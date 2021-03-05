@@ -72,10 +72,10 @@ void MethodDeclaration1() : {}
 {
     Type() <IDENTIFIER> "(" (
     Type() <IDENTIFIER> ("," Type() <IDENTIFIER>)* )?
-    ")" "{" (VarDeclaration())* (Statement())*
+    ")" "{" (LOOKAHEAD(2) VarDeclaration())* (Statement())*
     <RETURN> Expression() ";" "}"
     | <STATIC> <VOID> <MAIN> "(" "String" "[" "]" 
-    <IDENTIFIER> ")" "{" (VarDeclaration())* (Statement())* "}"
+    <IDENTIFIER> ")" "{" (LOOKAHEAD(2) VarDeclaration())* (Statement())* "}"
 }
 
 void Type() : {}
