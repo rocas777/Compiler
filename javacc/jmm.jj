@@ -1,0 +1,137 @@
+PARSER_BEGIN(jmm)
+
+public class jmm
+{
+    public static void main(String args[]) throws ParseException
+    {
+        jmm parser = new jmm(System.in);
+        jmm.Program();
+    }
+}
+
+PARSER_END(jmm)
+
+SKIP:
+{
+    " "
+}
+
+TOKEN:
+{ 
+    < INTEGERLITERAL : (["0"-"9"])+ >
+    | < IF : "if">
+    | < INT : "int">
+    | < NEW : "new">
+    | < VOID : "void">
+    | < ELSE : "else">
+    | < TRUE : "true">
+    | < MAIN : "main">
+    | < THIS : "this">
+    | < WHILE : "while">
+    | < FALSE : "false">
+    | < CLASS : "class">
+    | < PUBLIC : "public">
+    | < STATIC : "static">
+    | < STRING : "String">
+    | < LENGTH : "length">
+    | < RETURN : "return">
+    | < IMPORT : "import">
+    | < BOOLEAN : "boolean">
+    | < EXTENDS : "extends">
+    | < IDENTIFIER : (["a"-"z","A"-"Z"])(["a"-"z","A"-"Z","0"-"9","_"])* >
+}
+
+void Program() : {}
+{
+    ImportDeclaration() ClassDeclaration() <EOF>
+}
+
+void ImportDeclaration() : {}
+{
+    (
+        <IMPORT> <IDENTIFIER> ("." <IDENTIFIER>)* ";"
+    )*
+}
+
+void ClassDeclaration() : {}
+{
+    <CLASS> <IDENTIFIER> ("extends" <IDENTIFIER>)? "{" (VarDeclaration())* (MethodDeclaration())* "}"
+}
+
+void VarDeclaration() : {}
+{
+    Type() <IDENTIFIER> ";"
+}
+
+void MethodDeclaration() : {}
+{
+    <PUBLIC> MethodDeclaration1()
+}
+
+void MethodDeclaration1() : {}
+{
+    Type() <IDENTIFIER> "(" (
+    Type() <IDENTIFIER> ("," Type() <IDENTIFIER>)* )?
+    ")" "{" (VarDeclaration())* (Statement())*
+    <RETURN> Expression() ";" "}"
+    | <STATIC> <VOID> <MAIN> "(" "String" "[" "]" 
+    <IDENTIFIER> ")" "{" (VarDeclaration())* (Statement())* "}"
+}
+
+void Type() : {}
+{
+    <INT> Type1()
+    | <BOOLEAN>
+    | <IDENTIFIER>
+}
+
+void Type1() : {}
+{
+    ("[" "]")?
+}
+
+void Statement() : {}
+{
+    "{" (Statement())* "}"
+    | <IF> "(" Expression() ")" Statement() "else" Statement()
+    | <WHILE> "(" Expression() ")" Statement()
+    | Expression() ";"
+    | <IDENTIFIER> Statement1()
+}
+
+void Statement1() : {}
+{
+    "=" Expression() ";"
+    | "[" Expression() "]" "=" Expression() ";"
+}
+
+void Expression() : {}
+{
+    <INTEGERLITERAL> ExpressionLRFix()
+    | <TRUE> ExpressionLRFix()
+    | <FALSE> ExpressionLRFix()
+    | <IDENTIFIER> ExpressionLRFix()
+    | <THIS> ExpressionLRFix()
+    | <NEW> Expression1()
+    | "!" Expression() ExpressionLRFix()
+    | "(" Expression() ")" ExpressionLRFix()
+}
+
+void Expression1() : {}
+{
+    <INT> "[" Expression() "]" ExpressionLRFix()
+    | <IDENTIFIER> "(" ")" ExpressionLRFix()
+}
+
+void ExpressionLRFix() : {}
+{
+    (("&&" | "<" | "+" | "-" | "*" | "/") Expression() ExpressionLRFix()
+    | "[" Expression() "]" ExpressionLRFix()
+    | "." ExpressionLRFix1())?
+}
+
+void ExpressionLRFix1() : {}
+{
+    <LENGTH> ExpressionLRFix()
+    | <IDENTIFIER> "(" (Expression() (Expression())*)? ")" ExpressionLRFix()
+}
