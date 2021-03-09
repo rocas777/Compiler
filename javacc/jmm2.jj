@@ -112,9 +112,9 @@ void Expression3() : {}
 
 void ExpressionLFRFix() : {}
 {
-    (( "&&" | "<" | "+" | "-" | "*" | "/"  ) Expression() ExpressionLFRFix()
+    (LOOKAHEAD(2) (( "&&" | "<" | "+" | "-" | "*" | "/"  ) Expression() ExpressionLFRFix()
     | "[" Expression() "]" ExpressionLFRFix()
-    | "." ( <IDENTIFIER> "(" (Expression() ( "," Expression())*)? ")" ExpressionLFRFix()  | <LENGTH> ExpressionLFRFix()  ))?
+    | "." ( <IDENTIFIER> "(" (Expression() ( "," Expression())*)? ")" ExpressionLFRFix()  | <LENGTH> ExpressionLFRFix())  ))?
 }
 
 void ExpressionLFRFix2() : {}
