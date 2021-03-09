@@ -1,0 +1,139 @@
+PARSER_BEGIN(jmm)
+
+public class jmm
+{
+    public static void main(String args[]) throws ParseException
+    {
+        jmm parser = new jmm(System.in);
+        jmm.Program();
+    }
+}
+
+PARSER_END(jmm)
+
+SKIP:
+{
+    " " | "\n"
+}
+
+TOKEN:
+{
+    < INTEGERLITERAL : (["0"-"9"])+ >
+    | < IF : "if">
+    | < INT : "int">
+    | < NEW : "new">
+    | < VOID : "void">
+    | < ELSE : "else">
+    | < TRUE : "true">
+    | < MAIN : "main">
+    | < THIS : "this">
+    | < WHILE : "while">
+    | < FALSE : "false">
+    | < CLASS : "class">
+    | < PUBLIC : "public">
+    | < STATIC : "static">
+    | < STRING : "String">
+    | < LENGTH : "length">
+    | < RETURN : "return">
+    | < IMPORT : "import">
+    | < BOOLEAN : "boolean">
+    | < EXTENDS : "extends">
+    | < IDENTIFIER : (["a"-"z","A"-"Z"])(["a"-"z","A"-"Z","0"-"9","_"])* >
+}
+
+void Program() : {}
+{
+    ImportDeclaration() ClassDeclaration() <EOF>
+}
+
+void ImportDeclaration() :{}
+{
+    (<IMPORT> <IDENTIFIER> ("." <IDENTIFIER>)* ";")*
+}
+
+void ClassDeclaration() :{}
+{
+    <CLASS> <IDENTIFIER> (<EXTENDS> <IDENTIFIER>)? "{" (VarDeclaration())* (MethodDeclaration())* "}"
+}
+
+void VarDeclaration() : {}
+{
+    Type() <IDENTIFIER> ";"
+}
+
+void Type() : {}
+{
+    <INT> ArrayType()
+    | <BOOLEAN>
+    | <IDENTIFIER>
+}
+
+void ArrayType() : {}
+{
+    ("[" "]")?
+}
+
+void Teste() : {}
+{
+    (<INT> ArrayType() | <BOOLEAN>) <IDENTIFIER>  ";" Teste()
+    | <IDENTIFIER> (<IDENTIFIER> Teste() | "[" Expression() "]" ("=" Expression() ";")? | "=" Expression() ";" | ("&&" | "<" | "+" | "-" | "*" | "/" ) Expression() | "." (<IDENTIFIER> "(" (Expression() ("," Expression())*)? ")" | <LENGTH> ) Next() )
+    | ("{" (Statement())* "}"
+           | <IF> "(" Expression() ")" Statement() <ELSE> Statement()
+           | <WHILE> "(" Expression() ")" Statement()
+           | Expression1()  ";") Next()
+}
+
+void Next() : {}
+{
+    Statement()
+}
+
+void MethodDeclaration() : {}
+{
+    <PUBLIC> (Type() <IDENTIFIER> "(" (Type() <IDENTIFIER>
+        ("," Type() <IDENTIFIER> )*)? ")" "{" (Teste())?
+        <RETURN> Expression() ";" "}"
+    | <STATIC> <VOID> <MAIN> "(" <STRING> "[" "]" <IDENTIFIER>  ")" "{"
+        (Teste())? "}")
+}
+
+void Statement() : {}
+{
+    "{" (Statement())* "}"
+    | <IF> "(" Expression() ")" Statement() <ELSE> Statement()
+    | <WHILE> "(" Expression() ")" Statement()
+    | Expression1()  ";"
+    | <IDENTIFIER> ("[" Expression() "]" ("=" Expression() ";")? | "=" Expression() ";" | ("&&" | "<" | "+" | "-" | "*" | "/" ) Expression() | "." (<IDENTIFIER> "(" (Expression() ("," Expression())*)? ")" | <LENGTH> ))
+}
+
+void Expression() : {}
+{
+     <INTEGERLITERAL> ExpressionL()
+    | <TRUE> ExpressionL()
+    | <FALSE> ExpressionL()
+    | <IDENTIFIER> ExpressionL()
+    | <THIS> ExpressionL()
+    | <NEW> (<INT> "[" Expression() "]" | <IDENTIFIER> "(" ")" ) ExpressionL()
+    | "!" Expression() ExpressionL()
+    | "(" Expression() ")" ExpressionL()
+    | ExpressionL()
+}
+
+void Expression1() : {}
+{
+     <INTEGERLITERAL> ExpressionL()
+    | <TRUE> ExpressionL()
+    | <FALSE> ExpressionL()
+    | <THIS> ExpressionL()
+    | <NEW> (<INT> "[" Expression() "]" | <IDENTIFIER> "(" ")" ) ExpressionL()
+    | "!" Expression() ExpressionL()
+    | "(" Expression() ")" ExpressionL()
+    | ExpressionL()
+}
+
+void ExpressionL() : {}
+{
+    ("&&" | "<" | "+" | "-" | "*" | "/" ) Expression()
+    |  "[" Expression() "]"
+    | "." (<IDENTIFIER> "(" (Expression() ("," Expression())*)? ")" | <LENGTH> )
+}
