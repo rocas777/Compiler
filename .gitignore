@@ -4,3 +4,6 @@
 /generated/
 comp2021-*.jar
 ./idea/
+.classpath
+.project
+.settings
