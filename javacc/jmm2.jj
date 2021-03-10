@@ -107,7 +107,6 @@ void Expression3() : {}
     | <NEW> (<INT> "[" Expression() "]" | <IDENTIFIER> "(" ")" ) ExpressionLFRFix()
     | "!" Expression() ExpressionLFRFix()
     | "(" Expression()  ")" ExpressionLFRFix()
-    | ExpressionLFRFix()
 }
 
 void ExpressionLFRFix() : {}
