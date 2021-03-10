@@ -1,1 +1,4 @@
 *.class
+*.java
+!ParseException.java
+!ErrorManager.java
