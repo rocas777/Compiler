@@ -1,6 +1,6 @@
 PARSER_BEGIN(jmm)
 
-public class jmm
+import java.security.PublicKey;public class jmm
 {
     public static void main(String args[]) throws ParseException
     {
@@ -13,11 +13,11 @@ PARSER_END(jmm)
 
 SKIP:
 {
-    " "
+    " " | "\n"
 }
 
 TOKEN:
-{ 
+{
     < INTEGERLITERAL : (["0"-"9"])+ >
     | < IF : "if">
     | < INT : "int">
@@ -46,16 +46,14 @@ void Program() : {}
     ImportDeclaration() ClassDeclaration() <EOF>
 }
 
-void ImportDeclaration() : {}
+void ImportDeclaration() :{}
 {
-    (
-        <IMPORT> <IDENTIFIER> ("." <IDENTIFIER>)* ";"
-    )*
+    (<IMPORT> <IDENTIFIER> ("." <IDENTIFIER>)* ";")*
 }
 
-void ClassDeclaration() : {}
+void ClassDeclaration() :{}
 {
-    <CLASS> <IDENTIFIER> ("extends" <IDENTIFIER>)? "{" (VarDeclaration())* (MethodDeclaration())* "}"
+    <CLASS> <IDENTIFIER> (<EXTENDS> <IDENTIFIER>)? "{" (VarDeclaration())* (MethodDeclaration())* "}"
 }
 
 void VarDeclaration() : {}
@@ -65,73 +63,61 @@ void VarDeclaration() : {}
 
 void MethodDeclaration() : {}
 {
-    <PUBLIC> MethodDeclaration1()
-}
-
-void MethodDeclaration1() : {}
-{
-    Type() <IDENTIFIER> "(" (
-    Type() <IDENTIFIER> ("," Type() <IDENTIFIER>)* )?
-    ")" "{" (LOOKAHEAD(2) VarDeclaration())* (Statement())*
-    <RETURN> Expression() ";" "}"
-    | <STATIC> <VOID> <MAIN> "(" "String" "[" "]" 
-    <IDENTIFIER> ")" "{" (LOOKAHEAD(2) VarDeclaration())* (Statement())* "}"
+    <PUBLIC> (Type() <IDENTIFIER> "(" (Type() <IDENTIFIER> ("," Type() <IDENTIFIER> )* )? ")" "{" (LOOKAHEAD(2) VarDeclaration())* (Statement())* <RETURN> Expression() ";" "}"
+    | <STATIC> <VOID> <MAIN> "(" <STRING> "[" "]" <IDENTIFIER>  ")" "{" (LOOKAHEAD(2) VarDeclaration())* (Statement())* "}" )
 }
 
 void Type() : {}
 {
-    <INT> Type1()
+    <INT> ("[" "]")?
     | <BOOLEAN>
     | <IDENTIFIER>
 }
 
-void Type1() : {}
-{
-    ("[" "]")?
-}
-
 void Statement() : {}
 {
-    "{" (Statement())* "}"
-    | <IF> "(" Expression() ")" Statement() "else" Statement()
+    "{" (Statement() )* "}"
+    | <IF> "(" Expression() ")" Statement() <ELSE> Statement()
     | <WHILE> "(" Expression() ")" Statement()
-    | Expression() ";"
-    | <IDENTIFIER> Statement1()
-}
-
-void Statement1() : {}
-{
-    "=" Expression() ";"
-    | "[" Expression() "]" "=" Expression() ";"
+    | Expression3() ";"
+    | <IDENTIFIER> (
+        "=" Expression() ";"
+            | "[" Expression() "]" ("=" Expression() ";" | ExpressionLFRFix())
+            | ExpressionLFRFix2() ";" )
 }
 
 void Expression() : {}
 {
-    <INTEGERLITERAL> ExpressionLRFix()
-    | <TRUE> ExpressionLRFix()
-    | <FALSE> ExpressionLRFix()
-    | <IDENTIFIER> ExpressionLRFix()
-    | <THIS> ExpressionLRFix()
-    | <NEW> Expression1()
-    | "!" Expression() ExpressionLRFix()
-    | "(" Expression() ")" ExpressionLRFix()
+     <INTEGERLITERAL> ExpressionLFRFix()
+    | <TRUE> ExpressionLFRFix()
+    | <FALSE> ExpressionLFRFix()
+    | <IDENTIFIER> ExpressionLFRFix()
+    | <THIS> ExpressionLFRFix()
+    | <NEW> (<INT> "[" Expression() "]" | <IDENTIFIER> "(" ")" ) ExpressionLFRFix()
+    | "!" Expression() ExpressionLFRFix()
+    | "(" Expression()  ")" ExpressionLFRFix()
 }
 
-void Expression1() : {}
+void Expression3() : {}
 {
-    <INT> "[" Expression() "]" ExpressionLRFix()
-    | <IDENTIFIER> "(" ")" ExpressionLRFix()
+     <INTEGERLITERAL> ExpressionLFRFix()
+    | <TRUE> ExpressionLFRFix()
+    | <FALSE> ExpressionLFRFix()
+    | <THIS> ExpressionLFRFix()
+    | <NEW> (<INT> "[" Expression() "]" | <IDENTIFIER> "(" ")" ) ExpressionLFRFix()
+    | "!" Expression() ExpressionLFRFix()
+    | "(" Expression()  ")" ExpressionLFRFix()
 }
 
-void ExpressionLRFix() : {}
+void ExpressionLFRFix() : {}
 {
-    (("&&" | "<" | "+" | "-" | "*" | "/") Expression() ExpressionLRFix()
-    | "[" Expression() "]" ExpressionLRFix()
-    | "." ExpressionLRFix1())?
+    (LOOKAHEAD(2) (( "&&" | "<" | "+" | "-" | "*" | "/"  ) Expression() ExpressionLFRFix()
+    | "[" Expression() "]" ExpressionLFRFix()
+    | "." ( <IDENTIFIER> "(" (Expression() ( "," Expression())*)? ")" ExpressionLFRFix()  | <LENGTH> ExpressionLFRFix())  ))?
 }
 
-void ExpressionLRFix1() : {}
+void ExpressionLFRFix2() : {}
 {
-    <LENGTH> ExpressionLRFix()
-    | <IDENTIFIER> "(" (Expression() (Expression())*)? ")" ExpressionLRFix()
+    (( "&&" | "<" | "+" | "-" | "*" | "/"  ) Expression() ExpressionLFRFix()
+    | "." ( <IDENTIFIER> "(" (Expression() ( "," Expression())*)? ")" ExpressionLFRFix()  | <LENGTH> ExpressionLFRFix()  ))?
 }
