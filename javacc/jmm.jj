@@ -38,7 +38,24 @@ TOKEN:
     | < IMPORT : "import">
     | < BOOLEAN : "boolean">
     | < EXTENDS : "extends">
+    | < OPENPAR : "(" >
+    | < CLOSEPAR : ")" >
     | < IDENTIFIER : (["a"-"z","A"-"Z"])(["a"-"z","A"-"Z","0"-"9","_"])* >
+}
+
+JAVACODE
+void error_skipto(int kind) {
+  ParseException e = generateParseException();  // generate the exception object
+  System.out.println(e.toString());  // print the error message
+  Token t;
+  // consume tokens all the way up to a token of "kind" - use a do-while loop
+  // rather than a while because the current token is the one immediately before
+  // the erroneous token (in our case the token immediately before what should
+  // have been "if"/"while".
+  do {
+    t = getNextToken();
+  }
+  while (t.kind != kind);
 }
 
 void Program() : {}
@@ -63,8 +80,8 @@ void VarDeclaration() : {}
 
 void MethodDeclaration() : {}
 {
-    <PUBLIC> (Type() <IDENTIFIER> "(" (Type() <IDENTIFIER> ("," Type() <IDENTIFIER> )* )? ")" "{" (LOOKAHEAD(2) VarDeclaration())* (Statement())* <RETURN> Expression() ";" "}"
-    | <STATIC> <VOID> <MAIN> "(" <STRING> "[" "]" <IDENTIFIER>  ")" "{" (LOOKAHEAD(2) VarDeclaration())* (Statement())* "}" )
+    <PUBLIC> (Type() <IDENTIFIER> <OPENPAR> (Type() <IDENTIFIER> ("," Type() <IDENTIFIER> )* )? <CLOSEPAR> "{" (LOOKAHEAD(2) VarDeclaration())* (Statement())* <RETURN> Expression() ";" "}"
+    | <STATIC> <VOID> <MAIN> <OPENPAR> <STRING> "[" "]" <IDENTIFIER>  <CLOSEPAR> "{" (LOOKAHEAD(2) VarDeclaration())* (Statement())* "}" )
 }
 
 void Type() : {}
@@ -74,11 +91,21 @@ void Type() : {}
     | <IDENTIFIER>
 }
 
-void Statement() : {}
+void Statement() : {} 
 {
     "{" (Statement() )* "}"
-    | <IF> "(" Expression() ")" Statement() <ELSE> Statement()
-    | <WHILE> "(" Expression() ")" Statement()
+    | <IF> <OPENPAR> Expression() <CLOSEPAR> Statement() <ELSE> Statement()
+    | <WHILE>  
+   try 
+   {
+       <OPENPAR> Expression() <CLOSEPAR>
+   }
+   catch(ParseException e)
+   {
+       error_skipto(CLOSEPAR);
+       ErrorManager.errorCounter++;
+       if (ErrorManager.errorCounter == 10) throw e;   
+   } Statement()
     | Expression3() ";"
     | <IDENTIFIER> (
         "=" Expression() ";"
@@ -93,9 +120,9 @@ void Expression() : {}
     | <FALSE> ExpressionLFRFix()
     | <IDENTIFIER> ExpressionLFRFix()
     | <THIS> ExpressionLFRFix()
-    | <NEW> (<INT> "[" Expression() "]" | <IDENTIFIER> "(" ")" ) ExpressionLFRFix()
+    | <NEW> (<INT> "[" Expression() "]" | <IDENTIFIER> <OPENPAR> <CLOSEPAR> ) ExpressionLFRFix()
     | "!" Expression() ExpressionLFRFix()
-    | "(" Expression()  ")" ExpressionLFRFix()
+    | <OPENPAR> Expression()  <CLOSEPAR> ExpressionLFRFix()
 }
 
 void Expression3() : {}
@@ -104,20 +131,20 @@ void Expression3() : {}
     | <TRUE> ExpressionLFRFix()
     | <FALSE> ExpressionLFRFix()
     | <THIS> ExpressionLFRFix()
-    | <NEW> (<INT> "[" Expression() "]" | <IDENTIFIER> "(" ")" ) ExpressionLFRFix()
+    | <NEW> (<INT> "[" Expression() "]" | <IDENTIFIER> <OPENPAR> <CLOSEPAR> ) ExpressionLFRFix()
     | "!" Expression() ExpressionLFRFix()
-    | "(" Expression()  ")" ExpressionLFRFix()
+    | <OPENPAR> Expression()  <CLOSEPAR> ExpressionLFRFix()
 }
 
 void ExpressionLFRFix() : {}
 {
     (LOOKAHEAD(2) (( "&&" | "<" | "+" | "-" | "*" | "/"  ) Expression() ExpressionLFRFix()
     | "[" Expression() "]" ExpressionLFRFix()
-    | "." ( <IDENTIFIER> "(" (Expression() ( "," Expression())*)? ")" ExpressionLFRFix()  | <LENGTH> ExpressionLFRFix())  ))?
+    | "." ( <IDENTIFIER> <OPENPAR> (Expression() ( "," Expression())*)? <CLOSEPAR> ExpressionLFRFix()  | <LENGTH> ExpressionLFRFix())  ))?
 }
 
 void ExpressionLFRFix2() : {}
 {
     (( "&&" | "<" | "+" | "-" | "*" | "/"  ) Expression() ExpressionLFRFix()
-    | "." ( <IDENTIFIER> "(" (Expression() ( "," Expression())*)? ")" ExpressionLFRFix()  | <LENGTH> ExpressionLFRFix()  ))?
+    | "." ( <IDENTIFIER> <OPENPAR> (Expression() ( "," Expression())*)? <CLOSEPAR> ExpressionLFRFix()  | <LENGTH> ExpressionLFRFix()  ))?
 }
