@@ -1,11 +1,15 @@
 PARSER_BEGIN(jmm)
 
-import java.security.PublicKey;public class jmm
+import java.security.PublicKey;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
+public class jmm
 {
-    public static void main(String args[]) throws ParseException
+    public static void main(String args[]) throws ParseException, FileNotFoundException
     {
-        jmm parser = new jmm(System.in);
-        jmm.Program();
+        jmm parser = new jmm(new FileInputStream(args[0]));
+        jmm.Program(); 
     }
 }
 
