@@ -6,10 +6,13 @@ import java.io.FileNotFoundException;
 
 public class jmm
 {
+    public static int errorLimit = 10;
+    public static int errorCounter = 0;
+
     public static void main(String args[]) throws ParseException, FileNotFoundException
     {
         jmm parser = new jmm(new FileInputStream(args[0]));
-        jmm.Program(); 
+        jmm.Program();
     }
 }
 
@@ -17,7 +20,7 @@ PARSER_END(jmm)
 
 SKIP:
 {
-    " " | "\n"
+    " " | "\n" | "\t" | "\r"
 }
 
 TOKEN:
@@ -42,24 +45,26 @@ TOKEN:
     | < IMPORT : "import">
     | < BOOLEAN : "boolean">
     | < EXTENDS : "extends">
-    | < OPENPAR : "(" >
-    | < CLOSEPAR : ")" >
+    | < OPENPAR : "(">
+    | < CLOSEPAR : ")">
+    | < SEMICOLON : ";">
+    | < OPENCUR : "{">
     | < IDENTIFIER : (["a"-"z","A"-"Z"])(["a"-"z","A"-"Z","0"-"9","_"])* >
 }
 
 JAVACODE
-void error_skipto(int kind) {
-  ParseException e = generateParseException();  // generate the exception object
-  System.out.println(e.toString());  // print the error message
-  Token t;
-  // consume tokens all the way up to a token of "kind" - use a do-while loop
-  // rather than a while because the current token is the one immediately before
-  // the erroneous token (in our case the token immediately before what should
-  // have been "if"/"while".
-  do {
+void error_skipto(String description) {
+    ParseException e = generateParseException();  // generate the exception object
+    Token t;
+
     t = getNextToken();
-  }
-  while (t.kind != kind);
+    System.out.println("Unexpected \"" + t.image + "\" in " + description + " at line " + t.beginLine + "!");
+
+    while(t.kind != SEMICOLON && t.kind != EOF && t.kind != OPENCUR && t.kind != CLOSEPAR)
+    {
+        t = getNextToken();
+    }
+
 }
 
 void Program() : {}
@@ -69,23 +74,23 @@ void Program() : {}
 
 void ImportDeclaration() :{}
 {
-    (<IMPORT> <IDENTIFIER> ("." <IDENTIFIER>)* ";")*
+    (<IMPORT> <IDENTIFIER> ("." <IDENTIFIER>)* <SEMICOLON>)*
 }
 
 void ClassDeclaration() :{}
 {
-    <CLASS> <IDENTIFIER> (<EXTENDS> <IDENTIFIER>)? "{" (VarDeclaration())* (MethodDeclaration())* "}"
+    <CLASS> <IDENTIFIER> (<EXTENDS> <IDENTIFIER>)? <OPENCUR> (VarDeclaration())* (MethodDeclaration())* "}"
 }
 
 void VarDeclaration() : {}
 {
-    Type() <IDENTIFIER> ";"
+    Type() <IDENTIFIER> <SEMICOLON>
 }
 
 void MethodDeclaration() : {}
 {
-    <PUBLIC> (Type() <IDENTIFIER> <OPENPAR> (Type() <IDENTIFIER> ("," Type() <IDENTIFIER> )* )? <CLOSEPAR> "{" (LOOKAHEAD(2) VarDeclaration())* (Statement())* <RETURN> Expression() ";" "}"
-    | <STATIC> <VOID> <MAIN> <OPENPAR> <STRING> "[" "]" <IDENTIFIER>  <CLOSEPAR> "{" (LOOKAHEAD(2) VarDeclaration())* (Statement())* "}" )
+    <PUBLIC> (Type() <IDENTIFIER> <OPENPAR> (Type() <IDENTIFIER> ("," Type() <IDENTIFIER> )* )? <CLOSEPAR> <OPENCUR> (LOOKAHEAD(2) VarDeclaration())* (Statement())* <RETURN> Expression() <SEMICOLON> "}"
+    | <STATIC> <VOID> <MAIN> <OPENPAR> <STRING> "[" "]" <IDENTIFIER>  <CLOSEPAR> <OPENCUR> (LOOKAHEAD(2) VarDeclaration())* (Statement())* "}" )
 }
 
 void Type() : {}
@@ -97,24 +102,24 @@ void Type() : {}
 
 void Statement() : {} 
 {
-    "{" (Statement() )* "}"
+    <OPENCUR> (Statement() )* "}"
     | <IF> <OPENPAR> Expression() <CLOSEPAR> Statement() <ELSE> Statement()
-    | <WHILE>  
+    | <WHILE> <OPENPAR> 
    try 
    {
-       <OPENPAR> Expression() <CLOSEPAR>
+        Expression() <CLOSEPAR>
    }
    catch(ParseException e)
    {
-       error_skipto(CLOSEPAR);
-       ErrorManager.errorCounter++;
-       if (ErrorManager.errorCounter == 10) throw e;   
-   } Statement()
-    | Expression3() ";"
+       error_skipto("while expression");
+       errorCounter++;
+       if (errorCounter == errorLimit) throw e;   
+   }  Statement()
+    | Expression3() <SEMICOLON>
     | <IDENTIFIER> (
-        "=" Expression() ";"
-            | "[" Expression() "]" ("=" Expression() ";" | ExpressionLFRFix())
-            | ExpressionLFRFix2() ";" )
+        "=" Expression() <SEMICOLON>
+            | "[" Expression() "]" ("=" Expression() <SEMICOLON> | ExpressionLFRFix())
+            | ExpressionLFRFix2() <SEMICOLON> )
 }
 
 void Expression() : {}

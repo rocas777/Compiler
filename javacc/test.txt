@@ -12,6 +12,15 @@ class Fac
 
     public static void main(String[] args)
     {
-        io.println(new Fac().ComputeFac(10));
+        int i;
+        i = 0;
+        io.println(new Fac().ComputeFac(10)); 
+
+        while (int)
+        {
+            i = 3;
+            i = 2;
+        }
+
     }
 }
