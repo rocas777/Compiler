@@ -60,12 +60,13 @@ void error_skipto(String description) {
     ParseException e = generateParseException();  // generate the exception object
     Token t;
 
-    t = getNextToken();
+    t = getToken(1);
     System.out.println("Unexpected \"" + t.image + "\" in " + description + " at line " + t.beginLine + "!");
 
     while(t.kind != SEMICOLON && t.kind != EOF && t.kind != OPENCUR && t.kind != CLOSEPAR)
     {
         t = getNextToken();
+        t = getToken(1);
     }
 
 }
@@ -110,14 +111,14 @@ void Statement() : {}
     | <WHILE> <OPENPAR> 
    try 
    {
-        Expression() <CLOSEPAR>
+        Expression()  
    }
    catch(ParseException e)
    {
        error_skipto("while expression");
        errorCounter++;
        if (errorCounter == errorLimit) throw e;   
-   }  Statement()
+   } <CLOSEPAR> Statement()
     | Expression3() <SEMICOLON>
     | <IDENTIFIER> (
         "=" Expression() <SEMICOLON>

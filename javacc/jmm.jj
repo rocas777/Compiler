@@ -69,12 +69,13 @@ void error_skipto(String description) {/*@bgen(jjtree) error_skipto */
     ParseException e = generateParseException();  // generate the exception object
     Token t;
 
-    t = getNextToken();
+    t = getToken(1);
     System.out.println("Unexpected \"" + t.image + "\" in " + description + " at line " + t.beginLine + "!");
 
     while(t.kind != SEMICOLON && t.kind != EOF && t.kind != OPENCUR && t.kind != CLOSEPAR)
     {
         t = getNextToken();
+        t = getToken(1);
     }/*@bgen(jjtree)*/
  } finally {
    if (jjtc000) {
@@ -264,7 +265,7 @@ void Statement() : {/*@bgen(jjtree) Statement */
     | <WHILE> <OPENPAR> 
    try 
    {
-        Expression() <CLOSEPAR>
+        Expression() <CLOSEPAR> 
    }
    catch(ParseException e)
    {
