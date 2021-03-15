@@ -136,14 +136,14 @@ void Expression3() : {}
     | <OPENPAR> Expression()  <CLOSEPAR> ExpressionLFRFix()
 }
 
-void ExpressionLFRFix() : {}
+void ExpressionLFRFix() #void : {}
 {
     (LOOKAHEAD(2) (( "&&" | "<" | "+" | "-" | "*" | "/"  ) Expression() ExpressionLFRFix()
     | "[" Expression() "]" ExpressionLFRFix()
     | "." ( <IDENTIFIER> <OPENPAR> (Expression() ( "," Expression())*)? <CLOSEPAR> ExpressionLFRFix()  | <LENGTH> ExpressionLFRFix())  ))?
 }
 
-void ExpressionLFRFix2() : {}
+void ExpressionLFRFix2() #void : {}
 {
     (( "&&" | "<" | "+" | "-" | "*" | "/"  ) Expression() ExpressionLFRFix()
     | "." ( <IDENTIFIER> <OPENPAR> (Expression() ( "," Expression())*)? <CLOSEPAR> ExpressionLFRFix()  | <LENGTH> ExpressionLFRFix()  ))?
