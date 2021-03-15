@@ -1,4 +1,0 @@
-*.class
-*.java
-!ParseException.java
-!SimpleNode.java

@@ -1,25 +1,17 @@
-PARSER_BEGIN(jmm)
+PARSER_BEGIN(Parser)
 
-import java.security.PublicKey;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-
-public class jmm
+public class Parser
 {
     public static int errorLimit = 10;
     public static int errorCounter = 0;
 
-    public static void main(String args[]) throws ParseException, FileNotFoundException
+    public static void main(String args[]) throws ParseException
     {
-        jmm parser = new jmm(new FileInputStream(args[0]));
-
-        SimpleNode root = jmm.Program();
-
-        root.dump("");
+        //Parser parser = new Parser(System.in);
     }
 }
 
-PARSER_END(jmm)
+PARSER_END(Parser)
 
 SKIP:
 {
