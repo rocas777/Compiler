@@ -65,30 +65,30 @@ SimpleNode Program() : {}
 
 void ImportDeclaration() :{}
 {
-    (<IMPORT> <IDENTIFIER> ("." <IDENTIFIER>)* <SEMICOLON>)*
+    (<IMPORT> Identifier() ("." Identifier())* <SEMICOLON>)*
 }
 
 void ClassDeclaration() :{}
 {
-    <CLASS> <IDENTIFIER> (<EXTENDS> <IDENTIFIER>)? <OPENCUR> (VarDeclaration())* (MethodDeclaration())* "}"
+    <CLASS> Identifier() (<EXTENDS> Identifier())? <OPENCUR> (VarDeclaration())* (MethodDeclaration())* "}"
 }
 
 void VarDeclaration() : {}
 {
-    Type() <IDENTIFIER> <SEMICOLON>
+    Type() Identifier() <SEMICOLON>
 }
 
 void MethodDeclaration() : {}
 {
-    <PUBLIC> (Type() <IDENTIFIER> <OPENPAR> (Type() <IDENTIFIER> ("," Type() <IDENTIFIER> )* )? <CLOSEPAR> <OPENCUR> (LOOKAHEAD(2) VarDeclaration())* (Statement())* <RETURN> Expression() <SEMICOLON> "}"
-    | <STATIC> <VOID> <MAIN> <OPENPAR> <STRING> "[" "]" <IDENTIFIER>  <CLOSEPAR> <OPENCUR> (LOOKAHEAD(2) VarDeclaration())* (Statement())* "}" )
+    <PUBLIC> (Type() Identifier() <OPENPAR> (Type() Identifier() ("," Type() Identifier() )* )? <CLOSEPAR> <OPENCUR> (LOOKAHEAD(2) VarDeclaration())* (Statement())* <RETURN> Expression() <SEMICOLON> "}"
+    | <STATIC> <VOID> <MAIN> <OPENPAR> <STRING> "[" "]" Identifier()  <CLOSEPAR> <OPENCUR> (LOOKAHEAD(2) VarDeclaration())* (Statement())* "}" )
 }
 
 void Type() : {Token t;}
 {
     <INT> ("[" "]")?
     | <BOOLEAN>
-    | <IDENTIFIER>
+    | Identifier()
 }
 
 void Statement() : {} 
@@ -107,7 +107,7 @@ void Statement() : {}
        if (errorCounter == errorLimit) throw e;   
    } <CLOSEPAR> Statement()
     | Expression3() <SEMICOLON>
-    | <IDENTIFIER> (
+    | Identifier() (
         "=" Expression() <SEMICOLON>
             | "[" Expression() "]" ("=" Expression() <SEMICOLON> | ExpressionLFRFix())
             | ExpressionLFRFix2() <SEMICOLON> )
@@ -118,9 +118,9 @@ void Expression() : {}
      <INTEGERLITERAL> ExpressionLFRFix()
     | <TRUE> ExpressionLFRFix()
     | <FALSE> ExpressionLFRFix()
-    | <IDENTIFIER> ExpressionLFRFix()
+    | Identifier() ExpressionLFRFix()
     | <THIS> ExpressionLFRFix()
-    | <NEW> (<INT> "[" Expression() "]" | <IDENTIFIER> <OPENPAR> <CLOSEPAR> ) ExpressionLFRFix()
+    | <NEW> (<INT> "[" Expression() "]" | Identifier() <OPENPAR> <CLOSEPAR> ) ExpressionLFRFix()
     | "!" Expression() ExpressionLFRFix()
     | <OPENPAR> Expression()  <CLOSEPAR> ExpressionLFRFix()
 }
@@ -131,7 +131,7 @@ void Expression3() : {}
     | <TRUE> ExpressionLFRFix()
     | <FALSE> ExpressionLFRFix()
     | <THIS> ExpressionLFRFix()
-    | <NEW> (<INT> "[" Expression() "]" | <IDENTIFIER> <OPENPAR> <CLOSEPAR> ) ExpressionLFRFix()
+    | <NEW> (<INT> "[" Expression() "]" | Identifier() <OPENPAR> <CLOSEPAR> ) ExpressionLFRFix()
     | "!" Expression() ExpressionLFRFix()
     | <OPENPAR> Expression()  <CLOSEPAR> ExpressionLFRFix()
 }
@@ -140,11 +140,16 @@ void ExpressionLFRFix() #void : {}
 {
     (LOOKAHEAD(2) (( "&&" | "<" | "+" | "-" | "*" | "/"  ) Expression() ExpressionLFRFix()
     | "[" Expression() "]" ExpressionLFRFix()
-    | "." ( <IDENTIFIER> <OPENPAR> (Expression() ( "," Expression())*)? <CLOSEPAR> ExpressionLFRFix()  | <LENGTH> ExpressionLFRFix())  ))?
+    | "." ( Identifier() <OPENPAR> (Expression() ( "," Expression())*)? <CLOSEPAR> ExpressionLFRFix()  | <LENGTH> ExpressionLFRFix())  ))?
 }
 
 void ExpressionLFRFix2() #void : {}
 {
     (( "&&" | "<" | "+" | "-" | "*" | "/"  ) Expression() ExpressionLFRFix()
-    | "." ( <IDENTIFIER> <OPENPAR> (Expression() ( "," Expression())*)? <CLOSEPAR> ExpressionLFRFix()  | <LENGTH> ExpressionLFRFix()  ))?
+    | "." ( Identifier() <OPENPAR> (Expression() ( "," Expression())*)? <CLOSEPAR> ExpressionLFRFix()  | <LENGTH> ExpressionLFRFix()  ))?
+}
+
+void Identifier() : {}
+{
+    <IDENTIFIER>
 }
