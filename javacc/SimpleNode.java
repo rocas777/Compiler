@@ -136,7 +136,7 @@ class SimpleNode implements Node, JmmNode {
      */
     public List<JmmNode> getChildren()
     {
-      return new ArrayList<JmmNode>();
+      return JmmNode.convertChildren(children);
     }
 
     /**
