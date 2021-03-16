@@ -13,9 +13,10 @@ class SimpleNode implements Node, JmmNode {
   protected Object value;
   protected Parser parser;
 
+  //added
   public String val;
   public String type;
-  
+
 
   public SimpleNode(int i) {
     id = i;

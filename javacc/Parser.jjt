@@ -63,39 +63,39 @@ SimpleNode Program() : {}
     ImportDeclaration() ClassDeclaration() <EOF> {return jjtThis;}
 }
 
-void ImportDeclaration() :{}
+void ImportDeclaration() : {}
 {
-    (<IMPORT> Identifier() ("." Identifier())* <SEMICOLON>)*
+    (<IMPORT> <IDENTIFIER> ("." <IDENTIFIER>)* #ImportMaterial <SEMICOLON>)*
 }
 
-void ClassDeclaration() :{}
+void ClassDeclaration() : {Token t;}
 {
-    <CLASS> Identifier() (<EXTENDS> Identifier())? <OPENCUR> (VarDeclaration())* (MethodDeclaration())* "}"
+    <CLASS> (t=<IDENTIFIER> {jjtThis.val = t.image;} #ClassName) (<EXTENDS> <IDENTIFIER>)? <OPENCUR> (VarDeclaration())* (MethodDeclaration())* "}"
 }
 
 void VarDeclaration() : {}
 {
-    Type() Identifier() <SEMICOLON>
+    Type() <IDENTIFIER> #VarName <SEMICOLON>
 }
 
 void MethodDeclaration() : {}
 {
-    <PUBLIC> (Type() Identifier() <OPENPAR> (Type() Identifier() ("," Type() Identifier() )* )? <CLOSEPAR> <OPENCUR> (LOOKAHEAD(2) VarDeclaration())* (Statement())* <RETURN> Expression() <SEMICOLON> "}"
-    | <STATIC> <VOID> <MAIN> <OPENPAR> <STRING> "[" "]" Identifier()  <CLOSEPAR> <OPENCUR> (LOOKAHEAD(2) VarDeclaration())* (Statement())* "}" )
+    <PUBLIC> (Type() <IDENTIFIER> <OPENPAR> (Type() <IDENTIFIER> ("," Type() <IDENTIFIER> )* )? <CLOSEPAR> <OPENCUR> (LOOKAHEAD(2) VarDeclaration())* (Statement())* <RETURN> Expression() <SEMICOLON> "}"
+    | <STATIC> <VOID> <MAIN> <OPENPAR> <STRING> "[" "]" <IDENTIFIER>  <CLOSEPAR> <OPENCUR> (LOOKAHEAD(2) VarDeclaration())* (Statement())* "}" )
 }
 
-void Type() : {Token t;}
+void Type() : {Token t1;}
 {
-    <INT> ("[" "]")?
-    | <BOOLEAN>
-    | Identifier()
+    <INT> {jjtThis.val = "int";} ("[" "]" {jjtThis.val += "[]";})? 
+    | <BOOLEAN> {jjtThis.val = "boolean";} #Boolean
+    | t1=<IDENTIFIER> {jjtThis.val = t1.image;} #TypeName
 }
 
 void Statement() : {} 
 {
     <OPENCUR> (Statement() )* "}"
-    | <IF> <OPENPAR> Expression() <CLOSEPAR> Statement() <ELSE> Statement()
-    | <WHILE> <OPENPAR> 
+    | <IF> #If <OPENPAR> Expression() <CLOSEPAR> Statement() <ELSE> #Else Statement()
+    | <WHILE> #While <OPENPAR> 
    try 
    {
         Expression()
@@ -107,49 +107,49 @@ void Statement() : {}
        if (errorCounter == errorLimit) throw e;   
    } <CLOSEPAR> Statement()
     | Expression3() <SEMICOLON>
-    | Identifier() (
-        "=" Expression() <SEMICOLON>
-            | "[" Expression() "]" ("=" Expression() <SEMICOLON> | ExpressionLFRFix())
+    | <IDENTIFIER> (
+        "=" #Assign Expression() <SEMICOLON>
+            | "[" Expression() "]" ("=" #Assign Expression() <SEMICOLON> | ExpressionLFRFix())
             | ExpressionLFRFix2() <SEMICOLON> )
 }
 
-void Expression() : {}
+void Expression() #void : {}
 {
-     <INTEGERLITERAL> ExpressionLFRFix()
-    | <TRUE> ExpressionLFRFix()
-    | <FALSE> ExpressionLFRFix()
-    | Identifier() ExpressionLFRFix()
-    | <THIS> ExpressionLFRFix()
-    | <NEW> (<INT> "[" Expression() "]" | Identifier() <OPENPAR> <CLOSEPAR> ) ExpressionLFRFix()
-    | "!" Expression() ExpressionLFRFix()
-    | <OPENPAR> Expression()  <CLOSEPAR> ExpressionLFRFix()
+    <INTEGERLITERAL> #IntegerLiteral ExpressionLFRFix()
+    | <TRUE> #True ExpressionLFRFix()
+    | <FALSE> #False ExpressionLFRFix()
+    | <IDENTIFIER> #VariableName ExpressionLFRFix()
+    | <THIS> #This ExpressionLFRFix()
+    | <NEW> #New (<INT> "[" Expression() "]" | <IDENTIFIER> <OPENPAR> <CLOSEPAR>) ExpressionLFRFix()
+    | "!" #Negation Expression() ExpressionLFRFix()
+    | <OPENPAR> Expression() <CLOSEPAR> ExpressionLFRFix()
 }
 
-void Expression3() : {}
+void Expression3() #void : {}
 {
-     <INTEGERLITERAL> ExpressionLFRFix()
-    | <TRUE> ExpressionLFRFix()
-    | <FALSE> ExpressionLFRFix()
-    | <THIS> ExpressionLFRFix()
-    | <NEW> (<INT> "[" Expression() "]" | Identifier() <OPENPAR> <CLOSEPAR> ) ExpressionLFRFix()
-    | "!" Expression() ExpressionLFRFix()
-    | <OPENPAR> Expression()  <CLOSEPAR> ExpressionLFRFix()
+    <INTEGERLITERAL> #IntegerLiteral ExpressionLFRFix()
+    | <TRUE> #True ExpressionLFRFix()
+    | <FALSE> #False ExpressionLFRFix()
+    | <THIS> #This ExpressionLFRFix()
+    | <NEW> #New (<INT> "[" Expression() "]" | <IDENTIFIER> <OPENPAR> <CLOSEPAR>) ExpressionLFRFix()
+    | "!" #Negation Expression() ExpressionLFRFix()
+    | <OPENPAR> Expression() <CLOSEPAR> ExpressionLFRFix() 
 }
 
-void ExpressionLFRFix() : {}
+void ExpressionLFRFix() #void : {}
 {
-    (LOOKAHEAD(2) (( "&&" | "<" | "+" | "-" | "*" | "/"  ) Expression() ExpressionLFRFix()
+    (LOOKAHEAD(2) (Operator() Expression() ExpressionLFRFix()
     | "[" Expression() "]" ExpressionLFRFix()
-    | "." ( Identifier() <OPENPAR> (Expression() ( "," Expression())*)? <CLOSEPAR> ExpressionLFRFix()  | <LENGTH> ExpressionLFRFix())  ))?
+    | "." ( <IDENTIFIER> #MethodName <OPENPAR> (Expression() ( "," Expression())*)? <CLOSEPAR> ExpressionLFRFix()  | <LENGTH> #Length ExpressionLFRFix())  ))?
 }
 
-void ExpressionLFRFix2()  : {}
+void ExpressionLFRFix2() #void : {}
 {
-    (( "&&" | "<" | "+" | "-" | "*" | "/"  ) Expression() ExpressionLFRFix()
-    | "." ( Identifier() <OPENPAR> (Expression() ( "," Expression())*)? <CLOSEPAR> ExpressionLFRFix()  | <LENGTH> ExpressionLFRFix()  ))?
+    (Operator() Expression() ExpressionLFRFix()
+    | "." ( <IDENTIFIER> #MethodName <OPENPAR> (Expression() ( "," Expression())*)? <CLOSEPAR> ExpressionLFRFix()  | <LENGTH> #Length ExpressionLFRFix()  ))?
 }
 
-void Identifier() : {Token t;}
+void Operator() #void : {}
 {
-   t=<IDENTIFIER> {jjtThis.val = t.image;}
+    ( "&&" #And | "<" #SmallerThan | "+" #Addition | "-" #Subtraction | "*" #Multiplication | "/" #Division )
 }
