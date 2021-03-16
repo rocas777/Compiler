@@ -86,16 +86,16 @@ void MethodDeclaration() : {}
 
 void Type() : {Token t1;}
 {
-    <INT> {jjtThis.val = "int";} ("[" "]" {jjtThis.val += "[]";})? 
-    | <BOOLEAN> {jjtThis.val = "boolean";} #Boolean
-    | t1=<IDENTIFIER> {jjtThis.val = t1.image;} #TypeName
+    <INT> {jjtThis.val = "int";} ("[" "]" {jjtThis.val += "[]";})?
+    | <BOOLEAN> {jjtThis.val = "boolean";}
+    | t1=<IDENTIFIER> {jjtThis.val = t1.image;}
 }
 
-void Statement() : {} 
+void Statement() #void : {} 
 {
     <OPENCUR> (Statement() )* "}"
     | <IF> #If <OPENPAR> Expression() <CLOSEPAR> Statement() <ELSE> #Else Statement()
-    | <WHILE> #While <OPENPAR> 
+    | <WHILE> <OPENPAR> 
    try 
    {
         Expression()
@@ -105,11 +105,11 @@ void Statement() : {}
        error_skipto("while expression");
        errorCounter++;
        if (errorCounter == errorLimit) throw e;   
-   } <CLOSEPAR> Statement()
+   } <CLOSEPAR> Statement() #While(2)
     | Expression3() <SEMICOLON>
     | Identifier() (
         "=" Assignee() #Assign(2) 
-            | "[" Expression() "]" ("=" #Assign Expression() <SEMICOLON> | ExpressionLFRFix())
+            | "[" Expression() "]" ("=" Expression() #ArrayAssign(3) <SEMICOLON> | ExpressionLFRFix())
             | ExpressionLFRFix2() <SEMICOLON> )
 }
 
@@ -118,7 +118,7 @@ void Identifier() : {}
     <IDENTIFIER>
 }
 
-void Assignee() : {}
+void Assignee() #void : {}
 {
     Expression() <SEMICOLON>
 }
@@ -148,18 +148,23 @@ void Expression3() #void : {}
 
 void ExpressionLFRFix() #void : {}
 {
-    (LOOKAHEAD(2) (Operator() Expression() ExpressionLFRFix()
+    (LOOKAHEAD(2) (Operation() ExpressionLFRFix()
     | "[" Expression() "]" ExpressionLFRFix()
     | "." ( <IDENTIFIER> #MethodName <OPENPAR> (Expression() ( "," Expression())*)? <CLOSEPAR> ExpressionLFRFix()  | <LENGTH> #Length ExpressionLFRFix())  ))?
 }
 
 void ExpressionLFRFix2() #void : {}
 {
-    (Operator() Expression() ExpressionLFRFix()
+    (Operation() ExpressionLFRFix()
     | "." ( <IDENTIFIER> #MethodName <OPENPAR> (Expression() ( "," Expression())*)? <CLOSEPAR> ExpressionLFRFix()  | <LENGTH> #Length ExpressionLFRFix()  ))?
 }
 
-void Operator() #void : {}
+void Operation() #void : {}
 {
-    ( "&&" #And | "<" #SmallerThan | "+" #Addition | "-" #Subtraction | "*" #Multiplication | "/" #Division )
+    "&&" Expression() #And(2)
+    | "<" Expression() #SmallerThan(2)
+    | "+" Expression() #Addition(2)
+    | "-" Expression() #Subtraction(2)
+    | "*" Expression() #Multiplication(2)
+    | "/" Expression() #Division(2)
 }

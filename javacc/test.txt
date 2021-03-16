@@ -18,6 +18,7 @@ class Fac
         io.println(new Fac().ComputeFac(10)); 
 
         i = i + 3;
+        a[0] = 3;
 
         while ( i < 3 )
         {
