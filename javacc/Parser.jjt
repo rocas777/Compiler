@@ -43,7 +43,7 @@ TOKEN:
 }
 
 JAVACODE
-void error_skipto(String description) {
+void error_skipto(String description) #void {
     ParseException e = generateParseException();  // generate the exception object
     Token t;
 
@@ -80,7 +80,7 @@ void VarDeclaration() : {}
 
 void MethodDeclaration() : {}
 {
-    <PUBLIC> (Type() <IDENTIFIER> <OPENPAR> (Type() <IDENTIFIER> ("," Type() <IDENTIFIER> )* )? <CLOSEPAR> <OPENCUR> (LOOKAHEAD(2) VarDeclaration())* (Statement())* <RETURN> Expression() <SEMICOLON> "}"
+    <PUBLIC> ((Type() #ReturnType) <IDENTIFIER> <OPENPAR> (Type() <IDENTIFIER> ("," Type() <IDENTIFIER> )* )? <CLOSEPAR> <OPENCUR> (LOOKAHEAD(2) VarDeclaration())* (Statement())* <RETURN> Expression() <SEMICOLON> "}"
     | <STATIC> <VOID> <MAIN> <OPENPAR> <STRING> "[" "]" <IDENTIFIER>  <CLOSEPAR> <OPENCUR> (LOOKAHEAD(2) VarDeclaration())* (Statement())* "}" )
 }
 
@@ -107,10 +107,20 @@ void Statement() : {}
        if (errorCounter == errorLimit) throw e;   
    } <CLOSEPAR> Statement()
     | Expression3() <SEMICOLON>
-    | <IDENTIFIER> (
-        "=" #Assign Expression() <SEMICOLON>
+    | Identifier() (
+        "=" Assignee() #Assign(2) 
             | "[" Expression() "]" ("=" #Assign Expression() <SEMICOLON> | ExpressionLFRFix())
             | ExpressionLFRFix2() <SEMICOLON> )
+}
+
+void Identifier() : {}
+{
+    <IDENTIFIER>
+}
+
+void Assignee() : {}
+{
+    Expression() <SEMICOLON>
 }
 
 void Expression() #void : {}
@@ -120,7 +130,7 @@ void Expression() #void : {}
     | <FALSE> #False ExpressionLFRFix()
     | <IDENTIFIER> #VariableName ExpressionLFRFix()
     | <THIS> #This ExpressionLFRFix()
-    | <NEW> #New (<INT> "[" Expression() "]" | <IDENTIFIER> <OPENPAR> <CLOSEPAR>) ExpressionLFRFix()
+    | (<NEW> #New) (<INT> "[" Expression() "]" | <IDENTIFIER> <OPENPAR> <CLOSEPAR>) ExpressionLFRFix()
     | "!" #Negation Expression() ExpressionLFRFix()
     | <OPENPAR> Expression() <CLOSEPAR> ExpressionLFRFix()
 }
@@ -131,7 +141,7 @@ void Expression3() #void : {}
     | <TRUE> #True ExpressionLFRFix()
     | <FALSE> #False ExpressionLFRFix()
     | <THIS> #This ExpressionLFRFix()
-    | <NEW> #New (<INT> "[" Expression() "]" | <IDENTIFIER> <OPENPAR> <CLOSEPAR>) ExpressionLFRFix()
+    | (<NEW> #New) (<INT> "[" Expression() "]" | <IDENTIFIER> <OPENPAR> <CLOSEPAR>) ExpressionLFRFix()
     | "!" #Negation Expression() ExpressionLFRFix()
     | <OPENPAR> Expression() <CLOSEPAR> ExpressionLFRFix() 
 }
