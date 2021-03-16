@@ -19,15 +19,17 @@ Program
     Identifier
     IntegerLiteral
    Else
-   Identifier
-   VariableName
    Assign
-    This
+    Identifier
     Multiplication
-     MethodName
-     Subtraction
-      VariableName
-      IntegerLiteral
+     VariableName
+     MethodCall
+      This
+      MethodName
+      MethodCallArgs
+       Subtraction
+        VariableName
+        IntegerLiteral
    VariableName
   MethodDeclaration
    VarDeclaration
@@ -36,11 +38,17 @@ Program
    Assign
     Identifier
     IntegerLiteral
-   Identifier
-   MethodName
-   New
-   MethodName
-   IntegerLiteral
+   MethodCall
+    Identifier
+    MethodName
+    MethodCallArgs
+     MethodCall
+      New
+       ConstructorCall
+        Identifier
+      MethodName
+      MethodCallArgs
+       IntegerLiteral
    Assign
     Identifier
     Addition

@@ -130,8 +130,8 @@ void Expression() #void : {}
     | <FALSE> #False ExpressionLFRFix()
     | <IDENTIFIER> #VariableName ExpressionLFRFix()
     | <THIS> #This ExpressionLFRFix()
-    | (<NEW> #New) (<INT> "[" Expression() "]" | <IDENTIFIER> <OPENPAR> <CLOSEPAR>) ExpressionLFRFix()
-    | "!" #Negation Expression() ExpressionLFRFix()
+    | <NEW> (ArrayInitializer() | ConstructorCall()) #New ExpressionLFRFix()
+    | "!" Expression() #Negation ExpressionLFRFix()
     | <OPENPAR> Expression() <CLOSEPAR> ExpressionLFRFix()
 }
 
@@ -141,22 +141,42 @@ void Expression3() #void : {}
     | <TRUE> #True ExpressionLFRFix()
     | <FALSE> #False ExpressionLFRFix()
     | <THIS> #This ExpressionLFRFix()
-    | (<NEW> #New) (<INT> "[" Expression() "]" | <IDENTIFIER> <OPENPAR> <CLOSEPAR>) ExpressionLFRFix()
-    | "!" #Negation Expression() ExpressionLFRFix()
+    | <NEW> (ArrayInitializer() | ConstructorCall()) #New ExpressionLFRFix()
+    | "!" Expression() #Negation ExpressionLFRFix()
     | <OPENPAR> Expression() <CLOSEPAR> ExpressionLFRFix() 
+}
+
+void ArrayInitializer() : {}
+{
+    <INT> "[" Expression() "]"
+}
+
+void ConstructorCall() : {}
+{
+    Identifier() <OPENPAR> <CLOSEPAR>
 }
 
 void ExpressionLFRFix() #void : {}
 {
     (LOOKAHEAD(2) (Operation() ExpressionLFRFix()
     | "[" Expression() "]" ExpressionLFRFix()
-    | "." ( <IDENTIFIER> #MethodName <OPENPAR> (Expression() ( "," Expression())*)? <CLOSEPAR> ExpressionLFRFix()  | <LENGTH> #Length ExpressionLFRFix())  ))?
+    | "." ( MethodCall() | <LENGTH> #Length ExpressionLFRFix())  ))?
 }
 
 void ExpressionLFRFix2() #void : {}
 {
     (Operation() ExpressionLFRFix()
-    | "." ( <IDENTIFIER> #MethodName <OPENPAR> (Expression() ( "," Expression())*)? <CLOSEPAR> ExpressionLFRFix()  | <LENGTH> #Length ExpressionLFRFix()  ))?
+    | "." ( MethodCall() | <LENGTH> #Length ExpressionLFRFix()  ))?
+}
+
+void MethodCall() #void : {}
+{
+    <IDENTIFIER> #MethodName <OPENPAR> (MethodCallArgs())? <CLOSEPAR> ExpressionLFRFix() #MethodCall(3)
+}
+
+void MethodCallArgs() : {}
+{
+    Expression() ( "," Expression())*
 }
 
 void Operation() #void : {}
