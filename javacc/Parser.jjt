@@ -98,7 +98,7 @@ void Statement() : {}
     | <WHILE> <OPENPAR> 
    try 
    {
-        Expression()  
+        Expression()
    }
    catch(ParseException e)
    {
@@ -136,20 +136,20 @@ void Expression3() : {}
     | <OPENPAR> Expression()  <CLOSEPAR> ExpressionLFRFix()
 }
 
-void ExpressionLFRFix() #void : {}
+void ExpressionLFRFix() : {}
 {
     (LOOKAHEAD(2) (( "&&" | "<" | "+" | "-" | "*" | "/"  ) Expression() ExpressionLFRFix()
     | "[" Expression() "]" ExpressionLFRFix()
     | "." ( Identifier() <OPENPAR> (Expression() ( "," Expression())*)? <CLOSEPAR> ExpressionLFRFix()  | <LENGTH> ExpressionLFRFix())  ))?
 }
 
-void ExpressionLFRFix2() #void : {}
+void ExpressionLFRFix2()  : {}
 {
     (( "&&" | "<" | "+" | "-" | "*" | "/"  ) Expression() ExpressionLFRFix()
     | "." ( Identifier() <OPENPAR> (Expression() ( "," Expression())*)? <CLOSEPAR> ExpressionLFRFix()  | <LENGTH> ExpressionLFRFix()  ))?
 }
 
-void Identifier() : {}
+void Identifier() : {Token t;}
 {
-    <IDENTIFIER>
+   t=<IDENTIFIER> {jjtThis.val = t.image;}
 }

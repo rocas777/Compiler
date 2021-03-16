@@ -68,12 +68,12 @@ jar {
 
 // Copy JAR to root folder
 task copyJar() {
-
     doFirst {
 		copy {
 			println 'Copying JAR file to ./'
 			from jar
 			into "./"
+         rename 'COMP.jar', "comp2021-2c.jar"
 		}	
     }
 }
