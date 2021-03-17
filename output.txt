@@ -6,14 +6,13 @@ Program
   ClassName
   NormalMethodDeclaration
    ReturnType
-    Type
    MethodName
    MethodDeclarationArgs
     Parameter
-     Type
+     ParameterType
      ParameterName
    VarDeclaration
-    Type
+    VarType
     VarName
    If
     SmallerThan
@@ -21,20 +20,20 @@ Program
      IntegerLiteral
     Body
      Assign
-      Identifier
+      AssignRecipient
       IntegerLiteral
      Assign
-      Identifier
+      AssignRecipient
       IntegerLiteral
      Assign
-      Identifier
+      AssignRecipient
       IntegerLiteral
      Assign
-      Identifier
+      AssignRecipient
       IntegerLiteral
    Else
     Assign
-     Identifier
+     AssignRecipient
      Multiplication
       VariableName
       MethodCall
@@ -45,40 +44,40 @@ Program
          VariableName
          IntegerLiteral
     Assign
-     Identifier
+     AssignRecipient
      IntegerLiteral
     Assign
-     Identifier
+     AssignRecipient
      IntegerLiteral
    ReturnValue
     VariableName
   MainMethodDeclaration
    VarDeclaration
-    Type
+    VarType
     VarName
    VarDeclaration
-    Type
+    VarType
     VarName
    Assign
-    Identifier
+    AssignRecipient
     IntegerLiteral
    MethodCall
-    Identifier
+    AssignRecipient
     MethodName
     MethodCallArgs
      MethodCall
       ConstructorCall
-       Identifier
+       ClassName
       MethodName
       MethodCallArgs
        IntegerLiteral
    Assign
-    Identifier
+    AssignRecipient
     Addition
      VariableName
      IntegerLiteral
    ArrayAssign
-    Identifier
+    AssignRecipient
     ArrayIndex
      IntegerLiteral
     AttributeCall
@@ -90,17 +89,17 @@ Program
       IntegerLiteral
     Body
      Assign
-      Identifier
+      AssignRecipient
       IntegerLiteral
      Assign
-      Identifier
+      AssignRecipient
       IntegerLiteral
      Assign
-      Identifier
+      AssignRecipient
       IntegerLiteral
    While
     True
     Body
      Assign
-      Identifier
+      AssignRecipient
       IntegerLiteral

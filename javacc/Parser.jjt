@@ -75,7 +75,7 @@ void ClassDeclaration() : {Token t;}
 
 void VarDeclaration() : {}
 {
-    Type() <IDENTIFIER> #VarName <SEMICOLON>
+    Type() #VarType <IDENTIFIER> #VarName <SEMICOLON>
 }
 
 void MethodDeclaration() #void : {}
@@ -95,14 +95,14 @@ void MainMethodDeclaration() : {}
 
 void MethodDeclarationArgs() : {}
 {
-    (Type() (<IDENTIFIER> #ParameterName) #Parameter(2)) ("," (Type() (<IDENTIFIER> #ParameterName) #Parameter(2)) )* 
+    ((Type() #ParameterType) (<IDENTIFIER> #ParameterName) #Parameter(2)) ("," ((Type() #ParameterType) (<IDENTIFIER> #ParameterName) #Parameter(2)) )* 
 }
 
-void Type() : {Token t1;}
+void Type() #void : {}
 {
-    <INT> {jjtThis.val = "int";} ("[" "]" {jjtThis.val += "[]";})?
-    | <BOOLEAN> {jjtThis.val = "boolean";}
-    | t1=<IDENTIFIER> {jjtThis.val = t1.image;}
+    <INT> ("[" "]")?
+    | <BOOLEAN>
+    | <IDENTIFIER>
 }
 
 void Body() : {}
@@ -126,15 +126,10 @@ void Statement() #void : {}
        if (errorCounter == errorLimit) throw e;   
    } <CLOSEPAR> Body() #While(2)
     | Expression3() <SEMICOLON>
-    | Identifier() (
+    | (<IDENTIFIER> #AssignRecipient) (
         "=" Assignee() #Assign(2) 
             | "[" Expression() #ArrayIndex "]" ("=" Expression() #ArrayAssign(3) <SEMICOLON> | ExpressionLFRFix())
             | ExpressionLFRFix2() <SEMICOLON> )
-}
-
-void Identifier() : {}
-{
-    <IDENTIFIER>
 }
 
 void Assignee() #void : {}
@@ -172,7 +167,7 @@ void ArrayInitializer() : {}
 
 void ConstructorCall() : {}
 {
-    Identifier() <OPENPAR> <CLOSEPAR>
+    <IDENTIFIER> #ClassName <OPENPAR> <CLOSEPAR>
 }
 
 void ExpressionLFRFix() #void : {}
