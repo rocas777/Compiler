@@ -1,3 +1,4 @@
+Unexpected "int" in while expression at line 42!
 Program
  ImportDeclaration
   ImportMaterial
@@ -100,7 +101,7 @@ Program
       AssignRecipient
       IntegerLiteral
    While
-    True
+    Error
     Body
      Assign
       AssignRecipient

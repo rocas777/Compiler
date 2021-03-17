@@ -6,6 +6,7 @@ import pt.up.fe.comp.jmm.report.Report;
 import pt.up.fe.specs.util.SpecsIo;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.ArrayList;
 import java.io.File;
 import java.io.FileWriter;
@@ -14,10 +15,13 @@ import java.io.StringReader;
 
 public class Main implements JmmParser {
 
+	public static List<Report> reports;
 
 	public JmmParserResult parse(String jmmCode) {
 		
 		try {
+			reports = new ArrayList<>();
+
 		    Parser myParser = new Parser(new StringReader(jmmCode));
     		SimpleNode root = myParser.Program(); // returns reference to root node
             	
@@ -34,9 +38,8 @@ public class Main implements JmmParser {
 			{
 				System.out.println(e.toString());
 			}
-			
 
-    		return new JmmParserResult(root, new ArrayList<Report>());
+    		return new JmmParserResult(root, reports);
 		} catch(ParseException e) {
 			throw new RuntimeException("Error while parsing", e);
 		}

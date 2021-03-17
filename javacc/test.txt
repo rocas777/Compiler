@@ -39,7 +39,7 @@ class Fac extends Something
             i = 1;
         }
 
-        while (true)
+        while (int)
         {
             i = 2;
         }

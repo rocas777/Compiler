@@ -1,5 +1,9 @@
 PARSER_BEGIN(Parser)
 
+import pt.up.fe.comp.jmm.report.Report;
+import pt.up.fe.comp.jmm.report.Stage;
+import pt.up.fe.comp.jmm.report.ReportType;
+
 public class Parser
 {
     public static int errorLimit = 10;
@@ -43,6 +47,26 @@ TOKEN:
 }
 
 JAVACODE
+void pushErrorNode() #void
+{
+    jjtree.pushNode(new SimpleNode(48));
+}
+
+JAVACODE
+void handleError(ParseException e) #void
+{
+    addReportToMain("Error found in while expression!", ReportType.WARNING);
+    error_skipto("while expression");
+    errorCounter++;
+    pushErrorNode();
+    if (errorCounter == errorLimit)
+    {
+        addReportToMain("Error found in while expression!", ReportType.ERROR);
+        throw e; 
+    }  
+}
+
+JAVACODE
 void error_skipto(String description) #void {
     ParseException e = generateParseException();  // generate the exception object
     Token t;
@@ -56,6 +80,15 @@ void error_skipto(String description) #void {
         t = getToken(1);
     }
 
+}
+
+JAVACODE
+void addReportToMain(String message, ReportType reportType) #void
+{
+    Token t = getToken(1);
+    int lineError = t.beginLine;
+    Stage stage = Stage.SYNTATIC;
+    Main.reports.add(new Report(reportType, stage, lineError, message));
 }
 
 SimpleNode Program() : {}
@@ -126,9 +159,7 @@ void Statement() #void : {Token t1;}
    }
    catch(ParseException e)
    {
-       error_skipto("while expression");
-       errorCounter++;
-       if (errorCounter == errorLimit) throw e;   
+        handleError(e);
    } <CLOSEPAR> Body() #While(2)
     | Expression3() <SEMICOLON>
     | (t1=<IDENTIFIER> {jjtThis.name = t1.image;} #AssignRecipient) (
