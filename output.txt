@@ -56,6 +56,9 @@ Program
    VarDeclaration
     Type
     VarName
+   VarDeclaration
+    Type
+    VarName
    Assign
     Identifier
     IntegerLiteral
@@ -78,11 +81,13 @@ Program
     Identifier
     ArrayIndex
      IntegerLiteral
-    IntegerLiteral
-   While
-    SmallerThan
+    AttributeCall
      VariableName
-     IntegerLiteral
+   While
+    Negation
+     SmallerThan
+      VariableName
+      IntegerLiteral
     Body
      Assign
       Identifier
@@ -90,6 +95,12 @@ Program
      Assign
       Identifier
       IntegerLiteral
+     Assign
+      Identifier
+      IntegerLiteral
+   While
+    True
+    Body
      Assign
       Identifier
       IntegerLiteral

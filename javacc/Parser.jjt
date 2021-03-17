@@ -179,7 +179,7 @@ void ExpressionLFRFix() #void : {}
 {
     (LOOKAHEAD(2) (Operation() ExpressionLFRFix()
     | "[" Expression() "]" ExpressionLFRFix()
-    | "." ( MethodCall() | <LENGTH> #Length ExpressionLFRFix())  ))?
+    | "." ( MethodCall() | AttributeCall() ExpressionLFRFix())  ))?
 }
 
 void ExpressionLFRFix2() #void : {}
@@ -191,6 +191,11 @@ void ExpressionLFRFix2() #void : {}
 void MethodCall() #void : {}
 {
     <IDENTIFIER> #MethodName <OPENPAR> (MethodCallArgs())? <CLOSEPAR> ExpressionLFRFix() #MethodCall(3)
+}
+
+void AttributeCall() #void : {}
+{
+    <LENGTH> #AttributeCall(1)
 }
 
 void MethodCallArgs() : {}

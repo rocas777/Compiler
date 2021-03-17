@@ -1,7 +1,7 @@
 import io.ia;
 import ia;
 
-class Fac
+class Fac extends Something
 {
     public int ComputeFac(int num)
     {
@@ -25,17 +25,23 @@ class Fac
     public static void main(String[] args)
     {
         int i;
+        boolean a;
         i = 0;
         io.println(new Fac().ComputeFac(10)); 
 
         i = i + 3;
-        a[0] = 3;
+        a[0] = a.length;
 
-        while ( i < 3 )
+        while (! i < 3 )
         {
             i = 3;
             i = 2;
             i = 1;
+        }
+
+        while (true)
+        {
+            i = 2;
         }
 
     }
