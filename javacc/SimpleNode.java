@@ -210,7 +210,7 @@ class SimpleNode implements Node, JmmNode {
      */
     public int getNumChildren()
     {
-      return children.length;
+      return jjtGetNumChildren();
     }
 
 
