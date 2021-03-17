@@ -94,7 +94,7 @@ void Type() : {Token t1;}
 void Statement() #void : {} 
 {
     <OPENCUR> (Statement() )* "}"
-    | <IF> #If <OPENPAR> Expression() <CLOSEPAR> Statement() <ELSE> #Else Statement()
+    | <IF> <OPENPAR> Expression() <CLOSEPAR> Statement() <ELSE> Statement() #IfElse(3)
     | <WHILE> <OPENPAR> 
    try 
    {

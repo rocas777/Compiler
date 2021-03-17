@@ -11,25 +11,24 @@ Program
    VarDeclaration
     Type
     VarName
-   If
-   SmallerThan
-    VariableName
-    IntegerLiteral
-   Assign
-    Identifier
-    IntegerLiteral
-   Else
-   Assign
-    Identifier
-    Multiplication
+   IfElse
+    SmallerThan
      VariableName
-     MethodCall
-      This
-      MethodName
-      MethodCallArgs
-       Subtraction
-        VariableName
-        IntegerLiteral
+     IntegerLiteral
+    Assign
+     Identifier
+     IntegerLiteral
+    Assign
+     Identifier
+     Multiplication
+      VariableName
+      MethodCall
+       This
+       MethodName
+       MethodCallArgs
+        Subtraction
+         VariableName
+         IntegerLiteral
    VariableName
   MethodDeclaration
    VarDeclaration
