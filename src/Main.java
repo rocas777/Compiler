@@ -7,6 +7,9 @@ import pt.up.fe.specs.util.SpecsIo;
 
 import java.util.Arrays;
 import java.util.ArrayList;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.StringReader;
 
 public class Main implements JmmParser {
@@ -19,7 +22,20 @@ public class Main implements JmmParser {
     		SimpleNode root = myParser.Program(); // returns reference to root node
             	
     		root.dump(""); // prints the tree on the screen
-    	
+			String jsonTree = root.toJson();
+			File jsonFile = new File("javacc/output.json");
+			try
+			{
+				FileWriter writer = new FileWriter(jsonFile);
+				writer.write(jsonTree);
+				writer.close();
+			}
+			catch (IOException e)
+			{
+				System.out.println(e.toString());
+			}
+			
+
     		return new JmmParserResult(root, new ArrayList<Report>());
 		} catch(ParseException e) {
 			throw new RuntimeException("Error while parsing", e);

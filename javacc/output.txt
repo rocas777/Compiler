@@ -69,7 +69,7 @@ Program
     MethodCallArgs
      MethodCall
       ConstructorCall
-       ClassName
+       NewObjectClassName
       MethodName
       MethodCallArgs
        IntegerLiteral
