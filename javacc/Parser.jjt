@@ -73,9 +73,9 @@ void ClassDeclaration() : {Token t1,t2;}
     <CLASS> (t1=<IDENTIFIER> {jjtThis.name = t1.image;} #ClassName) (<EXTENDS> t2=<IDENTIFIER> {jjtThis.name = t2.image;} #ExtendedClassName)? <OPENCUR> (VarDeclaration())* (MethodDeclaration())* "}"
 }
 
-void VarDeclaration() : {Token t1;}
+void VarDeclaration() : {Token t1,t2;}
 {
-   Type() #VarType t1=<IDENTIFIER> {jjtThis.name = t1.image;} #VarName <SEMICOLON>
+   t2=Type() {jjtThis.type = t2.image;} #VarType t1=<IDENTIFIER> {jjtThis.name = t1.image;} #VarName <SEMICOLON>
 }
 
 void MethodDeclaration() #void : {}
@@ -83,9 +83,9 @@ void MethodDeclaration() #void : {}
     <PUBLIC> (NormalMethodDeclaration() | MainMethodDeclaration())
 }
 
-void NormalMethodDeclaration() : {Token t1;}
+void NormalMethodDeclaration() : {Token t1,t2;}
 {
-    (Type() #ReturnType) t1=<IDENTIFIER> {jjtThis.name = t1.image;} #MethodName <OPENPAR> (MethodDeclarationArgs())? <CLOSEPAR> <OPENCUR> (LOOKAHEAD(2) VarDeclaration())* (Statement())* <RETURN> Expression() #ReturnValue <SEMICOLON> "}"
+    (t2=Type() {jjtThis.type = t2.image;} #ReturnType) t1=<IDENTIFIER> {jjtThis.name = t1.image;} #MethodName <OPENPAR> (MethodDeclarationArgs())? <CLOSEPAR> <OPENCUR> (LOOKAHEAD(2) VarDeclaration())* (Statement())* <RETURN> Expression() #ReturnValue <SEMICOLON> "}"
 }
 
 void MainMethodDeclaration() : {Token t1;}
@@ -93,16 +93,16 @@ void MainMethodDeclaration() : {Token t1;}
     <STATIC> <VOID> <MAIN> <OPENPAR> <STRING> "[" "]" t1=<IDENTIFIER> {jjtThis.name = t1.image;} #ClArgsName <CLOSEPAR> <OPENCUR> (LOOKAHEAD(2) VarDeclaration())* (Statement())* "}" 
 }
 
-void MethodDeclarationArgs() : {Token t1,t2;}
+void MethodDeclarationArgs() : {Token t1,t2,t3,t4;}
 {
-    ((Type() #ParameterType) (t1=<IDENTIFIER> {jjtThis.name = t1.image;} #ParameterName) #Parameter(2)) ("," ((Type() #ParameterType) (t2=<IDENTIFIER> {jjtThis.name = t2.image;} #ParameterName) #Parameter(2)) )* 
+    ((t3=Type() {jjtThis.type = t3.image;} #ParameterType) (t1=<IDENTIFIER> {jjtThis.name = t1.image;} #ParameterName) #Parameter(2)) ("," ((t4=Type() {jjtThis.type = t4.image;} #ParameterType) (t2=<IDENTIFIER> {jjtThis.name = t2.image;} #ParameterName) #Parameter(2)) )* 
 }
 
-void Type() #void : {}
+Token Type() #void : {Token t1,t2,t3;}
 {
-    <INT> ("[" "]")?
-    | <BOOLEAN>
-    | <IDENTIFIER>
+    t1=<INT> ("[" "]" {t1.image += "[]";})? {return t1;}
+    | t2=<BOOLEAN> {return t2;}
+    | t3=<IDENTIFIER> {return t3;}
 }
 
 void Body() : {}
@@ -137,9 +137,9 @@ void Assignee() #void : {}
     Expression() <SEMICOLON>
 }
 
-void Expression() #void : {Token t1;}
+void Expression() #void : {Token t1,t2;}
 {
-    <INTEGERLITERAL> #IntegerLiteral ExpressionLFRFix()
+    t2=<INTEGERLITERAL> {jjtThis.numericalValue = t2.image;} #IntegerLiteral ExpressionLFRFix()
     | <TRUE> #True ExpressionLFRFix()
     | <FALSE> #False ExpressionLFRFix()
     | t1=<IDENTIFIER> {jjtThis.name = t1.image;} #VariableName ExpressionLFRFix()
@@ -149,9 +149,9 @@ void Expression() #void : {Token t1;}
     | <OPENPAR> Expression() <CLOSEPAR> ExpressionLFRFix()
 }
 
-void Expression3() #void : {}
+void Expression3() #void : {Token t1;}
 {
-    <INTEGERLITERAL> #IntegerLiteral ExpressionLFRFix()
+    t1=<INTEGERLITERAL> {jjtThis.numericalValue = t1.image;} #IntegerLiteral ExpressionLFRFix()
     | <TRUE> #True ExpressionLFRFix()
     | <FALSE> #False ExpressionLFRFix()
     | <THIS> #This ExpressionLFRFix()
@@ -167,7 +167,7 @@ void ArrayInitializer() : {}
 
 void ConstructorCall() : {Token t1;}
 {
-    t1=<IDENTIFIER> {jjtThis.name = t1.image;} #ClassName <OPENPAR> <CLOSEPAR>
+    t1=<IDENTIFIER> {jjtThis.name = t1.image;} #NewObjectClassName <OPENPAR> <CLOSEPAR>
 }
 
 void ExpressionLFRFix() #void : {}

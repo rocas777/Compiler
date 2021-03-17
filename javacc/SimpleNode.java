@@ -14,8 +14,9 @@ class SimpleNode implements Node, JmmNode {
   protected Parser parser;
 
   //added
-  public String name;
-  public String type;
+  public String name = "";
+  public String type = "";
+  public String numericalValue = "";
 
   public SimpleNode(int i) {
     id = i;
@@ -87,6 +88,20 @@ class SimpleNode implements Node, JmmNode {
     return id;
   }
 
+
+
+
+
+
+
+
+
+
+
+
+
+  //REQUIRED FOR JMMNODE
+
   public String getKind()
   {
     return toString();
@@ -100,7 +115,16 @@ class SimpleNode implements Node, JmmNode {
      */
     public void add(JmmNode child, int index)
     {
+      int newChildrenLength = children.length + 1;
+      Node[] newChildren = new Node[newChildrenLength];
+      int oldChildrenIndex = 0;
 
+      for (int i = 0; i < newChildrenLength; i++) {
+        if (i == index) newChildren[i] = child;
+        else newChildren[i] = children[oldChildrenIndex++];
+      }
+
+      children = newChildren;
     }
 
     /**
@@ -110,8 +134,10 @@ class SimpleNode implements Node, JmmNode {
     {
       List<String> attributeList = new ArrayList<>();
 
+      if (!name.equals("")) attributeList.add("name");
+      if (!type.equals("")) attributeList.add("type");
+      if (!numericalValue.equals("")) attributeList.add("numericalValue");
       
-
       return attributeList;
     }
 
@@ -123,7 +149,20 @@ class SimpleNode implements Node, JmmNode {
      */
     public void put(String attribute, String value)
     {
-
+      switch (attribute) {
+        case "name":
+          name = value;
+          break;
+        case "type":
+          type = value;
+          break;
+        case "numericalValue":
+          numericalValue = value;
+          break;
+        default:
+          System.out.println("This node doesn't have the requested attribute!");
+          break;
+      }
     }
 
     /**
@@ -136,13 +175,19 @@ class SimpleNode implements Node, JmmNode {
     {
       String attributeValue = "";
 
-      switch (attribute)
-      {
+      switch (attribute) {
+        case "name":
+          attributeValue = name; 
+          break;
+        case "type":
+          attributeValue = type;
+          break;
+        case "numericalValue":
+          attributeValue = numericalValue;
+          break;
         default:
-        {
           System.out.println("This node doesn't have the requested attribute!");
           break;
-        }
       }
 
       return attributeValue;
