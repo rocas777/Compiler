@@ -4,7 +4,7 @@ Program
   ImportMaterial
  ClassDeclaration
   ClassName
-  MethodDeclaration
+  NormalMethodDeclaration
    ReturnType
     Type
    MethodName
@@ -15,13 +15,24 @@ Program
    VarDeclaration
     Type
     VarName
-   IfElse
+   If
     SmallerThan
      VariableName
      IntegerLiteral
-    Assign
-     Identifier
-     IntegerLiteral
+    Body
+     Assign
+      Identifier
+      IntegerLiteral
+     Assign
+      Identifier
+      IntegerLiteral
+     Assign
+      Identifier
+      IntegerLiteral
+     Assign
+      Identifier
+      IntegerLiteral
+   Else
     Assign
      Identifier
      Multiplication
@@ -33,8 +44,15 @@ Program
         Subtraction
          VariableName
          IntegerLiteral
-   VariableName
-  MethodDeclaration
+    Assign
+     Identifier
+     IntegerLiteral
+    Assign
+     Identifier
+     IntegerLiteral
+   ReturnValue
+    VariableName
+  MainMethodDeclaration
    VarDeclaration
     Type
     VarName
@@ -46,9 +64,8 @@ Program
     MethodName
     MethodCallArgs
      MethodCall
-      New
-       ConstructorCall
-        Identifier
+      ConstructorCall
+       Identifier
       MethodName
       MethodCallArgs
        IntegerLiteral
@@ -59,12 +76,20 @@ Program
      IntegerLiteral
    ArrayAssign
     Identifier
-    IntegerLiteral
+    ArrayIndex
+     IntegerLiteral
     IntegerLiteral
    While
     SmallerThan
      VariableName
      IntegerLiteral
-    Assign
-     Identifier
-     IntegerLiteral
+    Body
+     Assign
+      Identifier
+      IntegerLiteral
+     Assign
+      Identifier
+      IntegerLiteral
+     Assign
+      Identifier
+      IntegerLiteral

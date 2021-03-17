@@ -78,10 +78,19 @@ void VarDeclaration() : {}
     Type() <IDENTIFIER> #VarName <SEMICOLON>
 }
 
-void MethodDeclaration() : {}
+void MethodDeclaration() #void : {}
 {
-    <PUBLIC> ((Type() #ReturnType) <IDENTIFIER> #MethodName <OPENPAR> (MethodDeclarationArgs())? <CLOSEPAR> <OPENCUR> (LOOKAHEAD(2) VarDeclaration())* (Statement())* <RETURN> Expression() <SEMICOLON> "}"
-    | <STATIC> <VOID> <MAIN> <OPENPAR> <STRING> "[" "]" <IDENTIFIER>  <CLOSEPAR> <OPENCUR> (LOOKAHEAD(2) VarDeclaration())* (Statement())* "}" )
+    <PUBLIC> (NormalMethodDeclaration() | MainMethodDeclaration())
+}
+
+void NormalMethodDeclaration() : {}
+{
+    (Type() #ReturnType) <IDENTIFIER> #MethodName <OPENPAR> (MethodDeclarationArgs())? <CLOSEPAR> <OPENCUR> (LOOKAHEAD(2) VarDeclaration())* (Statement())* <RETURN> Expression() #ReturnValue <SEMICOLON> "}"
+}
+
+void MainMethodDeclaration() : {}
+{
+    <STATIC> <VOID> <MAIN> <OPENPAR> <STRING> "[" "]" <IDENTIFIER>  <CLOSEPAR> <OPENCUR> (LOOKAHEAD(2) VarDeclaration())* (Statement())* "}" 
 }
 
 void MethodDeclarationArgs() : {}
@@ -96,10 +105,15 @@ void Type() : {Token t1;}
     | t1=<IDENTIFIER> {jjtThis.val = t1.image;}
 }
 
+void Body() : {}
+{
+    Statement()
+}
+
 void Statement() #void : {} 
 {
     <OPENCUR> (Statement() )* "}"
-    | <IF> <OPENPAR> Expression() <CLOSEPAR> Statement() <ELSE> Statement() #IfElse(3)
+    | <IF> <OPENPAR> Expression() <CLOSEPAR> Body()  #If(2) <ELSE> Statement() #Else
     | <WHILE> <OPENPAR> 
    try 
    {
@@ -110,11 +124,11 @@ void Statement() #void : {}
        error_skipto("while expression");
        errorCounter++;
        if (errorCounter == errorLimit) throw e;   
-   } <CLOSEPAR> Statement() #While(2)
+   } <CLOSEPAR> Body() #While(2)
     | Expression3() <SEMICOLON>
     | Identifier() (
         "=" Assignee() #Assign(2) 
-            | "[" Expression() "]" ("=" Expression() #ArrayAssign(3) <SEMICOLON> | ExpressionLFRFix())
+            | "[" Expression() #ArrayIndex "]" ("=" Expression() #ArrayAssign(3) <SEMICOLON> | ExpressionLFRFix())
             | ExpressionLFRFix2() <SEMICOLON> )
 }
 
@@ -135,7 +149,7 @@ void Expression() #void : {}
     | <FALSE> #False ExpressionLFRFix()
     | <IDENTIFIER> #VariableName ExpressionLFRFix()
     | <THIS> #This ExpressionLFRFix()
-    | <NEW> (ArrayInitializer() | ConstructorCall()) #New ExpressionLFRFix()
+    | <NEW> (ArrayInitializer() | ConstructorCall()) ExpressionLFRFix()
     | "!" Expression() #Negation ExpressionLFRFix()
     | <OPENPAR> Expression() <CLOSEPAR> ExpressionLFRFix()
 }

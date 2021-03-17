@@ -6,8 +6,19 @@ class Fac
     public int ComputeFac(int num)
     {
         int num_aux;
-        if (num < 1) num_aux = 1;
-        else num_aux = num * (this.ComputeFac(num-1));
+        if (num < 1)
+        {
+           num_aux = 1; 
+           i = 0;
+           i = 3;
+           i = 2;
+        } 
+        else
+        {
+            num_aux = num * (this.ComputeFac(num-1));
+            i = 3;
+            i = 2;
+        } 
         return num_aux;
     }
 
@@ -23,6 +34,8 @@ class Fac
         while ( i < 3 )
         {
             i = 3;
+            i = 2;
+            i = 1;
         }
 
     }
