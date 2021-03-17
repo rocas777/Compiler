@@ -4,7 +4,9 @@
 /generated/
 comp2021-*.jar
 COMP.jar
-./idea/
+.idea
+gradlew*
 .classpath
 .project
 .settings
+gradle/wrapper
