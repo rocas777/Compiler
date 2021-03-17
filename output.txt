@@ -7,7 +7,11 @@ Program
   MethodDeclaration
    ReturnType
     Type
-   Type
+   MethodName
+   MethodDeclarationArgs
+    Parameter
+     Type
+     ParameterName
    VarDeclaration
     Type
     VarName

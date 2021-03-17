@@ -80,8 +80,13 @@ void VarDeclaration() : {}
 
 void MethodDeclaration() : {}
 {
-    <PUBLIC> ((Type() #ReturnType) <IDENTIFIER> <OPENPAR> (Type() <IDENTIFIER> ("," Type() <IDENTIFIER> )* )? <CLOSEPAR> <OPENCUR> (LOOKAHEAD(2) VarDeclaration())* (Statement())* <RETURN> Expression() <SEMICOLON> "}"
+    <PUBLIC> ((Type() #ReturnType) <IDENTIFIER> #MethodName <OPENPAR> (MethodDeclarationArgs())? <CLOSEPAR> <OPENCUR> (LOOKAHEAD(2) VarDeclaration())* (Statement())* <RETURN> Expression() <SEMICOLON> "}"
     | <STATIC> <VOID> <MAIN> <OPENPAR> <STRING> "[" "]" <IDENTIFIER>  <CLOSEPAR> <OPENCUR> (LOOKAHEAD(2) VarDeclaration())* (Statement())* "}" )
+}
+
+void MethodDeclarationArgs() : {}
+{
+    (Type() (<IDENTIFIER> #ParameterName) #Parameter(2)) ("," (Type() (<IDENTIFIER> #ParameterName) #Parameter(2)) )* 
 }
 
 void Type() : {Token t1;}
