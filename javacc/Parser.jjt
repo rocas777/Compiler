@@ -68,9 +68,9 @@ void ImportDeclaration() : {}
     (<IMPORT> <IDENTIFIER> ("." <IDENTIFIER>)* #ImportMaterial <SEMICOLON>)*
 }
 
-void ClassDeclaration() : {Token t;}
+void ClassDeclaration() : {}
 {
-    <CLASS> (t=<IDENTIFIER> {jjtThis.val = t.image;} #ClassName) (<EXTENDS> <IDENTIFIER>)? <OPENCUR> (VarDeclaration())* (MethodDeclaration())* "}"
+    <CLASS> (t=<IDENTIFIER> #ClassName) (<EXTENDS> <IDENTIFIER>)? <OPENCUR> (VarDeclaration())* (MethodDeclaration())* "}"
 }
 
 void VarDeclaration() : {}
