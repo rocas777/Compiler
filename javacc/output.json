@@ -4,20 +4,20 @@
   "children": [
     {
       "kind": "ImportDeclaration",
-      "attributes": {
-        "name": "ia"
-      },
+      "attributes": {},
       "children": [
         {
           "kind": "ImportMaterial",
           "attributes": {
-            "name": ".ia"
+            "name": "io.ia"
           },
           "children": []
         },
         {
           "kind": "ImportMaterial",
-          "attributes": {},
+          "attributes": {
+            "name": "ia"
+          },
           "children": []
         }
       ]
