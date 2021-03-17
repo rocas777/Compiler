@@ -115,16 +115,17 @@ class SimpleNode implements Node, JmmNode {
      */
     public void add(JmmNode child, int index)
     {
-      int newChildrenLength = children.length + 1;
-      Node[] newChildren = new Node[newChildrenLength];
-      int oldChildrenIndex = 0;
+      // int newChildrenLength = children.length + 1;
+      // Node[] newChildren = new Node[newChildrenLength];
+      // int oldChildrenIndex = 0;
 
-      for (int i = 0; i < newChildrenLength; i++) {
-        if (i == index) newChildren[i] = child;
-        else newChildren[i] = children[oldChildrenIndex++];
-      }
+      // for (int i = 0; i < newChildrenLength; i++) {
+      //   if (i == index) newChildren[i] = child;
+      //   else newChildren[i] = children[oldChildrenIndex++];
+      // }
 
-      children = newChildren;
+      // children = newChildren;
+      jjtAddChild((SimpleNode) child, index);
     }
 
     /**
