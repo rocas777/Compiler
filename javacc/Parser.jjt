@@ -70,7 +70,7 @@ void ImportDeclaration() : {}
 
 void ClassDeclaration() : {}
 {
-    <CLASS> (t=<IDENTIFIER> #ClassName) (<EXTENDS> <IDENTIFIER>)? <OPENCUR> (VarDeclaration())* (MethodDeclaration())* "}"
+    <CLASS> (<IDENTIFIER> #ClassName) (<EXTENDS> <IDENTIFIER>)? <OPENCUR> (VarDeclaration())* (MethodDeclaration())* "}"
 }
 
 void VarDeclaration() : {}
