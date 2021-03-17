@@ -4,6 +4,7 @@ Program
   ImportMaterial
  ClassDeclaration
   ClassName
+  ExtendedClassName
   NormalMethodDeclaration
    ReturnType
    MethodName
@@ -52,6 +53,7 @@ Program
    ReturnValue
     VariableName
   MainMethodDeclaration
+   ClArgsName
    VarDeclaration
     VarType
     VarName

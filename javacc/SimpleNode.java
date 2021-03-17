@@ -14,9 +14,8 @@ class SimpleNode implements Node, JmmNode {
   protected Parser parser;
 
   //added
-  public String val;
+  public String name;
   public String type;
-
 
   public SimpleNode(int i) {
     id = i;
@@ -109,7 +108,11 @@ class SimpleNode implements Node, JmmNode {
      */
     public List<String> getAttributes()
     {
-      return new ArrayList<String>();
+      List<String> attributeList = new ArrayList<>();
+
+      
+
+      return attributeList;
     }
 
     /**
@@ -131,7 +134,18 @@ class SimpleNode implements Node, JmmNode {
      */
     public String get(String attribute)
     {
-      return "";
+      String attributeValue = "";
+
+      switch (attribute)
+      {
+        default:
+        {
+          System.out.println("This node doesn't have the requested attribute!");
+          break;
+        }
+      }
+
+      return attributeValue;
     }
 
     /**
@@ -150,7 +164,7 @@ class SimpleNode implements Node, JmmNode {
      */
     public int getNumChildren()
     {
-      return 0;
+      return children.length;
     }
 
 
