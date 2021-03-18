@@ -38,13 +38,13 @@ public class MainTest {
         main.parse(fileContent);
     }
 
-    // @Test
-    // public void parseTestPass4()
-    // {
-    //     String fileContent = SpecsIo.read("test/fixtures/public/Life.jmm");
-    //     Main main = new Main();
-    //     main.parse(fileContent);
-    // }
+    @Test
+    public void parseTestPass4()
+    {
+        String fileContent = SpecsIo.read("test/fixtures/public/Life.jmm");
+        Main main = new Main();
+        main.parse(fileContent);
+    }
 
     @Test
     public void parseTestPass5()
@@ -70,13 +70,13 @@ public class MainTest {
         main.parse(fileContent);
     }
 
-    // @Test
-    // public void parseTestPass8()
-    // {
-    //     String fileContent = SpecsIo.read("test/fixtures/public/TicTacToe.jmm");
-    //     Main main = new Main();
-    //     main.parse(fileContent);
-    // }
+    @Test
+    public void parseTestPass8()
+    {
+        String fileContent = SpecsIo.read("test/fixtures/public/TicTacToe.jmm");
+        Main main = new Main();
+        main.parse(fileContent);
+    }
 
     @Test
     public void parseTestPass9()

@@ -27,8 +27,10 @@ class Fac extends Something
         int i;
         boolean a;
         i = 0;
-        io.println(a.ComputeFac()); 
-
+        //a = !(!this.gt(a, b) && !this.eq(a, b));
+        a = i.get() && true;
+        a = true && !this.gt(a, b);
+        a = !this.gt(a, b);
         i = i + 3;
         a[0] = a.length;
 
