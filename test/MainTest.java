@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 
+import pt.up.fe.comp.TestUtils;
 import pt.up.fe.specs.util.SpecsIo;
 
 public class MainTest {
@@ -182,13 +183,13 @@ public class MainTest {
         main.parse(fileContent);
     }
 
-    // // @Test(expected = RuntimeException.class)
-    // // public void parseTestSyntacticalFail3()
-    // // {
-    // //     String fileContent = SpecsIo.read("test/fixtures/public/fail/syntactical/LengthError.jmm");
-    // //     Main main = new Main();
-    // //     main.parse(fileContent);
-    // // }
+    // @Test(expected = RuntimeException.class)
+    // public void parseTestSyntacticalFail3()
+    // {
+    //     String fileContent = SpecsIo.read("test/fixtures/public/fail/syntactical/LengthError.jmm");
+    //     Main main = new Main();
+    //     main.parse(fileContent);
+    // }
 
     // @Test(expected = RuntimeException.class)
     // public void parseTestSyntacticalFail4()

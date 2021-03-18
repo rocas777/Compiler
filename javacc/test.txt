@@ -24,6 +24,7 @@ class Fac extends Something
 
     public static void main(String[] args)
     {
+        
         int i;
         boolean a;
         i = 0;
@@ -33,7 +34,7 @@ class Fac extends Something
         a = !this.gt(a, b);
         i = i + 3;
         a[0] = a.length;
-
+        a = this.method()[3];
         while (! i < 3 )
         {
             i = 3;
