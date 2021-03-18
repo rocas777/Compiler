@@ -3,7 +3,7 @@ import ia;
 
 class Fac extends Something
 {
-    public int ComputeFac(int num)
+    public int ComputeFac()
     {
         int num_aux;
         if (num < 1)
@@ -27,7 +27,7 @@ class Fac extends Something
         int i;
         boolean a;
         i = 0;
-        io.println(new Fac().ComputeFac(10)); 
+        io.println(a.ComputeFac()); 
 
         i = i + 3;
         a[0] = a.length;
@@ -38,7 +38,7 @@ class Fac extends Something
             i = 2;
             i = 1;
         }
-
+        i = a[0];
         while (int)
         {
             i = 2;

@@ -1,3 +1,8 @@
+options
+{
+    DEBUG=true;
+}
+
 PARSER_BEGIN(Parser)
 
 import pt.up.fe.comp.jmm.report.Report;
@@ -43,7 +48,42 @@ TOKEN:
     | < CLOSEPAR : ")">
     | < SEMICOLON : ";">
     | < OPENCUR : "{">
-    | < IDENTIFIER : (["a"-"z","A"-"Z"])(["a"-"z","A"-"Z","0"-"9","_"])* >
+    | < IDENTIFIER : (["a"-"z","A"-"Z","_","$"])(["a"-"z","A"-"Z","0"-"9","_","$"])* >
+}
+
+/* COMMENTS - SECTION COPIED FROM SAMPLE JAVA1.1 FILE PROVIDED */ 
+
+MORE :
+{
+  "//" : IN_SINGLE_LINE_COMMENT
+|
+  <"/**" ~["/"]> { input_stream.backup(1); } : IN_FORMAL_COMMENT
+|
+  "/*" : IN_MULTI_LINE_COMMENT
+}
+
+<IN_SINGLE_LINE_COMMENT>
+SPECIAL_TOKEN :
+{
+  <SINGLE_LINE_COMMENT: "\n" | "\r" | "\r\n" > : DEFAULT
+}
+
+<IN_FORMAL_COMMENT>
+SPECIAL_TOKEN :
+{
+  <FORMAL_COMMENT: "*/" > : DEFAULT
+}
+
+<IN_MULTI_LINE_COMMENT>
+SPECIAL_TOKEN :
+{
+  <MULTI_LINE_COMMENT: "*/" > : DEFAULT
+}
+
+<IN_SINGLE_LINE_COMMENT,IN_FORMAL_COMMENT,IN_MULTI_LINE_COMMENT>
+MORE :
+{
+  < ~[] >
 }
 
 JAVACODE
@@ -164,7 +204,7 @@ void Statement() #void : {Token t1;}
     | Expression3() <SEMICOLON>
     | (t1=<IDENTIFIER> {jjtThis.name = t1.image;} #AssignRecipient) (
         "=" Assignee() #Assign(2) 
-            | "[" Expression() #ArrayIndex "]" ("=" Expression() #ArrayAssign(3) <SEMICOLON> | ExpressionLFRFix())
+            | "[" Expression() #ArrayIndex "]" #ArrayAccess(2) ("=" Expression() #Assign(2) <SEMICOLON> | ExpressionLFRFix())
             | ExpressionLFRFix2() <SEMICOLON> )
 }
 
@@ -209,7 +249,7 @@ void ConstructorCall() : {Token t1;}
 void ExpressionLFRFix() #void : {}
 {
     (LOOKAHEAD(2) (Operation() ExpressionLFRFix()
-    | "[" Expression() "]" ExpressionLFRFix()
+    | "[" Expression() "]" #ArrayAccess(2) ExpressionLFRFix()
     | "." ( MethodCall() | AttributeCall() ExpressionLFRFix())  ))?
 }
 
@@ -221,7 +261,7 @@ void ExpressionLFRFix2() #void : {}
 
 void MethodCall() #void : {Token t1;}
 {
-    t1=<IDENTIFIER> {jjtThis.name = t1.image;} #MethodName <OPENPAR> (MethodCallArgs())? <CLOSEPAR> ExpressionLFRFix() #MethodCall(3)
+    t1=<IDENTIFIER> {jjtThis.name = t1.image;} #MethodName <OPENPAR> MethodCallArgs() <CLOSEPAR> ExpressionLFRFix() #MethodCall(3)
 }
 
 void AttributeCall() #void : {}
@@ -231,7 +271,7 @@ void AttributeCall() #void : {}
 
 void MethodCallArgs() : {}
 {
-    Expression() ( "," Expression())*
+    (Expression() ( "," Expression())*)?
 }
 
 void Operation() #void : {}

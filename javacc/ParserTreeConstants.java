@@ -50,6 +50,7 @@ public interface ParserTreeConstants
   public int JJTMULTIPLICATION = 46;
   public int JJTDIVISION = 47;
   public int JJTERROR = 48;
+  public int JJTARRAYACCESS = 49;
 
   public String[] jjtNodeName = {
     "void",
@@ -101,6 +102,7 @@ public interface ParserTreeConstants
     "Multiplication",
     "Division",
     "Error",
+    "ArrayAccess",
   };
 }
 /* JavaCC - OriginalChecksum=b95cc8e44deb397ab00dbb8812a4853b (do not edit this line) */
