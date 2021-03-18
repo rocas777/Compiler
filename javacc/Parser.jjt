@@ -119,7 +119,7 @@ void ClassDeclaration() #void : {Token t1,t2;}
 
 void VarDeclaration() : {Token t1,t2;}
 {
-   t2=Type() {jjtThis.type = t2.image;} #VarType t1=<IDENTIFIER> {jjtThis.name = t1.image;} #VarName <SEMICOLON>
+   t2=Type() {jjtThis.type = t2.image;} #VarType t1=<IDENTIFIER> {jjtThis.name = t1.image;} #VariableName <SEMICOLON>
 }
 
 void MethodDeclaration() #void : {}
