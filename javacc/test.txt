@@ -1,1 +1,51 @@
-import io.ia; import ia; class Fac extends Something { public int ComputeFac(int num) { int num_aux; if (num < 1) { num_aux = 1; i = 0; i = 3; i = 2; } else { num_aux = num * (this.ComputeFac(num-1)); i = 3; i = 2; } return num_aux; } public static void main(String[] args) { int i; boolean a; i = 0; io.println(new Fac().ComputeFac(10)); i = i + 3; a[0] = a.length; while (! i < 3 ) { i = 3; i = 2; i = 1; } while (int) { i = 2; } } }
+import io.ia;
+import ia;
+
+class Fac extends Something
+{
+    public int ComputeFac()
+    {
+        int num_aux;
+        if (num < 1)
+        {
+           num_aux = 1; 
+           i = 0;
+           i = 3;
+           i = 2;
+        } 
+        else
+        {
+            num_aux = num * (this.ComputeFac(num-1));
+            i = 3;
+            i = 2;
+        } 
+        return num_aux;
+    }
+
+    public static void main(String[] args)
+    {
+        
+        int i;
+        boolean a;
+        i = 0;
+        //a = !(!this.gt(a, b) && !this.eq(a, b));
+        a = i.get() && true;
+        a = true && !this.gt(a, b);
+        a = !this.gt(a, b);
+        i = i + 3;
+        a[0] = a.length;
+        a = this.method()[3];
+        while (! i < 3 )
+        {
+            i = 3;
+            i = 2;
+            i = 1;
+        }
+        i = a[0];
+        while (int)
+        {
+            i = 2;
+        }
+
+    }
+}

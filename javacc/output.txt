@@ -1,4 +1,547 @@
-Unexpected "int" in while expression at line 42!
+Call:   Program
+  Call:   ImportDeclaration
+    Call:   ImportMaterial
+      Consumed token: <"import" at line 1 column 1>
+      Consumed token: <<IDENTIFIER>: "io" at line 1 column 8>
+      Consumed token: <"." at line 1 column 10>
+      Consumed token: <<IDENTIFIER>: "ia" at line 1 column 11>
+      Consumed token: <";" at line 1 column 13>
+    Return: ImportMaterial
+    Call:   ImportMaterial
+      Consumed token: <"import" at line 2 column 1>
+      Consumed token: <<IDENTIFIER>: "ia" at line 2 column 8>
+      Consumed token: <";" at line 2 column 10>
+    Return: ImportMaterial
+  Return: ImportDeclaration
+  Call:   ClassDeclaration
+    Consumed token: <"class" at line 4 column 1>
+    Consumed token: <<IDENTIFIER>: "Fac" at line 4 column 7>
+    Consumed token: <"extends" at line 4 column 11>
+    Consumed token: <<IDENTIFIER>: "Something" at line 4 column 19>
+    Consumed token: <"{" at line 5 column 1>
+    Call:   MethodDeclaration
+      Consumed token: <"public" at line 6 column 5>
+      Call:   NormalMethodDeclaration
+        Call:   Type
+          Consumed token: <"int" at line 6 column 12>
+        Return: Type
+        Consumed token: <<IDENTIFIER>: "ComputeFac" at line 6 column 16>
+        Consumed token: <"(" at line 6 column 26>
+        Consumed token: <")" at line 6 column 27>
+        Consumed token: <"{" at line 7 column 5>
+        Call:   VarDeclaration
+          Call:   Type
+            Consumed token: <"int" at line 8 column 9>
+          Return: Type
+          Consumed token: <<IDENTIFIER>: "num_aux" at line 8 column 13>
+          Consumed token: <";" at line 8 column 20>
+        Return: VarDeclaration
+        Call:   Statement
+          Consumed token: <"if" at line 9 column 9>
+          Consumed token: <"(" at line 9 column 12>
+          Call:   Expression
+            Consumed token: <<IDENTIFIER>: "num" at line 9 column 13>
+            Call:   ExpressionLFRFix
+              Call:   Operation
+                Consumed token: <"<" at line 9 column 17>
+                Call:   Expression
+                  Consumed token: <<INTEGERLITERAL>: "1" at line 9 column 19>
+                  Call:   ExpressionLFRFix
+                  Return: ExpressionLFRFix
+                Return: Expression
+              Return: Operation
+              Call:   ExpressionLFRFix
+              Return: ExpressionLFRFix
+            Return: ExpressionLFRFix
+          Return: Expression
+          Consumed token: <")" at line 9 column 20>
+          Call:   Body
+            Call:   Statement
+              Consumed token: <"{" at line 10 column 9>
+              Call:   Statement
+                Consumed token: <<IDENTIFIER>: "num_aux" at line 11 column 12>
+                Consumed token: <"=" at line 11 column 20>
+                Call:   Assignee
+                  Call:   Expression
+                    Consumed token: <<INTEGERLITERAL>: "1" at line 11 column 22>
+                    Call:   ExpressionLFRFix
+                    Return: ExpressionLFRFix
+                  Return: Expression
+                  Consumed token: <";" at line 11 column 23>
+                Return: Assignee
+              Return: Statement
+              Call:   Statement
+                Consumed token: <<IDENTIFIER>: "i" at line 12 column 12>
+                Consumed token: <"=" at line 12 column 14>
+                Call:   Assignee
+                  Call:   Expression
+                    Consumed token: <<INTEGERLITERAL>: "0" at line 12 column 16>
+                    Call:   ExpressionLFRFix
+                    Return: ExpressionLFRFix
+                  Return: Expression
+                  Consumed token: <";" at line 12 column 17>
+                Return: Assignee
+              Return: Statement
+              Call:   Statement
+                Consumed token: <<IDENTIFIER>: "i" at line 13 column 12>
+                Consumed token: <"=" at line 13 column 14>
+                Call:   Assignee
+                  Call:   Expression
+                    Consumed token: <<INTEGERLITERAL>: "3" at line 13 column 16>
+                    Call:   ExpressionLFRFix
+                    Return: ExpressionLFRFix
+                  Return: Expression
+                  Consumed token: <";" at line 13 column 17>
+                Return: Assignee
+              Return: Statement
+              Call:   Statement
+                Consumed token: <<IDENTIFIER>: "i" at line 14 column 12>
+                Consumed token: <"=" at line 14 column 14>
+                Call:   Assignee
+                  Call:   Expression
+                    Consumed token: <<INTEGERLITERAL>: "2" at line 14 column 16>
+                    Call:   ExpressionLFRFix
+                    Return: ExpressionLFRFix
+                  Return: Expression
+                  Consumed token: <";" at line 14 column 17>
+                Return: Assignee
+              Return: Statement
+              Consumed token: <"}" at line 15 column 9>
+            Return: Statement
+          Return: Body
+          Consumed token: <"else" at line 16 column 9>
+          Call:   Statement
+            Consumed token: <"{" at line 17 column 9>
+            Call:   Statement
+              Consumed token: <<IDENTIFIER>: "num_aux" at line 18 column 13>
+              Consumed token: <"=" at line 18 column 21>
+              Call:   Assignee
+                Call:   Expression
+                  Consumed token: <<IDENTIFIER>: "num" at line 18 column 23>
+                  Call:   ExpressionLFRFix
+                    Call:   Operation
+                      Consumed token: <"*" at line 18 column 27>
+                      Call:   Expression
+                        Consumed token: <"(" at line 18 column 29>
+                        Call:   Expression
+                          Consumed token: <"this" at line 18 column 30>
+                          Call:   ExpressionLFRFix
+                            Consumed token: <"." at line 18 column 34>
+                            Call:   MethodCall
+                              Consumed token: <<IDENTIFIER>: "ComputeFac" at line 18 column 35>
+                              Consumed token: <"(" at line 18 column 45>
+                              Call:   MethodCallArgs
+                                Call:   Expression
+                                  Consumed token: <<IDENTIFIER>: "num" at line 18 column 46>
+                                  Call:   ExpressionLFRFix
+                                    Call:   Operation
+                                      Consumed token: <"-" at line 18 column 49>
+                                      Call:   Expression
+                                        Consumed token: <<INTEGERLITERAL>: "1" at line 18 column 50>
+                                        Call:   ExpressionLFRFix
+                                        Return: ExpressionLFRFix
+                                      Return: Expression
+                                    Return: Operation
+                                    Call:   ExpressionLFRFix
+                                    Return: ExpressionLFRFix
+                                  Return: ExpressionLFRFix
+                                Return: Expression
+                              Return: MethodCallArgs
+                              Consumed token: <")" at line 18 column 51>
+                              Call:   ExpressionLFRFix
+                              Return: ExpressionLFRFix
+                            Return: MethodCall
+                            Call:   ExpressionLFRFix
+                            Return: ExpressionLFRFix
+                          Return: ExpressionLFRFix
+                        Return: Expression
+                        Consumed token: <")" at line 18 column 52>
+                        Call:   ExpressionLFRFix
+                        Return: ExpressionLFRFix
+                      Return: Expression
+                    Return: Operation
+                    Call:   ExpressionLFRFix
+                    Return: ExpressionLFRFix
+                  Return: ExpressionLFRFix
+                Return: Expression
+                Consumed token: <";" at line 18 column 53>
+              Return: Assignee
+            Return: Statement
+            Call:   Statement
+              Consumed token: <<IDENTIFIER>: "i" at line 19 column 13>
+              Consumed token: <"=" at line 19 column 15>
+              Call:   Assignee
+                Call:   Expression
+                  Consumed token: <<INTEGERLITERAL>: "3" at line 19 column 17>
+                  Call:   ExpressionLFRFix
+                  Return: ExpressionLFRFix
+                Return: Expression
+                Consumed token: <";" at line 19 column 18>
+              Return: Assignee
+            Return: Statement
+            Call:   Statement
+              Consumed token: <<IDENTIFIER>: "i" at line 20 column 13>
+              Consumed token: <"=" at line 20 column 15>
+              Call:   Assignee
+                Call:   Expression
+                  Consumed token: <<INTEGERLITERAL>: "2" at line 20 column 17>
+                  Call:   ExpressionLFRFix
+                  Return: ExpressionLFRFix
+                Return: Expression
+                Consumed token: <";" at line 20 column 18>
+              Return: Assignee
+            Return: Statement
+            Consumed token: <"}" at line 21 column 9>
+          Return: Statement
+        Return: Statement
+        Consumed token: <"return" at line 22 column 9>
+        Call:   Expression
+          Consumed token: <<IDENTIFIER>: "num_aux" at line 22 column 16>
+          Call:   ExpressionLFRFix
+          Return: ExpressionLFRFix
+        Return: Expression
+        Consumed token: <";" at line 22 column 23>
+        Consumed token: <"}" at line 23 column 5>
+      Return: NormalMethodDeclaration
+    Return: MethodDeclaration
+    Call:   MethodDeclaration
+      Consumed token: <"public" at line 25 column 5>
+      Call:   MainMethodDeclaration
+        Consumed token: <"static" at line 25 column 12>
+        Consumed token: <"void" at line 25 column 19>
+        Consumed token: <"main" at line 25 column 24>
+        Consumed token: <"(" at line 25 column 28>
+        Consumed token: <"String" at line 25 column 29>
+        Consumed token: <"[" at line 25 column 35>
+        Consumed token: <"]" at line 25 column 36>
+        Consumed token: <<IDENTIFIER>: "args" at line 25 column 38>
+        Consumed token: <")" at line 25 column 42>
+        Consumed token: <"{" at line 26 column 5>
+        Call:   VarDeclaration
+          Call:   Type
+            Consumed token: <"int" at line 27 column 9>
+          Return: Type
+          Consumed token: <<IDENTIFIER>: "i" at line 27 column 13>
+          Consumed token: <";" at line 27 column 14>
+        Return: VarDeclaration
+        Call:   VarDeclaration
+          Call:   Type
+            Consumed token: <"boolean" at line 28 column 9>
+          Return: Type
+          Consumed token: <<IDENTIFIER>: "a" at line 28 column 17>
+          Consumed token: <";" at line 28 column 18>
+        Return: VarDeclaration
+        Call:   Statement
+          Consumed token: <<IDENTIFIER>: "i" at line 29 column 9>
+          Consumed token: <"=" at line 29 column 11>
+          Call:   Assignee
+            Call:   Expression
+              Consumed token: <<INTEGERLITERAL>: "0" at line 29 column 13>
+              Call:   ExpressionLFRFix
+              Return: ExpressionLFRFix
+            Return: Expression
+            Consumed token: <";" at line 29 column 14>
+          Return: Assignee
+        Return: Statement
+        Call:   Statement
+          Consumed token: <<IDENTIFIER>: "a" at line 31 column 9>
+          Consumed token: <"=" at line 31 column 11>
+          Call:   Assignee
+            Call:   Expression
+              Consumed token: <<IDENTIFIER>: "i" at line 31 column 13>
+              Call:   ExpressionLFRFix
+                Consumed token: <"." at line 31 column 14>
+                Call:   MethodCall
+                  Consumed token: <<IDENTIFIER>: "get" at line 31 column 15>
+                  Consumed token: <"(" at line 31 column 18>
+                  Call:   MethodCallArgs
+                  Return: MethodCallArgs
+                  Consumed token: <")" at line 31 column 19>
+                  Call:   ExpressionLFRFix
+                    Call:   Operation
+                      Consumed token: <"&&" at line 31 column 21>
+                      Call:   Expression
+                        Consumed token: <"true" at line 31 column 24>
+                        Call:   ExpressionLFRFix
+                        Return: ExpressionLFRFix
+                      Return: Expression
+                    Return: Operation
+                    Call:   ExpressionLFRFix
+                    Return: ExpressionLFRFix
+                  Return: ExpressionLFRFix
+                Return: MethodCall
+                Call:   ExpressionLFRFix
+                Return: ExpressionLFRFix
+              Return: ExpressionLFRFix
+            Return: Expression
+            Consumed token: <";" at line 31 column 28>
+          Return: Assignee
+        Return: Statement
+        Call:   Statement
+          Consumed token: <<IDENTIFIER>: "a" at line 32 column 9>
+          Consumed token: <"=" at line 32 column 11>
+          Call:   Assignee
+            Call:   Expression
+              Consumed token: <"true" at line 32 column 13>
+              Call:   ExpressionLFRFix
+                Call:   Operation
+                  Consumed token: <"&&" at line 32 column 18>
+                  Call:   Expression
+                    Consumed token: <"!" at line 32 column 21>
+                    Call:   Expression
+                      Consumed token: <"this" at line 32 column 22>
+                      Call:   ExpressionLFRFix
+                        Consumed token: <"." at line 32 column 26>
+                        Call:   MethodCall
+                          Consumed token: <<IDENTIFIER>: "gt" at line 32 column 27>
+                          Consumed token: <"(" at line 32 column 29>
+                          Call:   MethodCallArgs
+                            Call:   Expression
+                              Consumed token: <<IDENTIFIER>: "a" at line 32 column 30>
+                              Call:   ExpressionLFRFix
+                              Return: ExpressionLFRFix
+                            Return: Expression
+                            Consumed token: <"," at line 32 column 31>
+                            Call:   Expression
+                              Consumed token: <<IDENTIFIER>: "b" at line 32 column 33>
+                              Call:   ExpressionLFRFix
+                              Return: ExpressionLFRFix
+                            Return: Expression
+                          Return: MethodCallArgs
+                          Consumed token: <")" at line 32 column 34>
+                          Call:   ExpressionLFRFix
+                          Return: ExpressionLFRFix
+                        Return: MethodCall
+                        Call:   ExpressionLFRFix
+                        Return: ExpressionLFRFix
+                      Return: ExpressionLFRFix
+                    Return: Expression
+                    Call:   ExpressionLFRFix
+                    Return: ExpressionLFRFix
+                  Return: Expression
+                Return: Operation
+                Call:   ExpressionLFRFix
+                Return: ExpressionLFRFix
+              Return: ExpressionLFRFix
+            Return: Expression
+            Consumed token: <";" at line 32 column 35>
+          Return: Assignee
+        Return: Statement
+        Call:   Statement
+          Consumed token: <<IDENTIFIER>: "a" at line 33 column 9>
+          Consumed token: <"=" at line 33 column 11>
+          Call:   Assignee
+            Call:   Expression
+              Consumed token: <"!" at line 33 column 13>
+              Call:   Expression
+                Consumed token: <"this" at line 33 column 14>
+                Call:   ExpressionLFRFix
+                  Consumed token: <"." at line 33 column 18>
+                  Call:   MethodCall
+                    Consumed token: <<IDENTIFIER>: "gt" at line 33 column 19>
+                    Consumed token: <"(" at line 33 column 21>
+                    Call:   MethodCallArgs
+                      Call:   Expression
+                        Consumed token: <<IDENTIFIER>: "a" at line 33 column 22>
+                        Call:   ExpressionLFRFix
+                        Return: ExpressionLFRFix
+                      Return: Expression
+                      Consumed token: <"," at line 33 column 23>
+                      Call:   Expression
+                        Consumed token: <<IDENTIFIER>: "b" at line 33 column 25>
+                        Call:   ExpressionLFRFix
+                        Return: ExpressionLFRFix
+                      Return: Expression
+                    Return: MethodCallArgs
+                    Consumed token: <")" at line 33 column 26>
+                    Call:   ExpressionLFRFix
+                    Return: ExpressionLFRFix
+                  Return: MethodCall
+                  Call:   ExpressionLFRFix
+                  Return: ExpressionLFRFix
+                Return: ExpressionLFRFix
+              Return: Expression
+              Call:   ExpressionLFRFix
+              Return: ExpressionLFRFix
+            Return: Expression
+            Consumed token: <";" at line 33 column 27>
+          Return: Assignee
+        Return: Statement
+        Call:   Statement
+          Consumed token: <<IDENTIFIER>: "i" at line 34 column 9>
+          Consumed token: <"=" at line 34 column 11>
+          Call:   Assignee
+            Call:   Expression
+              Consumed token: <<IDENTIFIER>: "i" at line 34 column 13>
+              Call:   ExpressionLFRFix
+                Call:   Operation
+                  Consumed token: <"+" at line 34 column 15>
+                  Call:   Expression
+                    Consumed token: <<INTEGERLITERAL>: "3" at line 34 column 17>
+                    Call:   ExpressionLFRFix
+                    Return: ExpressionLFRFix
+                  Return: Expression
+                Return: Operation
+                Call:   ExpressionLFRFix
+                Return: ExpressionLFRFix
+              Return: ExpressionLFRFix
+            Return: Expression
+            Consumed token: <";" at line 34 column 18>
+          Return: Assignee
+        Return: Statement
+        Call:   Statement
+          Consumed token: <<IDENTIFIER>: "a" at line 35 column 9>
+          Consumed token: <"[" at line 35 column 10>
+          Call:   Expression
+            Consumed token: <<INTEGERLITERAL>: "0" at line 35 column 11>
+            Call:   ExpressionLFRFix
+            Return: ExpressionLFRFix
+          Return: Expression
+          Consumed token: <"]" at line 35 column 12>
+          Consumed token: <"=" at line 35 column 14>
+          Call:   Expression
+            Consumed token: <<IDENTIFIER>: "a" at line 35 column 16>
+            Call:   ExpressionLFRFix
+              Consumed token: <"." at line 35 column 17>
+              Call:   AttributeCall
+                Consumed token: <"length" at line 35 column 18>
+              Return: AttributeCall
+              Call:   ExpressionLFRFix
+              Return: ExpressionLFRFix
+            Return: ExpressionLFRFix
+          Return: Expression
+          Consumed token: <";" at line 35 column 24>
+        Return: Statement
+        Call:   Statement
+          Consumed token: <"while" at line 37 column 9>
+          Consumed token: <"(" at line 37 column 15>
+          Call:   Expression
+            Consumed token: <"!" at line 37 column 16>
+            Call:   Expression
+              Consumed token: <<IDENTIFIER>: "i" at line 37 column 18>
+              Call:   ExpressionLFRFix
+                Call:   Operation
+                  Consumed token: <"<" at line 37 column 20>
+                  Call:   Expression
+                    Consumed token: <<INTEGERLITERAL>: "3" at line 37 column 22>
+                    Call:   ExpressionLFRFix
+                    Return: ExpressionLFRFix
+                  Return: Expression
+                Return: Operation
+                Call:   ExpressionLFRFix
+                Return: ExpressionLFRFix
+              Return: ExpressionLFRFix
+            Return: Expression
+            Call:   ExpressionLFRFix
+            Return: ExpressionLFRFix
+          Return: Expression
+          Consumed token: <")" at line 37 column 24>
+          Call:   Body
+            Call:   Statement
+              Consumed token: <"{" at line 38 column 9>
+              Call:   Statement
+                Consumed token: <<IDENTIFIER>: "i" at line 39 column 13>
+                Consumed token: <"=" at line 39 column 15>
+                Call:   Assignee
+                  Call:   Expression
+                    Consumed token: <<INTEGERLITERAL>: "3" at line 39 column 17>
+                    Call:   ExpressionLFRFix
+                    Return: ExpressionLFRFix
+                  Return: Expression
+                  Consumed token: <";" at line 39 column 18>
+                Return: Assignee
+              Return: Statement
+              Call:   Statement
+                Consumed token: <<IDENTIFIER>: "i" at line 40 column 13>
+                Consumed token: <"=" at line 40 column 15>
+                Call:   Assignee
+                  Call:   Expression
+                    Consumed token: <<INTEGERLITERAL>: "2" at line 40 column 17>
+                    Call:   ExpressionLFRFix
+                    Return: ExpressionLFRFix
+                  Return: Expression
+                  Consumed token: <";" at line 40 column 18>
+                Return: Assignee
+              Return: Statement
+              Call:   Statement
+                Consumed token: <<IDENTIFIER>: "i" at line 41 column 13>
+                Consumed token: <"=" at line 41 column 15>
+                Call:   Assignee
+                  Call:   Expression
+                    Consumed token: <<INTEGERLITERAL>: "1" at line 41 column 17>
+                    Call:   ExpressionLFRFix
+                    Return: ExpressionLFRFix
+                  Return: Expression
+                  Consumed token: <";" at line 41 column 18>
+                Return: Assignee
+              Return: Statement
+              Consumed token: <"}" at line 42 column 9>
+            Return: Statement
+          Return: Body
+        Return: Statement
+        Call:   Statement
+          Consumed token: <<IDENTIFIER>: "i" at line 43 column 9>
+          Consumed token: <"=" at line 43 column 11>
+          Call:   Assignee
+            Call:   Expression
+              Consumed token: <<IDENTIFIER>: "a" at line 43 column 13>
+              Call:   ExpressionLFRFix
+                Consumed token: <"[" at line 43 column 14>
+                Call:   Expression
+                  Consumed token: <<INTEGERLITERAL>: "0" at line 43 column 15>
+                  Call:   ExpressionLFRFix
+                  Return: ExpressionLFRFix
+                Return: Expression
+                Consumed token: <"]" at line 43 column 16>
+                Call:   ExpressionLFRFix
+                Return: ExpressionLFRFix
+              Return: ExpressionLFRFix
+            Return: Expression
+            Consumed token: <";" at line 43 column 17>
+          Return: Assignee
+        Return: Statement
+        Call:   Statement
+          Consumed token: <"while" at line 44 column 9>
+          Consumed token: <"(" at line 44 column 15>
+          Call:   Expression
+          Return: Expression
+          Call:   handleError
+            Call:   addReportToMain
+            Return: addReportToMain
+            Call:   error_skipto
+Unexpected "int" in while expression at line 44!
+              Consumed token: <"int" at line 44 column 16> (in getNextToken)
+            Return: error_skipto
+            Call:   pushErrorNode
+            Return: pushErrorNode
+          Return: handleError
+          Consumed token: <")" at line 44 column 19>
+          Call:   Body
+            Call:   Statement
+              Consumed token: <"{" at line 45 column 9>
+              Call:   Statement
+                Consumed token: <<IDENTIFIER>: "i" at line 46 column 13>
+                Consumed token: <"=" at line 46 column 15>
+                Call:   Assignee
+                  Call:   Expression
+                    Consumed token: <<INTEGERLITERAL>: "2" at line 46 column 17>
+                    Call:   ExpressionLFRFix
+                    Return: ExpressionLFRFix
+                  Return: Expression
+                  Consumed token: <";" at line 46 column 18>
+                Return: Assignee
+              Return: Statement
+              Consumed token: <"}" at line 47 column 9>
+            Return: Statement
+          Return: Body
+        Return: Statement
+        Consumed token: <"}" at line 49 column 5>
+      Return: MainMethodDeclaration
+    Return: MethodDeclaration
+    Consumed token: <"}" at line 50 column 1>
+  Return: ClassDeclaration
+  Consumed token: <<EOF> at line 50 column 1>
+Return: Program
 Program
  ImportDeclaration
   ImportMaterial
@@ -9,10 +552,6 @@ Program
   NormalMethodDeclaration
    ReturnType
    MethodName
-   MethodDeclarationArgs
-    Parameter
-     ParameterType
-     ParameterName
    VarDeclaration
     VarType
     VarName
@@ -64,25 +603,44 @@ Program
    Assign
     AssignRecipient
     IntegerLiteral
-   MethodCall
+   Assign
     AssignRecipient
-    MethodName
-    MethodCallArgs
+    And
      MethodCall
-      ConstructorCall
-       NewObjectClassName
+      VariableName
       MethodName
       MethodCallArgs
-       IntegerLiteral
+     True
+   Assign
+    AssignRecipient
+    And
+     True
+     Negation
+      MethodCall
+       This
+       MethodName
+       MethodCallArgs
+        VariableName
+        VariableName
+   Assign
+    AssignRecipient
+    Negation
+     MethodCall
+      This
+      MethodName
+      MethodCallArgs
+       VariableName
+       VariableName
    Assign
     AssignRecipient
     Addition
      VariableName
      IntegerLiteral
-   ArrayAssign
-    AssignRecipient
-    ArrayIndex
-     IntegerLiteral
+   Assign
+    ArrayAccess
+     AssignRecipient
+     ArrayIndex
+      IntegerLiteral
     AttributeCall
      VariableName
    While
@@ -100,6 +658,11 @@ Program
      Assign
       AssignRecipient
       IntegerLiteral
+   Assign
+    AssignRecipient
+    ArrayAccess
+     VariableName
+     IntegerLiteral
    While
     Error
     Body
