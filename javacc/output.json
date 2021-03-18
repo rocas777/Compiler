@@ -16,16 +16,11 @@
       ]
     },
     {
-      "kind": "ClassDeclaration",
-      "attributes": {},
+      "kind": "Class",
+      "attributes": {
+        "name": "Fac"
+      },
       "children": [
-        {
-          "kind": "ClassName",
-          "attributes": {
-            "name": "Fac"
-          },
-          "children": []
-        },
         {
           "kind": "NormalMethodDeclaration",
           "attributes": {},
