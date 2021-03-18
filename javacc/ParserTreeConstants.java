@@ -5,8 +5,7 @@ public interface ParserTreeConstants
   public int JJTPROGRAM = 1;
   public int JJTIMPORTDECLARATION = 2;
   public int JJTIMPORTMATERIAL = 3;
-  public int JJTCLASSDECLARATION = 4;
-  public int JJTCLASSNAME = 5;
+  public int JJTCLASS = 4;
   public int JJTEXTENDEDCLASSNAME = 6;
   public int JJTVARDECLARATION = 7;
   public int JJTVARTYPE = 8;
@@ -56,8 +55,7 @@ public interface ParserTreeConstants
     "Program",
     "ImportDeclaration",
     "ImportMaterial",
-    "ClassDeclaration",
-    "ClassName",
+    "Class",
     "ExtendedClassName",
     "VarDeclaration",
     "VarType",
