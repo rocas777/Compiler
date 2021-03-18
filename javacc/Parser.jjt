@@ -91,9 +91,9 @@ void addReportToMain(String message, ReportType reportType) #void
     Main.reports.add(new Report(reportType, stage, lineError, message));
 }
 
-SimpleNode Program() : {Token t1;}
+SimpleNode Program() : {}
 {
-    ImportDeclaration() Class() <EOF> {return jjtThis;}
+    ImportDeclaration() ClassDeclaration() <EOF> {return jjtThis;}
 }
 
 void ImportDeclaration() : {}
@@ -106,13 +106,9 @@ void ImportMaterial() : {Token t1,t2;}
     <IMPORT> t1=<IDENTIFIER> ("." t2=<IDENTIFIER> {jjtThis.name += "." + t2.image;})* {jjtThis.name = t1.image + jjtThis.name;} <SEMICOLON>
 }
 
-void Class() : {Token t1;}{
-    <CLASS> (t1=<IDENTIFIER> {jjtThis.name = t1.image;} ) ClassDeclaration()
-}
-
-void ClassDeclaration() #void: {Token t2;}
+void ClassDeclaration() : {Token t1,t2;}
 {
-     (<EXTENDS> t2=<IDENTIFIER> {jjtThis.name = t2.image;} #ExtendedClassName)? <OPENCUR> (VarDeclaration())* (MethodDeclaration())* "}"
+    <CLASS> (t1=<IDENTIFIER> {jjtThis.name = t1.image;} #ClassName) (<EXTENDS> t2=<IDENTIFIER> {jjtThis.name = t2.image;} #ExtendedClassName)? <OPENCUR> (VarDeclaration())* (MethodDeclaration())* "}"
 }
 
 void VarDeclaration() : {Token t1,t2;}

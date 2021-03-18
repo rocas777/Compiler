@@ -16,46 +16,51 @@
       ]
     },
     {
-      "kind": "Class",
-      "attributes": {
-        "name": "Fac"
-      },
+      "kind": "ClassDeclaration",
+      "attributes": {},
       "children": [
         {
-          "kind": "ReturnType",
+          "kind": "ClassName",
+          "attributes": {
+            "name": "Fac"
+          },
+          "children": []
+        },
+        {
+          "kind": "NormalMethodDeclaration",
           "attributes": {},
           "children": [
             {
-              "kind": "MethodName",
+              "kind": "ReturnType",
               "attributes": {
                 "type": "int"
               },
               "children": []
             },
             {
-              "kind": "ReturnValue",
+              "kind": "MethodName",
               "attributes": {
                 "name": "ComputeFac"
               },
               "children": []
             },
             {
-              "kind": "ParameterType",
+              "kind": "MethodDeclarationArgs",
               "attributes": {},
               "children": [
                 {
-                  "kind": "Body",
+                  "kind": "Parameter",
                   "attributes": {},
                   "children": [
                     {
-                      "kind": "ParameterName",
+                      "kind": "ParameterType",
                       "attributes": {
                         "type": "int"
                       },
                       "children": []
                     },
                     {
-                      "kind": "Parameter",
+                      "kind": "ParameterName",
                       "attributes": {
                         "name": "num"
                       },
@@ -66,18 +71,18 @@
               ]
             },
             {
-              "kind": "VarType",
+              "kind": "VarDeclaration",
               "attributes": {},
               "children": [
                 {
-                  "kind": "VarName",
+                  "kind": "VarType",
                   "attributes": {
                     "type": "int"
                   },
                   "children": []
                 },
                 {
-                  "kind": "NormalMethodDeclaration",
+                  "kind": "VarName",
                   "attributes": {
                     "name": "num_aux"
                   },
@@ -86,22 +91,22 @@
               ]
             },
             {
-              "kind": "Else",
+              "kind": "If",
               "attributes": {},
               "children": [
                 {
-                  "kind": "Addition",
+                  "kind": "SmallerThan",
                   "attributes": {},
                   "children": [
                     {
-                      "kind": "This",
+                      "kind": "VariableName",
                       "attributes": {
                         "name": "num"
                       },
                       "children": []
                     },
                     {
-                      "kind": "True",
+                      "kind": "IntegerLiteral",
                       "attributes": {
                         "numericalValue": "1"
                       },
@@ -110,22 +115,22 @@
                   ]
                 },
                 {
-                  "kind": "If",
+                  "kind": "Body",
                   "attributes": {},
                   "children": [
                     {
-                      "kind": "ArrayIndex",
+                      "kind": "Assign",
                       "attributes": {},
                       "children": [
                         {
-                          "kind": "Assign",
+                          "kind": "AssignRecipient",
                           "attributes": {
                             "name": "num_aux"
                           },
                           "children": []
                         },
                         {
-                          "kind": "True",
+                          "kind": "IntegerLiteral",
                           "attributes": {
                             "numericalValue": "1"
                           },
@@ -138,64 +143,64 @@
               ]
             },
             {
-              "kind": "While",
+              "kind": "Else",
               "attributes": {},
               "children": [
                 {
-                  "kind": "ArrayIndex",
+                  "kind": "Assign",
                   "attributes": {},
                   "children": [
                     {
-                      "kind": "Assign",
+                      "kind": "AssignRecipient",
                       "attributes": {
                         "name": "num_aux"
                       },
                       "children": []
                     },
                     {
-                      "kind": "Division",
+                      "kind": "Multiplication",
                       "attributes": {},
                       "children": [
                         {
-                          "kind": "This",
+                          "kind": "VariableName",
                           "attributes": {
                             "name": "num"
                           },
                           "children": []
                         },
                         {
-                          "kind": "AttributeCall",
+                          "kind": "MethodCall",
                           "attributes": {},
                           "children": [
                             {
-                              "kind": "Negation",
+                              "kind": "This",
                               "attributes": {},
                               "children": []
                             },
                             {
-                              "kind": "ReturnValue",
+                              "kind": "MethodName",
                               "attributes": {
                                 "name": "ComputeFac"
                               },
                               "children": []
                             },
                             {
-                              "kind": "And",
+                              "kind": "MethodCallArgs",
                               "attributes": {},
                               "children": [
                                 {
-                                  "kind": "Multiplication",
+                                  "kind": "Subtraction",
                                   "attributes": {},
                                   "children": [
                                     {
-                                      "kind": "This",
+                                      "kind": "VariableName",
                                       "attributes": {
                                         "name": "num"
                                       },
                                       "children": []
                                     },
                                     {
-                                      "kind": "True",
+                                      "kind": "IntegerLiteral",
                                       "attributes": {
                                         "numericalValue": "1"
                                       },
@@ -214,11 +219,11 @@
               ]
             },
             {
-              "kind": "MainMethodDeclaration",
+              "kind": "ReturnValue",
               "attributes": {},
               "children": [
                 {
-                  "kind": "This",
+                  "kind": "VariableName",
                   "attributes": {
                     "name": "num_aux"
                   },
@@ -229,48 +234,48 @@
           ]
         },
         {
-          "kind": "ClArgsName",
+          "kind": "MainMethodDeclaration",
           "attributes": {},
           "children": [
             {
-              "kind": "MethodDeclarationArgs",
+              "kind": "ClArgsName",
               "attributes": {
                 "name": "args"
               },
               "children": []
             },
             {
-              "kind": "AttributeCall",
+              "kind": "MethodCall",
               "attributes": {},
               "children": [
                 {
-                  "kind": "Assign",
+                  "kind": "AssignRecipient",
                   "attributes": {
                     "name": "io"
                   },
                   "children": []
                 },
                 {
-                  "kind": "ReturnValue",
+                  "kind": "MethodName",
                   "attributes": {
                     "name": "println"
                   },
                   "children": []
                 },
                 {
-                  "kind": "And",
+                  "kind": "MethodCallArgs",
                   "attributes": {},
                   "children": [
                     {
-                      "kind": "AttributeCall",
+                      "kind": "MethodCall",
                       "attributes": {},
                       "children": [
                         {
-                          "kind": "NewObjectClassName",
+                          "kind": "ConstructorCall",
                           "attributes": {},
                           "children": [
                             {
-                              "kind": "Length",
+                              "kind": "NewObjectClassName",
                               "attributes": {
                                 "name": "Fac"
                               },
@@ -279,18 +284,18 @@
                           ]
                         },
                         {
-                          "kind": "ReturnValue",
+                          "kind": "MethodName",
                           "attributes": {
                             "name": "ComputeFac"
                           },
                           "children": []
                         },
                         {
-                          "kind": "And",
+                          "kind": "MethodCallArgs",
                           "attributes": {},
                           "children": [
                             {
-                              "kind": "True",
+                              "kind": "IntegerLiteral",
                               "attributes": {
                                 "numericalValue": "10"
                               },
