@@ -159,17 +159,21 @@ void MethodDeclaration() #void : {}
 
 void NormalMethodDeclaration() : {Token t1,t2;}
 {
-    (t2=Type() {jjtThis.type = t2.image;} #ReturnType) t1=<IDENTIFIER> {jjtThis.name = t1.image;} #MethodName <OPENPAR> (MethodDeclarationArgs())? <CLOSEPAR> <OPENCUR> (LOOKAHEAD(2) VarDeclaration())* (Statement())* <RETURN> Expression() #ReturnValue <SEMICOLON> "}"
+    (t2=Type() {jjtThis.type = t2.image;} #ReturnType) t1=<IDENTIFIER> {jjtThis.name = t1.image;} #MethodName <OPENPAR> (MethodDeclarationArgs())? <CLOSEPAR> <OPENCUR> MethodBody() <RETURN> Expression() #ReturnValue <SEMICOLON> "}"
 }
 
 void MainMethodDeclaration() : {Token t1;}
 {
-    <STATIC> <VOID> <MAIN> <OPENPAR> <STRING> "[" "]" t1=<IDENTIFIER> {jjtThis.name = t1.image;} #ClArgsName <CLOSEPAR> <OPENCUR> (LOOKAHEAD(2) VarDeclaration())* (Statement())* "}" 
+    <STATIC> <VOID> <MAIN> <OPENPAR> <STRING> "[" "]" t1=<IDENTIFIER> {jjtThis.name = t1.image;} #ClArgsName <CLOSEPAR> <OPENCUR> MethodBody() "}"
 }
 
-void MethodDeclarationArgs() : {Token t1,t2,t3,t4;}
+void MethodBody()  #Body : {}{
+    (LOOKAHEAD(2) VarDeclaration())* (Statement())*
+}
+
+void MethodDeclarationArgs() #Args: {Token t1,t2,t3,t4;}
 {
-    ((t3=Type() {jjtThis.type = t3.image;} #ParameterType) (t1=<IDENTIFIER> {jjtThis.name = t1.image;} #ParameterName) #Parameter(2)) ("," ((t4=Type() {jjtThis.type = t4.image;} #ParameterType) (t2=<IDENTIFIER> {jjtThis.name = t2.image;} #ParameterName) #Parameter(2)) )* 
+    ((t3=Type() {jjtThis.type = t3.image;} #ParameterType) (t1=<IDENTIFIER> {jjtThis.name = t1.image;} #ParameterName) #Parameter(2)) ("," ((t4=Type() {jjtThis.type = t4.image;} #ParameterType) (t2=<IDENTIFIER> {jjtThis.name = t2.image;} #ParameterName) #Parameter(2)) )*
 }
 
 Token Type() #void : {Token t1,t2,t3;}
@@ -184,12 +188,12 @@ void Body() : {}
     Statement()
 }
 
-void Statement() #void : {Token t1;} 
+void Statement() #void : {Token t1;}
 {
     <OPENCUR> (Statement() )* "}"
     | <IF> <OPENPAR> Expression() <CLOSEPAR> Body()  #If(2) <ELSE> Statement() #Else
-    | <WHILE> <OPENPAR> 
-   try 
+    | <WHILE> <OPENPAR>
+   try
    {
         Expression() <CLOSEPAR>
    }
@@ -199,7 +203,7 @@ void Statement() #void : {Token t1;}
    } Body() #While(2)
     | Expression3() <SEMICOLON>
     | (t1=<IDENTIFIER> {jjtThis.name = t1.image;} #AssignRecipient) (
-        "=" Assignee() #Assign(2) 
+        "=" Assignee() #Assign(2)
             | "[" Expression() #ArrayIndex "]" #ArrayAccess(2) ("=" Expression() #Assign(2) <SEMICOLON> | ExpressionLFRFix())
             | ExpressionLFRFix2() <SEMICOLON> )
 }
@@ -217,7 +221,7 @@ void Expression() #void : {Token t1,t2;}
     | t1=<IDENTIFIER> {jjtThis.name = t1.image;} #VariableName ExpressionLFRFix()
     | <THIS> #This ExpressionLFRFix()
     | <NEW> (ArrayInitializer() | ConstructorCall()) ExpressionLFRFix()
-    | "!" Expression() #Negation ExpressionLFRFix()
+    | "!" Expression() #Negation(1) ExpressionLFRFix()
     | <OPENPAR> Expression() <CLOSEPAR> ExpressionLFRFix()
 }
 
@@ -228,8 +232,8 @@ void Expression3() #void : {Token t1;}
     | <FALSE> #False ExpressionLFRFix()
     | <THIS> #This ExpressionLFRFix()
     | <NEW> (ArrayInitializer() | ConstructorCall()) #New ExpressionLFRFix()
-    | "!" Expression() #Negation ExpressionLFRFix()
-    | <OPENPAR> Expression() <CLOSEPAR> ExpressionLFRFix() 
+    | "!" Expression() #Negation(1) ExpressionLFRFix()
+    | <OPENPAR> Expression() <CLOSEPAR> ExpressionLFRFix()
 }
 
 void ArrayInitializer() : {}
@@ -257,7 +261,7 @@ void ExpressionLFRFix2() #void : {}
 
 void MethodCall() #void : {Token t1;}
 {
-    t1=<IDENTIFIER> {jjtThis.name = t1.image;} #MethodName <OPENPAR> MethodCallArgs() <CLOSEPAR> #MethodCall(3) ExpressionLFRFix() 
+    t1=<IDENTIFIER> {jjtThis.name = t1.image;} #MethodName <OPENPAR> MethodCallArgs() <CLOSEPAR> #MethodCall(3) ExpressionLFRFix()
 }
 
 void AttributeCall() #void : {}
@@ -265,7 +269,7 @@ void AttributeCall() #void : {}
     <LENGTH> #AttributeCall(1)
 }
 
-void MethodCallArgs() : {}
+void MethodCallArgs() #Args : {}
 {
     (Expression() ( "," Expression())*)?
 }
