@@ -132,7 +132,7 @@ void NormalMethodDeclaration() : {Token t1,t2;}
     (t2=Type() {jjtThis.type = t2.image;} #ReturnType) t1=<IDENTIFIER> {jjtThis.name = t1.image;} <OPENPAR> (MethodDeclarationArgs())? <CLOSEPAR> MethodBody() <RETURN> Expression() #ReturnValue <SEMICOLON> "}"
 }
 
-void MethodBody()  : {Token t1,t2;}
+void MethodBody()  #Body: {Token t1,t2;}
 {
      <OPENCUR> (LOOKAHEAD(2) VarDeclaration())* (Statement())*
 }
