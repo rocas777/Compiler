@@ -109,12 +109,13 @@ void error_skipto(String description) #void {
     t = getToken(1);
     System.out.println("Unexpected \"" + t.image + "\" in " + description + " at line " + t.beginLine + "!");
 
-    while(t.kind != SEMICOLON && t.kind != EOF && t.kind != OPENCUR && t.kind != CLOSEPAR)
+    while(t.kind != EOF && t.kind != OPENCUR && t.kind != CLOSEPAR)
     {
         t = getNextToken();
         t = getToken(1);
     }
 
+    if (t.kind == CLOSEPAR) getNextToken();
 }
 
 JAVACODE
@@ -190,12 +191,12 @@ void Statement() #void : {Token t1;}
     | <WHILE> <OPENPAR> 
    try 
    {
-        Expression()
+        Expression() <CLOSEPAR>
    }
    catch(ParseException e)
    {
         handleError(e);
-   } <CLOSEPAR> Body() #While(2)
+   } Body() #While(2)
     | Expression3() <SEMICOLON>
     | (t1=<IDENTIFIER> {jjtThis.name = t1.image;} #AssignRecipient) (
         "=" Assignee() #Assign(2) 
