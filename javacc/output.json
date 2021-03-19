@@ -1,887 +1,897 @@
 {
-  "kind": "Program",
-  "attributes": {},
-  "children": [
-    {
-      "kind": "ImportDeclaration",
-      "attributes": {},
-      "children": [
-        {
-          "kind": "ImportMaterial",
-          "attributes": {
-            "name": "io.ia"
-          },
-          "children": []
-        },
-        {
-          "kind": "ImportMaterial",
-          "attributes": {
-            "name": "ia"
-          },
-          "children": []
-        }
-      ]
-    },
-    {
-      "kind": "ClassDeclaration",
-      "attributes": {},
-      "children": [
-        {
-          "kind": "ClassName",
-          "attributes": {
-            "name": "Fac"
-          },
-          "children": []
-        },
-        {
-          "kind": "ExtendedClassName",
-          "attributes": {
-            "name": "Something"
-          },
-          "children": []
-        },
-        {
-          "kind": "NormalMethodDeclaration",
-          "attributes": {},
-          "children": [
-            {
-              "kind": "ReturnType",
-              "attributes": {
-                "type": "int"
-              },
-              "children": []
+  "rootNode": {
+    "kind": "Program",
+    "attributes": {},
+    "children": [
+      {
+        "kind": "ImportDeclaration",
+        "attributes": {},
+        "children": [
+          {
+            "kind": "ImportMaterial",
+            "attributes": {
+              "name": "io.ia"
             },
-            {
-              "kind": "MethodName",
-              "attributes": {
-                "name": "ComputeFac"
-              },
-              "children": []
+            "children": []
+          },
+          {
+            "kind": "ImportMaterial",
+            "attributes": {
+              "name": "ia"
             },
-            {
-              "kind": "Body",
-              "attributes": {},
-              "children": [
-                {
-                  "kind": "VarDeclaration",
-                  "attributes": {},
-                  "children": [
-                    {
-                      "kind": "VarType",
-                      "attributes": {
-                        "type": "int"
-                      },
-                      "children": []
-                    },
-                    {
-                      "kind": "VarName",
-                      "attributes": {
-                        "name": "num_aux"
-                      },
-                      "children": []
-                    }
-                  ]
+            "children": []
+          }
+        ]
+      },
+      {
+        "kind": "ClassDeclaration",
+        "attributes": {},
+        "children": [
+          {
+            "kind": "ClassName",
+            "attributes": {
+              "name": "Fac"
+            },
+            "children": []
+          },
+          {
+            "kind": "ExtendedClassName",
+            "attributes": {
+              "name": "Something"
+            },
+            "children": []
+          },
+          {
+            "kind": "NormalMethodDeclaration",
+            "attributes": {},
+            "children": [
+              {
+                "kind": "ReturnType",
+                "attributes": {
+                  "type": "int"
                 },
-                {
-                  "kind": "If",
-                  "attributes": {},
-                  "children": [
-                    {
-                      "kind": "SmallerThan",
-                      "attributes": {},
-                      "children": [
-                        {
-                          "kind": "VariableName",
-                          "attributes": {
-                            "name": "num"
-                          },
-                          "children": []
-                        },
-                        {
-                          "kind": "IntegerLiteral",
-                          "attributes": {
-                            "numericalValue": "1"
-                          },
-                          "children": []
-                        }
-                      ]
-                    },
-                    {
-                      "kind": "Body",
-                      "attributes": {},
-                      "children": [
-                        {
-                          "kind": "Assign",
-                          "attributes": {},
-                          "children": [
-                            {
-                              "kind": "AssignRecipient",
-                              "attributes": {
-                                "name": "num_aux"
-                              },
-                              "children": []
-                            },
-                            {
-                              "kind": "IntegerLiteral",
-                              "attributes": {
-                                "numericalValue": "1"
-                              },
-                              "children": []
-                            }
-                          ]
-                        },
-                        {
-                          "kind": "Assign",
-                          "attributes": {},
-                          "children": [
-                            {
-                              "kind": "AssignRecipient",
-                              "attributes": {
-                                "name": "i"
-                              },
-                              "children": []
-                            },
-                            {
-                              "kind": "IntegerLiteral",
-                              "attributes": {
-                                "numericalValue": "0"
-                              },
-                              "children": []
-                            }
-                          ]
-                        },
-                        {
-                          "kind": "Assign",
-                          "attributes": {},
-                          "children": [
-                            {
-                              "kind": "AssignRecipient",
-                              "attributes": {
-                                "name": "i"
-                              },
-                              "children": []
-                            },
-                            {
-                              "kind": "IntegerLiteral",
-                              "attributes": {
-                                "numericalValue": "3"
-                              },
-                              "children": []
-                            }
-                          ]
-                        },
-                        {
-                          "kind": "Assign",
-                          "attributes": {},
-                          "children": [
-                            {
-                              "kind": "AssignRecipient",
-                              "attributes": {
-                                "name": "i"
-                              },
-                              "children": []
-                            },
-                            {
-                              "kind": "IntegerLiteral",
-                              "attributes": {
-                                "numericalValue": "2"
-                              },
-                              "children": []
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
+                "children": []
+              },
+              {
+                "kind": "MethodName",
+                "attributes": {
+                  "name": "ComputeFac"
                 },
-                {
-                  "kind": "Else",
-                  "attributes": {},
-                  "children": [
-                    {
-                      "kind": "Assign",
-                      "attributes": {},
-                      "children": [
-                        {
-                          "kind": "AssignRecipient",
-                          "attributes": {
-                            "name": "num_aux"
-                          },
-                          "children": []
+                "children": []
+              },
+              {
+                "kind": "Body",
+                "attributes": {},
+                "children": [
+                  {
+                    "kind": "VarDeclaration",
+                    "attributes": {},
+                    "children": [
+                      {
+                        "kind": "VarType",
+                        "attributes": {
+                          "type": "int"
                         },
-                        {
-                          "kind": "Multiplication",
-                          "attributes": {},
-                          "children": [
-                            {
-                              "kind": "VariableName",
-                              "attributes": {
-                                "name": "num"
-                              },
-                              "children": []
-                            },
-                            {
-                              "kind": "MethodCall",
-                              "attributes": {},
-                              "children": [
-                                {
-                                  "kind": "This",
-                                  "attributes": {},
-                                  "children": []
-                                },
-                                {
-                                  "kind": "MethodName",
-                                  "attributes": {
-                                    "name": "ComputeFac"
-                                  },
-                                  "children": []
-                                },
-                                {
-                                  "kind": "Args",
-                                  "attributes": {},
-                                  "children": [
-                                    {
-                                      "kind": "Subtraction",
-                                      "attributes": {},
-                                      "children": [
-                                        {
-                                          "kind": "VariableName",
-                                          "attributes": {
-                                            "name": "num"
-                                          },
-                                          "children": []
-                                        },
-                                        {
-                                          "kind": "IntegerLiteral",
-                                          "attributes": {
-                                            "numericalValue": "1"
-                                          },
-                                          "children": []
-                                        }
-                                      ]
-                                    }
-                                  ]
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    },
-                    {
-                      "kind": "Assign",
-                      "attributes": {},
-                      "children": [
-                        {
-                          "kind": "AssignRecipient",
-                          "attributes": {
-                            "name": "i"
-                          },
-                          "children": []
+                        "children": []
+                      },
+                      {
+                        "kind": "VarName",
+                        "attributes": {
+                          "name": "num_aux"
                         },
-                        {
-                          "kind": "IntegerLiteral",
-                          "attributes": {
-                            "numericalValue": "3"
-                          },
-                          "children": []
-                        }
-                      ]
-                    },
-                    {
-                      "kind": "Assign",
-                      "attributes": {},
-                      "children": [
-                        {
-                          "kind": "AssignRecipient",
-                          "attributes": {
-                            "name": "i"
-                          },
-                          "children": []
-                        },
-                        {
-                          "kind": "IntegerLiteral",
-                          "attributes": {
-                            "numericalValue": "2"
-                          },
-                          "children": []
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            },
-            {
-              "kind": "ReturnValue",
-              "attributes": {},
-              "children": [
-                {
-                  "kind": "VariableName",
-                  "attributes": {
-                    "name": "num_aux"
+                        "children": []
+                      }
+                    ]
                   },
-                  "children": []
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "kind": "MainMethodDeclaration",
-          "attributes": {},
-          "children": [
-            {
-              "kind": "ClArgsName",
-              "attributes": {
-                "name": "args"
+                  {
+                    "kind": "If",
+                    "attributes": {},
+                    "children": [
+                      {
+                        "kind": "SmallerThan",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "kind": "VariableName",
+                            "attributes": {
+                              "name": "num"
+                            },
+                            "children": []
+                          },
+                          {
+                            "kind": "IntegerLiteral",
+                            "attributes": {
+                              "numericalValue": "1"
+                            },
+                            "children": []
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Body",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "kind": "Assign",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "AssignRecipient",
+                                "attributes": {
+                                  "name": "num_aux"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "IntegerLiteral",
+                                "attributes": {
+                                  "numericalValue": "1"
+                                },
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Assign",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "AssignRecipient",
+                                "attributes": {
+                                  "name": "i"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "IntegerLiteral",
+                                "attributes": {
+                                  "numericalValue": "0"
+                                },
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Assign",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "AssignRecipient",
+                                "attributes": {
+                                  "name": "i"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "IntegerLiteral",
+                                "attributes": {
+                                  "numericalValue": "3"
+                                },
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Assign",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "AssignRecipient",
+                                "attributes": {
+                                  "name": "i"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "IntegerLiteral",
+                                "attributes": {
+                                  "numericalValue": "2"
+                                },
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Else",
+                    "attributes": {},
+                    "children": [
+                      {
+                        "kind": "Assign",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "kind": "AssignRecipient",
+                            "attributes": {
+                              "name": "num_aux"
+                            },
+                            "children": []
+                          },
+                          {
+                            "kind": "Multiplication",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "VariableName",
+                                "attributes": {
+                                  "name": "num"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "MethodCall",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "This",
+                                    "attributes": {},
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "MethodName",
+                                    "attributes": {
+                                      "name": "ComputeFac"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "Args",
+                                    "attributes": {},
+                                    "children": [
+                                      {
+                                        "kind": "Subtraction",
+                                        "attributes": {},
+                                        "children": [
+                                          {
+                                            "kind": "VariableName",
+                                            "attributes": {
+                                              "name": "num"
+                                            },
+                                            "children": []
+                                          },
+                                          {
+                                            "kind": "IntegerLiteral",
+                                            "attributes": {
+                                              "numericalValue": "1"
+                                            },
+                                            "children": []
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Assign",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "kind": "AssignRecipient",
+                            "attributes": {
+                              "name": "i"
+                            },
+                            "children": []
+                          },
+                          {
+                            "kind": "IntegerLiteral",
+                            "attributes": {
+                              "numericalValue": "3"
+                            },
+                            "children": []
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Assign",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "kind": "AssignRecipient",
+                            "attributes": {
+                              "name": "i"
+                            },
+                            "children": []
+                          },
+                          {
+                            "kind": "IntegerLiteral",
+                            "attributes": {
+                              "numericalValue": "2"
+                            },
+                            "children": []
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
               },
-              "children": []
-            },
-            {
-              "kind": "Body",
-              "attributes": {},
-              "children": [
-                {
-                  "kind": "VarDeclaration",
-                  "attributes": {},
-                  "children": [
-                    {
-                      "kind": "VarType",
-                      "attributes": {
-                        "type": "int"
-                      },
-                      "children": []
+              {
+                "kind": "ReturnValue",
+                "attributes": {},
+                "children": [
+                  {
+                    "kind": "VariableName",
+                    "attributes": {
+                      "name": "num_aux"
                     },
-                    {
-                      "kind": "VarName",
-                      "attributes": {
-                        "name": "i"
-                      },
-                      "children": []
-                    }
-                  ]
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "kind": "MainMethodDeclaration",
+            "attributes": {},
+            "children": [
+              {
+                "kind": "ClArgsName",
+                "attributes": {
+                  "name": "args"
                 },
-                {
-                  "kind": "VarDeclaration",
-                  "attributes": {},
-                  "children": [
-                    {
-                      "kind": "VarType",
-                      "attributes": {
-                        "type": "boolean"
-                      },
-                      "children": []
-                    },
-                    {
-                      "kind": "VarName",
-                      "attributes": {
-                        "name": "a"
-                      },
-                      "children": []
-                    }
-                  ]
-                },
-                {
-                  "kind": "Assign",
-                  "attributes": {},
-                  "children": [
-                    {
-                      "kind": "AssignRecipient",
-                      "attributes": {
-                        "name": "i"
-                      },
-                      "children": []
-                    },
-                    {
-                      "kind": "IntegerLiteral",
-                      "attributes": {
-                        "numericalValue": "0"
-                      },
-                      "children": []
-                    }
-                  ]
-                },
-                {
-                  "kind": "Assign",
-                  "attributes": {},
-                  "children": [
-                    {
-                      "kind": "AssignRecipient",
-                      "attributes": {
-                        "name": "a"
-                      },
-                      "children": []
-                    },
-                    {
-                      "kind": "And",
-                      "attributes": {},
-                      "children": [
-                        {
-                          "kind": "MethodCall",
-                          "attributes": {},
-                          "children": [
-                            {
-                              "kind": "VariableName",
-                              "attributes": {
-                                "name": "i"
-                              },
-                              "children": []
-                            },
-                            {
-                              "kind": "MethodName",
-                              "attributes": {
-                                "name": "get"
-                              },
-                              "children": []
-                            },
-                            {
-                              "kind": "Args",
-                              "attributes": {},
-                              "children": []
-                            }
-                          ]
+                "children": []
+              },
+              {
+                "kind": "Body",
+                "attributes": {},
+                "children": [
+                  {
+                    "kind": "VarDeclaration",
+                    "attributes": {},
+                    "children": [
+                      {
+                        "kind": "VarType",
+                        "attributes": {
+                          "type": "int"
                         },
-                        {
-                          "kind": "True",
-                          "attributes": {},
-                          "children": []
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "kind": "Assign",
-                  "attributes": {},
-                  "children": [
-                    {
-                      "kind": "AssignRecipient",
-                      "attributes": {
-                        "name": "a"
+                        "children": []
                       },
-                      "children": []
-                    },
-                    {
-                      "kind": "And",
-                      "attributes": {},
-                      "children": [
-                        {
-                          "kind": "True",
-                          "attributes": {},
-                          "children": []
+                      {
+                        "kind": "VarName",
+                        "attributes": {
+                          "name": "i"
                         },
-                        {
-                          "kind": "MethodCall",
-                          "attributes": {},
-                          "children": [
-                            {
-                              "kind": "Negation",
-                              "attributes": {},
-                              "children": [
-                                {
-                                  "kind": "This",
-                                  "attributes": {},
-                                  "children": []
-                                }
-                              ]
-                            },
-                            {
-                              "kind": "MethodName",
-                              "attributes": {
-                                "name": "gt"
-                              },
-                              "children": []
-                            },
-                            {
-                              "kind": "Args",
-                              "attributes": {},
-                              "children": [
-                                {
-                                  "kind": "VariableName",
-                                  "attributes": {
-                                    "name": "a"
-                                  },
-                                  "children": []
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "VarDeclaration",
+                    "attributes": {},
+                    "children": [
+                      {
+                        "kind": "VarType",
+                        "attributes": {
+                          "type": "boolean"
+                        },
+                        "children": []
+                      },
+                      {
+                        "kind": "VarName",
+                        "attributes": {
+                          "name": "a"
+                        },
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Assign",
+                    "attributes": {},
+                    "children": [
+                      {
+                        "kind": "AssignRecipient",
+                        "attributes": {
+                          "name": "i"
+                        },
+                        "children": []
+                      },
+                      {
+                        "kind": "IntegerLiteral",
+                        "attributes": {
+                          "numericalValue": "0"
+                        },
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Assign",
+                    "attributes": {},
+                    "children": [
+                      {
+                        "kind": "AssignRecipient",
+                        "attributes": {
+                          "name": "a"
+                        },
+                        "children": []
+                      },
+                      {
+                        "kind": "And",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "kind": "MethodCall",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "VariableName",
+                                "attributes": {
+                                  "name": "i"
                                 },
-                                {
-                                  "kind": "VariableName",
-                                  "attributes": {
-                                    "name": "b"
-                                  },
-                                  "children": []
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "kind": "Assign",
-                  "attributes": {},
-                  "children": [
-                    {
-                      "kind": "AssignRecipient",
-                      "attributes": {
-                        "name": "a"
-                      },
-                      "children": []
-                    },
-                    {
-                      "kind": "MethodCall",
-                      "attributes": {},
-                      "children": [
-                        {
-                          "kind": "Negation",
-                          "attributes": {},
-                          "children": [
-                            {
-                              "kind": "This",
-                              "attributes": {},
-                              "children": []
-                            }
-                          ]
-                        },
-                        {
-                          "kind": "MethodName",
-                          "attributes": {
-                            "name": "gt"
-                          },
-                          "children": []
-                        },
-                        {
-                          "kind": "Args",
-                          "attributes": {},
-                          "children": [
-                            {
-                              "kind": "VariableName",
-                              "attributes": {
-                                "name": "a"
+                                "children": []
                               },
-                              "children": []
-                            },
-                            {
-                              "kind": "VariableName",
-                              "attributes": {
-                                "name": "b"
-                              },
-                              "children": []
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "kind": "Assign",
-                  "attributes": {},
-                  "children": [
-                    {
-                      "kind": "AssignRecipient",
-                      "attributes": {
-                        "name": "i"
-                      },
-                      "children": []
-                    },
-                    {
-                      "kind": "Addition",
-                      "attributes": {},
-                      "children": [
-                        {
-                          "kind": "VariableName",
-                          "attributes": {
-                            "name": "i"
-                          },
-                          "children": []
-                        },
-                        {
-                          "kind": "IntegerLiteral",
-                          "attributes": {
-                            "numericalValue": "3"
-                          },
-                          "children": []
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "kind": "Assign",
-                  "attributes": {},
-                  "children": [
-                    {
-                      "kind": "ArrayAccess",
-                      "attributes": {},
-                      "children": [
-                        {
-                          "kind": "AssignRecipient",
-                          "attributes": {
-                            "name": "a"
-                          },
-                          "children": []
-                        },
-                        {
-                          "kind": "ArrayIndex",
-                          "attributes": {},
-                          "children": [
-                            {
-                              "kind": "IntegerLiteral",
-                              "attributes": {
-                                "numericalValue": "0"
-                              },
-                              "children": []
-                            }
-                          ]
-                        }
-                      ]
-                    },
-                    {
-                      "kind": "AttributeCall",
-                      "attributes": {},
-                      "children": [
-                        {
-                          "kind": "VariableName",
-                          "attributes": {
-                            "name": "a"
-                          },
-                          "children": []
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "kind": "Assign",
-                  "attributes": {},
-                  "children": [
-                    {
-                      "kind": "AssignRecipient",
-                      "attributes": {
-                        "name": "a"
-                      },
-                      "children": []
-                    },
-                    {
-                      "kind": "ArrayAccess",
-                      "attributes": {},
-                      "children": [
-                        {
-                          "kind": "MethodCall",
-                          "attributes": {},
-                          "children": [
-                            {
-                              "kind": "This",
-                              "attributes": {},
-                              "children": []
-                            },
-                            {
-                              "kind": "MethodName",
-                              "attributes": {
-                                "name": "method"
-                              },
-                              "children": []
-                            },
-                            {
-                              "kind": "Args",
-                              "attributes": {},
-                              "children": []
-                            }
-                          ]
-                        },
-                        {
-                          "kind": "IntegerLiteral",
-                          "attributes": {
-                            "numericalValue": "3"
-                          },
-                          "children": []
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "kind": "Assign",
-                  "attributes": {},
-                  "children": [
-                    {
-                      "kind": "AssignRecipient",
-                      "attributes": {
-                        "name": "a"
-                      },
-                      "children": []
-                    },
-                    {
-                      "kind": "And",
-                      "attributes": {},
-                      "children": [
-                        {
-                          "kind": "Negation",
-                          "attributes": {},
-                          "children": [
-                            {
-                              "kind": "True",
-                              "attributes": {},
-                              "children": []
-                            }
-                          ]
-                        },
-                        {
-                          "kind": "And",
-                          "attributes": {},
-                          "children": [
-                            {
-                              "kind": "False",
-                              "attributes": {},
-                              "children": []
-                            },
-                            {
-                              "kind": "False",
-                              "attributes": {},
-                              "children": []
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "kind": "Assign",
-                  "attributes": {},
-                  "children": [
-                    {
-                      "kind": "AssignRecipient",
-                      "attributes": {
-                        "name": "a"
-                      },
-                      "children": []
-                    },
-                    {
-                      "kind": "Negation",
-                      "attributes": {},
-                      "children": [
-                        {
-                          "kind": "ConstructorCall",
-                          "attributes": {},
-                          "children": [
-                            {
-                              "kind": "NewObjectClassName",
-                              "attributes": {
-                                "name": "Main"
-                              },
-                              "children": []
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "kind": "Assign",
-                  "attributes": {},
-                  "children": [
-                    {
-                      "kind": "AssignRecipient",
-                      "attributes": {
-                        "name": "a"
-                      },
-                      "children": []
-                    },
-                    {
-                      "kind": "Addition",
-                      "attributes": {},
-                      "children": [
-                        {
-                          "kind": "IntegerLiteral",
-                          "attributes": {
-                            "numericalValue": "1"
-                          },
-                          "children": []
-                        },
-                        {
-                          "kind": "Multiplication",
-                          "attributes": {},
-                          "children": [
-                            {
-                              "kind": "IntegerLiteral",
-                              "attributes": {
-                                "numericalValue": "2"
-                              },
-                              "children": []
-                            },
-                            {
-                              "kind": "Addition",
-                              "attributes": {},
-                              "children": [
-                                {
-                                  "kind": "IntegerLiteral",
-                                  "attributes": {
-                                    "numericalValue": "3"
-                                  },
-                                  "children": []
+                              {
+                                "kind": "MethodName",
+                                "attributes": {
+                                  "name": "get"
                                 },
-                                {
-                                  "kind": "IntegerLiteral",
-                                  "attributes": {
-                                    "numericalValue": "4"
+                                "children": []
+                              },
+                              {
+                                "kind": "Args",
+                                "attributes": {},
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "True",
+                            "attributes": {},
+                            "children": []
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Assign",
+                    "attributes": {},
+                    "children": [
+                      {
+                        "kind": "AssignRecipient",
+                        "attributes": {
+                          "name": "a"
+                        },
+                        "children": []
+                      },
+                      {
+                        "kind": "And",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "kind": "True",
+                            "attributes": {},
+                            "children": []
+                          },
+                          {
+                            "kind": "MethodCall",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "Negation",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "This",
+                                    "attributes": {},
+                                    "children": []
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "MethodName",
+                                "attributes": {
+                                  "name": "gt"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "Args",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "VariableName",
+                                    "attributes": {
+                                      "name": "a"
+                                    },
+                                    "children": []
                                   },
-                                  "children": []
-                                }
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                },
-                {
-                  "kind": "While",
-                  "attributes": {},
-                  "children": [
-                    {
-                      "kind": "Error",
-                      "attributes": {},
-                      "children": []
-                    },
-                    {
-                      "kind": "Body",
-                      "attributes": {},
-                      "children": [
-                        {
-                          "kind": "Assign",
-                          "attributes": {},
-                          "children": [
-                            {
-                              "kind": "AssignRecipient",
-                              "attributes": {
-                                "name": "i"
-                              },
-                              "children": []
+                                  {
+                                    "kind": "VariableName",
+                                    "attributes": {
+                                      "name": "b"
+                                    },
+                                    "children": []
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Assign",
+                    "attributes": {},
+                    "children": [
+                      {
+                        "kind": "AssignRecipient",
+                        "attributes": {
+                          "name": "a"
+                        },
+                        "children": []
+                      },
+                      {
+                        "kind": "MethodCall",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "kind": "Negation",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "This",
+                                "attributes": {},
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "MethodName",
+                            "attributes": {
+                              "name": "gt"
                             },
-                            {
-                              "kind": "IntegerLiteral",
-                              "attributes": {
-                                "numericalValue": "2"
+                            "children": []
+                          },
+                          {
+                            "kind": "Args",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "VariableName",
+                                "attributes": {
+                                  "name": "a"
+                                },
+                                "children": []
                               },
-                              "children": []
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-      ]
+                              {
+                                "kind": "VariableName",
+                                "attributes": {
+                                  "name": "b"
+                                },
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Assign",
+                    "attributes": {},
+                    "children": [
+                      {
+                        "kind": "AssignRecipient",
+                        "attributes": {
+                          "name": "i"
+                        },
+                        "children": []
+                      },
+                      {
+                        "kind": "Addition",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "kind": "VariableName",
+                            "attributes": {
+                              "name": "i"
+                            },
+                            "children": []
+                          },
+                          {
+                            "kind": "IntegerLiteral",
+                            "attributes": {
+                              "numericalValue": "3"
+                            },
+                            "children": []
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Assign",
+                    "attributes": {},
+                    "children": [
+                      {
+                        "kind": "ArrayAccess",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "kind": "AssignRecipient",
+                            "attributes": {
+                              "name": "a"
+                            },
+                            "children": []
+                          },
+                          {
+                            "kind": "ArrayIndex",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "IntegerLiteral",
+                                "attributes": {
+                                  "numericalValue": "0"
+                                },
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "AttributeCall",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "kind": "VariableName",
+                            "attributes": {
+                              "name": "a"
+                            },
+                            "children": []
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Assign",
+                    "attributes": {},
+                    "children": [
+                      {
+                        "kind": "AssignRecipient",
+                        "attributes": {
+                          "name": "a"
+                        },
+                        "children": []
+                      },
+                      {
+                        "kind": "ArrayAccess",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "kind": "MethodCall",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "This",
+                                "attributes": {},
+                                "children": []
+                              },
+                              {
+                                "kind": "MethodName",
+                                "attributes": {
+                                  "name": "method"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "Args",
+                                "attributes": {},
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "IntegerLiteral",
+                            "attributes": {
+                              "numericalValue": "3"
+                            },
+                            "children": []
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Assign",
+                    "attributes": {},
+                    "children": [
+                      {
+                        "kind": "AssignRecipient",
+                        "attributes": {
+                          "name": "a"
+                        },
+                        "children": []
+                      },
+                      {
+                        "kind": "And",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "kind": "Negation",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "True",
+                                "attributes": {},
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "And",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "False",
+                                "attributes": {},
+                                "children": []
+                              },
+                              {
+                                "kind": "False",
+                                "attributes": {},
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Assign",
+                    "attributes": {},
+                    "children": [
+                      {
+                        "kind": "AssignRecipient",
+                        "attributes": {
+                          "name": "a"
+                        },
+                        "children": []
+                      },
+                      {
+                        "kind": "Negation",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "kind": "ConstructorCall",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "NewObjectClassName",
+                                "attributes": {
+                                  "name": "Main"
+                                },
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "Assign",
+                    "attributes": {},
+                    "children": [
+                      {
+                        "kind": "AssignRecipient",
+                        "attributes": {
+                          "name": "a"
+                        },
+                        "children": []
+                      },
+                      {
+                        "kind": "Addition",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "kind": "IntegerLiteral",
+                            "attributes": {
+                              "numericalValue": "1"
+                            },
+                            "children": []
+                          },
+                          {
+                            "kind": "Multiplication",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "IntegerLiteral",
+                                "attributes": {
+                                  "numericalValue": "2"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "Addition",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "numericalValue": "3"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "numericalValue": "4"
+                                    },
+                                    "children": []
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "While",
+                    "attributes": {},
+                    "children": [
+                      {
+                        "kind": "Error",
+                        "attributes": {},
+                        "children": []
+                      },
+                      {
+                        "kind": "Body",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "kind": "Assign",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "AssignRecipient",
+                                "attributes": {
+                                  "name": "i"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "IntegerLiteral",
+                                "attributes": {
+                                  "numericalValue": "2"
+                                },
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "reports": [
+    {
+      "type": "WARNING",
+      "stage": "SYNTATIC",
+      "line": 41,
+      "message": "Error found in while expression!"
     }
   ]
 }

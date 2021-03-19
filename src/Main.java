@@ -26,18 +26,7 @@ public class Main implements JmmParser {
     		SimpleNode root = myParser.Program(); // returns reference to root node
             	
     		root.dump(""); // prints the tree on the screen
-			String jsonTree = root.toJson();
-			File jsonFile = new File("javacc/output.json");
-			try
-			{
-				FileWriter writer = new FileWriter(jsonFile);
-				writer.write(jsonTree);
-				writer.close();
-			}
-			catch (IOException e)
-			{
-				System.out.println(e.toString());
-			}
+			
 
     		return new JmmParserResult(root, reports);
 		} catch(ParseException e) {
@@ -48,7 +37,20 @@ public class Main implements JmmParser {
     public static void main(String[] args) {
 		var main = new Main();
 		var fileContents = SpecsIo.read(args[0]);
-		main.parse(fileContents);
+		var result = main.parse(fileContents);
+
+		String jsonTree = result.toJson();
+		File jsonFile = new File("javacc/output.json");
+		try
+		{
+			FileWriter writer = new FileWriter(jsonFile);
+			writer.write(jsonTree);
+			writer.close();
+		}
+		catch (IOException e)
+		{
+			System.out.println(e.toString());
+		}
 
         if (args[0].contains("fail")) {
             throw new RuntimeException("It's supposed to fail");

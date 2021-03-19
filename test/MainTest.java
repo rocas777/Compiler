@@ -8,7 +8,7 @@ import pt.up.fe.comp.TestUtils;
 import pt.up.fe.specs.util.SpecsIo;
 
 public class MainTest {
-
+        
     @Test
     public void parse1() {
         Main main = new Main();
