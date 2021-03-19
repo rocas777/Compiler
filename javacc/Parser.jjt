@@ -84,7 +84,7 @@ MORE :
 JAVACODE
 void pushErrorNode() #void
 {
-    jjtree.pushNode(new SimpleNode(48));
+    jjtree.pushNode(new SimpleNode(46));
 }
 
 JAVACODE
@@ -221,8 +221,20 @@ void Expression() #void : {Token t1,t2;}
     | t1=<IDENTIFIER> {jjtThis.name = t1.image;} #VariableName ExpressionLFRFix()
     | <THIS> #This ExpressionLFRFix()
     | <NEW> (ArrayInitializer() | ConstructorCall()) ExpressionLFRFix()
-    | "!" Expression() #Negation(1) ExpressionLFRFix()
+    | "!" Expression2() #Negation(1) ExpressionLFRFix()
     | <OPENPAR> Expression() <CLOSEPAR> ExpressionLFRFix()
+}
+
+void Expression2() #void : {Token t1, t2;}
+{
+    t2=<INTEGERLITERAL> {jjtThis.numericalValue = t2.image;} #IntegerLiteral 
+    | <TRUE> #True 
+    | <FALSE> #False 
+    | t1=<IDENTIFIER> {jjtThis.name = t1.image;} #VariableName 
+    | <THIS> #This 
+    | <NEW> (ArrayInitializer() | ConstructorCall()) 
+    | "!" Expression2() #Negation(1) 
+    | <OPENPAR> Expression() <CLOSEPAR> 
 }
 
 void Expression3() #void : {Token t1;}
@@ -232,7 +244,7 @@ void Expression3() #void : {Token t1;}
     | <FALSE> #False ExpressionLFRFix()
     | <THIS> #This ExpressionLFRFix()
     | <NEW> (ArrayInitializer() | ConstructorCall()) #New ExpressionLFRFix()
-    | "!" Expression() #Negation(1) ExpressionLFRFix()
+    | "!" Expression2() #Negation(1) ExpressionLFRFix()
     | <OPENPAR> Expression() <CLOSEPAR> ExpressionLFRFix()
 }
 
