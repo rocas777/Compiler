@@ -107,7 +107,7 @@ void error_skipto(String description) #void {
     Token t;
 
     t = getToken(1);
-    System.out.println("Unexpected \"" + t.image + "\" in " + description + " at line " + t.beginLine + "!");
+    System.out.println("Unexpected \"" + t.image + "\" in " + description + " at line " + t.beginLine + ", at column " + t.beginColumn + "!");
 
     while(t.kind != EOF && t.kind != OPENCUR && t.kind != CLOSEPAR)
     {
