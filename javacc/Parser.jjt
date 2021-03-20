@@ -98,7 +98,7 @@ void handleError(ParseException e) #void
     if (errorCounter == errorLimit)
     {
         addReportToMain("Error found in while expression!", ReportType.ERROR);
-        throw e; 
+        throw new ParseException("Found 10 errors! Will stop parsing!");
     }  
 }
 
@@ -116,7 +116,11 @@ void error_skipto(String description) #void {
         t = getToken(1);
     }
 
-    if (t.kind == CLOSEPAR) getNextToken();
+    while (t.kind == CLOSEPAR)
+    {
+        t = getNextToken();
+        t = getToken(1);
+    } 
 }
 
 JAVACODE

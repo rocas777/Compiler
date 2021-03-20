@@ -24,9 +24,11 @@ class Fac extends Something
 
     public static void main(String[] args)
     {
-        
+        int i;
+        boolean b;
         int i;
         boolean a;
+        
         i = 0;
         //a = !(!this.gt(a, b) && !this.eq(a, b));
         a = i.get() && true;
@@ -38,9 +40,6 @@ class Fac extends Something
         a = !true && (false && false);
         a = !new Main();
         a = 1 + 2 * 3 + 4;
-        while (int)
-        {
-            i = 2;
-        }
+        
     }
 }
