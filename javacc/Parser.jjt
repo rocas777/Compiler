@@ -94,6 +94,7 @@ void handleError(ParseException e) #void
     error_skipto("while expression");
     errorCounter++;
     pushErrorNode();
+    Main.dumpTree = false;
     if (errorCounter == errorLimit)
     {
         addReportToMain("Error found in while expression!", ReportType.ERROR);
@@ -197,10 +198,10 @@ void Statement() #void : {Token t1;}
    {
         Expression() <CLOSEPAR>
    }
-   catch(ParseException e)
+   catch (ParseException e)
    {
         handleError(e);
-   } Body() #While(2)
+   }  Body() #While(2)
     | Expression3() <SEMICOLON>
     | (t1=<IDENTIFIER> {jjtThis.name = t1.image;} #AssignRecipient) (
         "=" Assignee() #Assign(2)

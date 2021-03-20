@@ -16,6 +16,7 @@ import java.io.StringReader;
 public class Main implements JmmParser {
 
 	public static List<Report> reports;
+	public static boolean dumpTree = true;
 
 	public JmmParserResult parse(String jmmCode) {
 		
@@ -25,7 +26,7 @@ public class Main implements JmmParser {
 		    Parser myParser = new Parser(new StringReader(jmmCode));
     		SimpleNode root = myParser.Program(); // returns reference to root node
             	
-    		root.dump(""); // prints the tree on the screen
+    		if (dumpTree) root.dump(""); // prints the tree on the screen
 			
 
     		return new JmmParserResult(root, reports);
