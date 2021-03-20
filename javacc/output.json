@@ -6,7 +6,15 @@
       {
         "kind": "ImportDeclaration",
         "attributes": {},
-        "children": []
+        "children": [
+          {
+            "kind": "ImportMaterial",
+            "attributes": {
+              "name": "ioPlus"
+            },
+            "children": []
+          }
+        ]
       },
       {
         "kind": "ClassDeclaration",
@@ -15,7 +23,7 @@
           {
             "kind": "ClassName",
             "attributes": {
-              "name": "MissingRightPar"
+              "name": "HelloWorld"
             },
             "children": []
           },
@@ -35,37 +43,25 @@
                 "attributes": {},
                 "children": [
                   {
-                    "kind": "SmallerThan",
+                    "kind": "AND",
                     "attributes": {},
                     "children": [
                       {
-                        "kind": "VariableName",
-                        "attributes": {
-                          "name": "i"
-                        },
-                        "children": []
+                        "kind": "Neg",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "kind": "ID",
+                            "attributes": {},
+                            "children": []
+                          }
+                        ]
                       },
                       {
-                        "kind": "IntegerLiteral",
+                        "kind": "ttt",
                         "attributes": {
-                          "numericalValue": "10"
+                          "name": "3"
                         },
-                        "children": []
-                      }
-                    ]
-                  },
-                  {
-                    "kind": "While",
-                    "attributes": {},
-                    "children": [
-                      {
-                        "kind": "Error",
-                        "attributes": {},
-                        "children": []
-                      },
-                      {
-                        "kind": "Body",
-                        "attributes": {},
                         "children": []
                       }
                     ]
@@ -78,12 +74,5 @@
       }
     ]
   },
-  "reports": [
-    {
-      "type": "WARNING",
-      "stage": "SYNTATIC",
-      "line": 3,
-      "message": "Error found in while expression!"
-    }
-  ]
+  "reports": []
 }
