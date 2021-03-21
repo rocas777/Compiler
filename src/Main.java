@@ -40,17 +40,20 @@ public class Main implements JmmParser {
 		var fileContents = SpecsIo.read(args[0]);
 		var result = main.parse(fileContents);
 
-		String jsonTree = result.toJson();
-		File jsonFile = new File("javacc/output.json");
-		try
+		if (dumpTree)
 		{
-			FileWriter writer = new FileWriter(jsonFile);
-			writer.write(jsonTree);
-			writer.close();
-		}
-		catch (IOException e)
-		{
-			System.out.println(e.toString());
+			String jsonTree = result.toJson();
+			File jsonFile = new File("javacc/output.json");
+			try
+			{
+				FileWriter writer = new FileWriter(jsonFile);
+				writer.write(jsonTree);
+				writer.close();
+			}
+			catch (IOException e)
+			{
+				System.out.println(e.toString());
+			}
 		}
 
         if (args[0].contains("fail")) {
