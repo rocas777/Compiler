@@ -1,3 +1,8 @@
+options
+{
+    DEBUG_PARSER=true;
+}
+
 PARSER_BEGIN(Parser)
 
 import pt.up.fe.comp.jmm.report.Report;
@@ -172,7 +177,7 @@ void MainMethodDeclaration() : {Token t1;}
     <STATIC> <VOID> <MAIN> <OPENPAR> <STRING> "[" "]" t1=<IDENTIFIER> {jjtThis.name = t1.image;} #ArgName <CLOSEPAR> <OPENCUR> MethodBody() "}"
 }
 
-void MethodBody()  #Body : {}{
+void MethodBody() #Body : {}{
     (LOOKAHEAD(2) VarDeclaration())* (Statement())*
 }
 
@@ -221,7 +226,7 @@ void MethodCallArgs() #Args : {}
 
 
 
-void Statement()  #void: {Token t1;}
+void Statement() #void: {Token t1;}
 {
     <OPENCUR> (Statement() )* "}"
     | <IF> <OPENPAR> Expression() <CLOSEPAR> Body()  #If(2) <ELSE> Statement() #Else
@@ -263,7 +268,7 @@ void Expression() #void : {Token t1,t2;}
 
 }
 
-void Expression1()  #void : {}
+void Expression1() #void : {}
 {
 
     ("!" Expr3I()
@@ -312,13 +317,13 @@ void Expr3I() #void : {}
     )*
 }
 
-void C()  #void : {}
+void C() #void : {}
 {
     (("[" Expression()"]") #ArrayIndex) #ArrayAccess(2)
     | "." ( MethodCall() | AttributeCall())
 }
 
-void P()  #void : {Token t1,t2;}
+void P() #void : {Token t1,t2;}
 {
     t1=<INTEGERLITERAL> {jjtThis.name = t1.image;} #IntegerLiteral
     | <TRUE> #True
@@ -330,7 +335,7 @@ void P()  #void : {Token t1,t2;}
     | <OPENPAR> Expression() <CLOSEPAR>
 }
 
-void P1()  #void : {Token t1,t2;}
+void P1() #void : {Token t1,t2;}
 {
     t1=<INTEGERLITERAL> {jjtThis.name = t1.image;} #IntegerLiteral
     | <TRUE> #True
@@ -340,7 +345,7 @@ void P1()  #void : {Token t1,t2;}
     | <OPENPAR> Expression() <CLOSEPAR>
 }
 
-void PI()  #void : {Token t1,t2;}
+void PI() #void : {Token t1,t2;}
 {
     t1=<INTEGERLITERAL> {jjtThis.name = t1.image;} #IntegerLiteral
     | <TRUE> #True
