@@ -46,7 +46,7 @@ TOKEN:
     | < IDENTIFIER : (["a"-"z","A"-"Z","_","$"])(["a"-"z","A"-"Z","0"-"9","_","$"])* >
 }
 
-/* COMMENTS - SECTION COPIED FROM SAMPLE JAVA1.1 FILE PROVIDED */ 
+/* COMMENTS - SECTION COPIED FROM SAMPLE JAVA1.1 FILE PROVIDED */
 
 MORE :
 {
@@ -99,7 +99,7 @@ void handleError(ParseException e) #void
     {
         addReportToMain("Error found in while expression!", ReportType.ERROR);
         throw new ParseException("Found 10 errors! Will stop parsing!");
-    }  
+    }
 }
 
 JAVACODE
@@ -112,15 +112,15 @@ void error_skipto(String description) #void {
 
     while(t.kind != EOF && t.kind != OPENCUR && t.kind != CLOSEPAR)
     {
-        t = getNextToken();
+        getNextToken();
         t = getToken(1);
     }
 
     while (t.kind == CLOSEPAR)
     {
-        t = getNextToken();
+        getNextToken();
         t = getToken(1);
-    } 
+    }
 }
 
 JAVACODE
@@ -149,7 +149,7 @@ void ImportMaterial() : {Token t1,t2;}
 
 void ClassDeclaration() : {Token t1,t2;}
 {
-    <CLASS> (t1=<IDENTIFIER> {jjtThis.name = t1.image;} #ClassName) (<EXTENDS> t2=<IDENTIFIER> {jjtThis.name = t2.image;} #ExtendedClassName)? <OPENCUR> (VarDeclaration())* (MethodDeclaration())* "}"
+    <CLASS> (t1=<IDENTIFIER> {jjtThis.name = t1.image;} #Name) (<EXTENDS> t2=<IDENTIFIER> {jjtThis.name = t2.image;} #ExtendedClassName)? <OPENCUR> ( ((VarDeclaration())* #Vars) ((MethodDeclaration())* #Methods)) #Body "}"
 }
 
 void VarDeclaration() : {Token t1,t2;}
@@ -169,16 +169,16 @@ void NormalMethodDeclaration() : {Token t1,t2;}
 
 void MainMethodDeclaration() : {Token t1;}
 {
-    <STATIC> <VOID> <MAIN> <OPENPAR> <STRING> "[" "]" t1=<IDENTIFIER> {jjtThis.name = t1.image;} #ClArgsName <CLOSEPAR> <OPENCUR> MethodBody() "}"
+    <STATIC> <VOID> <MAIN> <OPENPAR> <STRING> "[" "]" t1=<IDENTIFIER> {jjtThis.name = t1.image;} #ArgName <CLOSEPAR> <OPENCUR> MethodBody() "}"
 }
 
-void MethodBody()  #Body : {}{
+void MethodBody() #Body : {}{
     (LOOKAHEAD(2) VarDeclaration())* (Statement())*
 }
 
 void MethodDeclarationArgs() #Args: {Token t1,t2,t3,t4;}
 {
-    ((t3=Type() {jjtThis.type = t3.image;} #ParameterType) (t1=<IDENTIFIER> {jjtThis.name = t1.image;} #ParameterName) #Parameter(2)) ("," ((t4=Type() {jjtThis.type = t4.image;} #ParameterType) (t2=<IDENTIFIER> {jjtThis.name = t2.image;} #ParameterName) #Parameter(2)) )*
+    ((t3=Type() {jjtThis.type = t3.image;} #ParameterType) (t1=<IDENTIFIER> {jjtThis.name = t1.image;} #ParameterName) #Parameter(2)) ("," ((t4=Type() {jjtThis.type = t4.image;} #ParameterType) (t2=<IDENTIFIER> {jjtThis.name = t2.image;} #ParameterName)) #Parameter(2))*
 }
 
 Token Type() #void : {Token t1,t2,t3;}
@@ -193,66 +193,6 @@ void Body() : {}
     Statement()
 }
 
-void Statement() #void : {Token t1;}
-{
-    <OPENCUR> (Statement() )* "}"
-    | <IF> <OPENPAR> Expression() <CLOSEPAR> Body()  #If(2) <ELSE> Statement() #Else
-    | <WHILE> <OPENPAR>
-   try
-   {
-        Expression() <CLOSEPAR>
-   }
-   catch (ParseException e)
-   {
-        handleError(e);
-   }  Body() #While(2)
-    | Expression3() <SEMICOLON>
-    | (t1=<IDENTIFIER> {jjtThis.name = t1.image;} #AssignRecipient) (
-        "=" Assignee() #Assign(2)
-            | "[" Expression() #ArrayIndex "]" #ArrayAccess(2) ("=" Expression() #Assign(2) <SEMICOLON> | ExpressionLFRFix())
-            | ExpressionLFRFix2() <SEMICOLON> )
-}
-
-void Assignee() #void : {}
-{
-    Expression() <SEMICOLON>
-}
-
-void Expression() #void : {Token t1,t2;}
-{
-    t2=<INTEGERLITERAL> {jjtThis.numericalValue = t2.image;} #IntegerLiteral ExpressionLFRFix()
-    | <TRUE> #True ExpressionLFRFix()
-    | <FALSE> #False ExpressionLFRFix()
-    | t1=<IDENTIFIER> {jjtThis.name = t1.image;} #VariableName ExpressionLFRFix()
-    | <THIS> #This ExpressionLFRFix()
-    | <NEW> (ArrayInitializer() | ConstructorCall()) ExpressionLFRFix()
-    | "!" Expression2() #Negation(1) ExpressionLFRFix()
-    | <OPENPAR> Expression() <CLOSEPAR> ExpressionLFRFix()
-}
-
-void Expression2() #void : {Token t1, t2;}
-{
-    t2=<INTEGERLITERAL> {jjtThis.numericalValue = t2.image;} #IntegerLiteral 
-    | <TRUE> #True 
-    | <FALSE> #False 
-    | t1=<IDENTIFIER> {jjtThis.name = t1.image;} #VariableName 
-    | <THIS> #This 
-    | <NEW> (ArrayInitializer() | ConstructorCall()) 
-    | "!" Expression2() #Negation(1) 
-    | <OPENPAR> Expression() <CLOSEPAR> 
-}
-
-void Expression3() #void : {Token t1;}
-{
-    t1=<INTEGERLITERAL> {jjtThis.numericalValue = t1.image;} #IntegerLiteral ExpressionLFRFix()
-    | <TRUE> #True ExpressionLFRFix()
-    | <FALSE> #False ExpressionLFRFix()
-    | <THIS> #This ExpressionLFRFix()
-    | <NEW> (ArrayInitializer() | ConstructorCall()) #New ExpressionLFRFix()
-    | "!" Expression2() #Negation(1) ExpressionLFRFix()
-    | <OPENPAR> Expression() <CLOSEPAR> ExpressionLFRFix()
-}
-
 void ArrayInitializer() : {}
 {
     <INT> "[" Expression() "]"
@@ -260,25 +200,13 @@ void ArrayInitializer() : {}
 
 void ConstructorCall() : {Token t1;}
 {
-    t1=<IDENTIFIER> {jjtThis.name = t1.image;} #NewObjectClassName <OPENPAR> <CLOSEPAR>
+    t1=<IDENTIFIER> {jjtThis.name = t1.image;} #ObjectClassName <OPENPAR> <CLOSEPAR>
 }
 
-void ExpressionLFRFix() #void : {}
-{
-    (LOOKAHEAD(2) (Operation() ExpressionLFRFix()
-    | "[" Expression() "]" #ArrayAccess(2) ExpressionLFRFix()
-    | "." ( MethodCall() | AttributeCall()) ExpressionLFRFix()  ))?
-}
-
-void ExpressionLFRFix2() #void : {}
-{
-    (Operation() ExpressionLFRFix()
-    | "." ( MethodCall() | AttributeCall()) ExpressionLFRFix()  )?
-}
 
 void MethodCall() #void : {Token t1;}
 {
-    t1=<IDENTIFIER> {jjtThis.name = t1.image;} #MethodName <OPENPAR> MethodCallArgs() <CLOSEPAR> #MethodCall(3) ExpressionLFRFix()
+    t1=<IDENTIFIER> {jjtThis.name = t1.image;} #MethodName <OPENPAR> MethodCallArgs() <CLOSEPAR> #Method(3)
 }
 
 void AttributeCall() #void : {}
@@ -291,12 +219,128 @@ void MethodCallArgs() #Args : {}
     (Expression() ( "," Expression())*)?
 }
 
-void Operation() #void : {}
+
+
+void Statement() #void: {Token t1;}
 {
-    "&&" Expression() #And(2)
-    | "<" Expression() #SmallerThan(2)
-    | "+" Expression() #Addition(2)
-    | "-" Expression() #Subtraction(2)
-    | "*" Expression() #Multiplication(2)
-    | "/" Expression() #Division(2)
+    <OPENCUR> (Statement() )* "}"
+    | <IF> <OPENPAR> Expression() <CLOSEPAR> Body()  #If(2) <ELSE> Statement() #Else
+    | <WHILE> <OPENPAR>
+   try
+   {
+        Expression() <CLOSEPAR>
+   }
+   catch (ParseException e)
+   {
+        handleError(e);
+   }  Body()  #While(2)
+   | Expression1() ";"
+   | id()
+   }
+
+void id() #void: {Token t1;}
+{
+    t1=<IDENTIFIER> ({jjtThis.name = t1.image;} #Assigned "=" Expression() #Assign(2) | Expression() | ({jjtThis.name = t1.image;} #VariableName) (("[" Expression()"]") #ArrayIndex) #ArrayAccess(2)  ( "=" (Expression()) #Assign(2))? | {jjtThis.name = t1.image;} #Object "." (  MethodCall() | AttributeCall()))? ";"
 }
+
+void Expression() #void : {Token t1,t2;}
+{
+
+    Expr3()
+               (
+                   "+" Expr3() #Add(2)
+                   | "-" Expr3() #Sub(2)
+                   | "<" Expr3() #LessThan(2)
+                   | "&&" Expr3() #AND(2)
+               )*
+
+}
+
+void Expression1() #void : {}
+{
+
+    Expr2()
+         (
+             "+" Expr3() #Add(2)
+             | "-" Expr3() #Sub(2)
+             | "<" Expr3() #LessThan(2)
+             | "&&" Expr3() #AND(2)
+         )*
+}
+
+void Expr2() #void : {}
+{
+    Expr4()
+    (
+        "*" Expr5() #Mul(2)
+        | "/" Expr5() #Div(2)
+    )*
+}
+
+void Expr3() #void : {}
+{
+    Expr5()
+    (
+        "*" Expr5() #Mul(2)
+        | "/" Expr5() #Div(2)
+    )*
+}
+
+
+void Expr4() #void : {}
+{
+    P1()
+    (
+        C()
+    )*
+    |
+    ("!" P()
+        (
+            C()
+        )*) #Neg
+}
+
+void Expr5() #void : {}
+{
+    P()
+    (
+        C()
+    )*
+    |
+    ("!" P()
+        (
+            C()
+        )*) #Neg
+}
+
+void C() #void : {}
+{
+    (("[" Expression()"]") #ArrayIndex) #ArrayAccess(2)
+    | "." ( MethodCall() | AttributeCall())
+}
+
+void P() #void : {Token t1,t2;}
+{
+    t1=<INTEGERLITERAL> {jjtThis.name = t1.image;} #IntegerLiteral
+    | <TRUE> #True
+    | <FALSE> #False
+    | t1=<IDENTIFIER> {jjtThis.name = t1.image;} #VariableName
+    | <THIS> #This
+    | <NEW> (ArrayInitializer() | ConstructorCall())
+    | <OPENPAR> Expression() <CLOSEPAR>
+}
+
+void P1() #void : {Token t1,t2;}
+{
+    t1=<INTEGERLITERAL> {jjtThis.name = t1.image;} #IntegerLiteral
+    | <TRUE> #True
+    | <FALSE> #False
+    | <THIS> #This
+    | <NEW> (ArrayInitializer() | ConstructorCall()) #NEW
+    | <OPENPAR> Expression() <CLOSEPAR>
+}
+
+
+
+
+

@@ -1,6 +1,6 @@
-import static io.println(int) void;
-import static io.println() void;
-class Turing {
+import io.println;
+import io.println;
+class Turing extends Batata{
 
     int NUM_SYMBOLS;
     int NUM_STATES;
@@ -21,10 +21,11 @@ class Turing {
 
     public static void main(String[] a) {
         Turing t;
-        
         t = new Turing();
+        a[6] = 9;
         t.init_bb_3s2sy();
         t.run();
+
     }
 
     
