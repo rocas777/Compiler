@@ -149,7 +149,7 @@ void ImportMaterial() : {Token t1,t2;}
 
 void ClassDeclaration() : {Token t1,t2;}
 {
-    <CLASS> (t1=<IDENTIFIER> {jjtThis.name = t1.image;} #ClassName) (<EXTENDS> t2=<IDENTIFIER> {jjtThis.name = t2.image;} #ExtendedClassName)? <OPENCUR> (VarDeclaration())* (MethodDeclaration())* "}"
+    <CLASS> (t1=<IDENTIFIER> {jjtThis.name = t1.image;} #Name) (<EXTENDS> t2=<IDENTIFIER> {jjtThis.name = t2.image;} #ExtendedClassName)? <OPENCUR> ( ((VarDeclaration())* #Vars) ((MethodDeclaration())* #Methods)) #Body "}"
 }
 
 void VarDeclaration() : {Token t1,t2;}
@@ -169,7 +169,7 @@ void NormalMethodDeclaration() : {Token t1,t2;}
 
 void MainMethodDeclaration() : {Token t1;}
 {
-    <STATIC> <VOID> <MAIN> <OPENPAR> <STRING> "[" "]" t1=<IDENTIFIER> {jjtThis.name = t1.image;} #ClArgsName <CLOSEPAR> <OPENCUR> MethodBody() "}"
+    <STATIC> <VOID> <MAIN> <OPENPAR> <STRING> "[" "]" t1=<IDENTIFIER> {jjtThis.name = t1.image;} #ArgName <CLOSEPAR> <OPENCUR> MethodBody() "}"
 }
 
 void MethodBody()  #Body : {}{
@@ -178,7 +178,7 @@ void MethodBody()  #Body : {}{
 
 void MethodDeclarationArgs() #Args: {Token t1,t2,t3,t4;}
 {
-    ((t3=Type() {jjtThis.type = t3.image;} #ParameterType) (t1=<IDENTIFIER> {jjtThis.name = t1.image;} #ParameterName)) ("," ((t4=Type() {jjtThis.type = t4.image;} #ParameterType) (t2=<IDENTIFIER> {jjtThis.name = t2.image;} #ParameterName)) )*
+    ((t3=Type() {jjtThis.type = t3.image;} #ParameterType) (t1=<IDENTIFIER> {jjtThis.name = t1.image;} #ParameterName) #Parameter(2)) ("," ((t4=Type() {jjtThis.type = t4.image;} #ParameterType) (t2=<IDENTIFIER> {jjtThis.name = t2.image;} #ParameterName)) #Parameter(2))*
 }
 
 Token Type() #void : {Token t1,t2,t3;}
@@ -192,10 +192,6 @@ void Body() : {}
 {
     Statement()
 }
-void Assignee() #void : {}
-{
-    Expression() <SEMICOLON>
-}
 
 void ArrayInitializer() : {}
 {
@@ -204,13 +200,13 @@ void ArrayInitializer() : {}
 
 void ConstructorCall() : {Token t1;}
 {
-    t1=<IDENTIFIER> {jjtThis.name = t1.image;} #NewObjectClassName <OPENPAR> <CLOSEPAR>
+    t1=<IDENTIFIER> {jjtThis.name = t1.image;} #ObjectClassName <OPENPAR> <CLOSEPAR>
 }
 
 
 void MethodCall() #void : {Token t1;}
 {
-    t1=<IDENTIFIER> {jjtThis.name = t1.image;} #MethodName <OPENPAR> MethodCallArgs() <CLOSEPAR>
+    t1=<IDENTIFIER> {jjtThis.name = t1.image;} #MethodName <OPENPAR> MethodCallArgs() <CLOSEPAR> #Method(3)
 }
 
 void AttributeCall() #void : {}
@@ -228,8 +224,8 @@ void MethodCallArgs() #Args : {}
 void Statement()  #void: {Token t1;}
 {
     <OPENCUR> (Statement() )* "}"
-        | <IF> <OPENPAR> Expression() <CLOSEPAR> Body()  #If(2) <ELSE> Statement() #Else
-        | <WHILE> <OPENPAR>
+    | <IF> <OPENPAR> Expression() <CLOSEPAR> Body()  #If(2) <ELSE> Statement() #Else
+    | <WHILE> <OPENPAR>
    try
    {
         Expression() <CLOSEPAR>
@@ -237,39 +233,53 @@ void Statement()  #void: {Token t1;}
    catch (ParseException e)
    {
         handleError(e);
-   }  Body()
-   | B1() ";"
-   | <IDENTIFIER> ( "=" Expression()| B()| "[" Expression() "]" ("=" Expression() )? | "." (  MethodCall() | AttributeCall())) ";"
+   }  Body()  #While(2)
+   | Expression1() ";"
+   | id()
+   }
+
+void id() #void: {Token t1;}
+{
+    t1=<IDENTIFIER> ({jjtThis.name = t1.image;} #Assigned "=" Expression() #Assign(2) | Expression() | ({jjtThis.name = t1.image;} #VariableName) (("[" Expression()"]") #ArrayIndex) #ArrayAcess(2)  ( "=" (Expression()) #Assign(2))? | {jjtThis.name = t1.image;} #Object "." (  MethodCall() | AttributeCall())) ";"
 }
 
 void Expression() #void : {Token t1,t2;}
 {
-    B()
+
+    ("!" Expr3I()
+        (
+            "+" Expr3() #Add(2)
+            | "-" Expr3() #Sub(2)
+            | "<" Expr3() #LessThan(2)
+            | "&&" Expr3() #AND(2)
+        )*) #Neg
+     | Expr3I()
+               (
+                   "+" Expr3() #Add(2)
+                   | "-" Expr3() #Sub(2)
+                   | "<" Expr3() #LessThan(2)
+                   | "&&" Expr3() #AND(2)
+               )*
+
 }
 
-
-void B()  #void : {}
+void Expression1()  #void : {}
 {
-    Expr3()
+
+    ("!" Expr3I()
     (
-        {System.out.println("0");}
         "+" Expr3() #Add(2)
         | "-" Expr3() #Sub(2)
         | "<" Expr3() #LessThan(2)
         | "&&" Expr3() #AND(2)
-    )*
-}
-
-void B1()  #void : {}
-{
-    Expr2()
-    (
-        {System.out.println("1");}
-        "+" Expr3() #Add(2)
-        | "-" Expr3() #Sub(2)
-        | "<" Expr3() #LessThan(2)
-        | "&&" Expr3() #AND(2)
-    )*
+    )*) #Neg
+    |Expr2()
+         (
+             "+" Expr3() #Add(2)
+             | "-" Expr3() #Sub(2)
+             | "<" Expr3() #LessThan(2)
+             | "&&" Expr3() #AND(2)
+         )*
 }
 
 void Expr2() #void : {}
@@ -292,36 +302,54 @@ void Expr3() #void : {}
     )*
 }
 
+void Expr3I() #void : {}
+{
+    PI()
+    (
+        "*" P() #Mul(2)
+        | "/" P() #Div(2)
+        | C()
+    )*
+}
+
 void C()  #void : {}
 {
-    "[" Expression() "]"
+    (("[" Expression()"]") #ArrayIndex) #ArrayAccess(2)
     | "." ( MethodCall() | AttributeCall())
 }
 
 void P()  #void : {Token t1,t2;}
 {
-    t1=<INTEGERLITERAL> {jjtThis.name = t1.image;} #ttt
+    t1=<INTEGERLITERAL> {jjtThis.name = t1.image;} #IntegerLiteral
     | <TRUE> #True
     | <FALSE> #False
-    | <IDENTIFIER> #ID
+    | t1=<IDENTIFIER> {jjtThis.name = t1.image;} #VariableName
     | <THIS> #This
-    | <NEW> (ArrayInitializer() | ConstructorCall()) #NEW
-    | "!" P() #Neg
+    | <NEW> (ArrayInitializer() | ConstructorCall())
+    | ("!" P() ) #Neg
     | <OPENPAR> Expression() <CLOSEPAR>
 }
 
 void P1()  #void : {Token t1,t2;}
 {
-    t1=<INTEGERLITERAL> {jjtThis.name = t1.image;} #ttt
+    t1=<INTEGERLITERAL> {jjtThis.name = t1.image;} #IntegerLiteral
     | <TRUE> #True
     | <FALSE> #False
     | <THIS> #This
     | <NEW> (ArrayInitializer() | ConstructorCall()) #NEW
-    | "!" P() #Neg
     | <OPENPAR> Expression() <CLOSEPAR>
 }
 
-
+void PI()  #void : {Token t1,t2;}
+{
+    t1=<INTEGERLITERAL> {jjtThis.name = t1.image;} #IntegerLiteral
+    | <TRUE> #True
+    | <FALSE> #False
+    | t1=<IDENTIFIER> {jjtThis.name = t1.image;} #VariableName
+    | <THIS> #This
+    | <NEW> (ArrayInitializer() | ConstructorCall())
+    | <OPENPAR> Expression() <CLOSEPAR>
+}
 
 
 

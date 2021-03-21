@@ -10,7 +10,14 @@
           {
             "kind": "ImportMaterial",
             "attributes": {
-              "name": "ioPlus"
+              "name": "io.println"
+            },
+            "children": []
+          },
+          {
+            "kind": "ImportMaterial",
+            "attributes": {
+              "name": "io.println"
             },
             "children": []
           }
@@ -21,48 +28,3755 @@
         "attributes": {},
         "children": [
           {
-            "kind": "ClassName",
+            "kind": "Name",
             "attributes": {
-              "name": "HelloWorld"
+              "name": "Turing"
             },
             "children": []
           },
           {
-            "kind": "MainMethodDeclaration",
+            "kind": "ExtendedClassName",
+            "attributes": {
+              "name": "Batata"
+            },
+            "children": []
+          },
+          {
+            "kind": "Body",
             "attributes": {},
             "children": [
               {
-                "kind": "ClArgsName",
-                "attributes": {
-                  "name": "args"
-                },
-                "children": []
-              },
-              {
-                "kind": "Body",
+                "kind": "Vars",
                 "attributes": {},
                 "children": [
                   {
-                    "kind": "AND",
+                    "kind": "VarDeclaration",
                     "attributes": {},
                     "children": [
                       {
-                        "kind": "Neg",
+                        "kind": "VarType",
+                        "attributes": {
+                          "type": "int"
+                        },
+                        "children": []
+                      },
+                      {
+                        "kind": "VarName",
+                        "attributes": {
+                          "name": "NUM_SYMBOLS"
+                        },
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "VarDeclaration",
+                    "attributes": {},
+                    "children": [
+                      {
+                        "kind": "VarType",
+                        "attributes": {
+                          "type": "int"
+                        },
+                        "children": []
+                      },
+                      {
+                        "kind": "VarName",
+                        "attributes": {
+                          "name": "NUM_STATES"
+                        },
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "VarDeclaration",
+                    "attributes": {},
+                    "children": [
+                      {
+                        "kind": "VarType",
+                        "attributes": {
+                          "type": "int[]"
+                        },
+                        "children": []
+                      },
+                      {
+                        "kind": "VarName",
+                        "attributes": {
+                          "name": "WTABLE"
+                        },
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "VarDeclaration",
+                    "attributes": {},
+                    "children": [
+                      {
+                        "kind": "VarType",
+                        "attributes": {
+                          "type": "int[]"
+                        },
+                        "children": []
+                      },
+                      {
+                        "kind": "VarName",
+                        "attributes": {
+                          "name": "MTABLE"
+                        },
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "VarDeclaration",
+                    "attributes": {},
+                    "children": [
+                      {
+                        "kind": "VarType",
+                        "attributes": {
+                          "type": "int[]"
+                        },
+                        "children": []
+                      },
+                      {
+                        "kind": "VarName",
+                        "attributes": {
+                          "name": "NTABLE"
+                        },
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "VarDeclaration",
+                    "attributes": {},
+                    "children": [
+                      {
+                        "kind": "VarType",
+                        "attributes": {
+                          "type": "int"
+                        },
+                        "children": []
+                      },
+                      {
+                        "kind": "VarName",
+                        "attributes": {
+                          "name": "H"
+                        },
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "VarDeclaration",
+                    "attributes": {},
+                    "children": [
+                      {
+                        "kind": "VarType",
+                        "attributes": {
+                          "type": "int"
+                        },
+                        "children": []
+                      },
+                      {
+                        "kind": "VarName",
+                        "attributes": {
+                          "name": "L"
+                        },
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "VarDeclaration",
+                    "attributes": {},
+                    "children": [
+                      {
+                        "kind": "VarType",
+                        "attributes": {
+                          "type": "int"
+                        },
+                        "children": []
+                      },
+                      {
+                        "kind": "VarName",
+                        "attributes": {
+                          "name": "R"
+                        },
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "VarDeclaration",
+                    "attributes": {},
+                    "children": [
+                      {
+                        "kind": "VarType",
+                        "attributes": {
+                          "type": "int[]"
+                        },
+                        "children": []
+                      },
+                      {
+                        "kind": "VarName",
+                        "attributes": {
+                          "name": "TAPE"
+                        },
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "VarDeclaration",
+                    "attributes": {},
+                    "children": [
+                      {
+                        "kind": "VarType",
+                        "attributes": {
+                          "type": "int"
+                        },
+                        "children": []
+                      },
+                      {
+                        "kind": "VarName",
+                        "attributes": {
+                          "name": "curState"
+                        },
+                        "children": []
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "VarDeclaration",
+                    "attributes": {},
+                    "children": [
+                      {
+                        "kind": "VarType",
+                        "attributes": {
+                          "type": "int"
+                        },
+                        "children": []
+                      },
+                      {
+                        "kind": "VarName",
+                        "attributes": {
+                          "name": "curPos"
+                        },
+                        "children": []
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "kind": "Methods",
+                "attributes": {},
+                "children": [
+                  {
+                    "kind": "MainMethodDeclaration",
+                    "attributes": {},
+                    "children": [
+                      {
+                        "kind": "ArgName",
+                        "attributes": {
+                          "name": "a"
+                        },
+                        "children": []
+                      },
+                      {
+                        "kind": "Body",
                         "attributes": {},
                         "children": [
                           {
-                            "kind": "ID",
+                            "kind": "VarDeclaration",
                             "attributes": {},
-                            "children": []
+                            "children": [
+                              {
+                                "kind": "VarType",
+                                "attributes": {
+                                  "type": "Turing"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "VarName",
+                                "attributes": {
+                                  "name": "t"
+                                },
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Assign",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "Assigned",
+                                "attributes": {
+                                  "name": "t"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "ConstructorCall",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "ObjectClassName",
+                                    "attributes": {
+                                      "name": "Turing"
+                                    },
+                                    "children": []
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Assign",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "ArrayAcess",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "VariableName",
+                                    "attributes": {
+                                      "name": "a"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "ArrayIndex",
+                                    "attributes": {},
+                                    "children": [
+                                      {
+                                        "kind": "IntegerLiteral",
+                                        "attributes": {
+                                          "name": "6"
+                                        },
+                                        "children": []
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "IntegerLiteral",
+                                "attributes": {
+                                  "name": "9"
+                                },
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Method",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "Object",
+                                "attributes": {
+                                  "name": "t"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "MethodName",
+                                "attributes": {
+                                  "name": "init_bb_3s2sy"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "Args",
+                                "attributes": {},
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Method",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "Object",
+                                "attributes": {
+                                  "name": "t"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "MethodName",
+                                "attributes": {
+                                  "name": "run"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "Args",
+                                "attributes": {},
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "NormalMethodDeclaration",
+                    "attributes": {},
+                    "children": [
+                      {
+                        "kind": "ReturnType",
+                        "attributes": {
+                          "type": "boolean"
+                        },
+                        "children": []
+                      },
+                      {
+                        "kind": "MethodName",
+                        "attributes": {
+                          "name": "init_bb_3s2sy"
+                        },
+                        "children": []
+                      },
+                      {
+                        "kind": "Body",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "kind": "Assign",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "Assigned",
+                                "attributes": {
+                                  "name": "TAPE"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "Method",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "This",
+                                    "attributes": {},
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "MethodName",
+                                    "attributes": {
+                                      "name": "initGeneric"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "Args",
+                                    "attributes": {},
+                                    "children": [
+                                      {
+                                        "kind": "IntegerLiteral",
+                                        "attributes": {
+                                          "name": "3"
+                                        },
+                                        "children": []
+                                      },
+                                      {
+                                        "kind": "IntegerLiteral",
+                                        "attributes": {
+                                          "name": "2"
+                                        },
+                                        "children": []
+                                      },
+                                      {
+                                        "kind": "IntegerLiteral",
+                                        "attributes": {
+                                          "name": "18"
+                                        },
+                                        "children": []
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Method",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "This",
+                                "attributes": {},
+                                "children": []
+                              },
+                              {
+                                "kind": "MethodName",
+                                "attributes": {
+                                  "name": "setTrans"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "Args",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "0"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "0"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "1"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "VariableName",
+                                    "attributes": {
+                                      "name": "R"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "1"
+                                    },
+                                    "children": []
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Method",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "This",
+                                "attributes": {},
+                                "children": []
+                              },
+                              {
+                                "kind": "MethodName",
+                                "attributes": {
+                                  "name": "setTrans"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "Args",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "0"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "1"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "1"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "VariableName",
+                                    "attributes": {
+                                      "name": "L"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "0"
+                                    },
+                                    "children": []
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Method",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "This",
+                                "attributes": {},
+                                "children": []
+                              },
+                              {
+                                "kind": "MethodName",
+                                "attributes": {
+                                  "name": "setTrans"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "Args",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "0"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "2"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "1"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "VariableName",
+                                    "attributes": {
+                                      "name": "L"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "1"
+                                    },
+                                    "children": []
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Method",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "This",
+                                "attributes": {},
+                                "children": []
+                              },
+                              {
+                                "kind": "MethodName",
+                                "attributes": {
+                                  "name": "setTrans"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "Args",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "1"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "0"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "1"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "VariableName",
+                                    "attributes": {
+                                      "name": "L"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "2"
+                                    },
+                                    "children": []
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Method",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "This",
+                                "attributes": {},
+                                "children": []
+                              },
+                              {
+                                "kind": "MethodName",
+                                "attributes": {
+                                  "name": "setTrans"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "Args",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "1"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "1"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "1"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "VariableName",
+                                    "attributes": {
+                                      "name": "R"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "1"
+                                    },
+                                    "children": []
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Method",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "This",
+                                "attributes": {},
+                                "children": []
+                              },
+                              {
+                                "kind": "MethodName",
+                                "attributes": {
+                                  "name": "setTrans"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "Args",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "1"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "2"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "1"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "VariableName",
+                                    "attributes": {
+                                      "name": "R"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "VariableName",
+                                    "attributes": {
+                                      "name": "H"
+                                    },
+                                    "children": []
+                                  }
+                                ]
+                              }
+                            ]
                           }
                         ]
                       },
                       {
-                        "kind": "ttt",
+                        "kind": "ReturnValue",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "kind": "True",
+                            "attributes": {},
+                            "children": []
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "NormalMethodDeclaration",
+                    "attributes": {},
+                    "children": [
+                      {
+                        "kind": "ReturnType",
                         "attributes": {
-                          "name": "3"
+                          "type": "boolean"
                         },
                         "children": []
+                      },
+                      {
+                        "kind": "MethodName",
+                        "attributes": {
+                          "name": "init_bb_4s2sy"
+                        },
+                        "children": []
+                      },
+                      {
+                        "kind": "Body",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "kind": "Assign",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "Assigned",
+                                "attributes": {
+                                  "name": "TAPE"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "Method",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "This",
+                                    "attributes": {},
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "MethodName",
+                                    "attributes": {
+                                      "name": "initGeneric"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "Args",
+                                    "attributes": {},
+                                    "children": [
+                                      {
+                                        "kind": "IntegerLiteral",
+                                        "attributes": {
+                                          "name": "4"
+                                        },
+                                        "children": []
+                                      },
+                                      {
+                                        "kind": "IntegerLiteral",
+                                        "attributes": {
+                                          "name": "2"
+                                        },
+                                        "children": []
+                                      },
+                                      {
+                                        "kind": "IntegerLiteral",
+                                        "attributes": {
+                                          "name": "20"
+                                        },
+                                        "children": []
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Method",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "This",
+                                "attributes": {},
+                                "children": []
+                              },
+                              {
+                                "kind": "MethodName",
+                                "attributes": {
+                                  "name": "setTrans"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "Args",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "0"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "0"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "1"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "VariableName",
+                                    "attributes": {
+                                      "name": "R"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "1"
+                                    },
+                                    "children": []
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Method",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "This",
+                                "attributes": {},
+                                "children": []
+                              },
+                              {
+                                "kind": "MethodName",
+                                "attributes": {
+                                  "name": "setTrans"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "Args",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "0"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "1"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "1"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "VariableName",
+                                    "attributes": {
+                                      "name": "L"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "0"
+                                    },
+                                    "children": []
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Method",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "This",
+                                "attributes": {},
+                                "children": []
+                              },
+                              {
+                                "kind": "MethodName",
+                                "attributes": {
+                                  "name": "setTrans"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "Args",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "0"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "2"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "1"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "VariableName",
+                                    "attributes": {
+                                      "name": "R"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "VariableName",
+                                    "attributes": {
+                                      "name": "H"
+                                    },
+                                    "children": []
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Method",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "This",
+                                "attributes": {},
+                                "children": []
+                              },
+                              {
+                                "kind": "MethodName",
+                                "attributes": {
+                                  "name": "setTrans"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "Args",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "0"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "3"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "1"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "VariableName",
+                                    "attributes": {
+                                      "name": "R"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "3"
+                                    },
+                                    "children": []
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Method",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "This",
+                                "attributes": {},
+                                "children": []
+                              },
+                              {
+                                "kind": "MethodName",
+                                "attributes": {
+                                  "name": "setTrans"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "Args",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "1"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "0"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "1"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "VariableName",
+                                    "attributes": {
+                                      "name": "L"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "1"
+                                    },
+                                    "children": []
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Method",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "This",
+                                "attributes": {},
+                                "children": []
+                              },
+                              {
+                                "kind": "MethodName",
+                                "attributes": {
+                                  "name": "setTrans"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "Args",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "1"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "1"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "0"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "VariableName",
+                                    "attributes": {
+                                      "name": "L"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "2"
+                                    },
+                                    "children": []
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Method",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "This",
+                                "attributes": {},
+                                "children": []
+                              },
+                              {
+                                "kind": "MethodName",
+                                "attributes": {
+                                  "name": "setTrans"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "Args",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "1"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "2"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "1"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "VariableName",
+                                    "attributes": {
+                                      "name": "L"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "3"
+                                    },
+                                    "children": []
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Method",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "This",
+                                "attributes": {},
+                                "children": []
+                              },
+                              {
+                                "kind": "MethodName",
+                                "attributes": {
+                                  "name": "setTrans"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "Args",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "1"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "3"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "0"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "VariableName",
+                                    "attributes": {
+                                      "name": "R"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "0"
+                                    },
+                                    "children": []
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ReturnValue",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "kind": "True",
+                            "attributes": {},
+                            "children": []
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "NormalMethodDeclaration",
+                    "attributes": {},
+                    "children": [
+                      {
+                        "kind": "ReturnType",
+                        "attributes": {
+                          "type": "boolean"
+                        },
+                        "children": []
+                      },
+                      {
+                        "kind": "MethodName",
+                        "attributes": {
+                          "name": "run"
+                        },
+                        "children": []
+                      },
+                      {
+                        "kind": "Body",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "kind": "VarDeclaration",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "VarType",
+                                "attributes": {
+                                  "type": "int"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "VarName",
+                                "attributes": {
+                                  "name": "dummy"
+                                },
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "VarDeclaration",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "VarType",
+                                "attributes": {
+                                  "type": "boolean"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "VarName",
+                                "attributes": {
+                                  "name": "halt"
+                                },
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "VarDeclaration",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "VarType",
+                                "attributes": {
+                                  "type": "Turing"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "VarName",
+                                "attributes": {
+                                  "name": "t"
+                                },
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Assign",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "Assigned",
+                                "attributes": {
+                                  "name": "t"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "This",
+                                "attributes": {},
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Assign",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "Assigned",
+                                "attributes": {
+                                  "name": "halt"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "False",
+                                "attributes": {},
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "While",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "Neg",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "VariableName",
+                                    "attributes": {
+                                      "name": "halt"
+                                    },
+                                    "children": []
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Body",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "Method",
+                                    "attributes": {},
+                                    "children": [
+                                      {
+                                        "kind": "This",
+                                        "attributes": {},
+                                        "children": []
+                                      },
+                                      {
+                                        "kind": "MethodName",
+                                        "attributes": {
+                                          "name": "printTape"
+                                        },
+                                        "children": []
+                                      },
+                                      {
+                                        "kind": "Args",
+                                        "attributes": {},
+                                        "children": []
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Assign",
+                                    "attributes": {},
+                                    "children": [
+                                      {
+                                        "kind": "Assigned",
+                                        "attributes": {
+                                          "name": "dummy"
+                                        },
+                                        "children": []
+                                      },
+                                      {
+                                        "kind": "Method",
+                                        "attributes": {},
+                                        "children": [
+                                          {
+                                            "kind": "VariableName",
+                                            "attributes": {
+                                              "name": "io"
+                                            },
+                                            "children": []
+                                          },
+                                          {
+                                            "kind": "MethodName",
+                                            "attributes": {
+                                              "name": "read"
+                                            },
+                                            "children": []
+                                          },
+                                          {
+                                            "kind": "Args",
+                                            "attributes": {},
+                                            "children": []
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Assign",
+                                    "attributes": {},
+                                    "children": [
+                                      {
+                                        "kind": "Assigned",
+                                        "attributes": {
+                                          "name": "halt"
+                                        },
+                                        "children": []
+                                      },
+                                      {
+                                        "kind": "Neg",
+                                        "attributes": {},
+                                        "children": [
+                                          {
+                                            "kind": "Method",
+                                            "attributes": {},
+                                            "children": [
+                                              {
+                                                "kind": "VariableName",
+                                                "attributes": {
+                                                  "name": "t"
+                                                },
+                                                "children": []
+                                              },
+                                              {
+                                                "kind": "MethodName",
+                                                "attributes": {
+                                                  "name": "trans"
+                                                },
+                                                "children": []
+                                              },
+                                              {
+                                                "kind": "Args",
+                                                "attributes": {},
+                                                "children": []
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Method",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "This",
+                                "attributes": {},
+                                "children": []
+                              },
+                              {
+                                "kind": "MethodName",
+                                "attributes": {
+                                  "name": "printTape"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "Args",
+                                "attributes": {},
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ReturnValue",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "kind": "True",
+                            "attributes": {},
+                            "children": []
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "NormalMethodDeclaration",
+                    "attributes": {},
+                    "children": [
+                      {
+                        "kind": "ReturnType",
+                        "attributes": {
+                          "type": "boolean"
+                        },
+                        "children": []
+                      },
+                      {
+                        "kind": "MethodName",
+                        "attributes": {
+                          "name": "printTape"
+                        },
+                        "children": []
+                      },
+                      {
+                        "kind": "Body",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "kind": "VarDeclaration",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "VarType",
+                                "attributes": {
+                                  "type": "int"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "VarName",
+                                "attributes": {
+                                  "name": "i"
+                                },
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Assign",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "Assigned",
+                                "attributes": {
+                                  "name": "i"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "IntegerLiteral",
+                                "attributes": {
+                                  "name": "0"
+                                },
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "While",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "LessThan",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "VariableName",
+                                    "attributes": {
+                                      "name": "i"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "AttributeCall",
+                                    "attributes": {},
+                                    "children": [
+                                      {
+                                        "kind": "VariableName",
+                                        "attributes": {
+                                          "name": "TAPE"
+                                        },
+                                        "children": []
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Body",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "If",
+                                    "attributes": {},
+                                    "children": [
+                                      {
+                                        "kind": "Neg",
+                                        "attributes": {},
+                                        "children": [
+                                          {
+                                            "kind": "Neg",
+                                            "attributes": {},
+                                            "children": [
+                                              {
+                                                "kind": "AND",
+                                                "attributes": {},
+                                                "children": [
+                                                  {
+                                                    "kind": "LessThan",
+                                                    "attributes": {},
+                                                    "children": [
+                                                      {
+                                                        "kind": "VariableName",
+                                                        "attributes": {
+                                                          "name": "i"
+                                                        },
+                                                        "children": []
+                                                      },
+                                                      {
+                                                        "kind": "VariableName",
+                                                        "attributes": {
+                                                          "name": "curPos"
+                                                        },
+                                                        "children": []
+                                                      }
+                                                    ]
+                                                  },
+                                                  {
+                                                    "kind": "Neg",
+                                                    "attributes": {},
+                                                    "children": [
+                                                      {
+                                                        "kind": "LessThan",
+                                                        "attributes": {},
+                                                        "children": [
+                                                          {
+                                                            "kind": "VariableName",
+                                                            "attributes": {
+                                                              "name": "curPos"
+                                                            },
+                                                            "children": []
+                                                          },
+                                                          {
+                                                            "kind": "VariableName",
+                                                            "attributes": {
+                                                              "name": "i"
+                                                            },
+                                                            "children": []
+                                                          }
+                                                        ]
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Body",
+                                        "attributes": {},
+                                        "children": [
+                                          {
+                                            "kind": "Method",
+                                            "attributes": {},
+                                            "children": [
+                                              {
+                                                "kind": "Object",
+                                                "attributes": {
+                                                  "name": "io"
+                                                },
+                                                "children": []
+                                              },
+                                              {
+                                                "kind": "MethodName",
+                                                "attributes": {
+                                                  "name": "print"
+                                                },
+                                                "children": []
+                                              },
+                                              {
+                                                "kind": "Args",
+                                                "attributes": {},
+                                                "children": [
+                                                  {
+                                                    "kind": "IntegerLiteral",
+                                                    "attributes": {
+                                                      "name": "0"
+                                                    },
+                                                    "children": []
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Else",
+                                    "attributes": {},
+                                    "children": [
+                                      {
+                                        "kind": "Method",
+                                        "attributes": {},
+                                        "children": [
+                                          {
+                                            "kind": "Object",
+                                            "attributes": {
+                                              "name": "io"
+                                            },
+                                            "children": []
+                                          },
+                                          {
+                                            "kind": "MethodName",
+                                            "attributes": {
+                                              "name": "print"
+                                            },
+                                            "children": []
+                                          },
+                                          {
+                                            "kind": "Args",
+                                            "attributes": {},
+                                            "children": [
+                                              {
+                                                "kind": "Add",
+                                                "attributes": {},
+                                                "children": [
+                                                  {
+                                                    "kind": "VariableName",
+                                                    "attributes": {
+                                                      "name": "curState"
+                                                    },
+                                                    "children": []
+                                                  },
+                                                  {
+                                                    "kind": "IntegerLiteral",
+                                                    "attributes": {
+                                                      "name": "1"
+                                                    },
+                                                    "children": []
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Assign",
+                                    "attributes": {},
+                                    "children": [
+                                      {
+                                        "kind": "Assigned",
+                                        "attributes": {
+                                          "name": "i"
+                                        },
+                                        "children": []
+                                      },
+                                      {
+                                        "kind": "Add",
+                                        "attributes": {},
+                                        "children": [
+                                          {
+                                            "kind": "VariableName",
+                                            "attributes": {
+                                              "name": "i"
+                                            },
+                                            "children": []
+                                          },
+                                          {
+                                            "kind": "IntegerLiteral",
+                                            "attributes": {
+                                              "name": "1"
+                                            },
+                                            "children": []
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Method",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "Object",
+                                "attributes": {
+                                  "name": "io"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "MethodName",
+                                "attributes": {
+                                  "name": "println"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "Args",
+                                "attributes": {},
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Assign",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "Assigned",
+                                "attributes": {
+                                  "name": "i"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "IntegerLiteral",
+                                "attributes": {
+                                  "name": "0"
+                                },
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "While",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "LessThan",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "VariableName",
+                                    "attributes": {
+                                      "name": "i"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "AttributeCall",
+                                    "attributes": {},
+                                    "children": [
+                                      {
+                                        "kind": "VariableName",
+                                        "attributes": {
+                                          "name": "TAPE"
+                                        },
+                                        "children": []
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Body",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "Method",
+                                    "attributes": {},
+                                    "children": [
+                                      {
+                                        "kind": "Object",
+                                        "attributes": {
+                                          "name": "io"
+                                        },
+                                        "children": []
+                                      },
+                                      {
+                                        "kind": "MethodName",
+                                        "attributes": {
+                                          "name": "print"
+                                        },
+                                        "children": []
+                                      },
+                                      {
+                                        "kind": "Args",
+                                        "attributes": {},
+                                        "children": [
+                                          {
+                                            "kind": "ArrayAccess",
+                                            "attributes": {},
+                                            "children": [
+                                              {
+                                                "kind": "VariableName",
+                                                "attributes": {
+                                                  "name": "TAPE"
+                                                },
+                                                "children": []
+                                              },
+                                              {
+                                                "kind": "ArrayIndex",
+                                                "attributes": {},
+                                                "children": [
+                                                  {
+                                                    "kind": "VariableName",
+                                                    "attributes": {
+                                                      "name": "i"
+                                                    },
+                                                    "children": []
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Assign",
+                                    "attributes": {},
+                                    "children": [
+                                      {
+                                        "kind": "Assigned",
+                                        "attributes": {
+                                          "name": "i"
+                                        },
+                                        "children": []
+                                      },
+                                      {
+                                        "kind": "Add",
+                                        "attributes": {},
+                                        "children": [
+                                          {
+                                            "kind": "VariableName",
+                                            "attributes": {
+                                              "name": "i"
+                                            },
+                                            "children": []
+                                          },
+                                          {
+                                            "kind": "IntegerLiteral",
+                                            "attributes": {
+                                              "name": "1"
+                                            },
+                                            "children": []
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Method",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "Object",
+                                "attributes": {
+                                  "name": "io"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "MethodName",
+                                "attributes": {
+                                  "name": "println"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "Args",
+                                "attributes": {},
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Method",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "Object",
+                                "attributes": {
+                                  "name": "io"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "MethodName",
+                                "attributes": {
+                                  "name": "println"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "Args",
+                                "attributes": {},
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ReturnValue",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "kind": "True",
+                            "attributes": {},
+                            "children": []
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "NormalMethodDeclaration",
+                    "attributes": {},
+                    "children": [
+                      {
+                        "kind": "ReturnType",
+                        "attributes": {
+                          "type": "boolean"
+                        },
+                        "children": []
+                      },
+                      {
+                        "kind": "MethodName",
+                        "attributes": {
+                          "name": "trans"
+                        },
+                        "children": []
+                      },
+                      {
+                        "kind": "Body",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "kind": "VarDeclaration",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "VarType",
+                                "attributes": {
+                                  "type": "int"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "VarName",
+                                "attributes": {
+                                  "name": "write"
+                                },
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "VarDeclaration",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "VarType",
+                                "attributes": {
+                                  "type": "int"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "VarName",
+                                "attributes": {
+                                  "name": "move"
+                                },
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "VarDeclaration",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "VarType",
+                                "attributes": {
+                                  "type": "int"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "VarName",
+                                "attributes": {
+                                  "name": "next"
+                                },
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "VarDeclaration",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "VarType",
+                                "attributes": {
+                                  "type": "int"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "VarName",
+                                "attributes": {
+                                  "name": "curS"
+                                },
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "VarDeclaration",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "VarType",
+                                "attributes": {
+                                  "type": "boolean"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "VarName",
+                                "attributes": {
+                                  "name": "halt"
+                                },
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Assign",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "Assigned",
+                                "attributes": {
+                                  "name": "curS"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "ArrayAccess",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "VariableName",
+                                    "attributes": {
+                                      "name": "TAPE"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "ArrayIndex",
+                                    "attributes": {},
+                                    "children": [
+                                      {
+                                        "kind": "VariableName",
+                                        "attributes": {
+                                          "name": "curPos"
+                                        },
+                                        "children": []
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Assign",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "Assigned",
+                                "attributes": {
+                                  "name": "write"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "ArrayAccess",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "VariableName",
+                                    "attributes": {
+                                      "name": "WTABLE"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "ArrayIndex",
+                                    "attributes": {},
+                                    "children": [
+                                      {
+                                        "kind": "Method",
+                                        "attributes": {},
+                                        "children": [
+                                          {
+                                            "kind": "This",
+                                            "attributes": {},
+                                            "children": []
+                                          },
+                                          {
+                                            "kind": "MethodName",
+                                            "attributes": {
+                                              "name": "ss2i"
+                                            },
+                                            "children": []
+                                          },
+                                          {
+                                            "kind": "Args",
+                                            "attributes": {},
+                                            "children": [
+                                              {
+                                                "kind": "VariableName",
+                                                "attributes": {
+                                                  "name": "curS"
+                                                },
+                                                "children": []
+                                              },
+                                              {
+                                                "kind": "VariableName",
+                                                "attributes": {
+                                                  "name": "curState"
+                                                },
+                                                "children": []
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Assign",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "Assigned",
+                                "attributes": {
+                                  "name": "move"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "ArrayAccess",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "VariableName",
+                                    "attributes": {
+                                      "name": "MTABLE"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "ArrayIndex",
+                                    "attributes": {},
+                                    "children": [
+                                      {
+                                        "kind": "Method",
+                                        "attributes": {},
+                                        "children": [
+                                          {
+                                            "kind": "This",
+                                            "attributes": {},
+                                            "children": []
+                                          },
+                                          {
+                                            "kind": "MethodName",
+                                            "attributes": {
+                                              "name": "ss2i"
+                                            },
+                                            "children": []
+                                          },
+                                          {
+                                            "kind": "Args",
+                                            "attributes": {},
+                                            "children": [
+                                              {
+                                                "kind": "VariableName",
+                                                "attributes": {
+                                                  "name": "curS"
+                                                },
+                                                "children": []
+                                              },
+                                              {
+                                                "kind": "VariableName",
+                                                "attributes": {
+                                                  "name": "curState"
+                                                },
+                                                "children": []
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Assign",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "Assigned",
+                                "attributes": {
+                                  "name": "next"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "ArrayAccess",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "VariableName",
+                                    "attributes": {
+                                      "name": "NTABLE"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "ArrayIndex",
+                                    "attributes": {},
+                                    "children": [
+                                      {
+                                        "kind": "Method",
+                                        "attributes": {},
+                                        "children": [
+                                          {
+                                            "kind": "This",
+                                            "attributes": {},
+                                            "children": []
+                                          },
+                                          {
+                                            "kind": "MethodName",
+                                            "attributes": {
+                                              "name": "ss2i"
+                                            },
+                                            "children": []
+                                          },
+                                          {
+                                            "kind": "Args",
+                                            "attributes": {},
+                                            "children": [
+                                              {
+                                                "kind": "VariableName",
+                                                "attributes": {
+                                                  "name": "curS"
+                                                },
+                                                "children": []
+                                              },
+                                              {
+                                                "kind": "VariableName",
+                                                "attributes": {
+                                                  "name": "curState"
+                                                },
+                                                "children": []
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Assign",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "ArrayAcess",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "VariableName",
+                                    "attributes": {
+                                      "name": "TAPE"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "ArrayIndex",
+                                    "attributes": {},
+                                    "children": [
+                                      {
+                                        "kind": "VariableName",
+                                        "attributes": {
+                                          "name": "curPos"
+                                        },
+                                        "children": []
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "VariableName",
+                                "attributes": {
+                                  "name": "write"
+                                },
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Assign",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "Assigned",
+                                "attributes": {
+                                  "name": "curPos"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "Add",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "VariableName",
+                                    "attributes": {
+                                      "name": "curPos"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "VariableName",
+                                    "attributes": {
+                                      "name": "move"
+                                    },
+                                    "children": []
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Assign",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "Assigned",
+                                "attributes": {
+                                  "name": "curState"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "VariableName",
+                                "attributes": {
+                                  "name": "next"
+                                },
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "If",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "Neg",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "AND",
+                                    "attributes": {},
+                                    "children": [
+                                      {
+                                        "kind": "LessThan",
+                                        "attributes": {},
+                                        "children": [
+                                          {
+                                            "kind": "VariableName",
+                                            "attributes": {
+                                              "name": "H"
+                                            },
+                                            "children": []
+                                          },
+                                          {
+                                            "kind": "VariableName",
+                                            "attributes": {
+                                              "name": "curState"
+                                            },
+                                            "children": []
+                                          }
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Neg",
+                                        "attributes": {},
+                                        "children": [
+                                          {
+                                            "kind": "LessThan",
+                                            "attributes": {},
+                                            "children": [
+                                              {
+                                                "kind": "VariableName",
+                                                "attributes": {
+                                                  "name": "curState"
+                                                },
+                                                "children": []
+                                              },
+                                              {
+                                                "kind": "VariableName",
+                                                "attributes": {
+                                                  "name": "H"
+                                                },
+                                                "children": []
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "Body",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "Assign",
+                                    "attributes": {},
+                                    "children": [
+                                      {
+                                        "kind": "Assigned",
+                                        "attributes": {
+                                          "name": "halt"
+                                        },
+                                        "children": []
+                                      },
+                                      {
+                                        "kind": "False",
+                                        "attributes": {},
+                                        "children": []
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Else",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "Assign",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "Assigned",
+                                    "attributes": {
+                                      "name": "halt"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "True",
+                                    "attributes": {},
+                                    "children": []
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ReturnValue",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "kind": "VariableName",
+                            "attributes": {
+                              "name": "halt"
+                            },
+                            "children": []
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "NormalMethodDeclaration",
+                    "attributes": {},
+                    "children": [
+                      {
+                        "kind": "ReturnType",
+                        "attributes": {
+                          "type": "int[]"
+                        },
+                        "children": []
+                      },
+                      {
+                        "kind": "MethodName",
+                        "attributes": {
+                          "name": "initGeneric"
+                        },
+                        "children": []
+                      },
+                      {
+                        "kind": "Args",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "kind": "Parameter",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "ParameterType",
+                                "attributes": {
+                                  "type": "int"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "ParameterName",
+                                "attributes": {
+                                  "name": "NUM_ST"
+                                },
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Parameter",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "ParameterType",
+                                "attributes": {
+                                  "type": "int"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "ParameterName",
+                                "attributes": {
+                                  "name": "NUM_SY"
+                                },
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Parameter",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "ParameterType",
+                                "attributes": {
+                                  "type": "int"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "ParameterName",
+                                "attributes": {
+                                  "name": "TAPE_LENGTH"
+                                },
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Body",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "kind": "VarDeclaration",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "VarType",
+                                "attributes": {
+                                  "type": "int[]"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "VarName",
+                                "attributes": {
+                                  "name": "TAPE_RET"
+                                },
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "VarDeclaration",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "VarType",
+                                "attributes": {
+                                  "type": "int"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "VarName",
+                                "attributes": {
+                                  "name": "tlen"
+                                },
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Assign",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "Assigned",
+                                "attributes": {
+                                  "name": "NUM_SYMBOLS"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "VariableName",
+                                "attributes": {
+                                  "name": "NUM_SY"
+                                },
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Assign",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "Assigned",
+                                "attributes": {
+                                  "name": "NUM_STATES"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "VariableName",
+                                "attributes": {
+                                  "name": "NUM_ST"
+                                },
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Assign",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "Assigned",
+                                "attributes": {
+                                  "name": "tlen"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "Mul",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "VariableName",
+                                    "attributes": {
+                                      "name": "NUM_SYMBOLS"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "VariableName",
+                                    "attributes": {
+                                      "name": "NUM_STATES"
+                                    },
+                                    "children": []
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Assign",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "Assigned",
+                                "attributes": {
+                                  "name": "H"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "Sub",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "0"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "1"
+                                    },
+                                    "children": []
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Assign",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "Assigned",
+                                "attributes": {
+                                  "name": "L"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "Sub",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "0"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "1"
+                                    },
+                                    "children": []
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Assign",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "Assigned",
+                                "attributes": {
+                                  "name": "R"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "IntegerLiteral",
+                                "attributes": {
+                                  "name": "1"
+                                },
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Assign",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "Assigned",
+                                "attributes": {
+                                  "name": "WTABLE"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "ArrayInitializer",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "VariableName",
+                                    "attributes": {
+                                      "name": "tlen"
+                                    },
+                                    "children": []
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Assign",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "Assigned",
+                                "attributes": {
+                                  "name": "MTABLE"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "ArrayInitializer",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "VariableName",
+                                    "attributes": {
+                                      "name": "tlen"
+                                    },
+                                    "children": []
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Assign",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "Assigned",
+                                "attributes": {
+                                  "name": "NTABLE"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "ArrayInitializer",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "VariableName",
+                                    "attributes": {
+                                      "name": "tlen"
+                                    },
+                                    "children": []
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Assign",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "Assigned",
+                                "attributes": {
+                                  "name": "TAPE_RET"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "ArrayInitializer",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "VariableName",
+                                    "attributes": {
+                                      "name": "TAPE_LENGTH"
+                                    },
+                                    "children": []
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Assign",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "Assigned",
+                                "attributes": {
+                                  "name": "curState"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "IntegerLiteral",
+                                "attributes": {
+                                  "name": "0"
+                                },
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Assign",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "Assigned",
+                                "attributes": {
+                                  "name": "curPos"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "Div",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "AttributeCall",
+                                    "attributes": {},
+                                    "children": [
+                                      {
+                                        "kind": "VariableName",
+                                        "attributes": {
+                                          "name": "TAPE_RET"
+                                        },
+                                        "children": []
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "kind": "IntegerLiteral",
+                                    "attributes": {
+                                      "name": "2"
+                                    },
+                                    "children": []
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ReturnValue",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "kind": "VariableName",
+                            "attributes": {
+                              "name": "TAPE_RET"
+                            },
+                            "children": []
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "NormalMethodDeclaration",
+                    "attributes": {},
+                    "children": [
+                      {
+                        "kind": "ReturnType",
+                        "attributes": {
+                          "type": "int"
+                        },
+                        "children": []
+                      },
+                      {
+                        "kind": "MethodName",
+                        "attributes": {
+                          "name": "ss2i"
+                        },
+                        "children": []
+                      },
+                      {
+                        "kind": "Args",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "kind": "Parameter",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "ParameterType",
+                                "attributes": {
+                                  "type": "int"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "ParameterName",
+                                "attributes": {
+                                  "name": "symbol"
+                                },
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Parameter",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "ParameterType",
+                                "attributes": {
+                                  "type": "int"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "ParameterName",
+                                "attributes": {
+                                  "name": "state"
+                                },
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Body",
+                        "attributes": {},
+                        "children": []
+                      },
+                      {
+                        "kind": "ReturnValue",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "kind": "Add",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "Mul",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "VariableName",
+                                    "attributes": {
+                                      "name": "symbol"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "VariableName",
+                                    "attributes": {
+                                      "name": "NUM_STATES"
+                                    },
+                                    "children": []
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "VariableName",
+                                "attributes": {
+                                  "name": "state"
+                                },
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "kind": "NormalMethodDeclaration",
+                    "attributes": {},
+                    "children": [
+                      {
+                        "kind": "ReturnType",
+                        "attributes": {
+                          "type": "boolean"
+                        },
+                        "children": []
+                      },
+                      {
+                        "kind": "MethodName",
+                        "attributes": {
+                          "name": "setTrans"
+                        },
+                        "children": []
+                      },
+                      {
+                        "kind": "Args",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "kind": "Parameter",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "ParameterType",
+                                "attributes": {
+                                  "type": "int"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "ParameterName",
+                                "attributes": {
+                                  "name": "symbol"
+                                },
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Parameter",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "ParameterType",
+                                "attributes": {
+                                  "type": "int"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "ParameterName",
+                                "attributes": {
+                                  "name": "state"
+                                },
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Parameter",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "ParameterType",
+                                "attributes": {
+                                  "type": "int"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "ParameterName",
+                                "attributes": {
+                                  "name": "write"
+                                },
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Parameter",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "ParameterType",
+                                "attributes": {
+                                  "type": "int"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "ParameterName",
+                                "attributes": {
+                                  "name": "move"
+                                },
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Parameter",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "ParameterType",
+                                "attributes": {
+                                  "type": "int"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "ParameterName",
+                                "attributes": {
+                                  "name": "next"
+                                },
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Body",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "kind": "Assign",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "ArrayAcess",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "VariableName",
+                                    "attributes": {
+                                      "name": "WTABLE"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "ArrayIndex",
+                                    "attributes": {},
+                                    "children": [
+                                      {
+                                        "kind": "Method",
+                                        "attributes": {},
+                                        "children": [
+                                          {
+                                            "kind": "This",
+                                            "attributes": {},
+                                            "children": []
+                                          },
+                                          {
+                                            "kind": "MethodName",
+                                            "attributes": {
+                                              "name": "ss2i"
+                                            },
+                                            "children": []
+                                          },
+                                          {
+                                            "kind": "Args",
+                                            "attributes": {},
+                                            "children": [
+                                              {
+                                                "kind": "VariableName",
+                                                "attributes": {
+                                                  "name": "symbol"
+                                                },
+                                                "children": []
+                                              },
+                                              {
+                                                "kind": "VariableName",
+                                                "attributes": {
+                                                  "name": "state"
+                                                },
+                                                "children": []
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "VariableName",
+                                "attributes": {
+                                  "name": "write"
+                                },
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Assign",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "ArrayAcess",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "VariableName",
+                                    "attributes": {
+                                      "name": "MTABLE"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "ArrayIndex",
+                                    "attributes": {},
+                                    "children": [
+                                      {
+                                        "kind": "Method",
+                                        "attributes": {},
+                                        "children": [
+                                          {
+                                            "kind": "This",
+                                            "attributes": {},
+                                            "children": []
+                                          },
+                                          {
+                                            "kind": "MethodName",
+                                            "attributes": {
+                                              "name": "ss2i"
+                                            },
+                                            "children": []
+                                          },
+                                          {
+                                            "kind": "Args",
+                                            "attributes": {},
+                                            "children": [
+                                              {
+                                                "kind": "VariableName",
+                                                "attributes": {
+                                                  "name": "symbol"
+                                                },
+                                                "children": []
+                                              },
+                                              {
+                                                "kind": "VariableName",
+                                                "attributes": {
+                                                  "name": "state"
+                                                },
+                                                "children": []
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "VariableName",
+                                "attributes": {
+                                  "name": "move"
+                                },
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "Assign",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "ArrayAcess",
+                                "attributes": {},
+                                "children": [
+                                  {
+                                    "kind": "VariableName",
+                                    "attributes": {
+                                      "name": "NTABLE"
+                                    },
+                                    "children": []
+                                  },
+                                  {
+                                    "kind": "ArrayIndex",
+                                    "attributes": {},
+                                    "children": [
+                                      {
+                                        "kind": "Method",
+                                        "attributes": {},
+                                        "children": [
+                                          {
+                                            "kind": "This",
+                                            "attributes": {},
+                                            "children": []
+                                          },
+                                          {
+                                            "kind": "MethodName",
+                                            "attributes": {
+                                              "name": "ss2i"
+                                            },
+                                            "children": []
+                                          },
+                                          {
+                                            "kind": "Args",
+                                            "attributes": {},
+                                            "children": [
+                                              {
+                                                "kind": "VariableName",
+                                                "attributes": {
+                                                  "name": "symbol"
+                                                },
+                                                "children": []
+                                              },
+                                              {
+                                                "kind": "VariableName",
+                                                "attributes": {
+                                                  "name": "state"
+                                                },
+                                                "children": []
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "kind": "VariableName",
+                                "attributes": {
+                                  "name": "next"
+                                },
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ReturnValue",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "kind": "True",
+                            "attributes": {},
+                            "children": []
+                          }
+                        ]
                       }
                     ]
                   }
