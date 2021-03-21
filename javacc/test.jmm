@@ -20,7 +20,7 @@ class Fac extends Something
             i = 3;
             i = 2;
         } 
-        return num_aux;
+        return num_aux * this.computeFac(1);
     }
 
     public static void main(String[] args)

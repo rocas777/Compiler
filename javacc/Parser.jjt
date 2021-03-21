@@ -1,8 +1,3 @@
-options
-{
-    DEBUG_PARSER=true;
-}
-
 PARSER_BEGIN(Parser)
 
 import pt.up.fe.comp.jmm.report.Report;
