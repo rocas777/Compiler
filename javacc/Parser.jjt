@@ -246,14 +246,7 @@ void id() #void: {Token t1;}
 void Expression() #void : {Token t1,t2;}
 {
 
-    ("!" Expr3I()
-        (
-            "+" Expr3() #Add(2)
-            | "-" Expr3() #Sub(2)
-            | "<" Expr3() #LessThan(2)
-            | "&&" Expr3() #AND(2)
-        )*) #Neg
-     | Expr3I()
+    Expr3()
                (
                    "+" Expr3() #Add(2)
                    | "-" Expr3() #Sub(2)
@@ -266,14 +259,7 @@ void Expression() #void : {Token t1,t2;}
 void Expression1()  #void : {}
 {
 
-    ("!" Expr3I()
-    (
-        "+" Expr3() #Add(2)
-        | "-" Expr3() #Sub(2)
-        | "<" Expr3() #LessThan(2)
-        | "&&" Expr3() #AND(2)
-    )*) #Neg
-    |Expr2()
+    Expr2()
          (
              "+" Expr3() #Add(2)
              | "-" Expr3() #Sub(2)
@@ -284,32 +270,47 @@ void Expression1()  #void : {}
 
 void Expr2() #void : {}
 {
-    P1()
+    Expr4()
     (
-        "*" P() #Mul(2)
-        | "/" P() #Div(2)
-        | C()
+        "*" Expr5() #Mul(2)
+        | "/" Expr5() #Div(2)
     )*
 }
 
 void Expr3() #void : {}
 {
-    P()
+    Expr5()
     (
-        "*" P() #Mul(2)
-        | "/" P() #Div(2)
-        | C()
+        "*" Expr5() #Mul(2)
+        | "/" Expr5() #Div(2)
     )*
 }
 
-void Expr3I() #void : {}
+
+void Expr4() #void : {}
 {
-    PI()
+    P1()
     (
-        "*" P() #Mul(2)
-        | "/" P() #Div(2)
-        | C()
+        C()
     )*
+    |
+    ("!" P()
+        (
+            C()
+        )*) #Neg
+}
+
+void Expr5() #void : {}
+{
+    P()
+    (
+        C()
+    )*
+    |
+    ("!" P()
+        (
+            C()
+        )*) #Neg
 }
 
 void C()  #void : {}
@@ -326,7 +327,6 @@ void P()  #void : {Token t1,t2;}
     | t1=<IDENTIFIER> {jjtThis.name = t1.image;} #VariableName
     | <THIS> #This
     | <NEW> (ArrayInitializer() | ConstructorCall())
-    | ("!" P() ) #Neg
     | <OPENPAR> Expression() <CLOSEPAR>
 }
 
@@ -337,17 +337,6 @@ void P1()  #void : {Token t1,t2;}
     | <FALSE> #False
     | <THIS> #This
     | <NEW> (ArrayInitializer() | ConstructorCall()) #NEW
-    | <OPENPAR> Expression() <CLOSEPAR>
-}
-
-void PI()  #void : {Token t1,t2;}
-{
-    t1=<INTEGERLITERAL> {jjtThis.name = t1.image;} #IntegerLiteral
-    | <TRUE> #True
-    | <FALSE> #False
-    | t1=<IDENTIFIER> {jjtThis.name = t1.image;} #VariableName
-    | <THIS> #This
-    | <NEW> (ArrayInitializer() | ConstructorCall())
     | <OPENPAR> Expression() <CLOSEPAR>
 }
 
