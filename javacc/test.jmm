@@ -3,6 +3,7 @@ import ia;
 
 class Fac extends Something
 {
+    int a;
     public int ComputeFac()
     {
         int num_aux;
@@ -32,12 +33,12 @@ class Fac extends Something
         i = 0;
         //a = !(!this.gt(a, b) && !this.eq(a, b));
         a = i.get() && true;
-        a = true && !this.gt(a, b);
+        afdfdfdfdf = true && !this.gt(a, b); //FIX THIS ONE
         a = !this.gt(a, b);
         i = i + 3;
         a[0] = a.length;
         a = this.method()[3];
-        a = !true && (false && false);
+        adfdfdfdf = !true && (false && false); //FIX THIS ONE
         a = !new Main();
         a = 1 + 2 * 3 + 4;
         
