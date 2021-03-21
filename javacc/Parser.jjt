@@ -112,13 +112,13 @@ void error_skipto(String description) #void {
 
     while(t.kind != EOF && t.kind != OPENCUR && t.kind != CLOSEPAR)
     {
-        t = getNextToken();
+        getNextToken();
         t = getToken(1);
     }
 
     while (t.kind == CLOSEPAR)
     {
-        t = getNextToken();
+        getNextToken();
         t = getToken(1);
     }
 }
@@ -240,7 +240,7 @@ void Statement()  #void: {Token t1;}
 
 void id() #void: {Token t1;}
 {
-    t1=<IDENTIFIER> ({jjtThis.name = t1.image;} #Assigned "=" Expression() #Assign(2) | Expression() | ({jjtThis.name = t1.image;} #VariableName) (("[" Expression()"]") #ArrayIndex) #ArrayAcess(2)  ( "=" (Expression()) #Assign(2))? | {jjtThis.name = t1.image;} #Object "." (  MethodCall() | AttributeCall())) ";"
+    t1=<IDENTIFIER> ({jjtThis.name = t1.image;} #Assigned "=" Expression() #Assign(2) | Expression() | ({jjtThis.name = t1.image;} #VariableName) (("[" Expression()"]") #ArrayIndex) #ArrayAcess(2)  ( "=" (Expression()) #Assign(2))? | {jjtThis.name = t1.image;} #Object "." (  MethodCall() | AttributeCall()))? ";"
 }
 
 void Expression() #void : {Token t1,t2;}
