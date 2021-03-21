@@ -6,7 +6,22 @@
       {
         "kind": "ImportDeclaration",
         "attributes": {},
-        "children": []
+        "children": [
+          {
+            "kind": "ImportMaterial",
+            "attributes": {
+              "name": "io.ia"
+            },
+            "children": []
+          },
+          {
+            "kind": "ImportMaterial",
+            "attributes": {
+              "name": "ia"
+            },
+            "children": []
+          }
+        ]
       },
       {
         "kind": "ClassDeclaration",
