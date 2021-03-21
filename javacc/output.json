@@ -10,14 +10,7 @@
           {
             "kind": "ImportMaterial",
             "attributes": {
-              "name": "io.ia"
-            },
-            "children": []
-          },
-          {
-            "kind": "ImportMaterial",
-            "attributes": {
-              "name": "ia"
+              "name": "ioPlus"
             },
             "children": []
           }
@@ -30,14 +23,7 @@
           {
             "kind": "Name",
             "attributes": {
-              "name": "Fac"
-            },
-            "children": []
-          },
-          {
-            "kind": "ExtendedClassName",
-            "attributes": {
-              "name": "Something"
+              "name": "HelloWorld"
             },
             "children": []
           },
@@ -48,320 +34,12 @@
               {
                 "kind": "Vars",
                 "attributes": {},
-                "children": [
-                  {
-                    "kind": "VarDeclaration",
-                    "attributes": {},
-                    "children": [
-                      {
-                        "kind": "VarType",
-                        "attributes": {
-                          "type": "int"
-                        },
-                        "children": []
-                      },
-                      {
-                        "kind": "VarName",
-                        "attributes": {
-                          "name": "a"
-                        },
-                        "children": []
-                      }
-                    ]
-                  }
-                ]
+                "children": []
               },
               {
                 "kind": "Methods",
                 "attributes": {},
                 "children": [
-                  {
-                    "kind": "NormalMethodDeclaration",
-                    "attributes": {},
-                    "children": [
-                      {
-                        "kind": "ReturnType",
-                        "attributes": {
-                          "type": "int"
-                        },
-                        "children": []
-                      },
-                      {
-                        "kind": "MethodName",
-                        "attributes": {
-                          "name": "ComputeFac"
-                        },
-                        "children": []
-                      },
-                      {
-                        "kind": "Body",
-                        "attributes": {},
-                        "children": [
-                          {
-                            "kind": "VarDeclaration",
-                            "attributes": {},
-                            "children": [
-                              {
-                                "kind": "VarType",
-                                "attributes": {
-                                  "type": "int"
-                                },
-                                "children": []
-                              },
-                              {
-                                "kind": "VarName",
-                                "attributes": {
-                                  "name": "num_aux"
-                                },
-                                "children": []
-                              }
-                            ]
-                          },
-                          {
-                            "kind": "If",
-                            "attributes": {},
-                            "children": [
-                              {
-                                "kind": "LessThan",
-                                "attributes": {},
-                                "children": [
-                                  {
-                                    "kind": "VariableName",
-                                    "attributes": {
-                                      "name": "num"
-                                    },
-                                    "children": []
-                                  },
-                                  {
-                                    "kind": "IntegerLiteral",
-                                    "attributes": {
-                                      "name": "1"
-                                    },
-                                    "children": []
-                                  }
-                                ]
-                              },
-                              {
-                                "kind": "Body",
-                                "attributes": {},
-                                "children": [
-                                  {
-                                    "kind": "Assign",
-                                    "attributes": {},
-                                    "children": [
-                                      {
-                                        "kind": "Assigned",
-                                        "attributes": {
-                                          "name": "num_aux"
-                                        },
-                                        "children": []
-                                      },
-                                      {
-                                        "kind": "IntegerLiteral",
-                                        "attributes": {
-                                          "name": "1"
-                                        },
-                                        "children": []
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "kind": "Assign",
-                                    "attributes": {},
-                                    "children": [
-                                      {
-                                        "kind": "Assigned",
-                                        "attributes": {
-                                          "name": "i"
-                                        },
-                                        "children": []
-                                      },
-                                      {
-                                        "kind": "IntegerLiteral",
-                                        "attributes": {
-                                          "name": "0"
-                                        },
-                                        "children": []
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "kind": "Assign",
-                                    "attributes": {},
-                                    "children": [
-                                      {
-                                        "kind": "Assigned",
-                                        "attributes": {
-                                          "name": "i"
-                                        },
-                                        "children": []
-                                      },
-                                      {
-                                        "kind": "IntegerLiteral",
-                                        "attributes": {
-                                          "name": "3"
-                                        },
-                                        "children": []
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "kind": "Assign",
-                                    "attributes": {},
-                                    "children": [
-                                      {
-                                        "kind": "Assigned",
-                                        "attributes": {
-                                          "name": "i"
-                                        },
-                                        "children": []
-                                      },
-                                      {
-                                        "kind": "IntegerLiteral",
-                                        "attributes": {
-                                          "name": "2"
-                                        },
-                                        "children": []
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
-                            ]
-                          },
-                          {
-                            "kind": "Else",
-                            "attributes": {},
-                            "children": [
-                              {
-                                "kind": "Assign",
-                                "attributes": {},
-                                "children": [
-                                  {
-                                    "kind": "Assigned",
-                                    "attributes": {
-                                      "name": "num_aux"
-                                    },
-                                    "children": []
-                                  },
-                                  {
-                                    "kind": "Mul",
-                                    "attributes": {},
-                                    "children": [
-                                      {
-                                        "kind": "VariableName",
-                                        "attributes": {
-                                          "name": "num"
-                                        },
-                                        "children": []
-                                      },
-                                      {
-                                        "kind": "Method",
-                                        "attributes": {},
-                                        "children": [
-                                          {
-                                            "kind": "This",
-                                            "attributes": {},
-                                            "children": []
-                                          },
-                                          {
-                                            "kind": "MethodName",
-                                            "attributes": {
-                                              "name": "ComputeFac"
-                                            },
-                                            "children": []
-                                          },
-                                          {
-                                            "kind": "Args",
-                                            "attributes": {},
-                                            "children": [
-                                              {
-                                                "kind": "Sub",
-                                                "attributes": {},
-                                                "children": [
-                                                  {
-                                                    "kind": "VariableName",
-                                                    "attributes": {
-                                                      "name": "num"
-                                                    },
-                                                    "children": []
-                                                  },
-                                                  {
-                                                    "kind": "IntegerLiteral",
-                                                    "attributes": {
-                                                      "name": "1"
-                                                    },
-                                                    "children": []
-                                                  }
-                                                ]
-                                              }
-                                            ]
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  }
-                                ]
-                              },
-                              {
-                                "kind": "Assign",
-                                "attributes": {},
-                                "children": [
-                                  {
-                                    "kind": "Assigned",
-                                    "attributes": {
-                                      "name": "i"
-                                    },
-                                    "children": []
-                                  },
-                                  {
-                                    "kind": "IntegerLiteral",
-                                    "attributes": {
-                                      "name": "3"
-                                    },
-                                    "children": []
-                                  }
-                                ]
-                              },
-                              {
-                                "kind": "Assign",
-                                "attributes": {},
-                                "children": [
-                                  {
-                                    "kind": "Assigned",
-                                    "attributes": {
-                                      "name": "i"
-                                    },
-                                    "children": []
-                                  },
-                                  {
-                                    "kind": "IntegerLiteral",
-                                    "attributes": {
-                                      "name": "2"
-                                    },
-                                    "children": []
-                                  }
-                                ]
-                              }
-                            ]
-                          }
-                        ]
-                      },
-                      {
-                        "kind": "ReturnValue",
-                        "attributes": {},
-                        "children": [
-                          {
-                            "kind": "VariableName",
-                            "attributes": {
-                              "name": "num_aux"
-                            },
-                            "children": []
-                          }
-                        ]
-                      }
-                    ]
-                  },
                   {
                     "kind": "MainMethodDeclaration",
                     "attributes": {},
@@ -378,346 +56,69 @@
                         "attributes": {},
                         "children": [
                           {
-                            "kind": "VarDeclaration",
+                            "kind": "Method",
                             "attributes": {},
                             "children": [
                               {
-                                "kind": "VarType",
+                                "kind": "Object",
                                 "attributes": {
-                                  "type": "int"
+                                  "name": "ioPlus"
                                 },
                                 "children": []
                               },
                               {
-                                "kind": "VarName",
+                                "kind": "MethodName",
                                 "attributes": {
-                                  "name": "i"
+                                  "name": "printHelloWorld"
                                 },
+                                "children": []
+                              },
+                              {
+                                "kind": "Args",
+                                "attributes": {},
                                 "children": []
                               }
                             ]
                           },
                           {
-                            "kind": "VarDeclaration",
+                            "kind": "AND",
                             "attributes": {},
                             "children": [
-                              {
-                                "kind": "VarType",
-                                "attributes": {
-                                  "type": "boolean"
-                                },
-                                "children": []
-                              },
-                              {
-                                "kind": "VarName",
-                                "attributes": {
-                                  "name": "b"
-                                },
-                                "children": []
-                              }
-                            ]
-                          },
-                          {
-                            "kind": "VarDeclaration",
-                            "attributes": {},
-                            "children": [
-                              {
-                                "kind": "VarType",
-                                "attributes": {
-                                  "type": "int"
-                                },
-                                "children": []
-                              },
-                              {
-                                "kind": "VarName",
-                                "attributes": {
-                                  "name": "i"
-                                },
-                                "children": []
-                              }
-                            ]
-                          },
-                          {
-                            "kind": "VarDeclaration",
-                            "attributes": {},
-                            "children": [
-                              {
-                                "kind": "VarType",
-                                "attributes": {
-                                  "type": "boolean"
-                                },
-                                "children": []
-                              },
-                              {
-                                "kind": "VarName",
-                                "attributes": {
-                                  "name": "a"
-                                },
-                                "children": []
-                              }
-                            ]
-                          },
-                          {
-                            "kind": "Assign",
-                            "attributes": {},
-                            "children": [
-                              {
-                                "kind": "Assigned",
-                                "attributes": {
-                                  "name": "i"
-                                },
-                                "children": []
-                              },
-                              {
-                                "kind": "IntegerLiteral",
-                                "attributes": {
-                                  "name": "0"
-                                },
-                                "children": []
-                              }
-                            ]
-                          },
-                          {
-                            "kind": "Assign",
-                            "attributes": {},
-                            "children": [
-                              {
-                                "kind": "Assigned",
-                                "attributes": {
-                                  "name": "a"
-                                },
-                                "children": []
-                              },
                               {
                                 "kind": "AND",
                                 "attributes": {},
                                 "children": [
                                   {
-                                    "kind": "Method",
+                                    "kind": "Neg",
                                     "attributes": {},
                                     "children": [
                                       {
-                                        "kind": "VariableName",
-                                        "attributes": {
-                                          "name": "i"
-                                        },
-                                        "children": []
-                                      },
-                                      {
-                                        "kind": "MethodName",
-                                        "attributes": {
-                                          "name": "get"
-                                        },
-                                        "children": []
-                                      },
-                                      {
-                                        "kind": "Args",
-                                        "attributes": {},
-                                        "children": []
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "kind": "True",
-                                    "attributes": {},
-                                    "children": []
-                                  }
-                                ]
-                              }
-                            ]
-                          },
-                          {
-                            "kind": "Assign",
-                            "attributes": {},
-                            "children": [
-                              {
-                                "kind": "Assigned",
-                                "attributes": {
-                                  "name": "afdfdfdfdf"
-                                },
-                                "children": []
-                              },
-                              {
-                                "kind": "AND",
-                                "attributes": {},
-                                "children": [
-                                  {
-                                    "kind": "True",
-                                    "attributes": {},
-                                    "children": []
-                                  },
-                                  {
-                                    "kind": "Method",
-                                    "attributes": {},
-                                    "children": [
-                                      {
-                                        "kind": "Neg",
+                                        "kind": "Method",
                                         "attributes": {},
                                         "children": [
                                           {
-                                            "kind": "This",
+                                            "kind": "VariableName",
+                                            "attributes": {
+                                              "name": "a"
+                                            },
+                                            "children": []
+                                          },
+                                          {
+                                            "kind": "MethodName",
+                                            "attributes": {
+                                              "name": "d"
+                                            },
+                                            "children": []
+                                          },
+                                          {
+                                            "kind": "Args",
                                             "attributes": {},
                                             "children": []
                                           }
                                         ]
-                                      },
-                                      {
-                                        "kind": "MethodName",
-                                        "attributes": {
-                                          "name": "gt"
-                                        },
-                                        "children": []
-                                      },
-                                      {
-                                        "kind": "Args",
-                                        "attributes": {},
-                                        "children": [
-                                          {
-                                            "kind": "VariableName",
-                                            "attributes": {
-                                              "name": "a"
-                                            },
-                                            "children": []
-                                          },
-                                          {
-                                            "kind": "VariableName",
-                                            "attributes": {
-                                              "name": "b"
-                                            },
-                                            "children": []
-                                          }
-                                        ]
                                       }
                                     ]
-                                  }
-                                ]
-                              }
-                            ]
-                          },
-                          {
-                            "kind": "Assign",
-                            "attributes": {},
-                            "children": [
-                              {
-                                "kind": "Assigned",
-                                "attributes": {
-                                  "name": "a"
-                                },
-                                "children": []
-                              },
-                              {
-                                "kind": "Neg",
-                                "attributes": {},
-                                "children": [
-                                  {
-                                    "kind": "Method",
-                                    "attributes": {},
-                                    "children": [
-                                      {
-                                        "kind": "This",
-                                        "attributes": {},
-                                        "children": []
-                                      },
-                                      {
-                                        "kind": "MethodName",
-                                        "attributes": {
-                                          "name": "gt"
-                                        },
-                                        "children": []
-                                      },
-                                      {
-                                        "kind": "Args",
-                                        "attributes": {},
-                                        "children": [
-                                          {
-                                            "kind": "VariableName",
-                                            "attributes": {
-                                              "name": "a"
-                                            },
-                                            "children": []
-                                          },
-                                          {
-                                            "kind": "VariableName",
-                                            "attributes": {
-                                              "name": "b"
-                                            },
-                                            "children": []
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
-                            ]
-                          },
-                          {
-                            "kind": "Assign",
-                            "attributes": {},
-                            "children": [
-                              {
-                                "kind": "Assigned",
-                                "attributes": {
-                                  "name": "i"
-                                },
-                                "children": []
-                              },
-                              {
-                                "kind": "Add",
-                                "attributes": {},
-                                "children": [
-                                  {
-                                    "kind": "VariableName",
-                                    "attributes": {
-                                      "name": "i"
-                                    },
-                                    "children": []
                                   },
-                                  {
-                                    "kind": "IntegerLiteral",
-                                    "attributes": {
-                                      "name": "3"
-                                    },
-                                    "children": []
-                                  }
-                                ]
-                              }
-                            ]
-                          },
-                          {
-                            "kind": "Assign",
-                            "attributes": {},
-                            "children": [
-                              {
-                                "kind": "ArrayAccess",
-                                "attributes": {},
-                                "children": [
-                                  {
-                                    "kind": "VariableName",
-                                    "attributes": {
-                                      "name": "a"
-                                    },
-                                    "children": []
-                                  },
-                                  {
-                                    "kind": "ArrayIndex",
-                                    "attributes": {},
-                                    "children": [
-                                      {
-                                        "kind": "IntegerLiteral",
-                                        "attributes": {
-                                          "name": "0"
-                                        },
-                                        "children": []
-                                      }
-                                    ]
-                                  }
-                                ]
-                              },
-                              {
-                                "kind": "AttributeCall",
-                                "attributes": {},
-                                "children": [
                                   {
                                     "kind": "VariableName",
                                     "attributes": {
@@ -734,187 +135,12 @@
                             "attributes": {},
                             "children": [
                               {
-                                "kind": "Assigned",
-                                "attributes": {
-                                  "name": "a"
-                                },
-                                "children": []
-                              },
-                              {
-                                "kind": "ArrayAccess",
-                                "attributes": {},
-                                "children": [
-                                  {
-                                    "kind": "Method",
-                                    "attributes": {},
-                                    "children": [
-                                      {
-                                        "kind": "This",
-                                        "attributes": {},
-                                        "children": []
-                                      },
-                                      {
-                                        "kind": "MethodName",
-                                        "attributes": {
-                                          "name": "method"
-                                        },
-                                        "children": []
-                                      },
-                                      {
-                                        "kind": "Args",
-                                        "attributes": {},
-                                        "children": []
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "kind": "ArrayIndex",
-                                    "attributes": {},
-                                    "children": [
-                                      {
-                                        "kind": "IntegerLiteral",
-                                        "attributes": {
-                                          "name": "3"
-                                        },
-                                        "children": []
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
-                            ]
-                          },
-                          {
-                            "kind": "Assign",
-                            "attributes": {},
-                            "children": [
-                              {
-                                "kind": "Assigned",
-                                "attributes": {
-                                  "name": "adfdfdfdf"
-                                },
-                                "children": []
-                              },
-                              {
                                 "kind": "Neg",
                                 "attributes": {},
                                 "children": [
                                   {
-                                    "kind": "AND",
+                                    "kind": "True",
                                     "attributes": {},
-                                    "children": [
-                                      {
-                                        "kind": "True",
-                                        "attributes": {},
-                                        "children": []
-                                      },
-                                      {
-                                        "kind": "AND",
-                                        "attributes": {},
-                                        "children": [
-                                          {
-                                            "kind": "False",
-                                            "attributes": {},
-                                            "children": []
-                                          },
-                                          {
-                                            "kind": "False",
-                                            "attributes": {},
-                                            "children": []
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
-                            ]
-                          },
-                          {
-                            "kind": "Assign",
-                            "attributes": {},
-                            "children": [
-                              {
-                                "kind": "Assigned",
-                                "attributes": {
-                                  "name": "a"
-                                },
-                                "children": []
-                              },
-                              {
-                                "kind": "Neg",
-                                "attributes": {},
-                                "children": [
-                                  {
-                                    "kind": "ConstructorCall",
-                                    "attributes": {},
-                                    "children": [
-                                      {
-                                        "kind": "ObjectClassName",
-                                        "attributes": {
-                                          "name": "Main"
-                                        },
-                                        "children": []
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
-                            ]
-                          },
-                          {
-                            "kind": "Assign",
-                            "attributes": {},
-                            "children": [
-                              {
-                                "kind": "Assigned",
-                                "attributes": {
-                                  "name": "a"
-                                },
-                                "children": []
-                              },
-                              {
-                                "kind": "Add",
-                                "attributes": {},
-                                "children": [
-                                  {
-                                    "kind": "Add",
-                                    "attributes": {},
-                                    "children": [
-                                      {
-                                        "kind": "IntegerLiteral",
-                                        "attributes": {
-                                          "name": "1"
-                                        },
-                                        "children": []
-                                      },
-                                      {
-                                        "kind": "Mul",
-                                        "attributes": {},
-                                        "children": [
-                                          {
-                                            "kind": "IntegerLiteral",
-                                            "attributes": {
-                                              "name": "2"
-                                            },
-                                            "children": []
-                                          },
-                                          {
-                                            "kind": "IntegerLiteral",
-                                            "attributes": {
-                                              "name": "3"
-                                            },
-                                            "children": []
-                                          }
-                                        ]
-                                      }
-                                    ]
-                                  },
-                                  {
-                                    "kind": "IntegerLiteral",
-                                    "attributes": {
-                                      "name": "4"
-                                    },
                                     "children": []
                                   }
                                 ]
