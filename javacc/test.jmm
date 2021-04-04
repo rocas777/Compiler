@@ -4,6 +4,7 @@ import ia;
 class Fac extends Something
 {
     int a;
+    int[] b;
     public int ComputeFac()
     {
         int num_aux;
@@ -23,12 +24,19 @@ class Fac extends Something
         return num_aux * this.computeFac(1);
     }
 
+    public int somethingFunction(int num)
+    {
+        int num;
+        return 1;
+    }
+
     public static void main(String[] args)
     {
         int i;
         boolean b;
         int i;
         boolean a;
+        int[] a;
         
         i = 0;
         //a = !(!this.gt(a, b) && !this.eq(a, b));

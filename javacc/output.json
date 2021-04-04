@@ -68,6 +68,26 @@
                         "children": []
                       }
                     ]
+                  },
+                  {
+                    "kind": "VarDeclaration",
+                    "attributes": {},
+                    "children": [
+                      {
+                        "kind": "VarType",
+                        "attributes": {
+                          "type": "int[]"
+                        },
+                        "children": []
+                      },
+                      {
+                        "kind": "VarName",
+                        "attributes": {
+                          "name": "b"
+                        },
+                        "children": []
+                      }
+                    ]
                   }
                 ]
               },
@@ -400,6 +420,91 @@
                     ]
                   },
                   {
+                    "kind": "NormalMethodDeclaration",
+                    "attributes": {},
+                    "children": [
+                      {
+                        "kind": "ReturnType",
+                        "attributes": {
+                          "type": "int"
+                        },
+                        "children": []
+                      },
+                      {
+                        "kind": "MethodName",
+                        "attributes": {
+                          "name": "somethingFunction"
+                        },
+                        "children": []
+                      },
+                      {
+                        "kind": "Args",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "kind": "Parameter",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "ParameterType",
+                                "attributes": {
+                                  "type": "int"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "ParameterName",
+                                "attributes": {
+                                  "name": "num"
+                                },
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "Body",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "kind": "VarDeclaration",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "VarType",
+                                "attributes": {
+                                  "type": "int"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "VarName",
+                                "attributes": {
+                                  "name": "num"
+                                },
+                                "children": []
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "kind": "ReturnValue",
+                        "attributes": {},
+                        "children": [
+                          {
+                            "kind": "IntegerLiteral",
+                            "attributes": {
+                              "name": "1"
+                            },
+                            "children": []
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
                     "kind": "MainMethodDeclaration",
                     "attributes": {},
                     "children": [
@@ -482,6 +587,26 @@
                                 "kind": "VarType",
                                 "attributes": {
                                   "type": "boolean"
+                                },
+                                "children": []
+                              },
+                              {
+                                "kind": "VarName",
+                                "attributes": {
+                                  "name": "a"
+                                },
+                                "children": []
+                              }
+                            ]
+                          },
+                          {
+                            "kind": "VarDeclaration",
+                            "attributes": {},
+                            "children": [
+                              {
+                                "kind": "VarType",
+                                "attributes": {
+                                  "type": "int[]"
                                 },
                                 "children": []
                               },

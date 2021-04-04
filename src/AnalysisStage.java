@@ -1,17 +1,13 @@
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 
 import pt.up.fe.comp.TestUtils;
 import pt.up.fe.comp.jmm.JmmNode;
 import pt.up.fe.comp.jmm.JmmParserResult;
 import pt.up.fe.comp.jmm.analysis.JmmAnalysis;
 import pt.up.fe.comp.jmm.analysis.JmmSemanticsResult;
-import pt.up.fe.comp.jmm.ast.examples.ExamplePostorderVisitor;
-import pt.up.fe.comp.jmm.ast.examples.ExamplePreorderVisitor;
-import pt.up.fe.comp.jmm.ast.examples.ExamplePrintVariables;
-import pt.up.fe.comp.jmm.ast.examples.ExampleVisitor;
+import pt.up.fe.comp.jmm.analysis.table.Symbol;
 import pt.up.fe.comp.jmm.report.Report;
 import pt.up.fe.comp.jmm.report.ReportType;
 import pt.up.fe.comp.jmm.report.Stage;
@@ -63,17 +59,50 @@ public class AnalysisStage implements JmmAnalysis {
         var classVisitor = new ClassVisitor();
         classVisitor.visit(node, symbolTable);
 
-        var imports = symbolTable.getImports();
+        var fieldVisitor = new FieldVisitor();
+        fieldVisitor.visit(node, symbolTable);
 
+        var methodVisitor = new MethodVisitor();
+        methodVisitor.visit(node, symbolTable);
+
+
+
+
+
+        //Testing prints
+        var imports = symbolTable.getImports();
         System.out.println("Imports: ");
         for (String string : imports) {
             System.out.println("\t" + string);
         }
         System.out.println("Class Name: " + symbolTable.getClassName());
         System.out.println("Super Class Name: " + symbolTable.getSuper());
+        var fields = symbolTable.getFields();
+        System.out.println("Fields: ");
+        for (Symbol symbol : fields) {
+            var type = symbol.getType();
+            String printLine = type.getName() + ((type.isArray()) ? "[]" : "");
+            printLine += " " + symbol.getName();
+            System.out.println("\t" + printLine);
+        }
+        var methods = symbolTable.getMethods();
+        System.out.println("METHODS: ");
+        for (String string : methods) {
+            System.out.println("Method Name: " + string);
+            var type = symbolTable.getReturnType(string);
+            System.out.println("Return Type: " + type.getName() + ((type.isArray()) ? "[]" : ""));
+            var params = symbolTable.getParameters(string);
+            for (Symbol param : params) {
+                var paramType = param.getType();
+                System.out.println("Parameter: " + paramType.getName() + ((paramType.isArray()) ? "[]" : "") + " " + param.getName());
+            }
+            var locals = symbolTable.getLocalVariables(string);
+            for (Symbol localVar : locals) {
+                var localType = localVar.getType();
+                System.out.println("Local Variable: " + localType.getName() + ((localType.isArray()) ? "[]" : "") + " " + localVar.getName());
+            }
+        }
 
-
-        // No Symbol Table being calculated yet
         return new JmmSemanticsResult(parserResult, symbolTable, new ArrayList<>());
 
     }

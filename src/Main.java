@@ -1,17 +1,15 @@
 
-import pt.up.fe.comp.jmm.JmmNode;
-import pt.up.fe.comp.jmm.JmmParser;
-import pt.up.fe.comp.jmm.JmmParserResult;
-import pt.up.fe.comp.jmm.report.Report;
-import pt.up.fe.specs.util.SpecsIo;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.ArrayList;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
+
+import pt.up.fe.comp.jmm.JmmParser;
+import pt.up.fe.comp.jmm.JmmParserResult;
+import pt.up.fe.comp.jmm.report.Report;
+import pt.up.fe.specs.util.SpecsIo;
 
 public class Main implements JmmParser {
 

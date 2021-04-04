@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +20,7 @@ public class MySymbolTable implements SymbolTable {
         this.className = null;
         this.superClassName = null;
         this.fields = new ArrayList<>();
+        this.functions = new HashMap<>();
     }
 
     public void setClassName(String className) {

@@ -1,5 +1,4 @@
 import pt.up.fe.comp.jmm.JmmNode;
-import pt.up.fe.comp.jmm.ast.AJmmVisitor;
 import pt.up.fe.comp.jmm.ast.PreorderJmmVisitor;
 
 public class ClassVisitor extends PreorderJmmVisitor<MySymbolTable, Boolean> {
