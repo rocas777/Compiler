@@ -90,7 +90,7 @@ void pushErrorNode() #void
 JAVACODE
 void handleError(ParseException e) #void
 {
-    addReportToMain("Error found in while expression!", ReportType.WARNING);
+    addReportToMain("Error found in while expression!", ReportType.ERROR);
     error_skipto("while expression");
     errorCounter++;
     pushErrorNode();
@@ -128,7 +128,7 @@ void addReportToMain(String message, ReportType reportType) #void
 {
     Token t = getToken(1);
     int lineError = t.beginLine;
-    Stage stage = Stage.SYNTATIC;
+    Stage stage = Stage.LEXICAL;
     Main.reports.add(new Report(reportType, stage, lineError, message));
 }
 
