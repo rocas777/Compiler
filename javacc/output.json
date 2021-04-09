@@ -30,14 +30,18 @@
           {
             "kind": "Name",
             "attributes": {
-              "name": "Fac"
+              "line": "4",
+              "name": "Fac",
+              "column": "7"
             },
             "children": []
           },
           {
             "kind": "ExtendedClassName",
             "attributes": {
-              "name": "Something"
+              "line": "4",
+              "name": "Something",
+              "column": "19"
             },
             "children": []
           },
@@ -56,6 +60,8 @@
                       {
                         "kind": "VarType",
                         "attributes": {
+                          "line": "6",
+                          "column": "5",
                           "type": "int"
                         },
                         "children": []
@@ -63,7 +69,9 @@
                       {
                         "kind": "VarName",
                         "attributes": {
-                          "name": "a"
+                          "line": "6",
+                          "name": "a",
+                          "column": "9"
                         },
                         "children": []
                       }
@@ -76,6 +84,8 @@
                       {
                         "kind": "VarType",
                         "attributes": {
+                          "line": "7",
+                          "column": "5",
                           "type": "int[]"
                         },
                         "children": []
@@ -83,7 +93,9 @@
                       {
                         "kind": "VarName",
                         "attributes": {
-                          "name": "b"
+                          "line": "7",
+                          "name": "b",
+                          "column": "11"
                         },
                         "children": []
                       }
@@ -102,6 +114,8 @@
                       {
                         "kind": "ReturnType",
                         "attributes": {
+                          "line": "8",
+                          "column": "12",
                           "type": "int"
                         },
                         "children": []
@@ -109,7 +123,9 @@
                       {
                         "kind": "MethodName",
                         "attributes": {
-                          "name": "ComputeFac"
+                          "line": "8",
+                          "name": "ComputeFac",
+                          "column": "16"
                         },
                         "children": []
                       },
@@ -124,6 +140,8 @@
                               {
                                 "kind": "VarType",
                                 "attributes": {
+                                  "line": "10",
+                                  "column": "9",
                                   "type": "int"
                                 },
                                 "children": []
@@ -131,7 +149,9 @@
                               {
                                 "kind": "VarName",
                                 "attributes": {
-                                  "name": "num_aux"
+                                  "line": "10",
+                                  "name": "num_aux",
+                                  "column": "13"
                                 },
                                 "children": []
                               }
@@ -148,14 +168,18 @@
                                   {
                                     "kind": "VariableName",
                                     "attributes": {
-                                      "name": "num"
+                                      "line": "11",
+                                      "name": "num",
+                                      "column": "13"
                                     },
                                     "children": []
                                   },
                                   {
                                     "kind": "IntegerLiteral",
                                     "attributes": {
-                                      "name": "1"
+                                      "line": "11",
+                                      "name": "1",
+                                      "column": "19"
                                     },
                                     "children": []
                                   }
@@ -172,14 +196,18 @@
                                       {
                                         "kind": "Assigned",
                                         "attributes": {
-                                          "name": "num_aux"
+                                          "line": "13",
+                                          "name": "num_aux",
+                                          "column": "12"
                                         },
                                         "children": []
                                       },
                                       {
                                         "kind": "IntegerLiteral",
                                         "attributes": {
-                                          "name": "1"
+                                          "line": "13",
+                                          "name": "1",
+                                          "column": "22"
                                         },
                                         "children": []
                                       }
@@ -192,14 +220,18 @@
                                       {
                                         "kind": "Assigned",
                                         "attributes": {
-                                          "name": "i"
+                                          "line": "14",
+                                          "name": "i",
+                                          "column": "12"
                                         },
                                         "children": []
                                       },
                                       {
                                         "kind": "IntegerLiteral",
                                         "attributes": {
-                                          "name": "0"
+                                          "line": "14",
+                                          "name": "0",
+                                          "column": "16"
                                         },
                                         "children": []
                                       }
@@ -212,14 +244,18 @@
                                       {
                                         "kind": "Assigned",
                                         "attributes": {
-                                          "name": "i"
+                                          "line": "15",
+                                          "name": "i",
+                                          "column": "12"
                                         },
                                         "children": []
                                       },
                                       {
                                         "kind": "IntegerLiteral",
                                         "attributes": {
-                                          "name": "3"
+                                          "line": "15",
+                                          "name": "3",
+                                          "column": "16"
                                         },
                                         "children": []
                                       }
@@ -232,14 +268,18 @@
                                       {
                                         "kind": "Assigned",
                                         "attributes": {
-                                          "name": "i"
+                                          "line": "16",
+                                          "name": "i",
+                                          "column": "12"
                                         },
                                         "children": []
                                       },
                                       {
                                         "kind": "IntegerLiteral",
                                         "attributes": {
-                                          "name": "2"
+                                          "line": "16",
+                                          "name": "2",
+                                          "column": "16"
                                         },
                                         "children": []
                                       }
@@ -260,7 +300,9 @@
                                   {
                                     "kind": "Assigned",
                                     "attributes": {
-                                      "name": "num_aux"
+                                      "line": "20",
+                                      "name": "num_aux",
+                                      "column": "13"
                                     },
                                     "children": []
                                   },
@@ -271,7 +313,9 @@
                                       {
                                         "kind": "VariableName",
                                         "attributes": {
-                                          "name": "num"
+                                          "line": "20",
+                                          "name": "num",
+                                          "column": "23"
                                         },
                                         "children": []
                                       },
@@ -287,7 +331,9 @@
                                           {
                                             "kind": "MethodName",
                                             "attributes": {
-                                              "name": "ComputeFac"
+                                              "line": "20",
+                                              "name": "ComputeFac",
+                                              "column": "35"
                                             },
                                             "children": []
                                           },
@@ -302,14 +348,18 @@
                                                   {
                                                     "kind": "VariableName",
                                                     "attributes": {
-                                                      "name": "num"
+                                                      "line": "20",
+                                                      "name": "num",
+                                                      "column": "46"
                                                     },
                                                     "children": []
                                                   },
                                                   {
                                                     "kind": "IntegerLiteral",
                                                     "attributes": {
-                                                      "name": "1"
+                                                      "line": "20",
+                                                      "name": "1",
+                                                      "column": "50"
                                                     },
                                                     "children": []
                                                   }
@@ -330,14 +380,18 @@
                                   {
                                     "kind": "Assigned",
                                     "attributes": {
-                                      "name": "i"
+                                      "line": "21",
+                                      "name": "i",
+                                      "column": "13"
                                     },
                                     "children": []
                                   },
                                   {
                                     "kind": "IntegerLiteral",
                                     "attributes": {
-                                      "name": "3"
+                                      "line": "21",
+                                      "name": "3",
+                                      "column": "17"
                                     },
                                     "children": []
                                   }
@@ -350,14 +404,18 @@
                                   {
                                     "kind": "Assigned",
                                     "attributes": {
-                                      "name": "i"
+                                      "line": "22",
+                                      "name": "i",
+                                      "column": "13"
                                     },
                                     "children": []
                                   },
                                   {
                                     "kind": "IntegerLiteral",
                                     "attributes": {
-                                      "name": "2"
+                                      "line": "22",
+                                      "name": "2",
+                                      "column": "17"
                                     },
                                     "children": []
                                   }
@@ -378,7 +436,9 @@
                               {
                                 "kind": "VariableName",
                                 "attributes": {
-                                  "name": "num_aux"
+                                  "line": "24",
+                                  "name": "num_aux",
+                                  "column": "16"
                                 },
                                 "children": []
                               },
@@ -394,7 +454,9 @@
                                   {
                                     "kind": "MethodName",
                                     "attributes": {
-                                      "name": "computeFac"
+                                      "line": "24",
+                                      "name": "computeFac",
+                                      "column": "31"
                                     },
                                     "children": []
                                   },
@@ -405,7 +467,9 @@
                                       {
                                         "kind": "IntegerLiteral",
                                         "attributes": {
-                                          "name": "1"
+                                          "line": "24",
+                                          "name": "1",
+                                          "column": "42"
                                         },
                                         "children": []
                                       }
@@ -426,6 +490,8 @@
                       {
                         "kind": "ReturnType",
                         "attributes": {
+                          "line": "27",
+                          "column": "12",
                           "type": "int"
                         },
                         "children": []
@@ -433,7 +499,9 @@
                       {
                         "kind": "MethodName",
                         "attributes": {
-                          "name": "somethingFunction"
+                          "line": "27",
+                          "name": "somethingFunction",
+                          "column": "16"
                         },
                         "children": []
                       },
@@ -448,6 +516,8 @@
                               {
                                 "kind": "ParameterType",
                                 "attributes": {
+                                  "line": "27",
+                                  "column": "34",
                                   "type": "int"
                                 },
                                 "children": []
@@ -455,7 +525,9 @@
                               {
                                 "kind": "ParameterName",
                                 "attributes": {
-                                  "name": "num"
+                                  "line": "27",
+                                  "name": "num",
+                                  "column": "38"
                                 },
                                 "children": []
                               }
@@ -474,6 +546,8 @@
                               {
                                 "kind": "VarType",
                                 "attributes": {
+                                  "line": "29",
+                                  "column": "9",
                                   "type": "int"
                                 },
                                 "children": []
@@ -481,7 +555,9 @@
                               {
                                 "kind": "VarName",
                                 "attributes": {
-                                  "name": "num"
+                                  "line": "29",
+                                  "name": "num",
+                                  "column": "13"
                                 },
                                 "children": []
                               }
@@ -496,7 +572,9 @@
                           {
                             "kind": "IntegerLiteral",
                             "attributes": {
-                              "name": "1"
+                              "line": "30",
+                              "name": "1",
+                              "column": "16"
                             },
                             "children": []
                           }
@@ -511,7 +589,9 @@
                       {
                         "kind": "ArgName",
                         "attributes": {
-                          "name": "args"
+                          "line": "33",
+                          "name": "args",
+                          "column": "38"
                         },
                         "children": []
                       },
@@ -526,6 +606,8 @@
                               {
                                 "kind": "VarType",
                                 "attributes": {
+                                  "line": "35",
+                                  "column": "9",
                                   "type": "int"
                                 },
                                 "children": []
@@ -533,7 +615,9 @@
                               {
                                 "kind": "VarName",
                                 "attributes": {
-                                  "name": "i"
+                                  "line": "35",
+                                  "name": "i",
+                                  "column": "13"
                                 },
                                 "children": []
                               }
@@ -546,6 +630,8 @@
                               {
                                 "kind": "VarType",
                                 "attributes": {
+                                  "line": "36",
+                                  "column": "9",
                                   "type": "boolean"
                                 },
                                 "children": []
@@ -553,7 +639,9 @@
                               {
                                 "kind": "VarName",
                                 "attributes": {
-                                  "name": "b"
+                                  "line": "36",
+                                  "name": "b",
+                                  "column": "17"
                                 },
                                 "children": []
                               }
@@ -566,6 +654,8 @@
                               {
                                 "kind": "VarType",
                                 "attributes": {
+                                  "line": "37",
+                                  "column": "9",
                                   "type": "int"
                                 },
                                 "children": []
@@ -573,7 +663,9 @@
                               {
                                 "kind": "VarName",
                                 "attributes": {
-                                  "name": "i"
+                                  "line": "37",
+                                  "name": "i",
+                                  "column": "13"
                                 },
                                 "children": []
                               }
@@ -586,6 +678,8 @@
                               {
                                 "kind": "VarType",
                                 "attributes": {
+                                  "line": "38",
+                                  "column": "9",
                                   "type": "boolean"
                                 },
                                 "children": []
@@ -593,7 +687,9 @@
                               {
                                 "kind": "VarName",
                                 "attributes": {
-                                  "name": "a"
+                                  "line": "38",
+                                  "name": "a",
+                                  "column": "17"
                                 },
                                 "children": []
                               }
@@ -606,6 +702,8 @@
                               {
                                 "kind": "VarType",
                                 "attributes": {
+                                  "line": "39",
+                                  "column": "9",
                                   "type": "int[]"
                                 },
                                 "children": []
@@ -613,7 +711,9 @@
                               {
                                 "kind": "VarName",
                                 "attributes": {
-                                  "name": "a"
+                                  "line": "39",
+                                  "name": "a",
+                                  "column": "15"
                                 },
                                 "children": []
                               }
@@ -626,27 +726,9 @@
                               {
                                 "kind": "Assigned",
                                 "attributes": {
-                                  "name": "i"
-                                },
-                                "children": []
-                              },
-                              {
-                                "kind": "IntegerLiteral",
-                                "attributes": {
-                                  "name": "0"
-                                },
-                                "children": []
-                              }
-                            ]
-                          },
-                          {
-                            "kind": "Assign",
-                            "attributes": {},
-                            "children": [
-                              {
-                                "kind": "Assigned",
-                                "attributes": {
-                                  "name": "a"
+                                  "line": "42",
+                                  "name": "a",
+                                  "column": "9"
                                 },
                                 "children": []
                               },
@@ -661,14 +743,18 @@
                                       {
                                         "kind": "VariableName",
                                         "attributes": {
-                                          "name": "i"
+                                          "line": "42",
+                                          "name": "i",
+                                          "column": "13"
                                         },
                                         "children": []
                                       },
                                       {
                                         "kind": "MethodName",
                                         "attributes": {
-                                          "name": "get"
+                                          "line": "42",
+                                          "name": "get",
+                                          "column": "15"
                                         },
                                         "children": []
                                       },
@@ -695,7 +781,9 @@
                               {
                                 "kind": "Assigned",
                                 "attributes": {
-                                  "name": "afdfdfdfdf"
+                                  "line": "43",
+                                  "name": "afdfdfdfdf",
+                                  "column": "9"
                                 },
                                 "children": []
                               },
@@ -724,7 +812,9 @@
                                           {
                                             "kind": "MethodName",
                                             "attributes": {
-                                              "name": "gt"
+                                              "line": "43",
+                                              "name": "gt",
+                                              "column": "36"
                                             },
                                             "children": []
                                           },
@@ -735,14 +825,18 @@
                                               {
                                                 "kind": "VariableName",
                                                 "attributes": {
-                                                  "name": "a"
+                                                  "line": "43",
+                                                  "name": "a",
+                                                  "column": "39"
                                                 },
                                                 "children": []
                                               },
                                               {
                                                 "kind": "VariableName",
                                                 "attributes": {
-                                                  "name": "b"
+                                                  "line": "43",
+                                                  "name": "b",
+                                                  "column": "42"
                                                 },
                                                 "children": []
                                               }
@@ -763,7 +857,9 @@
                               {
                                 "kind": "Assigned",
                                 "attributes": {
-                                  "name": "a"
+                                  "line": "44",
+                                  "name": "a",
+                                  "column": "9"
                                 },
                                 "children": []
                               },
@@ -783,7 +879,9 @@
                                       {
                                         "kind": "MethodName",
                                         "attributes": {
-                                          "name": "gt"
+                                          "line": "44",
+                                          "name": "gt",
+                                          "column": "19"
                                         },
                                         "children": []
                                       },
@@ -794,14 +892,18 @@
                                           {
                                             "kind": "VariableName",
                                             "attributes": {
-                                              "name": "a"
+                                              "line": "44",
+                                              "name": "a",
+                                              "column": "22"
                                             },
                                             "children": []
                                           },
                                           {
                                             "kind": "VariableName",
                                             "attributes": {
-                                              "name": "b"
+                                              "line": "44",
+                                              "name": "b",
+                                              "column": "25"
                                             },
                                             "children": []
                                           }
@@ -820,7 +922,9 @@
                               {
                                 "kind": "Assigned",
                                 "attributes": {
-                                  "name": "i"
+                                  "line": "45",
+                                  "name": "i",
+                                  "column": "9"
                                 },
                                 "children": []
                               },
@@ -831,14 +935,18 @@
                                   {
                                     "kind": "VariableName",
                                     "attributes": {
-                                      "name": "i"
+                                      "line": "45",
+                                      "name": "i",
+                                      "column": "13"
                                     },
                                     "children": []
                                   },
                                   {
                                     "kind": "IntegerLiteral",
                                     "attributes": {
-                                      "name": "3"
+                                      "line": "45",
+                                      "name": "3",
+                                      "column": "17"
                                     },
                                     "children": []
                                   }
@@ -857,7 +965,9 @@
                                   {
                                     "kind": "VariableName",
                                     "attributes": {
-                                      "name": "a"
+                                      "line": "46",
+                                      "name": "a",
+                                      "column": "9"
                                     },
                                     "children": []
                                   },
@@ -868,7 +978,9 @@
                                       {
                                         "kind": "IntegerLiteral",
                                         "attributes": {
-                                          "name": "0"
+                                          "line": "46",
+                                          "name": "0",
+                                          "column": "11"
                                         },
                                         "children": []
                                       }
@@ -883,7 +995,9 @@
                                   {
                                     "kind": "VariableName",
                                     "attributes": {
-                                      "name": "a"
+                                      "line": "46",
+                                      "name": "a",
+                                      "column": "16"
                                     },
                                     "children": []
                                   }
@@ -898,7 +1012,9 @@
                               {
                                 "kind": "Assigned",
                                 "attributes": {
-                                  "name": "a"
+                                  "line": "47",
+                                  "name": "a",
+                                  "column": "9"
                                 },
                                 "children": []
                               },
@@ -918,7 +1034,9 @@
                                       {
                                         "kind": "MethodName",
                                         "attributes": {
-                                          "name": "method"
+                                          "line": "47",
+                                          "name": "method",
+                                          "column": "18"
                                         },
                                         "children": []
                                       },
@@ -936,7 +1054,9 @@
                                       {
                                         "kind": "IntegerLiteral",
                                         "attributes": {
-                                          "name": "3"
+                                          "line": "47",
+                                          "name": "3",
+                                          "column": "27"
                                         },
                                         "children": []
                                       }
@@ -953,7 +1073,9 @@
                               {
                                 "kind": "Assigned",
                                 "attributes": {
-                                  "name": "adfdfdfdf"
+                                  "line": "48",
+                                  "name": "adfdfdfdf",
+                                  "column": "9"
                                 },
                                 "children": []
                               },
@@ -999,7 +1121,9 @@
                               {
                                 "kind": "Assigned",
                                 "attributes": {
-                                  "name": "a"
+                                  "line": "49",
+                                  "name": "a",
+                                  "column": "9"
                                 },
                                 "children": []
                               },
@@ -1014,7 +1138,9 @@
                                       {
                                         "kind": "ObjectClassName",
                                         "attributes": {
-                                          "name": "Main"
+                                          "line": "49",
+                                          "name": "Main",
+                                          "column": "18"
                                         },
                                         "children": []
                                       }
@@ -1031,7 +1157,9 @@
                               {
                                 "kind": "Assigned",
                                 "attributes": {
-                                  "name": "a"
+                                  "line": "50",
+                                  "name": "a",
+                                  "column": "9"
                                 },
                                 "children": []
                               },
@@ -1046,7 +1174,9 @@
                                       {
                                         "kind": "IntegerLiteral",
                                         "attributes": {
-                                          "name": "1"
+                                          "line": "50",
+                                          "name": "1",
+                                          "column": "13"
                                         },
                                         "children": []
                                       },
@@ -1057,14 +1187,18 @@
                                           {
                                             "kind": "IntegerLiteral",
                                             "attributes": {
-                                              "name": "2"
+                                              "line": "50",
+                                              "name": "2",
+                                              "column": "17"
                                             },
                                             "children": []
                                           },
                                           {
                                             "kind": "IntegerLiteral",
                                             "attributes": {
-                                              "name": "3"
+                                              "line": "50",
+                                              "name": "3",
+                                              "column": "21"
                                             },
                                             "children": []
                                           }
@@ -1075,7 +1209,9 @@
                                   {
                                     "kind": "IntegerLiteral",
                                     "attributes": {
-                                      "name": "4"
+                                      "line": "50",
+                                      "name": "4",
+                                      "column": "25"
                                     },
                                     "children": []
                                   }

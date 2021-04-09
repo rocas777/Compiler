@@ -84,17 +84,23 @@ public class MySymbolTable implements SymbolTable {
 
     @Override
     public Type getReturnType(String methodName) {
-        return functions.get(methodName).getReturnType();
+        var func = functions.get(methodName);
+        if (func == null) return null;
+        return func.getReturnType();
     }
 
     @Override
     public List<Symbol> getParameters(String methodName) {
-        return functions.get(methodName).getParameters();
+        var func = functions.get(methodName);
+        if (func == null) return null;
+        return func.getParameters();
     }
 
     @Override
     public List<Symbol> getLocalVariables(String methodName) {
-        return functions.get(methodName).getLocalVariables();
+        var func = functions.get(methodName);
+        if (func == null) return null;
+        return func.getLocalVariables();
     }
     
 }

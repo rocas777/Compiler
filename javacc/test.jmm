@@ -38,7 +38,6 @@ class Fac extends Something
         boolean a;
         int[] a;
         
-        i = 0;
         //a = !(!this.gt(a, b) && !this.eq(a, b));
         a = i.get() && true;
         afdfdfdfdf = true && !this.gt(a, b); //FIX THIS ONE

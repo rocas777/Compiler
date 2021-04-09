@@ -149,12 +149,12 @@ void ImportMaterial() : {Token t1,t2;}
 
 void ClassDeclaration() : {Token t1,t2;}
 {
-    <CLASS> (t1=<IDENTIFIER> {jjtThis.name = t1.image;} #Name) (<EXTENDS> t2=<IDENTIFIER> {jjtThis.name = t2.image;} #ExtendedClassName)? <OPENCUR> ( ((VarDeclaration())* #Vars) ((MethodDeclaration())* #Methods)) #Body "}"
+    <CLASS> (t1=<IDENTIFIER> {jjtThis.name = t1.image; jjtThis.line = String.valueOf(t1.beginLine); jjtThis.column = String.valueOf(t1.beginColumn);} #Name) (<EXTENDS> t2=<IDENTIFIER> {jjtThis.name = t2.image; jjtThis.line = String.valueOf(t2.beginLine); jjtThis.column = String.valueOf(t2.beginColumn);} #ExtendedClassName)? <OPENCUR> ( ((VarDeclaration())* #Vars) ((MethodDeclaration())* #Methods)) #Body "}"
 }
 
 void VarDeclaration() : {Token t1,t2;}
 {
-   t2=Type() {jjtThis.type = t2.image;} #VarType t1=<IDENTIFIER> {jjtThis.name = t1.image;} #VarName <SEMICOLON>
+   t2=Type() {jjtThis.type = t2.image; jjtThis.line = String.valueOf(t2.beginLine); jjtThis.column = String.valueOf(t2.beginColumn);} #VarType t1=<IDENTIFIER> {jjtThis.name = t1.image; jjtThis.line = String.valueOf(t1.beginLine); jjtThis.column = String.valueOf(t1.beginColumn);} #VarName <SEMICOLON>
 }
 
 void MethodDeclaration() #void : {}
@@ -164,12 +164,12 @@ void MethodDeclaration() #void : {}
 
 void NormalMethodDeclaration() : {Token t1,t2;}
 {
-    (t2=Type() {jjtThis.type = t2.image;} #ReturnType) t1=<IDENTIFIER> {jjtThis.name = t1.image;} #MethodName <OPENPAR> (MethodDeclarationArgs())? <CLOSEPAR> <OPENCUR> MethodBody() <RETURN> Expression() #ReturnValue <SEMICOLON> "}"
+    (t2=Type() {jjtThis.type = t2.image; jjtThis.line = String.valueOf(t2.beginLine); jjtThis.column = String.valueOf(t2.beginColumn);} #ReturnType) t1=<IDENTIFIER> {jjtThis.name = t1.image; jjtThis.line = String.valueOf(t1.beginLine); jjtThis.column = String.valueOf(t1.beginColumn);} #MethodName <OPENPAR> (MethodDeclarationArgs())? <CLOSEPAR> <OPENCUR> MethodBody() <RETURN> Expression() #ReturnValue <SEMICOLON> "}"
 }
 
 void MainMethodDeclaration() : {Token t1;}
 {
-    <STATIC> <VOID> <MAIN> <OPENPAR> <STRING> "[" "]" t1=<IDENTIFIER> {jjtThis.name = t1.image;} #ArgName <CLOSEPAR> <OPENCUR> MethodBody() "}"
+    <STATIC> <VOID> <MAIN> <OPENPAR> <STRING> "[" "]" t1=<IDENTIFIER> {jjtThis.name = t1.image; jjtThis.line = String.valueOf(t1.beginLine); jjtThis.column = String.valueOf(t1.beginColumn);} #ArgName <CLOSEPAR> <OPENCUR> MethodBody() "}"
 }
 
 void MethodBody() #Body : {}{
@@ -178,7 +178,7 @@ void MethodBody() #Body : {}{
 
 void MethodDeclarationArgs() #Args: {Token t1,t2,t3,t4;}
 {
-    ((t3=Type() {jjtThis.type = t3.image;} #ParameterType) (t1=<IDENTIFIER> {jjtThis.name = t1.image;} #ParameterName) #Parameter(2)) ("," ((t4=Type() {jjtThis.type = t4.image;} #ParameterType) (t2=<IDENTIFIER> {jjtThis.name = t2.image;} #ParameterName)) #Parameter(2))*
+    ((t3=Type() {jjtThis.type = t3.image; jjtThis.line = String.valueOf(t3.beginLine); jjtThis.column = String.valueOf(t3.beginColumn);} #ParameterType) (t1=<IDENTIFIER> {jjtThis.name = t1.image; jjtThis.line = String.valueOf(t1.beginLine); jjtThis.column = String.valueOf(t1.beginColumn);} #ParameterName) #Parameter(2)) ("," ((t4=Type() {jjtThis.type = t4.image; jjtThis.line = String.valueOf(t4.beginLine); jjtThis.column = String.valueOf(t4.beginColumn);} #ParameterType) (t2=<IDENTIFIER> {jjtThis.name = t2.image; jjtThis.line = String.valueOf(t2.beginLine); jjtThis.column = String.valueOf(t2.beginColumn);} #ParameterName)) #Parameter(2))*
 }
 
 Token Type() #void : {Token t1,t2,t3;}
@@ -200,13 +200,13 @@ void ArrayInitializer() : {}
 
 void ConstructorCall() : {Token t1;}
 {
-    t1=<IDENTIFIER> {jjtThis.name = t1.image;} #ObjectClassName <OPENPAR> <CLOSEPAR>
+    t1=<IDENTIFIER> {jjtThis.name = t1.image; jjtThis.line = String.valueOf(t1.beginLine); jjtThis.column = String.valueOf(t1.beginColumn);} #ObjectClassName <OPENPAR> <CLOSEPAR>
 }
 
 
 void MethodCall() #void : {Token t1;}
 {
-    t1=<IDENTIFIER> {jjtThis.name = t1.image;} #MethodName <OPENPAR> MethodCallArgs() <CLOSEPAR> #Method(3)
+    t1=<IDENTIFIER> {jjtThis.name = t1.image; jjtThis.line = String.valueOf(t1.beginLine); jjtThis.column = String.valueOf(t1.beginColumn);} #MethodName <OPENPAR> MethodCallArgs() <CLOSEPAR> #Method(3)
 }
 
 void AttributeCall() #void : {}
@@ -240,7 +240,7 @@ void Statement() #void: {Token t1;}
 
 void id() #void: {Token t1;}
 {
-    t1=<IDENTIFIER> ({jjtThis.name = t1.image;} #Assigned "=" Expression() #Assign(2) | Expression() | ({jjtThis.name = t1.image;} #VariableName) (("[" Expression()"]") #ArrayIndex) #ArrayAccess(2)  ( "=" (Expression()) #Assign(2))? | {jjtThis.name = t1.image;} #Object "." (  MethodCall() | AttributeCall()))? ";"
+    t1=<IDENTIFIER> ({jjtThis.name = t1.image; jjtThis.line = String.valueOf(t1.beginLine); jjtThis.column = String.valueOf(t1.beginColumn);} #Assigned "=" Expression() #Assign(2) | Expression() | ({jjtThis.name = t1.image; jjtThis.line = String.valueOf(t1.beginLine); jjtThis.column = String.valueOf(t1.beginColumn);} #VariableName) (("[" Expression()"]") #ArrayIndex) #ArrayAccess(2)  ( "=" (Expression()) #Assign(2))? | {jjtThis.name = t1.image; jjtThis.line = String.valueOf(t1.beginLine); jjtThis.column = String.valueOf(t1.beginColumn);} #Object "." (  MethodCall() | AttributeCall()))? ";"
 }
 
 void Expression() #void : {Token t1,t2;}
@@ -321,10 +321,10 @@ void C() #void : {}
 
 void P() #void : {Token t1,t2;}
 {
-    t1=<INTEGERLITERAL> {jjtThis.name = t1.image;} #IntegerLiteral
+    t1=<INTEGERLITERAL> {jjtThis.name = t1.image; jjtThis.line = String.valueOf(t1.beginLine); jjtThis.column = String.valueOf(t1.beginColumn);} #IntegerLiteral
     | <TRUE> #True
     | <FALSE> #False
-    | t1=<IDENTIFIER> {jjtThis.name = t1.image;} #VariableName
+    | t1=<IDENTIFIER> {jjtThis.name = t1.image; jjtThis.line = String.valueOf(t1.beginLine); jjtThis.column = String.valueOf(t1.beginColumn);} #VariableName
     | <THIS> #This
     | <NEW> (ArrayInitializer() | ConstructorCall())
     | <OPENPAR> Expression() <CLOSEPAR>
@@ -332,7 +332,7 @@ void P() #void : {Token t1,t2;}
 
 void P1() #void : {Token t1,t2;}
 {
-    t1=<INTEGERLITERAL> {jjtThis.name = t1.image;} #IntegerLiteral
+    t1=<INTEGERLITERAL> {jjtThis.name = t1.image; jjtThis.line = String.valueOf(t1.beginLine); jjtThis.column = String.valueOf(t1.beginColumn);} #IntegerLiteral
     | <TRUE> #True
     | <FALSE> #False
     | <THIS> #This

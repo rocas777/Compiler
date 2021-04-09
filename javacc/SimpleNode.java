@@ -17,6 +17,8 @@ class SimpleNode implements Node, JmmNode {
   public String name = "";
   public String type = "";
   public String numericalValue = "";
+  public String line = "";
+  public String column = "";
 
   public SimpleNode(int i) {
     id = i;
@@ -146,6 +148,8 @@ class SimpleNode implements Node, JmmNode {
       if (!name.equals("")) attributeList.add("name");
       if (!type.equals("")) attributeList.add("type");
       if (!numericalValue.equals("")) attributeList.add("numericalValue");
+      if (!line.equals("")) attributeList.add("line");
+      if (!column.equals("")) attributeList.add("column");
       
       return attributeList;
     }
@@ -167,6 +171,12 @@ class SimpleNode implements Node, JmmNode {
           break;
         case "numericalValue":
           numericalValue = value;
+          break;
+        case "line":
+          line = value;
+          break;
+        case "column":
+          column = value;
           break;
         default:
           System.out.println("This node doesn't have the requested attribute!");
@@ -193,6 +203,12 @@ class SimpleNode implements Node, JmmNode {
           break;
         case "numericalValue":
           attributeValue = numericalValue;
+          break;
+        case "line":
+          attributeValue = line;
+          break;
+        case "column":
+          attributeValue = column;
           break;
         default:
           System.out.println("This node doesn't have the requested attribute!");

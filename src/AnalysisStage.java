@@ -1,6 +1,7 @@
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import pt.up.fe.comp.TestUtils;
 import pt.up.fe.comp.jmm.JmmNode;
@@ -30,6 +31,7 @@ public class AnalysisStage implements JmmAnalysis {
         }
 
         JmmNode node = parserResult.getRootNode();
+        List<Report> reports = parserResult.getReports();
 
         // System.out.println("Dump tree with Visitor where you control tree traversal");
         // ExampleVisitor visitor = new ExampleVisitor("Identifier", "id");
@@ -51,6 +53,7 @@ public class AnalysisStage implements JmmAnalysis {
         // var varPrinter = new ExamplePrintVariables("Variable", "name", "line");
         // varPrinter.visit(node, null);
 
+        //Fill symbol table
         var symbolTable = new MySymbolTable();
 
         var importVisitor = new ImportVisitor();
@@ -65,7 +68,8 @@ public class AnalysisStage implements JmmAnalysis {
         var methodVisitor = new MethodVisitor();
         methodVisitor.visit(node, symbolTable);
 
-
+        //Semantic analysis
+        //var 
 
 
 
@@ -103,7 +107,7 @@ public class AnalysisStage implements JmmAnalysis {
             }
         }
 
-        return new JmmSemanticsResult(parserResult, symbolTable, new ArrayList<>());
+        return new JmmSemanticsResult(parserResult, symbolTable, reports);
 
     }
 
