@@ -3,11 +3,6 @@
 */
 
 class T {
-    public int a(){
-        int c;
-        c = 0;
-        return 1;
-    }
     public static void main(String[] s) { 
         int[] a;
         int c;
@@ -15,5 +10,4 @@ class T {
         a = new int[0];
         c = a[true];
     }
-
 }
