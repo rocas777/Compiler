@@ -1,5 +1,6 @@
 import org.junit.Test;
 import pt.up.fe.comp.TestUtils;
+import pt.up.fe.comp.jmm.report.Report;
 import pt.up.fe.specs.util.SpecsIo;
 
 public class MainTest {
@@ -68,6 +69,13 @@ public class MainTest {
     @Test
     public void parseTestSemanticFail1() {
         var result = TestUtils.parse(SpecsIo.getResource("fixtures/public/fail/semantic/arr_index_not_int.jmm"));
+        var result2 = TestUtils.analyse(result);
+        TestUtils.mustFail(result2.getReports());
+    }
+
+    @Test
+    public void parseTestSemanticFail2() {
+        var result = TestUtils.parse(SpecsIo.getResource("fixtures/public/fail/semantic/bool_op_incomp.jmm"));
         var result2 = TestUtils.analyse(result);
         TestUtils.mustFail(result2.getReports());
     }

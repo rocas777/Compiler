@@ -72,6 +72,10 @@ public class AnalysisStage implements JmmAnalysis {
         var arrayAccessIndexVisitor = new ArrayAccessVisitor();
         arrayAccessIndexVisitor.visit(node, symbolTable);
 
+        var boolOperationVisitor = new BoolOperationVisitor();
+        boolOperationVisitor.visit(node,symbolTable);
+
+
         //Semantic analysis
         //var 
 
