@@ -3,12 +3,17 @@
 */
 
 class T {
+    public int a(){
+        int c;
+        c = 0;
+        return 1;
+    }
     public static void main(String[] s) { 
         int[] a;
         int c;
         // This is valid in Java
         a = new int[0];
         c = a[true];
-        
     }
+
 }

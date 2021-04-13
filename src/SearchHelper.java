@@ -48,7 +48,12 @@ public class SearchHelper {
     }
 
     static String getMethodName(JmmNode node) {
-        while (!(node.getParent().getKind().contains("MethodDeclaration"))) node = node.getParent();
-        return node.getKind();
+        while (true) {
+            if (node.getParent().getKind().contains("NormalMethodDeclaration")) {
+                return node.getParent().getChildren().get(1).get("name");
+            } else if (node.getParent().getKind().contains("MainMethodDeclaration"))
+                return "main";
+            node = node.getParent();
+        }
     }
 }

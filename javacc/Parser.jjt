@@ -98,7 +98,7 @@ void handleError(ParseException e) #void
     if (errorCounter == errorLimit)
     {
         addReportToMain("Error found in while expression!", ReportType.ERROR);
-        throw new ParseException("Found 10 errors! Will stop parsing!");
+        //throw new ParseException("Found 10 errors! Will stop parsing!");
     }
 }
 

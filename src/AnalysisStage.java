@@ -54,7 +54,7 @@ public class AnalysisStage implements JmmAnalysis {
         //Fill symbol table
         var symbolTable = new MySymbolTable();
 
-        /*var importVisitor = new ImportVisitor();
+        var importVisitor = new ImportVisitor();
         importVisitor.visit(node, symbolTable);
 
         var classVisitor = new ClassVisitor();
@@ -65,9 +65,12 @@ public class AnalysisStage implements JmmAnalysis {
 
         var methodVisitor = new MethodVisitor();
         methodVisitor.visit(node, symbolTable);
+        
+        var variableExistsVisitor = new VariableExistsVisitor();
+        variableExistsVisitor.visit(node, symbolTable);
 
         var arrayAccessIndexVisitor = new ArrayAccessVisitor();
-        arrayAccessIndexVisitor.visit(node, symbolTable);*/
+        arrayAccessIndexVisitor.visit(node, symbolTable);
 
         //Semantic analysis
         //var 

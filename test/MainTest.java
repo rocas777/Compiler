@@ -60,18 +60,16 @@ public class MainTest {
 
     @Test
     public void parseTestPass9() {
-
         var result = TestUtils.parse(SpecsIo.getResource("fixtures/public/WhileAndIF.jmm"));
         TestUtils.noErrors(result.getReports());
     }
 
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void parseTestSemanticFail1() {
-        String fileContent =
-                SpecsIo.read("test/fixtures/fail/semantic/arr_index_not_int.jmm");
-        Main main = new Main();
-        main.parse(fileContent);
+        var result = TestUtils.parse(SpecsIo.getResource("fixtures/public/fail/semantic/arr_index_not_int.jmm"));
+        var result2 = TestUtils.analyse(result);
+        TestUtils.mustFail(result2.getReports());
     }
 
     /*@Test(expected = RuntimeException.class)
@@ -154,49 +152,39 @@ public class MainTest {
     // main.parse(fileContent);
     // }
 
-    @Test(expected = RuntimeException.class)
+    /*@Test
     public void parseTestSyntacticalFail1() {
-        String fileContent = SpecsIo.read("test/fixtures/public/fail/syntactical/BlowUp.jmm");
-        Main main = new Main();
-        main.parse(fileContent);
-    }
+        var result = TestUtils.parse(SpecsIo.getResource("fixtures/public/fail/syntactical/BlowUp.jmm"));
+        TestUtils.mustFail(result.getReports());
+    }*/
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void parseTestSyntacticalFail2() {
-        String fileContent = SpecsIo.read("test/fixtures/public/fail/syntactical/CompleteWhileTest.jmm");
-        Main main = new Main();
-        main.parse(fileContent);
+        var result = TestUtils.parse(SpecsIo.getResource("fixtures/public/fail/syntactical/CompleteWhileTest.jmm"));
+        TestUtils.mustFail(result.getReports());
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void parseTestSyntacticalFail3() {
-        String fileContent =
-                SpecsIo.read("test/fixtures/public/fail/syntactical/LengthError.jmm");
-        Main main = new Main();
-        main.parse(fileContent);
+        var result = TestUtils.parse(SpecsIo.getResource("fixtures/public/fail/syntactical/LengthError.jmm"));
+        TestUtils.mustFail(result.getReports());
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void parseTestSyntacticalFail4() {
-        String fileContent =
-                SpecsIo.read("test/fixtures/public/fail/syntactical/MissingRightPar.jmm");
-        Main main = new Main();
-        main.parse(fileContent);
+        var result = TestUtils.parse(SpecsIo.getResource("fixtures/public/fail/syntactical/MissingRightPar.jmm"));
+        TestUtils.mustFail(result.getReports());
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void parseTestSyntacticalFail5() {
-        String fileContent =
-                SpecsIo.read("test/fixtures/public/fail/syntactical/MultipleSequential.jmm");
-        Main main = new Main();
-        main.parse(fileContent);
+        var result = TestUtils.parse(SpecsIo.getResource("fixtures/public/fail/syntactical/MultipleSequential.jmm"));
+        TestUtils.mustFail(result.getReports());
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void parseTestSyntacticalFail6() {
-        String fileContent =
-                SpecsIo.read("test/fixtures/public/fail/syntactical/NestedLoop.jmm");
-        Main main = new Main();
-        main.parse(fileContent);
+        var result = TestUtils.parse(SpecsIo.getResource("fixtures/public/fail/syntactical/NestedLoop.jmm"));
+        TestUtils.mustFail(result.getReports());
     }
 }

@@ -1,11 +1,11 @@
+import pt.up.fe.comp.jmm.analysis.table.Symbol;
+import pt.up.fe.comp.jmm.analysis.table.SymbolTable;
+import pt.up.fe.comp.jmm.analysis.table.Type;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import pt.up.fe.comp.jmm.analysis.table.Symbol;
-import pt.up.fe.comp.jmm.analysis.table.SymbolTable;
-import pt.up.fe.comp.jmm.analysis.table.Type;
 
 public class MySymbolTable implements SymbolTable {
     private List<String> imports;
@@ -14,8 +14,7 @@ public class MySymbolTable implements SymbolTable {
     private List<Symbol> fields;
     private Map<String, FunctionTable> functions;
 
-    public MySymbolTable()
-    {
+    public MySymbolTable() {
         this.imports = new ArrayList<>();
         this.className = null;
         this.superClassName = null;
@@ -31,23 +30,36 @@ public class MySymbolTable implements SymbolTable {
         this.superClassName = superClassName;
     }
 
-    public void addImport(String importName)
-    {
+    public void addImport(String importName) {
         this.imports.add(importName);
     }
 
-    public void addField(Symbol field)
-    {
+    public void addField(Symbol field) {
         this.fields.add(field);
     }
 
-    public void addFunction(String funcName, FunctionTable funcData)
-    {
+    public void addFunction(String funcName, FunctionTable funcData) {
         this.functions.put(funcName, funcData);
     }
 
-
-
+    public Symbol getVariable(String variableName, String methodName) {
+        for (Symbol field : fields) {
+            if (field.getName().equals(variableName)) {
+                return field;
+            }
+        }
+        for (Symbol parameter : getParameters(methodName)) {
+            if (parameter.getName().equals(variableName)) {
+                return parameter;
+            }
+        }
+        for (Symbol local : getLocalVariables(methodName)) {
+            if (local.getName().equals(variableName)) {
+                return local;
+            }
+        }
+        return null;
+    }
 
 
     //METHODS REQUIRED BY INTERFACE
@@ -102,5 +114,5 @@ public class MySymbolTable implements SymbolTable {
         if (func == null) return null;
         return func.getLocalVariables();
     }
-    
+
 }
