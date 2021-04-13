@@ -1,8 +1,3 @@
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import pt.up.fe.comp.TestUtils;
 import pt.up.fe.comp.jmm.JmmNode;
 import pt.up.fe.comp.jmm.JmmParserResult;
@@ -12,6 +7,9 @@ import pt.up.fe.comp.jmm.analysis.table.Symbol;
 import pt.up.fe.comp.jmm.report.Report;
 import pt.up.fe.comp.jmm.report.ReportType;
 import pt.up.fe.comp.jmm.report.Stage;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class AnalysisStage implements JmmAnalysis {
 
@@ -56,7 +54,7 @@ public class AnalysisStage implements JmmAnalysis {
         //Fill symbol table
         var symbolTable = new MySymbolTable();
 
-        var importVisitor = new ImportVisitor();
+        /*var importVisitor = new ImportVisitor();
         importVisitor.visit(node, symbolTable);
 
         var classVisitor = new ClassVisitor();
@@ -68,9 +66,11 @@ public class AnalysisStage implements JmmAnalysis {
         var methodVisitor = new MethodVisitor();
         methodVisitor.visit(node, symbolTable);
 
+        var arrayAccessIndexVisitor = new ArrayAccessVisitor();
+        arrayAccessIndexVisitor.visit(node, symbolTable);*/
+
         //Semantic analysis
         //var 
-
 
 
         //Testing prints
