@@ -54,7 +54,7 @@ public class BoolOperationVisitor extends PreorderJmmVisitor<MySymbolTable, List
             }
         }
 
-        Main.reports.addAll(reports);
+        Main.semanticReports.addAll(reports);
 
         return reports;
     }

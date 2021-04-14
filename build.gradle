@@ -34,6 +34,12 @@ compileJavacc {
 	arguments = [grammar_encoding: 'UTF-8', static: 'false']	
 }
 
+apply plugin: 'java'
+
+test {
+    dependsOn cleanTest
+    testLogging.showStandardStreams = true
+}
 
 // Project sources
 sourceSets {
