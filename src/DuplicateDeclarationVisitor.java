@@ -29,7 +29,21 @@ public class DuplicateDeclarationVisitor extends PreorderJmmVisitor<MySymbolTabl
             Type type = varData.getType();
             if (type != null)
             {
-               if (!type.getName().equals(typeChild.get("type"))) Main.reports.add(new Report(ReportType.ERROR, Stage.SEMANTIC, nameChildLine, nameChildColumn, "Redeclaration of variable with different type")); 
+                boolean matchesIsArray = true;
+                boolean matchesTypeName = true;
+
+                String typeChildTypeText = typeChild.get("type");
+                boolean typeChildIsArray = false;
+                if (typeChildTypeText.contains("[]")) typeChildIsArray = true;
+                String typeChildTypeName = ((typeChildIsArray) ? typeChildTypeText.substring(0, typeChildTypeText.length() - 2) : typeChildTypeText);
+
+                String typeName = type.getName();
+                boolean isArray = type.isArray();
+
+                matchesIsArray = typeChildIsArray == isArray;
+                matchesTypeName = typeChildTypeName.equals(typeName);
+
+                if (!matchesIsArray || !matchesTypeName) Main.reports.add(new Report(ReportType.ERROR, Stage.SEMANTIC, nameChildLine, nameChildColumn, "Redeclaration of variable with different type")); 
             }
         }
 
