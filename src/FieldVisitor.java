@@ -31,7 +31,7 @@ public class FieldVisitor extends PreorderJmmVisitor<MySymbolTable, Boolean> {
         if (isArray) typeName = typeString.substring(0, typeString.length() - 2);
         else typeName = typeString;
         Type type = new Type(typeName, isArray);
-        Symbol symbol = new Symbol(type, symbolInfo.get("name"));
+        Symbol symbol = new MySymbol(type, symbolInfo.get("name"), Integer.parseInt(symbolInfo.get("line")), Integer.parseInt(symbolInfo.get("column")));
         return symbol;
     }
 }

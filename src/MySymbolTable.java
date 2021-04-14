@@ -1,11 +1,14 @@
-import pt.up.fe.comp.jmm.analysis.table.Symbol;
-import pt.up.fe.comp.jmm.analysis.table.SymbolTable;
-import pt.up.fe.comp.jmm.analysis.table.Type;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import pt.up.fe.comp.jmm.analysis.table.Symbol;
+import pt.up.fe.comp.jmm.analysis.table.SymbolTable;
+import pt.up.fe.comp.jmm.analysis.table.Type;
+import pt.up.fe.comp.jmm.report.Report;
+import pt.up.fe.comp.jmm.report.ReportType;
+import pt.up.fe.comp.jmm.report.Stage;
 
 public class MySymbolTable implements SymbolTable {
     private List<String> imports;
@@ -40,6 +43,66 @@ public class MySymbolTable implements SymbolTable {
 
     public void addFunction(String funcName, FunctionTable funcData) {
         this.functions.put(funcName, funcData);
+
+        processDuplicates(funcData);
+    }
+
+    private void processDuplicates(FunctionTable funcData)
+    {
+        List<Symbol> symbols = funcData.getLocalVariables();
+        symbols.addAll(funcData.getParameters());
+
+        Map<String, List<Symbol>> varNameAndSymbols = new HashMap<>();
+
+        for (Symbol symbol : symbols) {
+            String varName = symbol.getName();
+            if (varNameAndSymbols.containsKey(varName))
+            {
+                varNameAndSymbols.get(varName).add(symbol);
+            }
+            else
+            {
+                List<Symbol> symbolList = new ArrayList<>();
+                symbolList.add(symbol);
+                varNameAndSymbols.put(varName, symbolList);
+            } 
+        }
+
+        for (Map.Entry<String, List<Symbol>> mapEntry : varNameAndSymbols.entrySet())
+        {
+            var declarations = mapEntry.getValue();
+            if (declarations.size() > 1)
+            {
+                int minLine = Integer.MAX_VALUE;
+                int minCol = Integer.MAX_VALUE;
+                MySymbol firstSymbol = null;
+
+                for (Object declaration : declarations) {
+                    MySymbol symbol = (MySymbol) declaration;
+                    if (symbol.getLine() < minLine)
+                    {
+                        firstSymbol = symbol;
+                        minLine = symbol.getLine();
+                        minCol = symbol.getColumn();
+                    } 
+                    else if (symbol.getLine() == minLine && symbol.getColumn() < minCol)
+                    {
+                        firstSymbol = symbol;
+                        minLine = symbol.getLine();
+                        minCol = symbol.getColumn();
+                    }
+                }
+
+                for (Symbol declaration : declarations)
+                {
+                    MySymbol symbol = (MySymbol) declaration;
+                    if (symbol.getLine() > minLine || symbol.getColumn() > minCol)
+                    {
+                        Main.reports.add(new Report(ReportType.ERROR, Stage.SEMANTIC, symbol.getLine(), symbol.getColumn(), "Duplicate local variable"));
+                    }
+                }
+            }
+        }
     }
 
     public Symbol getVariable(String variableName, String methodName) {
