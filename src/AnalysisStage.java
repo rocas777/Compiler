@@ -75,6 +75,8 @@ public class AnalysisStage implements JmmAnalysis {
         var boolOperationVisitor = new BoolOperationVisitor();
         boolOperationVisitor.visit(node,symbolTable);
 
+        var duplicateDeclarationVisitor = new DuplicateDeclarationVisitor();
+        duplicateDeclarationVisitor.visit(node, symbolTable);
 
         //Semantic analysis
         //var 
