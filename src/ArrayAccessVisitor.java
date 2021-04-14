@@ -33,7 +33,7 @@ public class ArrayAccessVisitor extends PreorderJmmVisitor<MySymbolTable, List<R
             case "Method": {
                 var child = arrayIndexNode.getChildren().get(1);
                 String methodName = child.get("name");
-                Report report = SearchHelper.checkIfInteger(methodName, table, "Array Access Index is not an Integer ");
+                Report report = SearchHelper.CheckIfInteger(methodName, table, "Array Access Index is not an Integer ");
                 if (report != null) reports.add(report);
 
             }

@@ -7,15 +7,14 @@ import pt.up.fe.comp.jmm.report.Stage;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArithmeticVisitor extends PreorderJmmVisitor<MySymbolTable, List<Report>> {
-    public ArithmeticVisitor() {
-        addVisit("Add", this::processOperation);
-        addVisit("Sub", this::processOperation);
-        addVisit("Mul", this::processOperation);
-        addVisit("Div", this::processOperation);
+public class BoolOperationVisitor extends PreorderJmmVisitor<MySymbolTable, List<Report>> {
+    public BoolOperationVisitor() {
+        addVisit("AND",this::processOperation);
+        addVisit("LessThan",this::processOperation);
+        addVisit("Neg",this::processOperation);
     }
 
-    List<Report> processOperation(JmmNode node, MySymbolTable table) {
+    List<Report> processOperation(JmmNode node, MySymbolTable table){
         List<Report> reports = new ArrayList<>();
 
         var children = node.getChildren();
@@ -24,25 +23,24 @@ public class ArithmeticVisitor extends PreorderJmmVisitor<MySymbolTable, List<Re
             String kind = jmmNode.getKind();
 
             switch (kind) {
-                case "IntegerLiteral":
-                case "Add":
-                case "Sub":
-                case "Mul":
-                case "Div":
-                case "ArrayAccess": {
+                case "AND":
+                case "LessThan":
+                case "Neg":
+                {
                     continue;
                 }
                 case "Method": {
                     var child = jmmNode.getChildren().get(1);
 
                     String methodName = child.get("name");
-                    Report report = SearchHelper.CheckIfInteger(methodName, table, "Method does not return in type");
+                    Report report = SearchHelper.CheckIfBoolean(methodName, table, "Method " + methodName + " does not return boolean type");
                     if (report != null) reports.add(report);
-
+                    break;
                 }
                 case "VariableName": {
+                    String varName = jmmNode.get("name");
                     String methodName = SearchHelper.getMethodName(node);
-                    Report report = SearchHelper.CheckIfInteger(jmmNode.get("name"), methodName, table, "Variable is not an int");
+                    Report report = SearchHelper.CheckIfBoolean(varName, methodName, table, "Variable " + varName + " is not a boolean");
                     if (report != null) reports.add(report);
 
                     break;
@@ -55,6 +53,8 @@ public class ArithmeticVisitor extends PreorderJmmVisitor<MySymbolTable, List<Re
 
             }
         }
+
+        Main.reports.addAll(reports);
 
         return reports;
     }
