@@ -43,11 +43,6 @@ public class MySymbolTable implements SymbolTable {
     }
 
     public Symbol getVariable(String variableName, String methodName) {
-        for (Symbol field : fields) {
-            if (field.getName().equals(variableName)) {
-                return field;
-            }
-        }
         for (Symbol parameter : getParameters(methodName)) {
             if (parameter.getName().equals(variableName)) {
                 return parameter;
@@ -56,6 +51,12 @@ public class MySymbolTable implements SymbolTable {
         for (Symbol local : getLocalVariables(methodName)) {
             if (local.getName().equals(variableName)) {
                 return local;
+            }
+        }
+
+        for (Symbol field : fields) {
+            if (field.getName().equals(variableName)) {
+                return field;
             }
         }
         return null;
