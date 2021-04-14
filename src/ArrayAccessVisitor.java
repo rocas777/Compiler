@@ -13,7 +13,7 @@ public class ArrayAccessVisitor extends PreorderJmmVisitor<MySymbolTable, List<R
     }
 
     List<Report> processOperation(JmmNode node, MySymbolTable table) {
-        List<Report> reports = new ArrayList<>();
+        List<Report> reports = checkIfArrayIsBeingAccessed(node, table);
 
         var children = node.getChildren();
         if (children.size() != 2) {
@@ -55,6 +55,39 @@ public class ArrayAccessVisitor extends PreorderJmmVisitor<MySymbolTable, List<R
         for (Report report : reports) {
             Main.reports.add(report);
         }
+        return reports;
+    }
+
+    List<Report> checkIfArrayIsBeingAccessed(JmmNode node, MySymbolTable table)
+    {
+        List<Report> reports = new ArrayList<>();
+
+        String nodeMethodName = SearchHelper.getMethodName(node);
+        var firstChild = node.getChildren().get(0);
+
+        switch (firstChild.getKind())
+        {
+            case "VariableName":
+            {
+                String arrayName = node.getChildren().get(0).get("name");
+                Report newReport = SearchHelper.CheckIfArray(arrayName, nodeMethodName, table, "Array Access is being used on a variable which is not an array ");
+                if (newReport != null) reports.add(newReport);
+                break;
+            }
+            case "Method":
+            {
+                String methodName = firstChild.getChildren().get(1).get("name");
+                Report newReport = SearchHelper.CheckIfArray(methodName, table, "Array Access is being used with a function which doesn't return an array ");
+                if (newReport != null) reports.add(newReport);
+                break;
+            }
+            default:
+            {
+                reports.add(new Report(ReportType.ERROR, Stage.SEMANTIC, 0, "Array Access is being used on an element which is not an array "));
+                break;
+            }
+        }
+
         return reports;
     }
 }
