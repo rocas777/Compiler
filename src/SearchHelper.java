@@ -16,7 +16,12 @@ public class SearchHelper {
     }
 
     static Report CheckIfInteger(String name, String methodName, MySymbolTable table, String error) {
-        Type type = table.getVariable(name, methodName).getType();
+        var variable = table.getVariable(name, methodName);
+        if (variable == null)
+            return new Report(ReportType.ERROR, Stage.SEMANTIC, 0, 0, error);
+        Type type = variable.getType();
+        if (type == null)
+            return new Report(ReportType.ERROR, Stage.SEMANTIC, 0, 0, error);
         if (!type.getName().equals("int") || type.isArray())
             return new Report(ReportType.ERROR, Stage.SEMANTIC, 0, error);
         return null;
@@ -32,8 +37,34 @@ public class SearchHelper {
     }
 
     static Report CheckIfBoolean(String name, String methodName, MySymbolTable table, String error) {
-        Type type = table.getVariable(name, methodName).getType();
+        var variable = table.getVariable(name, methodName);
+        if (variable == null)
+            return new Report(ReportType.ERROR, Stage.SEMANTIC, 0, 0, error);
+        Type type = variable.getType();
+        if (type == null)
+            return new Report(ReportType.ERROR, Stage.SEMANTIC, 0, 0, error);
         if (!type.getName().equals("boolean"))
+            return new Report(ReportType.ERROR, Stage.SEMANTIC, 0, 0, error);
+        return null;
+    }
+
+    static Report CheckIfArray(String methodName, MySymbolTable table, String error) {
+        Type returnType = table.getReturnType(methodName);
+        if (returnType == null)
+            return new Report(ReportType.ERROR, Stage.SEMANTIC, 0, 0, error);
+        if (!returnType.isArray())
+            return new Report(ReportType.ERROR, Stage.SEMANTIC, 0, 0, error);
+        return null;
+    }
+
+    static Report CheckIfArray(String name, String methodName, MySymbolTable table, String error) {
+        var variable = table.getVariable(name, methodName);
+        if (variable == null)
+            return new Report(ReportType.ERROR, Stage.SEMANTIC, 0, 0, error);
+        Type type = variable.getType();
+        if (type == null)
+            return new Report(ReportType.ERROR, Stage.SEMANTIC, 0, 0, error);
+        if (!type.isArray())
             return new Report(ReportType.ERROR, Stage.SEMANTIC, 0, 0, error);
         return null;
     }
@@ -45,6 +76,8 @@ public class SearchHelper {
             } else if (node.getParent().getKind().contains("MainMethodDeclaration"))
                 return "main";
             node = node.getParent();
+            if (node == null || node.getParent() == null) break;
         }
+        return null;
     }
 }
