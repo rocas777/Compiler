@@ -14,12 +14,14 @@ import pt.up.fe.specs.util.SpecsIo;
 public class Main implements JmmParser {
 
 	public static List<Report> reports;
+	public static List<Report> semanticReports;
 	public static boolean dumpTree = true;
 
 	public JmmParserResult parse(String jmmCode) {
 		
 		try {
 			reports = new ArrayList<>();
+			semanticReports = new ArrayList<>();
 
 		    Parser myParser = new Parser(new StringReader(jmmCode));
     		SimpleNode root = myParser.Program(); // returns reference to root node

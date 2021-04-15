@@ -53,7 +53,7 @@ public class ArrayAccessVisitor extends PreorderJmmVisitor<MySymbolTable, List<R
 
         }
         for (Report report : reports) {
-            Main.reports.add(report);
+            Main.semanticReports.add(report);
         }
         return reports;
     }
