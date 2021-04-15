@@ -37,14 +37,13 @@ public class ArithmeticVisitor extends PreorderJmmVisitor<MySymbolTable, List<Re
 
                     String methodName = child.get("name");
                     Report report = SearchHelper.CheckIfInteger(methodName, table, "Method " + methodName + " does not return int type");
-                    if (report != null) reports.add(report);
-
+                    if (report != null) reports.add(report);  
+                    break;            
                 }
                 case "VariableName": {
                     String methodName = SearchHelper.getMethodName(node);
                     Report report = SearchHelper.CheckIfInteger(jmmNode.get("name"), methodName, table, "Variable " + jmmNode.get("name") + jmmNode + " is not an int");
                     if (report != null) reports.add(report);
-
                     break;
                 }
                 default: {
