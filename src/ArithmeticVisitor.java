@@ -56,6 +56,8 @@ public class ArithmeticVisitor extends PreorderJmmVisitor<MySymbolTable, List<Re
             }
         }
 
+        Main.semanticReports.addAll(reports);
+        
         return reports;
     }
 }
