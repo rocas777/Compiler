@@ -1,0 +1,31 @@
+/*  REASON:
+    Boolean operation with non booleans
+
+    ESTE TESTE FOI FEITO PELO NUNO
+*/
+
+class T {
+    public static void main(String[] s) {
+          int a;
+          int b;
+          boolean c;
+
+          if((a+b) && c){
+
+          }
+          else{
+
+          }
+
+          while(!a){
+
+          }
+    }
+
+    public int foo(){
+        int aux;
+        aux=1;
+        return aux;
+    }
+
+}

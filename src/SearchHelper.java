@@ -27,24 +27,24 @@ public class SearchHelper {
         return null;
     }
 
-    static Report CheckIfBoolean(String methodName, MySymbolTable table, String error) {
+    static Report CheckIfBoolean(String methodName, MySymbolTable table, String error, int line) {
         Type returnType = table.getReturnType(methodName);
         if (returnType == null)
-            return new Report(ReportType.ERROR, Stage.SEMANTIC, 0, 0, error);
+            return new Report(ReportType.ERROR, Stage.SEMANTIC, line,  error);
         if (!returnType.getName().equals("boolean"))
-            return new Report(ReportType.ERROR, Stage.SEMANTIC, 0, 0, error);
+            return new Report(ReportType.ERROR, Stage.SEMANTIC, line,  error);
         return null;
     }
 
-    static Report CheckIfBoolean(String name, String methodName, MySymbolTable table, String error) {
+    static Report CheckIfBoolean(String name, String methodName, MySymbolTable table, String error, int line, int col) {
         var variable = table.getVariable(name, methodName);
         if (variable == null)
-            return new Report(ReportType.ERROR, Stage.SEMANTIC, 0, 0, error);
+            return new Report(ReportType.ERROR, Stage.SEMANTIC, line, col, error);
         Type type = variable.getType();
         if (type == null)
-            return new Report(ReportType.ERROR, Stage.SEMANTIC, 0, 0, error);
+            return new Report(ReportType.ERROR, Stage.SEMANTIC, line, col, error);
         if (!type.getName().equals("boolean"))
-            return new Report(ReportType.ERROR, Stage.SEMANTIC, 0, 0, error);
+            return new Report(ReportType.ERROR, Stage.SEMANTIC, line, col, error);
         return null;
     }
 
