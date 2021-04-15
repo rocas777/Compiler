@@ -98,7 +98,7 @@ public class MySymbolTable implements SymbolTable {
                     MySymbol symbol = (MySymbol) declaration;
                     if (symbol.getLine() > minLine || symbol.getColumn() > minCol)
                     {
-                        Main.reports.add(new Report(ReportType.ERROR, Stage.SEMANTIC, symbol.getLine(), symbol.getColumn(), "Duplicate local variable"));
+                        Main.semanticReports.add(new Report(ReportType.ERROR, Stage.SEMANTIC, symbol.getLine(), symbol.getColumn(), "Duplicate local variable"));
                     }
                 }
             }
