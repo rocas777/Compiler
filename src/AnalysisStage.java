@@ -29,7 +29,6 @@ public class AnalysisStage implements JmmAnalysis {
         }
 
         JmmNode node = parserResult.getRootNode();
-        List<Report> reports = parserResult.getReports();
 
         // System.out.println("Dump tree with Visitor where you control tree traversal");
         // ExampleVisitor visitor = new ExampleVisitor("Identifier", "id");
@@ -113,7 +112,7 @@ public class AnalysisStage implements JmmAnalysis {
             }
         }
 
-        return new JmmSemanticsResult(parserResult, symbolTable, reports);
+        return new JmmSemanticsResult(parserResult, symbolTable, Main.semanticReports);
 
     }
 
