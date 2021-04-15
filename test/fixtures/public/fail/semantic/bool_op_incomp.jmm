@@ -11,7 +11,7 @@ class T {
           boolean c;
 
           c = a && this.foo();
-          c = !b < c;
+          c = b < c;
           c = !this.foo();
     }
 
