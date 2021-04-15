@@ -28,7 +28,7 @@ public class VariableExistsVisitor extends PreorderJmmVisitor<MySymbolTable, Lis
         //todo fix line
         reports.add(new Report(ReportType.ERROR, Stage.SEMANTIC, 0, "Symbol " + name + " not found"));
         for (Report report : reports) {
-            Main.reports.add(report);
+            Main.semanticReports.add(report);
         }
         return reports;
     }

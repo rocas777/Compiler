@@ -39,7 +39,7 @@ public class MethodVisitor extends PreorderJmmVisitor<MySymbolTable, Boolean> {
         List<Symbol> parameters = new ArrayList<>();
         Type returnType = new Type("void", false);
         Type paramType = new Type("String", true);
-        parameters.add(new Symbol(paramType, firstChild.get("name")));
+        parameters.add(new MySymbol(paramType, firstChild.get("name"), Integer.parseInt(firstChild.get("line")), Integer.parseInt(firstChild.get("column"))));
         List<Symbol> locals = getLocals(children.get(1).getChildren());
         table.addFunction("main", new FunctionTable(returnType, parameters, locals));
         return true;
