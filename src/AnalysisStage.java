@@ -9,7 +9,6 @@ import pt.up.fe.comp.jmm.report.ReportType;
 import pt.up.fe.comp.jmm.report.Stage;
 
 import java.util.Arrays;
-import java.util.List;
 
 public class AnalysisStage implements JmmAnalysis {
 
@@ -64,7 +63,10 @@ public class AnalysisStage implements JmmAnalysis {
 
         var methodVisitor = new MethodVisitor();
         methodVisitor.visit(node, symbolTable);
-        
+
+        var arithmeticVisitor = new ArithmeticVisitor();
+        arithmeticVisitor.visit(node, symbolTable);
+
         var variableExistsVisitor = new VariableExistsVisitor();
         variableExistsVisitor.visit(node, symbolTable);
 

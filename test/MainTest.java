@@ -75,10 +75,11 @@ public class MainTest {
 
     @Test
     public void parseTestSemanticFail2() {
-        var result = TestUtils.parse(SpecsIo.getResource("fixtures/public/fail/semantic/bool_op_incomp.jmm"));
+        var result = TestUtils.parse(SpecsIo.getResource("fixtures/public/fail/semantic/arr_size_not_int.jmm"));
         var result2 = TestUtils.analyse(result);
         TestUtils.mustFail(result2.getReports());
     }
+
 
     @Test
     public void parseTestSemanticFail3() {
@@ -89,90 +90,70 @@ public class MainTest {
 
     @Test
     public void parseTestSemanticFail4() {
+        var result = TestUtils.parse(SpecsIo.getResource("fixtures/public/fail/semantic/binop_incomp.jmm"));
+        var result2 = TestUtils.analyse(result);
+        TestUtils.mustFail(result2.getReports());
+    }
+
+    @Test
+    public void parseTestSemanticFail6() {
         var result = TestUtils.parse(SpecsIo.getResource("fixtures/public/fail/semantic/funcNotFound.jmm"));
         var result2 = TestUtils.analyse(result);
         TestUtils.mustFail(result2.getReports());
     }
 
-    /*@Test(expected = RuntimeException.class)
-    public void parseTestSemanticFail2() {
-        String fileContent =
-                SpecsIo.read("test/fixtures/fail/semantic/arr_size_not_int.jmm");
-        Main main = new Main();
-        main.parse(fileContent);
-    }*/
+    //@Test
+    public void parseTestSemanticFail7() {
+        var result = TestUtils.parse(SpecsIo.getResource("fixtures/public/fail/semantic/simple_length.jmm"));
+        var result2 = TestUtils.analyse(result);
+        TestUtils.mustFail(result2.getReports());
+    }
 
-    // @Test(expected = RuntimeException.class)
-    // public void parseTestSemanticFail3()
-    // {
-    // String fileContent =
-    // SpecsIo.read("test/fixtures/fail/semantic/badArguments.jmm");
-    // Main main = new Main();
-    // main.parse(fileContent);
-    // }
+    //@Test
+    public void parseTestSemanticFail8() {
+        var result = TestUtils.parse(SpecsIo.getResource("fixtures/public/fail/semantic/var_exp_incomp.jmm"));
+        var result2 = TestUtils.analyse(result);
+        TestUtils.mustFail(result2.getReports());
+    }
 
-    // @Test(expected = RuntimeException.class)
-    // public void parseTestSemanticFail4()
-    // {
-    // String fileContent =
-    // SpecsIo.read("test/fixtures/fail/semantic/binop_incomp.jmm");
-    // Main main = new Main();
-    // main.parse(fileContent);
-    // }
+    //@Test
+    public void parseTestSemanticFail9() {
+        var result = TestUtils.parse(SpecsIo.getResource("fixtures/public/fail/semantic/var_lit_incomp.jmm"));
+        var result2 = TestUtils.analyse(result);
+        TestUtils.mustFail(result2.getReports());
+    }
 
-    // @Test(expected = RuntimeException.class)
-    // public void parseTestSemanticFail5()
-    // {
-    // String fileContent =
-    // SpecsIo.read("test/fixtures/fail/semantic/funcNotFound.jmm");
-    // Main main = new Main();
-    // main.parse(fileContent);
-    // }
+    //@Test
+    public void parseTestSemanticFail10() {
+        var result = TestUtils.parse(SpecsIo.getResource("fixtures/public/fail/semantic/var_undef.jmm"));
+        var result2 = TestUtils.analyse(result);
+        TestUtils.mustFail(result2.getReports());
+    }
 
-    // @Test(expected = RuntimeException.class)
-    // public void parseTestSemanticFail6()
-    // {
-    // String fileContent =
-    // SpecsIo.read("test/fixtures/fail/semantic/simple_length.jmm");
-    // Main main = new Main();
-    // main.parse(fileContent);
-    // }
+    //@Test
+    public void parseTestSemanticFail11() {
+        var result = TestUtils.parse(SpecsIo.getResource("fixtures/public/fail/semantic/varNotInit.jmm"));
+        var result2 = TestUtils.analyse(result);
+        TestUtils.mustFail(result2.getReports());
+    }
 
-    // @Test(expected = RuntimeException.class)
-    // public void parseTestSemanticFail7()
-    // {
-    // String fileContent =
-    // SpecsIo.read("test/fixtures/fail/semantic/var_exp_incomp.jmm");
-    // Main main = new Main();
-    // main.parse(fileContent);
-    // }
 
-    // @Test(expected = RuntimeException.class)
-    // public void parseTestSemanticFail8()
-    // {
-    // String fileContent =
-    // SpecsIo.read("test/fixtures/fail/semantic/var_lit_incomp.jmm");
-    // Main main = new Main();
-    // main.parse(fileContent);
-    // }
+    @Test
+    public void CustomSemanticTestFail1() {
+        var result = TestUtils.parse(SpecsIo.getResource("fixtures/public/fail/semantic/bool_op_incomp.jmm"));
+        var result2 = TestUtils.analyse(result);
+        TestUtils.mustFail(result2.getReports());
+    }
 
-    // @Test(expected = RuntimeException.class)
-    // public void parseTestSemanticFail9()
-    // {
-    // String fileContent =
-    // SpecsIo.read("test/fixtures/fail/semantic/var_undef.jmm");
-    // Main main = new Main();
-    // main.parse(fileContent);
-    // }
-
-    // @Test(expected = RuntimeException.class)
-    // public void parseTestSemanticFail10()
-    // {
-    // String fileContent =
-    // SpecsIo.read("test/fixtures/fail/semantic/varNotInit.jmm");
-    // Main main = new Main();
-    // main.parse(fileContent);
-    // }
+    @Test
+    public void CustomSemanticTestFail2() {
+        var result = TestUtils.parse(SpecsIo.getResource("fixtures/public/fail/semantic/array_access_is_on_array.jmm"));
+        var result2 = TestUtils.analyse(result);
+        TestUtils.mustFail(result2.getReports());
+        for (Report r : result2.getReports()) {
+            System.out.println(r);
+        }
+    }
 
     /*@Test
     public void parseTestSyntacticalFail1() {
