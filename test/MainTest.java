@@ -80,6 +80,20 @@ public class MainTest {
         TestUtils.mustFail(result2.getReports());
     }
 
+    @Test
+    public void parseTestSemanticFail3() {
+        var result = TestUtils.parse(SpecsIo.getResource("fixtures/public/fail/semantic/badArguments.jmm"));
+        var result2 = TestUtils.analyse(result);
+        TestUtils.mustFail(result2.getReports());
+    }
+
+    @Test
+    public void parseTestSemanticFail4() {
+        var result = TestUtils.parse(SpecsIo.getResource("fixtures/public/fail/semantic/funcNotFound.jmm"));
+        var result2 = TestUtils.analyse(result);
+        TestUtils.mustFail(result2.getReports());
+    }
+
     /*@Test(expected = RuntimeException.class)
     public void parseTestSemanticFail2() {
         String fileContent =
