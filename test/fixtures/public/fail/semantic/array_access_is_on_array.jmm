@@ -1,0 +1,12 @@
+/*  REASON:
+    array access on non arrays
+
+    ESTE TESTE FOI FEITO PELO MIGUEL
+*/
+
+class T {
+    public static void main(String[] a) {
+        int b;
+        b[0] = 0;
+    }
+}
