@@ -81,7 +81,7 @@ public class MainTest {
     }
 
 
-    //@Test
+    @Test
     public void parseTestSemanticFail3() {
         var result = TestUtils.parse(SpecsIo.getResource("fixtures/public/fail/semantic/badArguments.jmm"));
         var result2 = TestUtils.analyse(result);
@@ -95,7 +95,7 @@ public class MainTest {
         TestUtils.mustFail(result2.getReports());
     }
 
-    //@Test
+    @Test
     public void parseTestSemanticFail6() {
         var result = TestUtils.parse(SpecsIo.getResource("fixtures/public/fail/semantic/funcNotFound.jmm"));
         var result2 = TestUtils.analyse(result);
