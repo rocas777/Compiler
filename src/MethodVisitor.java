@@ -1,21 +1,19 @@
-import java.util.ArrayList;
-import java.util.List;
-
 import pt.up.fe.comp.jmm.JmmNode;
 import pt.up.fe.comp.jmm.analysis.table.Symbol;
 import pt.up.fe.comp.jmm.analysis.table.Type;
 import pt.up.fe.comp.jmm.ast.PreorderJmmVisitor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MethodVisitor extends PreorderJmmVisitor<MySymbolTable, Boolean> {
-    public MethodVisitor()
-    {
+    public MethodVisitor() {
         addVisit("MainMethodDeclaration", this::addMain);
         addVisit("NormalMethodDeclaration", this::addNormalMethod);
     }
- 
-    
-    private Boolean addNormalMethod(JmmNode node, MySymbolTable table)
-    {
+
+
+    private Boolean addNormalMethod(JmmNode node, MySymbolTable table) {
         var children = node.getChildren();
         String funcName = children.get(1).get("name");
         String returnTypeString = children.get(0).get("type");
@@ -31,9 +29,8 @@ public class MethodVisitor extends PreorderJmmVisitor<MySymbolTable, Boolean> {
         table.addFunction(funcName, new FunctionTable(returnType, parameters, getLocals(bodyChild.getChildren())));
         return true;
     }
-    
-    private Boolean addMain(JmmNode node, MySymbolTable table)
-    {
+
+    private Boolean addMain(JmmNode node, MySymbolTable table) {
         var children = node.getChildren();
         var firstChild = children.get(0);
         List<Symbol> parameters = new ArrayList<>();
@@ -45,29 +42,30 @@ public class MethodVisitor extends PreorderJmmVisitor<MySymbolTable, Boolean> {
         return true;
     }
 
-    List<Symbol> getParameters(List<JmmNode> nodes)
-    {
+    List<Symbol> getParameters(List<JmmNode> nodes) {
         List<Symbol> parameters = new ArrayList<>();
         int i = 0;
         JmmNode currNode = null;
-        while ((currNode = nodes.get(i++)).getKind().equals("Parameter"))
-        {
+        while ((currNode = nodes.get(i++)).getKind().equals("Parameter")) {
             parameters.add(FieldVisitor.processVarDeclaration(currNode));
             if (i >= nodes.size()) break;
         }
         return parameters;
     }
 
-    List<Symbol> getLocals(List<JmmNode> nodes)
-    {
+    List<Symbol> getLocals(List<JmmNode> nodes) {
         List<Symbol> locals = new ArrayList<>();
 
         int i = 0;
         JmmNode currNode = null;
-        while ((currNode = nodes.get(i++)).getKind().equals("VarDeclaration"))
-        {
-            locals.add(FieldVisitor.processVarDeclaration(currNode));
-            if (i >= nodes.size()) break;
+        try {
+            while ((currNode = nodes.get(i++)).getKind().equals("VarDeclaration")) {
+                locals.add(FieldVisitor.processVarDeclaration(currNode));
+                if (i >= nodes.size()) break;
+            }
+        }//todo fix this
+        catch (Exception ignored) {
+
         }
         return locals;
     }

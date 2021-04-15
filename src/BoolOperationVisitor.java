@@ -9,12 +9,12 @@ import java.util.List;
 
 public class BoolOperationVisitor extends PreorderJmmVisitor<MySymbolTable, List<Report>> {
     public BoolOperationVisitor() {
-        addVisit("AND",this::processOperation);
-        addVisit("LessThan",this::processOperation);
-        addVisit("Neg",this::processOperation);
+        addVisit("AND", this::processOperation);
+        addVisit("LessThan", this::processOperation);
+        addVisit("Neg", this::processOperation);
     }
 
-    List<Report> processOperation(JmmNode node, MySymbolTable table){
+    List<Report> processOperation(JmmNode node, MySymbolTable table) {
         List<Report> reports = new ArrayList<>();
 
         var children = node.getChildren();
@@ -25,8 +25,7 @@ public class BoolOperationVisitor extends PreorderJmmVisitor<MySymbolTable, List
             switch (kind) {
                 case "AND":
                 case "LessThan":
-                case "Neg":
-                {
+                case "Neg": {
                     continue;
                 }
                 case "Method": {
@@ -43,6 +42,10 @@ public class BoolOperationVisitor extends PreorderJmmVisitor<MySymbolTable, List
                     Report report = SearchHelper.CheckIfBoolean(varName, methodName, table, "Variable " + varName + " is not a boolean");
                     if (report != null) reports.add(report);
 
+                    break;
+                }
+                case "True":
+                case "False": {
                     break;
                 }
                 default: {
