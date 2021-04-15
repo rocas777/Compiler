@@ -74,6 +74,11 @@ public class FuncCallVisitor extends PreorderJmmVisitor<MySymbolTable, Boolean> 
                                 argType = new Type("boolean", false);
                                 break;
                             }
+                            case "Neg":
+                            {
+                                argType = new Type("boolean", false);
+                                break;
+                            }
                             case "VariableName":
                             {
                                 String nodeMethodName = SearchHelper.getMethodName(node);
