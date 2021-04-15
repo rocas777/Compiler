@@ -1,6 +1,5 @@
 import org.junit.Test;
 import pt.up.fe.comp.TestUtils;
-import pt.up.fe.comp.jmm.report.Report;
 import pt.up.fe.specs.util.SpecsIo;
 
 public class MainTest {
@@ -116,7 +115,7 @@ public class MainTest {
         TestUtils.mustFail(result2.getReports());
     }
 
-    //@Test
+    @Test
     public void parseTestSemanticFail9() {
         var result = TestUtils.parse(SpecsIo.getResource("fixtures/public/fail/semantic/var_lit_incomp.jmm"));
         var result2 = TestUtils.analyse(result);
@@ -150,9 +149,6 @@ public class MainTest {
         var result = TestUtils.parse(SpecsIo.getResource("fixtures/public/fail/semantic/array_access_is_on_array.jmm"));
         var result2 = TestUtils.analyse(result);
         TestUtils.mustFail(result2.getReports());
-        for (Report r : result2.getReports()) {
-            System.out.println(r);
-        }
     }
 
     /*@Test
