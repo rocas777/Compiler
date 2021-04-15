@@ -88,7 +88,7 @@ public class MainTest {
         TestUtils.mustFail(result2.getReports());
     }
 
-    //@Test
+    @Test
     public void parseTestSemanticFail4() {
         var result = TestUtils.parse(SpecsIo.getResource("fixtures/public/fail/semantic/binop_incomp.jmm"));
         var result2 = TestUtils.analyse(result);
