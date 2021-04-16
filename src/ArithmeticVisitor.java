@@ -36,13 +36,14 @@ public class ArithmeticVisitor extends PreorderJmmVisitor<MySymbolTable, List<Re
                     var child = jmmNode.getChildren().get(1);
 
                     String methodName = child.get("name");
-                    Report report = SearchHelper.CheckIfInteger(methodName, table, "Method " + methodName + " does not return int type");
-                    if (report != null) reports.add(report);  
-                    break;            
+                    Report report = SearchHelper.CheckIfInteger(methodName, table, "Method " + methodName + " does not return int type",Integer.parseInt(child.get("line")),Integer.parseInt(child.get("column")));
+                    if (report != null) reports.add(report);
+                    break;
                 }
                 case "VariableName": {
                     String methodName = SearchHelper.getMethodName(node);
-                    Report report = SearchHelper.CheckIfInteger(jmmNode.get("name"), methodName, table, "Variable " + jmmNode.get("name") + jmmNode + " is not an int");
+
+                    Report report = SearchHelper.CheckIfInteger(jmmNode.get("name"), methodName, table, "Variable " + jmmNode.get("name") + jmmNode + " is not an int",Integer.parseInt(jmmNode.get("line")),Integer.parseInt(jmmNode.get("column")));
                     if (report != null) reports.add(report);
                     break;
                 }
