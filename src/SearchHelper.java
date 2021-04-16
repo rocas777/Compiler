@@ -6,12 +6,12 @@ import pt.up.fe.comp.jmm.report.Stage;
 
 //todo fix lines
 public class SearchHelper {
-    static Report CheckIfInteger(String methodName, MySymbolTable table, String error, int line) {
+    static Report CheckIfInteger(String methodName, MySymbolTable table, String error, int line, int col) {
         Type returnType = table.getReturnType(methodName);
         if (returnType == null)
-            return new Report(ReportType.ERROR, Stage.SEMANTIC, line, error);
+            return new Report(ReportType.ERROR, Stage.SEMANTIC, line, col, error);
         if (!returnType.getName().equals("int") || returnType.isArray())
-            return new Report(ReportType.ERROR, Stage.SEMANTIC, line, error);
+            return new Report(ReportType.ERROR, Stage.SEMANTIC, line, col, error);
         return null;
     }
 
@@ -27,12 +27,12 @@ public class SearchHelper {
         return null;
     }
 
-    static Report CheckIfBoolean(String methodName, MySymbolTable table, String error, int line) {
+    static Report CheckIfBoolean(String methodName, MySymbolTable table, String error, int line, int col) {
         Type returnType = table.getReturnType(methodName);
         if (returnType == null)
-            return new Report(ReportType.ERROR, Stage.SEMANTIC, line,  error);
+            return new Report(ReportType.ERROR, Stage.SEMANTIC, line, col, error);
         if (!returnType.getName().equals("boolean"))
-            return new Report(ReportType.ERROR, Stage.SEMANTIC, line,  error);
+            return new Report(ReportType.ERROR, Stage.SEMANTIC, line, col,  error);
         return null;
     }
 

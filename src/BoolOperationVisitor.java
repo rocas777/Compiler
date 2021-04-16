@@ -38,7 +38,7 @@ public class BoolOperationVisitor extends PreorderJmmVisitor<MySymbolTable, List
                     var child = jmmNode.getChildren().get(1);
 
                     String methodName = child.get("name");
-                    Report report = SearchHelper.CheckIfBoolean(methodName, table, "Method " + methodName + " does not return boolean type for boolean operation",Integer.parseInt(child.get("line")));
+                    Report report = SearchHelper.CheckIfBoolean(methodName, table, "Method " + methodName + " does not return boolean type for boolean operation",Integer.parseInt(child.get("line")),Integer.parseInt(child.get("column")));
                     if (report != null) reports.add(report);
                     break;
                 }
@@ -89,7 +89,7 @@ public class BoolOperationVisitor extends PreorderJmmVisitor<MySymbolTable, List
                     var child = jmmNode.getChildren().get(1);
 
                     String methodName = child.get("name");
-                    Report report = SearchHelper.CheckIfBoolean(methodName, table, "Method " + methodName + " does not return boolean type for " + node.getKind()+ " expression",Integer.parseInt(child.get("line")));
+                    Report report = SearchHelper.CheckIfBoolean(methodName, table, "Method " + methodName + " does not return boolean type for " + node.getKind()+ " expression",Integer.parseInt(child.get("line")),Integer.parseInt(child.get("line")));
                     if (report != null) reports.add(report);
                     break;
                 }
@@ -102,8 +102,8 @@ public class BoolOperationVisitor extends PreorderJmmVisitor<MySymbolTable, List
                     break;
                 }
                 default: {
-
-                    reports.add(new Report(ReportType.ERROR, Stage.SEMANTIC, -1, "Conditional expression " + node.getKind() + " must result in a boolean"));
+                    //todo fixline
+                    reports.add(new Report(ReportType.ERROR, Stage.SEMANTIC, 0, "Conditional expression " + node.getKind() + " must result in a boolean"));
                     break;
                 }
 
@@ -137,7 +137,7 @@ public class BoolOperationVisitor extends PreorderJmmVisitor<MySymbolTable, List
                     var child = jmmNode.getChildren().get(1);
 
                     String methodName = child.get("name");
-                    Report report = SearchHelper.CheckIfInteger(methodName, table, "Method does not return int type",Integer.parseInt(child.get("line")));
+                    Report report = SearchHelper.CheckIfInteger(methodName, table, "Method does not return int type",Integer.parseInt(child.get("column")),Integer.parseInt(child.get("line")));
                     if (report != null) reports.add(report);
 
                 }
