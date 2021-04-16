@@ -85,6 +85,9 @@ public class AnalysisStage implements JmmAnalysis {
         var lengthVisitor = new LengthVisitor();
         lengthVisitor.visit(node, symbolTable);
 
+        var assigneeAssignedVisitor = new AssigneeAssignedVisitor();
+        assigneeAssignedVisitor.visit(node, symbolTable);
+
         for (Report report : Main.semanticReports) {
             System.out.println(report.toString());
         }

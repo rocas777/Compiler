@@ -240,7 +240,7 @@ void Statement() #void: {Token t1;}
 
 void id() #void: {Token t1;}
 {
-    t1=<IDENTIFIER> ({jjtThis.name = t1.image; jjtThis.line = String.valueOf(t1.beginLine); jjtThis.column = String.valueOf(t1.beginColumn);} #Assigned "=" Expression() #Assign(2) | Expression() | ({jjtThis.name = t1.image; jjtThis.line = String.valueOf(t1.beginLine); jjtThis.column = String.valueOf(t1.beginColumn);} #VariableName) (("[" Expression()"]") #ArrayIndex) #ArrayAccess(2)  ( "=" (Expression()) #Assign(2))? | {jjtThis.name = t1.image; jjtThis.line = String.valueOf(t1.beginLine); jjtThis.column = String.valueOf(t1.beginColumn);} #Object "." (  MethodCall() | AttributeCall()))? ";"
+    t1=<IDENTIFIER> ({jjtThis.name = t1.image; jjtThis.line = String.valueOf(t1.beginLine); jjtThis.column = String.valueOf(t1.beginColumn);} #Assigned "=" Expression() #Assign(2) /*todo check | Expression()*/ | ({jjtThis.name = t1.image; jjtThis.line = String.valueOf(t1.beginLine); jjtThis.column = String.valueOf(t1.beginColumn);} #VariableName) (("[" Expression()"]") #ArrayIndex) #ArrayAccess(2)  ( "=" (Expression()) #Assign(2))? | {jjtThis.name = t1.image; jjtThis.line = String.valueOf(t1.beginLine); jjtThis.column = String.valueOf(t1.beginColumn);} #Object "." (  MethodCall() | AttributeCall()))? ";"
 }
 
 void Expression() #void : {Token t1,t2;}
