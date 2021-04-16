@@ -17,7 +17,7 @@ public class BoolOperationVisitor extends PreorderJmmVisitor<MySymbolTable, List
         addVisit("While",this::processConditionals);
     }
 
-    List<Report> processOperation(JmmNode node, MySymbolTable table){
+    List<Report> processOperation(JmmNode node, MySymbolTable table) {
         List<Report> reports = new ArrayList<>();
 
         var children = node.getChildren();
@@ -99,6 +99,10 @@ public class BoolOperationVisitor extends PreorderJmmVisitor<MySymbolTable, List
                     Report report = SearchHelper.CheckIfBoolean(varName, methodName, table, "Variable " + varName + " is not a boolean",Integer.parseInt(jmmNode.get("line")),Integer.parseInt(jmmNode.get("column")));
                     if (report != null) reports.add(report);
 
+                    break;
+                }
+                case "True":
+                case "False": {
                     break;
                 }
                 default: {

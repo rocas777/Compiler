@@ -112,7 +112,7 @@ public class MainTest {
         TestUtils.mustFail(result2.getReports());
     }
 
-    //@Test
+    @Test
     public void parseTestSemanticFail7() {
         var result = TestUtils.parse(SpecsIo.getResource("fixtures/public/fail/semantic/simple_length.jmm"));
         var result2 = TestUtils.analyse(result);
