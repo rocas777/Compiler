@@ -133,7 +133,7 @@ public class MainTest {
         TestUtils.mustFail(result2.getReports());
     }
 
-    //@Test
+    @Test
     public void parseTestSemanticFail10() {
         var result = TestUtils.parse(SpecsIo.getResource("fixtures/public/fail/semantic/var_undef.jmm"));
         var result2 = TestUtils.analyse(result);
