@@ -7,12 +7,28 @@
 class T {
     public static void main(String[] s) {
           int a;
-          int b;
+          int d;
+          boolean b;
           boolean c;
 
-          c = a && this.foo();
-          c = b < c;
-          c = !this.foo();
+          while( 1 + 2  ){
+
+          }
+
+          if(!(1<3) && false){
+
+          }
+          else{
+
+          }
+
+          if(1 + this.foo()){
+
+          }
+          else{
+
+          }
+
     }
 
     public int foo(){

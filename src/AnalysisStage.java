@@ -76,6 +76,9 @@ public class AnalysisStage implements JmmAnalysis {
         var boolOperationVisitor = new BoolOperationVisitor();
         boolOperationVisitor.visit(node, symbolTable);
 
+        var importMethodVisitor = new ImportMethodVisitor();
+        importMethodVisitor.visit(node, symbolTable);
+
         var funcCallVisitor = new FuncCallVisitor();
         funcCallVisitor.visit(node, symbolTable);
         
