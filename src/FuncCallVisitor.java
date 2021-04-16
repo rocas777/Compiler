@@ -18,13 +18,32 @@ public class FuncCallVisitor extends PreorderJmmVisitor<MySymbolTable, Boolean> 
         var firstChild = children.get(0);
         var secondChild = children.get(1);
         var thirdChild = children.get(2);
-        if (firstChild.getKind().equals("This"))
+        String nodeMethodName = SearchHelper.getMethodName(node);
+        
+        boolean methodTargetBelongsToThisClass = false;
+        if (firstChild.getKind().equals("Object") || firstChild.getKind().equals("VariableName"))
+        {
+            Symbol objectSymbol =  table.getVariable(firstChild.get("name"), nodeMethodName);
+            if (objectSymbol != null) {
+                Type objectType = objectSymbol.getType();
+                if (objectType.getName().equals(table.getClassName())) methodTargetBelongsToThisClass = true;
+            }
+        }
+
+        if (firstChild.getKind().equals("This") || methodTargetBelongsToThisClass)
         {
             String methodName = secondChild.get("name");
             var parameters = table.getParameters(methodName);
             var args = thirdChild.getChildren();
 
-            if (parameters == null) Main.semanticReports.add(new Report(ReportType.ERROR, Stage.SEMANTIC, Integer.parseInt(secondChild.get("line")), Integer.parseInt(secondChild.get("column")), "Method called hasn't been declared"));
+            var superClass = table.getSuper();
+
+            boolean shouldCheck = true;
+
+            if (parameters == null)
+            {
+                if (superClass == null) Main.semanticReports.add(new Report(ReportType.ERROR, Stage.SEMANTIC, Integer.parseInt(secondChild.get("line")), Integer.parseInt(secondChild.get("column")), "Method called hasn't been declared"));
+            } 
             else
             {
                 if (parameters.size() != args.size()) Main.semanticReports.add(new Report(ReportType.ERROR, Stage.SEMANTIC, Integer.parseInt(secondChild.get("line")), Integer.parseInt(secondChild.get("column")), "Number of arguments in method call and number of parameters in declaration don't match"));
@@ -81,7 +100,6 @@ public class FuncCallVisitor extends PreorderJmmVisitor<MySymbolTable, Boolean> 
                             }
                             case "VariableName":
                             {
-                                String nodeMethodName = SearchHelper.getMethodName(node);
                                 Symbol varData = table.getVariable(currentArg.get("name"), nodeMethodName);
                                 if (varData == null) argType = null;
                                 else argType = varData.getType();
@@ -91,7 +109,23 @@ public class FuncCallVisitor extends PreorderJmmVisitor<MySymbolTable, Boolean> 
                             {
                                 var methodFirstChild = currentArg.getChildren().get(0);
                                 var methodSecondChild = currentArg.getChildren().get(1);
-                                if (methodFirstChild.getKind().equals("This")) argType = table.getReturnType(methodSecondChild.get("name"));
+                                boolean subMethodTargetBelongsToThisClass = false;
+                                if (methodFirstChild.getKind().equals("Object") || methodFirstChild.getKind().equals("VariableName"))
+                                {
+                                    Symbol objectSymbol = table.getVariable(methodFirstChild.get("name"), nodeMethodName); 
+                                    if (objectSymbol != null)
+                                    {
+                                        Type objectType = objectSymbol.getType();
+                                        if (objectType.getName().equals(table.getClassName())) subMethodTargetBelongsToThisClass = true;
+                                    } 
+                                }
+
+                                if (methodFirstChild.getKind().equals("This") || subMethodTargetBelongsToThisClass)
+                                {
+                                    argType = table.getReturnType(methodSecondChild.get("name"));
+                                    if (argType == null && superClass != null) argType = paramType;
+                                    else if (argType == null && superClass == null) shouldCheck = false;
+                                }
                                 else argType = paramType;
                                 break;
                             }
@@ -101,12 +135,15 @@ public class FuncCallVisitor extends PreorderJmmVisitor<MySymbolTable, Boolean> 
                                 break;
                             }
                         }
-
-                        if (!argType.equals(paramType))
+                        if (shouldCheck)
                         {
-                            var descendantWithLineAndCol = findFirstDescendantWithLineAndCol(currentArg);
-                            Main.semanticReports.add(new Report(ReportType.ERROR, Stage.SEMANTIC, Integer.parseInt(descendantWithLineAndCol.get("line")), Integer.parseInt(descendantWithLineAndCol.get("column")), "Parameter and argument types don't match"));
+                            if (!paramType.equals(argType))
+                            {
+                                var descendantWithLineAndCol = findFirstDescendantWithLineAndCol(currentArg);
+                                Main.semanticReports.add(new Report(ReportType.ERROR, Stage.SEMANTIC, Integer.parseInt(descendantWithLineAndCol.get("line")), Integer.parseInt(descendantWithLineAndCol.get("column")), "Parameter and argument types don't match"));
+                            }
                         }
+                        
                     } 
                 }
             }

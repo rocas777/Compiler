@@ -45,7 +45,6 @@ public class ArithmeticVisitor extends PreorderJmmVisitor<MySymbolTable, List<Re
 
                     Report report = SearchHelper.CheckIfInteger(jmmNode.get("name"), methodName, table, "Variable " + jmmNode.get("name") + jmmNode + " is not an int",Integer.parseInt(jmmNode.get("line")),Integer.parseInt(jmmNode.get("column")));
                     if (report != null) reports.add(report);
-
                     break;
                 }
                 default: {
