@@ -6,45 +6,45 @@ import pt.up.fe.comp.jmm.report.Stage;
 
 //todo fix lines
 public class SearchHelper {
-    public static Report CheckIfInteger(String methodName, MySymbolTable table, String error) {
+    static Report CheckIfInteger(String methodName, MySymbolTable table, String error, int line, int col) {
         Type returnType = table.getReturnType(methodName);
         if (returnType == null)
-            return new Report(ReportType.ERROR, Stage.SEMANTIC, 0, error);
+            return new Report(ReportType.ERROR, Stage.SEMANTIC, line, col, error);
         if (!returnType.getName().equals("int") || returnType.isArray())
-            return new Report(ReportType.ERROR, Stage.SEMANTIC, 0, error);
+            return new Report(ReportType.ERROR, Stage.SEMANTIC, line, col, error);
         return null;
     }
 
-    public static Report CheckIfInteger(String name, String methodName, MySymbolTable table, String error) {
+    static Report CheckIfInteger(String name, String methodName, MySymbolTable table, String error, int line, int col) {
         var variable = table.getVariable(name, methodName);
         if (variable == null)
-            return new Report(ReportType.ERROR, Stage.SEMANTIC, 0, 0, error);
+            return new Report(ReportType.ERROR, Stage.SEMANTIC, line, col, error);
         Type type = variable.getType();
         if (type == null)
-            return new Report(ReportType.ERROR, Stage.SEMANTIC, 0, 0, error);
+            return new Report(ReportType.ERROR, Stage.SEMANTIC, line, col, error);
         if (!type.getName().equals("int") || type.isArray())
-            return new Report(ReportType.ERROR, Stage.SEMANTIC, 0, error);
+            return new Report(ReportType.ERROR, Stage.SEMANTIC, line, col, error);
         return null;
     }
 
-    public static Report CheckIfBoolean(String methodName, MySymbolTable table, String error) {
+    static Report CheckIfBoolean(String methodName, MySymbolTable table, String error, int line, int col) {
         Type returnType = table.getReturnType(methodName);
         if (returnType == null)
-            return new Report(ReportType.ERROR, Stage.SEMANTIC, 0, 0, error);
+            return new Report(ReportType.ERROR, Stage.SEMANTIC, line, col, error);
         if (!returnType.getName().equals("boolean"))
-            return new Report(ReportType.ERROR, Stage.SEMANTIC, 0, 0, error);
+            return new Report(ReportType.ERROR, Stage.SEMANTIC, line, col,  error);
         return null;
     }
 
-    public static Report CheckIfBoolean(String name, String methodName, MySymbolTable table, String error) {
+    static Report CheckIfBoolean(String name, String methodName, MySymbolTable table, String error, int line, int col) {
         var variable = table.getVariable(name, methodName);
         if (variable == null)
-            return new Report(ReportType.ERROR, Stage.SEMANTIC, 0, 0, error);
+            return new Report(ReportType.ERROR, Stage.SEMANTIC, line, col, error);
         Type type = variable.getType();
         if (type == null)
-            return new Report(ReportType.ERROR, Stage.SEMANTIC, 0, 0, error);
+            return new Report(ReportType.ERROR, Stage.SEMANTIC, line, col, error);
         if (!type.getName().equals("boolean"))
-            return new Report(ReportType.ERROR, Stage.SEMANTIC, 0, 0, error);
+            return new Report(ReportType.ERROR, Stage.SEMANTIC, line, col, error);
         return null;
     }
 
