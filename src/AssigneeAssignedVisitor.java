@@ -50,7 +50,7 @@ public class AssigneeAssignedVisitor extends PreorderJmmVisitor<MySymbolTable, L
                 }
                 case "IntegerLiteral": {
                     if (!a1Type.getName().equals("int")) {
-                        Report r = SearchHelper.CheckIfInteger(varName, table, "Trying to assign an integer to a " + a1Type.getName());
+                        Report r = SearchHelper.CheckIfInteger(varName, table, "Trying to assign an integer to a " + a1Type.getName(), 0, 0);
                         reports.add(r);
                     }
                     break;
@@ -58,7 +58,7 @@ public class AssigneeAssignedVisitor extends PreorderJmmVisitor<MySymbolTable, L
                 case "True":
                 case "False": {
                     if (!a1Type.getName().equals("boolean")) {
-                        Report r = SearchHelper.CheckIfBoolean(varName, table, "Trying to assign a boolean to a " + a1Type.getName());
+                        Report r = SearchHelper.CheckIfBoolean(varName, table, "Trying to assign a boolean to a " + a1Type.getName(), 0, 0);
                         reports.add(r);
                     }
                     break;
@@ -82,8 +82,45 @@ public class AssigneeAssignedVisitor extends PreorderJmmVisitor<MySymbolTable, L
                     var call = children.get(0);
                     var symbol = table.getVariable(call.get("name"), methodName);
                     var rType = symbol.getType();
+                    System.out.println();
                     if (!a1Type.getName().equals(rType.getName())) {
                         reports.add(new Report(ReportType.ERROR, Stage.SEMANTIC, Integer.parseInt(call.get("line")), Integer.parseInt(call.get("column")), "Trying to assign a " + rType.getName() + " to a " + a1Type.getName()));
+                    }
+                    break;
+                }
+                case "ArrayInitializer": {
+                    var call = children.get(1).getChildren().get(0);
+                    if (!a1Type.getName().equals("int") || !a1Type.isArray()) {
+                        reports.add(new Report(ReportType.ERROR, Stage.SEMANTIC, Integer.parseInt(call.get("line")), Integer.parseInt(call.get("column")), "Trying to assign a array to a " + a1Type.getName()));
+                    }
+                    break;
+                }
+                case "Mul":
+                case "Div":
+                case "Sub":
+                case "Add": {
+                    if ((a1Type.getName().equals("int") && !a1Type.isArray()) || children.get(0).getKind().equals("ArrayAccess")) {
+
+                    } else {
+                        reports.add(new Report(ReportType.ERROR, Stage.SEMANTIC, Integer.parseInt(children.get(0).get("line")), Integer.parseInt(children.get(1).get("column")), "Trying to assign the result of a arithmetic operation to a different non int variable"));
+                    }
+                    break;
+                }
+                case "AND":
+                case "LessThan":
+                case "Neg": {
+                    if (a1Type.getName().equals("boolean")) {
+
+                    } else {
+                        reports.add(new Report(ReportType.ERROR, Stage.SEMANTIC, Integer.parseInt(children.get(0).get("line")), Integer.parseInt(children.get(1).get("column")), "Trying to assign the result of a logic operation to a different non boolean variable"));
+                    }
+                    break;
+                }
+                case "AttributeCall": {
+                    if ((a1Type.getName().equals("int") && !a1Type.isArray()) || children.get(0).getKind().equals("ArrayAccess")) {
+
+                    } else {
+                        reports.add(new Report(ReportType.ERROR, Stage.SEMANTIC, Integer.parseInt(children.get(0).get("line")), Integer.parseInt(children.get(1).get("column")), "Trying to assign the result of a length attribute to a different non int variable"));
                     }
                     break;
                 }
@@ -91,7 +128,7 @@ public class AssigneeAssignedVisitor extends PreorderJmmVisitor<MySymbolTable, L
                     try {
                         reports.add(new Report(ReportType.ERROR, Stage.SEMANTIC, Integer.parseInt(children.get(1).get("line")), Integer.parseInt(children.get(1).get("column")), "Trying to assign a value to a different type recipient"));
                     } catch (Exception ignored) {
-                        reports.add(new Report(ReportType.ERROR, Stage.SEMANTIC, 2, -2, "Trying to assign a value to a different type recipient"));
+                        reports.add(new Report(ReportType.ERROR, Stage.SEMANTIC, 0, 0, "Trying to assign a value to a different type recipient " + children.get(1)));
                     }
                 }
             }
