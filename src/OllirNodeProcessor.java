@@ -16,13 +16,17 @@ class OllirNodeProcessor {
     public static String processNode(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount)
     {
         String ollirString = "";
-        var children = node.getChildren();
 
         switch (node.getKind())
         {
             case "If":
             {
                 ollirString += processIfNode(node, tempVarCount, locals, parameters, structureCount);
+                break;
+            }
+            case "LessThan":
+            {
+                ollirString += processLessThanNode(node, tempVarCount, locals, parameters, structureCount);
                 break;
             }
             default:
@@ -41,11 +45,36 @@ class OllirNodeProcessor {
         var children = node.getChildren();
         int structureNumber = determineNumberForStructure("If", structureCount);
 
+        String ifExpression = processNode(children.get(0), tempVarCount, locals, parameters, structureCount);
+        String[] lines = ifExpression.split(";");
+
+        String lhsLastAssign = lines[lines.length - 1].split(":=")[0];
+
         ollirString += "if (";
-        ollirString += processNode(children.get(0), tempVarCount, locals, parameters, structureCount); // if the expression inside the if needs to be broken down then the code returned needs to appear before the if in the ollir code
+        ollirString += lhsLastAssign;
         ollirString += ") goto ifbody" + structureNumber + ";";
         ollirString += "goto elsebody" + structureNumber + ";";
     
+        return ollirString;
+    }
+
+    public static String processLessThanNode(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount)
+    {
+        String ollirString = "";
+        var children = node.getChildren();
+
+        String leftChild = processNode(children.get(0), tempVarCount, locals, parameters, structureCount);
+        String rightChild = processNode(children.get(1), tempVarCount, locals, parameters, structureCount);
+        
+        String[] leftLines = leftChild.split(";");
+        String[] rightLines = rightChild.split(";");
+
+        String leftChildTempVar = leftLines[leftLines.length - 1].split(":=")[0];
+        String rightChildTempVar = rightLines[rightLines.length - 1].split(":=")[0];
+
+        //TODO
+        //FINISH THIS
+
         return ollirString;
     }
 
@@ -63,5 +92,7 @@ class OllirNodeProcessor {
             structureCount.put(structure, updatedCount);
             return updatedCount.intValue();
         }
+
+        
     }
 }
