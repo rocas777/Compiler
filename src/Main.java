@@ -40,7 +40,9 @@ public class Main implements JmmParser {
 		var fileContents = SpecsIo.read(args[0]);
 		var result = main.parse(fileContents);
 		var analysis = new AnalysisStage();
-		analysis.semanticAnalysis(result);
+		var result2 = analysis.semanticAnalysis(result);
+		var optimizer = new OptimizationStage();
+		var result3 = optimizer.toOllir(result2);
 
 		if (dumpTree)
 		{

@@ -51,6 +51,14 @@ class OllirNodeProcessor {
             }
             case "Body":
             {
+                var children = node.getChildren();
+                for (JmmNode jmmNode : children) {
+                    ollirString += processNode(jmmNode, tempVarCount, locals, parameters, structureCount, table, isStatic);
+                }
+                break;
+            }
+            case "Else":
+            {
 
                 break;
             }
@@ -81,7 +89,8 @@ class OllirNodeProcessor {
         Type varType = null;
         String rhs = "";
         String lhs = "";
-        
+        String typeString = "";
+
         if (isLocal)
         {
             varType = locals.get(indexInList).getType();
@@ -89,9 +98,13 @@ class OllirNodeProcessor {
         else
         {
             indexInList = lookupVarName(parameters, varName);
+            varName = sanitizeVariableName(varName);
             isParameter = (indexInList != -1);
             if (isParameter)
             {
+                int paramNum = (isStatic) ? indexInList : (indexInList + 1);
+                varName = sanitizeVariableName(varName);
+                varName = "$" + paramNum + "." + varName;
                 varType = locals.get(indexInList).getType();
             }
             else
@@ -99,15 +112,21 @@ class OllirNodeProcessor {
                 indexInList = lookupVarName(fields, varName);
                 if (indexInList < 0) System.out.println("Undeclared variable passed semantic analysis!");
                 varType = fields.get(indexInList).getType();
+
+                varName = sanitizeVariableName(varName);
+                Integer currentTempVarCount = tempVarCount;
+                typeString = processType(varType);
+                ollirString += "t" + (tempVarCount++) + "." + typeString + " :=." + typeString + "getfield(this, " +  varName + "." + typeString + ")." + typeString + ";";
+                varName = "t" + currentTempVarCount.toString();
             }
         }
 
-        String typeString = processType(varType);
-        varName = sanitizeVariableName(varName);
+        typeString = processType(varType);
+        
         rhs = varName + "." + typeString;
         lhs = "t" + (tempVarCount++) + "." + typeString;
 
-        ollirString = lhs + " :=." + typeString + " " + rhs;
+        ollirString += lhs + " :=." + typeString + " " + rhs + ";";
 
         return ollirString;
     }
