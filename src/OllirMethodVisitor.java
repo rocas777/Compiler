@@ -46,7 +46,7 @@ public class OllirMethodVisitor extends PreorderJmmVisitor<MySymbolTable, Boolea
         var returnType = table.getReturnType(methodName);
 
         ollirString += processParameters(parameters) + ".";
-        ollirString += processType(returnType);
+        ollirString += OllirNodeProcessor.processType(returnType);
 
         JmmNode bodyNode;
         var children = node.getChildren();
@@ -54,7 +54,7 @@ public class OllirMethodVisitor extends PreorderJmmVisitor<MySymbolTable, Boolea
         else bodyNode = children.get(children.size() - 2);
 
         ollirString += " {";
-        ollirString += processMethodBody(methodName, bodyNode, table);
+        ollirString += processMethodBody(methodName, bodyNode, table, isMain);
         ollirString += "}";
 
         methodNameAndOllirCode.put(methodName, ollirString);
@@ -79,51 +79,16 @@ public class OllirMethodVisitor extends PreorderJmmVisitor<MySymbolTable, Boolea
     {
         String symbolString = "";
 
-        String name = symbol.getName();
+        String name = OllirNodeProcessor.sanitizeVariableName(symbol.getName());
         Type type = symbol.getType();
         
         symbolString += name + ".";
-        symbolString += processType(type);
+        symbolString += OllirNodeProcessor.processType(type);
     
         return symbolString;
     }
 
-    private String processType(Type type)
-    {
-        String typeString = "";
-        String typeName = type.getName();
-
-        if (type.isArray()) typeString += "array.";
-
-        switch (typeName)
-        {
-            case "int":
-            {
-                typeString += "i32";
-                break;
-            }
-            case "boolean":
-            {
-                typeString += "bool";
-                break;
-            }
-            case "String":
-            {
-                typeString += "String";
-                break;
-            }
-            default:
-            {
-                typeString += typeName;
-                break;
-            }
-        }
-        return typeString;
-    }
-
-    
-
-    private String processMethodBody(String methodName, JmmNode bodyNode, MySymbolTable table)
+    private String processMethodBody(String methodName, JmmNode bodyNode, MySymbolTable table, boolean isStatic)
     {
         String methodString = "";
 
@@ -141,7 +106,7 @@ public class OllirMethodVisitor extends PreorderJmmVisitor<MySymbolTable, Boolea
 
         for (int i = startingIndex; i < bodyChildren.size(); i++)
         {
-            methodString += OllirNodeProcessor.processNode(bodyChildren.get(i), tempVarCount, locals, parameters, structureCount);
+            methodString += OllirNodeProcessor.processNode(bodyChildren.get(i), tempVarCount, locals, parameters, structureCount, table, isStatic);
         }
 
         return methodString;
