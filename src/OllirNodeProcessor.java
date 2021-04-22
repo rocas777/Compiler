@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +28,8 @@ class OllirNodeProcessor {
     {
         String ollirString = "";
 
-        switch (node.getKind())
+        String nodeKind = node.getKind();
+        switch (nodeKind)
         {
             case "If":
             {
@@ -44,6 +46,7 @@ class OllirNodeProcessor {
                 ollirString += processIntegerLiteral(node, tempVarCount, locals, parameters, structureCount, table, isStatic);
                 break;
             }
+            case "Assigned":
             case "VariableName":
             {
                 ollirString += processVariableName(node, tempVarCount, locals, parameters, structureCount, table, isStatic);
@@ -59,7 +62,25 @@ class OllirNodeProcessor {
             }
             case "Else":
             {
-
+                ollirString += processElseNode(node, tempVarCount, locals, parameters, structureCount, table, isStatic);
+                break;
+            }
+            case "Assign":
+            {
+                ollirString += processAssignNode(node, tempVarCount, locals, parameters, structureCount, table, isStatic);
+                break;
+            }
+            case "Add":
+            case "Sub":
+            case "Mul":
+            case "Div":
+            {
+                ollirString += processOperNode(node, tempVarCount, locals, parameters, structureCount, table, isStatic, nodeKind);
+                break;
+            }
+            case "ArrayAccess":
+            {
+                ollirString += processArrayAccessNode(node, tempVarCount, locals, parameters, structureCount, table, isStatic);
                 break;
             }
             default:
@@ -68,6 +89,83 @@ class OllirNodeProcessor {
                 break;
             }
         }
+
+        return ollirString;
+    }
+
+    private static String processArrayAccessNode(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
+    {
+        String ollirString = "";
+
+
+        return ollirString;
+    }
+
+    private static String processOperNode(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic, String operation)
+    {
+        String ollirString = "";
+
+        var childrenData = extractChildrenData(node, tempVarCount, locals, parameters, structureCount, table, isStatic);
+
+        String leftChild = childrenData.get(0);
+        String rightChild = childrenData.get(1);
+
+        String leftTempVar = childrenData.get(2); 
+        String rightTempVar = childrenData.get(3);
+
+        ollirString = leftChild + rightChild;
+        String operationChar = "";
+        switch (operation)
+        {
+            case "Add":
+            {
+                operationChar = "+";
+                break;
+            }
+            case "Sub":
+            {
+                operationChar = "-";
+                break;
+            }
+            case "Mul":
+            {
+                operationChar = "*";
+                break;
+            }
+            case "Div":
+            {
+                operationChar = "/";
+                break;
+            }
+            default:
+            {
+                System.out.println("Invalid operation in ollir conversion!");
+                break;
+            }
+        }
+
+        ollirString += "t" + (tempVarCount++) + ".i32" + " :=.i32 " + leftTempVar + " " + operationChar + ".i32 " + rightTempVar + ";";
+
+        return ollirString;
+    }
+
+    private static String processAssignNode(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
+    {
+        String ollirString = "";
+
+        var childrenData = extractChildrenData(node, tempVarCount, locals, parameters, structureCount, table, isStatic);
+
+        String leftChild = childrenData.get(0);
+        String rightChild = childrenData.get(1);
+
+        String leftTempVar = childrenData.get(2); 
+        String rightTempVar = childrenData.get(3); 
+
+        String[] splitLeftVar = leftTempVar.split(".");
+        String typeString = splitLeftVar[splitLeftVar.length - 1];
+
+        ollirString = leftChild + rightChild;
+        ollirString += leftTempVar + " :=." + typeString + " " + rightTempVar + ";";
 
         return ollirString;
     }
@@ -131,6 +229,24 @@ class OllirNodeProcessor {
         return ollirString;
     }
 
+    private static String processElseNode(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
+    {
+        String ollirString = "";
+
+        int structureNumber = determineNumberForStructure("Else", structureCount);
+
+        ollirString += "elsebody" + structureNumber + ":\n";
+
+        var children = node.getChildren();
+        for (JmmNode jmmNode : children) {
+            ollirString += processNode(jmmNode, tempVarCount, locals, parameters, structureCount, table, isStatic);
+        }
+
+        ollirString += "endifbody" + structureNumber + ":\n";
+
+        return ollirString;
+    }
+
     private static String processIntegerLiteral(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
     {
         String ollirString = "";
@@ -160,26 +276,25 @@ class OllirNodeProcessor {
         ollirString += "goto elsebody" + structureNumber + ";";
         ollirString += "ifbody" + structureNumber + ":\n";
         ollirString += processNode(children.get(1), tempVarCount, locals, parameters, structureCount, table, isStatic);
-    
+        ollirString += "goto endifbody" + structureNumber + ";";
+
         return ollirString;
     }
 
     private static String processLessThanNode(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
     {
         String ollirString = "";
-        var children = node.getChildren();
 
-        String leftChild = processNode(children.get(0), tempVarCount, locals, parameters, structureCount, table, isStatic);
-        String rightChild = processNode(children.get(1), tempVarCount, locals, parameters, structureCount, table, isStatic);
-        
-        String[] leftLines = leftChild.split(";");
-        String[] rightLines = rightChild.split(";");
+        var childrenData = extractChildrenData(node, tempVarCount, locals, parameters, structureCount, table, isStatic);
 
-        String leftChildTempVar = leftLines[leftLines.length - 1].split(":=")[0];
-        String rightChildTempVar = rightLines[rightLines.length - 1].split(":=")[0];
+        String leftChild = childrenData.get(0);
+        String rightChild = childrenData.get(1);
+
+        String leftTempVar = childrenData.get(2); 
+        String rightTempVar = childrenData.get(3);
 
         ollirString += leftChild + rightChild;
-        ollirString += "t" + (tempVarCount++) + ".bool :=.bool " + leftChildTempVar + " <.bool " + rightChildTempVar + ";";        
+        ollirString += "t" + (tempVarCount++) + ".bool :=.bool " + leftTempVar + " <.bool " + rightTempVar + ";";        
 
         return ollirString;
     }
@@ -239,5 +354,28 @@ class OllirNodeProcessor {
             }
         }
         return typeString;
+    }
+
+    private static List<String> extractChildrenData(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
+    {
+        List<String> childrenVars = new ArrayList<>();
+
+        var children = node.getChildren();
+
+        String leftChild = processNode(children.get(0), tempVarCount, locals, parameters, structureCount, table, isStatic);
+        String rightChild = processNode(children.get(1), tempVarCount, locals, parameters, structureCount, table, isStatic);
+        
+        String[] leftLines = leftChild.split(";");
+        String[] rightLines = rightChild.split(";");
+
+        String leftTempVar = leftLines[leftLines.length - 1].split(":=")[0]; 
+        String rightTempVar = rightLines[rightLines.length - 1].split(":=")[0]; 
+        
+        childrenVars.add(leftChild);
+        childrenVars.add(rightChild);
+        childrenVars.add(leftTempVar);
+        childrenVars.add(rightTempVar);
+
+        return childrenVars;
     }
 }
