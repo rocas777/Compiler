@@ -121,13 +121,7 @@ public class OllirMethodVisitor extends PreorderJmmVisitor<MySymbolTable, Boolea
         return typeString;
     }
 
-    private String sanitizeVariableName(String varName)
-    {
-        //TODO 
-        //FINISH THIS
-        //MAKE SURE VAR NAME ISNT t1,t2,etc
-        return varName;
-    }
+    
 
     private String processMethodBody(String methodName, JmmNode bodyNode, MySymbolTable table)
     {
@@ -147,52 +141,10 @@ public class OllirMethodVisitor extends PreorderJmmVisitor<MySymbolTable, Boolea
 
         for (int i = startingIndex; i < bodyChildren.size(); i++)
         {
-            methodString += processMethodBodyNode(bodyChildren.get(i), tempVarCount, locals, parameters, structureCount);
+            methodString += OllirNodeProcessor.processNode(bodyChildren.get(i), tempVarCount, locals, parameters, structureCount);
         }
 
         return methodString;
-    }
-
-    private String processMethodBodyNode(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount)
-    {
-        String ollirString = "";
-        var children = node.getChildren();
-
-        switch (node.getKind())
-        {
-            case "If":
-            {
-                int structureNumber = determineNumberForStructure("If", structureCount);
-                ollirString += "if (";
-                ollirString += processMethodBodyNode(children.get(0), tempVarCount, locals, parameters, structureCount); // if the expression inside the if needs to be broken down then the code returned needs to appear before the if in the ollir code
-                ollirString += ") goto ifbody" + structureNumber + ";";
-                ollirString += "goto elsebody" + structureNumber + ";";
-                break;
-            }
-            default:
-            {
-                System.out.println("Invalid node kind!");
-                break;
-            }
-        }
-
-        return ollirString;
-    }
-
-    private int determineNumberForStructure(String structure, Map<String, Integer> structureCount)
-    {
-        Integer currentCount = structureCount.get(structure);
-        if (currentCount == null)
-        {
-            structureCount.put(structure, Integer.valueOf(1));
-            return 1;
-        }
-        else
-        {
-            Integer updatedCount = currentCount++;
-            structureCount.put(structure, updatedCount);
-            return updatedCount.intValue();
-        }
     }
 
     public Map<String, String> getMap() {
