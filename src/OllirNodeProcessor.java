@@ -97,6 +97,16 @@ class OllirNodeProcessor {
     {
         String ollirString = "";
 
+        var childrenData = extractChildrenData(node, tempVarCount, locals, parameters, structureCount, table, isStatic);
+
+        String leftChild = childrenData.get(0);
+        String rightChild = childrenData.get(1);
+
+        String leftTempVar = childrenData.get(2); 
+        String rightTempVar = childrenData.get(3);
+
+        ollirString = leftChild + rightChild;
+        
 
         return ollirString;
     }
