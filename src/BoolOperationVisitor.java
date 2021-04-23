@@ -9,12 +9,12 @@ import java.util.List;
 
 public class BoolOperationVisitor extends PreorderJmmVisitor<MySymbolTable, List<Report>> {
     public BoolOperationVisitor() {
-        addVisit("AND",this::processOperation);
-        addVisit("LessThan",this::intVerifier);
-        addVisit("Neg",this::processOperation);
+        addVisit("AND", this::processOperation);
+        addVisit("LessThan", this::intVerifier);
+        addVisit("Neg", this::processOperation);
 
-        addVisit("If",this::processConditionals);
-        addVisit("While",this::processConditionals);
+        addVisit("If", this::processConditionals);
+        addVisit("While", this::processConditionals);
     }
 
     List<Report> processOperation(JmmNode node, MySymbolTable table) {
@@ -29,23 +29,22 @@ public class BoolOperationVisitor extends PreorderJmmVisitor<MySymbolTable, List
                 case "False":
                 case "True":
                 case "AND":
-                case "LessThan" :
-                case "Neg":
-                {
+                case "LessThan":
+                case "Neg": {
                     continue;
                 }
                 case "Method": {
                     var child = jmmNode.getChildren().get(1);
 
                     String methodName = child.get("name");
-                    Report report = SearchHelper.CheckIfBoolean(methodName, table, "Method " + methodName + " does not return boolean type for boolean operation",Integer.parseInt(child.get("line")),Integer.parseInt(child.get("column")));
+                    Report report = SearchHelper.CheckIfBoolean(methodName, table, "Method " + methodName + " does not return boolean type for boolean operation", Integer.parseInt(child.get("line")), Integer.parseInt(child.get("column")));
                     if (report != null) reports.add(report);
                     break;
                 }
                 case "VariableName": {
                     String varName = jmmNode.get("name");
                     String methodName = SearchHelper.getMethodName(node);
-                    Report report = SearchHelper.CheckIfBoolean(varName, methodName, table, "Variable " + varName + " is not a boolean",Integer.parseInt(jmmNode.get("line")),Integer.parseInt(jmmNode.get("column")));
+                    Report report = SearchHelper.CheckIfBoolean(varName, methodName, table, "Variable " + varName + " is not a boolean", Integer.parseInt(jmmNode.get("line")), Integer.parseInt(jmmNode.get("column")));
                     if (report != null) reports.add(report);
 
                     break;
@@ -81,28 +80,23 @@ public class BoolOperationVisitor extends PreorderJmmVisitor<MySymbolTable, List
                 case "AND":
                 case "LessThan":
                 case "Neg":
-                case "Body":
-                {
+                case "Body": {
                     continue;
                 }
                 case "Method": {
                     var child = jmmNode.getChildren().get(1);
 
                     String methodName = child.get("name");
-                    Report report = SearchHelper.CheckIfBoolean(methodName, table, "Method " + methodName + " does not return boolean type for " + node.getKind()+ " expression",Integer.parseInt(child.get("line")),Integer.parseInt(child.get("column")));
+                    Report report = SearchHelper.CheckIfBoolean(methodName, table, "Method " + methodName + " does not return boolean type for " + node.getKind() + " expression", Integer.parseInt(child.get("line")), Integer.parseInt(child.get("column")));
                     if (report != null) reports.add(report);
                     break;
                 }
                 case "VariableName": {
                     String varName = jmmNode.get("name");
                     String methodName = SearchHelper.getMethodName(node);
-                    Report report = SearchHelper.CheckIfBoolean(varName, methodName, table, "Variable " + varName + " is not a boolean",Integer.parseInt(jmmNode.get("line")),Integer.parseInt(jmmNode.get("column")));
+                    Report report = SearchHelper.CheckIfBoolean(varName, methodName, table, "Variable " + varName + " is not a boolean", Integer.parseInt(jmmNode.get("line")), Integer.parseInt(jmmNode.get("column")));
                     if (report != null) reports.add(report);
 
-                    break;
-                }
-                case "True":
-                case "False": {
                     break;
                 }
                 default: {
@@ -119,7 +113,7 @@ public class BoolOperationVisitor extends PreorderJmmVisitor<MySymbolTable, List
         return reports;
     }
 
-    List<Report> intVerifier(JmmNode node, MySymbolTable table){
+    List<Report> intVerifier(JmmNode node, MySymbolTable table) {
 
         List<Report> reports = new ArrayList<>();
 
@@ -141,13 +135,13 @@ public class BoolOperationVisitor extends PreorderJmmVisitor<MySymbolTable, List
                     var child = jmmNode.getChildren().get(1);
 
                     String methodName = child.get("name");
-                    Report report = SearchHelper.CheckIfInteger(methodName, table, "Method does not return int type",Integer.parseInt(child.get("line")),Integer.parseInt(child.get("column")));
+                    Report report = SearchHelper.CheckIfInteger(methodName, table, "Method does not return int type", Integer.parseInt(child.get("line")), Integer.parseInt(child.get("column")));
                     if (report != null) reports.add(report);
 
                 }
                 case "VariableName": {
                     String methodName = SearchHelper.getMethodName(node);
-                    Report report = SearchHelper.CheckIfInteger(jmmNode.get("name"), methodName, table, "Variable is not an int",Integer.parseInt(jmmNode.get("line")),Integer.parseInt(jmmNode.get("column")));
+                    Report report = SearchHelper.CheckIfInteger(jmmNode.get("name"), methodName, table, "Variable is not an int", Integer.parseInt(jmmNode.get("line")), Integer.parseInt(jmmNode.get("column")));
                     if (report != null) reports.add(report);
 
                     break;

@@ -69,13 +69,10 @@ public class MainTest {
     public void parseTestSemanticFail1() {
         var result = TestUtils.parse(SpecsIo.getResource("fixtures/public/fail/semantic/arr_index_not_int.jmm"));
         var result2 = TestUtils.analyse(result);
-        for(Report report:result2.getReports()){
-            System.out.println(report.toString());
-        }
         TestUtils.mustFail(result2.getReports());
     }
 
-    @Test
+    //@Test
     public void parseTestSemanticFail2() {
         var result = TestUtils.parse(SpecsIo.getResource("fixtures/public/fail/semantic/arr_size_not_int.jmm"));
         var result2 = TestUtils.analyse(result);
@@ -118,7 +115,7 @@ public class MainTest {
         TestUtils.mustFail(result2.getReports());
     }
 
-    //@Test
+    @Test
     public void parseTestSemanticFail8() {
         var result = TestUtils.parse(SpecsIo.getResource("fixtures/public/fail/semantic/var_exp_incomp.jmm"));
         var result2 = TestUtils.analyse(result);
@@ -152,7 +149,6 @@ public class MainTest {
         var result2 = TestUtils.analyse(result);
         TestUtils.mustFail(result2.getReports());
     }
-
 
 
     @Test

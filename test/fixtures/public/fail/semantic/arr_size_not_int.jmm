@@ -4,7 +4,7 @@
 
 class T {
     public static void main(String[] a) { 
-        int[] a;
-        a = new int[true];
+        int[] b;
+        b = new int[true];
     }
 }
