@@ -38,7 +38,9 @@ public class LengthVisitor extends PreorderJmmVisitor<MySymbolTable, List<Report
                 }
                 case "Method": {
                     String methodName = children.get(0).getChildren().get(1).get("name");
-                    Report report = SearchHelper.CheckIfBoolean(methodName, table, ".length not supported for " + methodName + "() return type");
+                    int line = Integer.parseInt(children.get(0).getChildren().get(1).get("line"));
+                    int col = Integer.parseInt(children.get(0).getChildren().get(1).get("column"));
+                    Report report = SearchHelper.CheckIfBoolean(methodName, table, ".length not supported for " + methodName + "() return type", line, col);
                     if (report != null) reports.add(report);
                     break;
                 }
