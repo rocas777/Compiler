@@ -106,7 +106,8 @@ class OllirNodeProcessor {
         String rightTempVar = childrenData.get(3);
 
         ollirString = leftChild + rightChild;
-        
+        //TODO
+        //FINISH THIS
 
         return ollirString;
     }
