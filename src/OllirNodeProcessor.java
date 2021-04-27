@@ -24,7 +24,7 @@ class OllirNodeProcessor {
         return newVarName;
     }
 
-    public static String processNode(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
+    public static String processNode(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic, Type expectedType)
     {
         String ollirString = "";
 
@@ -33,41 +33,41 @@ class OllirNodeProcessor {
         {
             case "If":
             {
-                ollirString += processIfNode(node, tempVarCount, locals, parameters, structureCount, table, isStatic);
+                ollirString += processIfNode(node, tempVarCount, locals, parameters, structureCount, table, isStatic, expectedType);
                 break;
             }
             case "LessThan":
             {
-                ollirString += processLessThanNode(node, tempVarCount, locals, parameters, structureCount, table, isStatic);
+                ollirString += processLessThanNode(node, tempVarCount, locals, parameters, structureCount, table, isStatic, expectedType);
                 break;
             }
             case "IntegerLiteral":
             {
-                ollirString += processIntegerLiteral(node, tempVarCount, locals, parameters, structureCount, table, isStatic);
+                ollirString += processIntegerLiteral(node, tempVarCount, locals, parameters, structureCount, table, isStatic, expectedType);
                 break;
             }
             case "Assigned":
             case "VariableName":
             {
-                ollirString += processVariableName(node, tempVarCount, locals, parameters, structureCount, table, isStatic);
+                ollirString += processVariableName(node, tempVarCount, locals, parameters, structureCount, table, isStatic, expectedType);
                 break;
             }
             case "Body":
             {
                 var children = node.getChildren();
                 for (JmmNode jmmNode : children) {
-                    ollirString += processNode(jmmNode, tempVarCount, locals, parameters, structureCount, table, isStatic);
+                    ollirString += processNode(jmmNode, tempVarCount, locals, parameters, structureCount, table, isStatic, expectedType);
                 }
                 break;
             }
             case "Else":
             {
-                ollirString += processElseNode(node, tempVarCount, locals, parameters, structureCount, table, isStatic);
+                ollirString += processElseNode(node, tempVarCount, locals, parameters, structureCount, table, isStatic, expectedType);
                 break;
             }
             case "Assign":
             {
-                ollirString += processAssignNode(node, tempVarCount, locals, parameters, structureCount, table, isStatic);
+                ollirString += processAssignNode(node, tempVarCount, locals, parameters, structureCount, table, isStatic, expectedType);
                 break;
             }
             case "Add":
@@ -75,27 +75,27 @@ class OllirNodeProcessor {
             case "Mul":
             case "Div":
             {
-                ollirString += processOperNode(node, tempVarCount, locals, parameters, structureCount, table, isStatic, nodeKind);
+                ollirString += processOperNode(node, tempVarCount, locals, parameters, structureCount, table, isStatic, new Type("int", false), nodeKind);
                 break;
             }
             case "ArrayAccess":
             {
-                ollirString += processArrayAccessNode(node, tempVarCount, locals, parameters, structureCount, table, isStatic);
+                ollirString += processArrayAccessNode(node, tempVarCount, locals, parameters, structureCount, table, isStatic, expectedType);
                 break;
             }
             case "Method":
             {
-                ollirString += processMethodCallNode(node, tempVarCount, locals, parameters, structureCount, table, isStatic);
+                ollirString += processMethodCallNode(node, tempVarCount, locals, parameters, structureCount, table, isStatic, expectedType);
                 break;
             }
             case "This":
             {
-                ollirString += processThisNode(node, tempVarCount, locals, parameters, structureCount, table, isStatic);
+                ollirString += processThisNode(node, tempVarCount, locals, parameters, structureCount, table, isStatic, expectedType);
                 break;
             }
             case "Args":
             {
-                ollirString += processArgsNode(node, tempVarCount, locals, parameters, structureCount, table, isStatic);
+                ollirString += processArgsNode(node, tempVarCount, locals, parameters, structureCount, table, isStatic, expectedType);
                 break;
             }
             default:
@@ -108,7 +108,7 @@ class OllirNodeProcessor {
         return ollirString;
     }
 
-    private static String processThisNode(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
+    private static String processThisNode(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic, Type expectedType)
     {
         String ollirString = "";
 
@@ -120,11 +120,11 @@ class OllirNodeProcessor {
         return ollirString;
     }
 
-    private static String processArgsNode(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
+    private static String processArgsNode(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic, Type expectedType)
     {
         String ollirString = "";
 
-        var childrenData = extractChildrenData(node, tempVarCount, locals, parameters, structureCount, table, isStatic);
+        var childrenData = extractChildrenData(node, tempVarCount, locals, parameters, structureCount, table, isStatic, expectedType);
         List<String> tempVars = new ArrayList<>();
 
         for (int i = 0; i < (childrenData.size() / 2); i++) {
@@ -139,7 +139,7 @@ class OllirNodeProcessor {
         return ollirString;
     }
 
-    private static String processMethodCallNode(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
+    private static String processMethodCallNode(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic, Type expectedType)
     {
         String ollirString = "";
 
@@ -149,8 +149,8 @@ class OllirNodeProcessor {
         var secondChild = children.get(1);
         var thirdChild = children.get(2);
 
-        String firstChildString = processNode(firstChild, tempVarCount, locals, parameters, structureCount, table, isStatic);
-        String thirdChildString = processNode(thirdChild, tempVarCount, locals, parameters, structureCount, table, isStatic);
+        String firstChildString = processNode(firstChild, tempVarCount, locals, parameters, structureCount, table, isStatic, expectedType);
+        String thirdChildString = processNode(thirdChild, tempVarCount, locals, parameters, structureCount, table, isStatic, expectedType);
         String methodName = secondChild.get("name");
 
         ollirString += firstChildString;
@@ -161,20 +161,20 @@ class OllirNodeProcessor {
             ollirString += thirdChildLines[i];
         }
         
-        Type methodReturnType = determineReturnMethodType(methodName, table);
+        Type methodReturnType = determineMethodReturnType(methodName, table, expectedType);
         String typeString = processType(methodReturnType);
 
-        if (!methodReturnType.getName().equals("void")) ollirString += "t" + (tempVarCount++) + "." + typeString + " := " + 
+        if (!methodReturnType.getName().equals("void")) ollirString += "t" + (tempVarCount++) + "." + typeString + " :=." + typeString 
         else ollirString += 
 
         return ollirString;
     }
 
-    private static String processArrayAccessNode(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
+    private static String processArrayAccessNode(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic, Type expectedType)
     {
         String ollirString = "";
 
-        var childrenData = extractChildrenData(node, tempVarCount, locals, parameters, structureCount, table, isStatic);
+        var childrenData = extractChildrenData(node, tempVarCount, locals, parameters, structureCount, table, isStatic, expectedType);
 
         String leftChild = childrenData.get(0);
         String rightChild = childrenData.get(1);
@@ -189,11 +189,11 @@ class OllirNodeProcessor {
         return ollirString;
     }
 
-    private static String processOperNode(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic, String operation)
+    private static String processOperNode(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic, Type expectedType, String operation)
     {
         String ollirString = "";
 
-        var childrenData = extractChildrenData(node, tempVarCount, locals, parameters, structureCount, table, isStatic);
+        var childrenData = extractChildrenData(node, tempVarCount, locals, parameters, structureCount, table, isStatic, new Type("int", false));
 
         String leftChild = childrenData.get(0);
         String rightChild = childrenData.get(1);
@@ -237,11 +237,11 @@ class OllirNodeProcessor {
         return ollirString;
     }
 
-    private static String processAssignNode(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
+    private static String processAssignNode(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic, Type expectedType)
     {
         String ollirString = "";
 
-        var childrenData = extractChildrenData(node, tempVarCount, locals, parameters, structureCount, table, isStatic);
+        var childrenData = extractChildrenData(node, tempVarCount, locals, parameters, structureCount, table, isStatic, expectedType);
 
         String leftChild = childrenData.get(0);
         String rightChild = childrenData.get(1);
@@ -258,7 +258,7 @@ class OllirNodeProcessor {
         return ollirString;
     }
 
-    private static String processVariableName(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
+    private static String processVariableName(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic, Type expectedType)
     {
         String ollirString = "";
 
@@ -317,7 +317,7 @@ class OllirNodeProcessor {
         return ollirString;
     }
 
-    private static String processElseNode(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
+    private static String processElseNode(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic, Type expectedType)
     {
         String ollirString = "";
 
@@ -327,7 +327,7 @@ class OllirNodeProcessor {
 
         var children = node.getChildren();
         for (JmmNode jmmNode : children) {
-            ollirString += processNode(jmmNode, tempVarCount, locals, parameters, structureCount, table, isStatic);
+            ollirString += processNode(jmmNode, tempVarCount, locals, parameters, structureCount, table, isStatic, expectedType);
         }
 
         ollirString += "endifbody" + structureNumber + ":\n";
@@ -335,7 +335,7 @@ class OllirNodeProcessor {
         return ollirString;
     }
 
-    private static String processIntegerLiteral(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
+    private static String processIntegerLiteral(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic, Type expectedType)
     {
         String ollirString = "";
 
@@ -346,13 +346,13 @@ class OllirNodeProcessor {
         return ollirString;
     }
 
-    private static String processIfNode(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
+    private static String processIfNode(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic, Type expectedType)
     {
         String ollirString = "";
         var children = node.getChildren();
         int structureNumber = determineNumberForStructure("If", structureCount);
 
-        String ifExpression = processNode(children.get(0), tempVarCount, locals, parameters, structureCount, table, isStatic);
+        String ifExpression = processNode(children.get(0), tempVarCount, locals, parameters, structureCount, table, isStatic, new Type("boolean", false));
 
         String lhsLastAssign = extractLastTempVar(ifExpression);
 
@@ -362,17 +362,17 @@ class OllirNodeProcessor {
         ollirString += ") goto ifbody" + structureNumber + ";";
         ollirString += "goto elsebody" + structureNumber + ";";
         ollirString += "ifbody" + structureNumber + ":\n";
-        ollirString += processNode(children.get(1), tempVarCount, locals, parameters, structureCount, table, isStatic);
+        ollirString += processNode(children.get(1), tempVarCount, locals, parameters, structureCount, table, isStatic, expectedType);
         ollirString += "goto endifbody" + structureNumber + ";";
 
         return ollirString;
     }
 
-    private static String processLessThanNode(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
+    private static String processLessThanNode(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic, Type expectedType)
     {
         String ollirString = "";
 
-        var childrenData = extractChildrenData(node, tempVarCount, locals, parameters, structureCount, table, isStatic);
+        var childrenData = extractChildrenData(node, tempVarCount, locals, parameters, structureCount, table, isStatic, expectedType);
 
         String leftChild = childrenData.get(0);
         String rightChild = childrenData.get(1);
@@ -443,7 +443,7 @@ class OllirNodeProcessor {
         return typeString;
     }
 
-    private static List<String> extractChildrenData(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
+    private static List<String> extractChildrenData(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic, Type expectedType)
     {
         List<String> childrenVars = new ArrayList<>();
         List<String> tempVars = new ArrayList<>();
@@ -451,7 +451,7 @@ class OllirNodeProcessor {
         var children = node.getChildren();
 
         for (JmmNode jmmNode : children) {
-            String currentChild = processNode(jmmNode, tempVarCount, locals, parameters, structureCount, table, isStatic);
+            String currentChild = processNode(jmmNode, tempVarCount, locals, parameters, structureCount, table, isStatic, expectedType);
             childrenVars.add(currentChild);
             String currentTempVar = extractLastTempVar(currentChild);
             tempVars.add(currentTempVar);
@@ -477,16 +477,43 @@ class OllirNodeProcessor {
         return lastTempVar.replaceAll("\\s", "");
     }
 
-    private static Type determineReturnMethodType(String methodName, MySymbolTable table)
+    private static Type getTypeFromOllir(String declaration)
     {
+        boolean isArray = false;
+        if (declaration.contains(".array.")) isArray = true;
+        int lastDotIndex = declaration.lastIndexOf(".");
+        String typeFragment = declaration.substring(lastDotIndex + 1);
         String typeName = "";
+        switch (typeFragment)
+        {
+            case "i32":
+            {
+                typeName = "int";
+                break;
+            }
+            case "bool":
+            {
+                typeName = "boolean";
+                break;
+            }
+            case "String":
+            {
+                typeName = "String";
+                break;
+            }
+            default:
+            {
+                typeName = typeFragment;
+                break;
+            }
+        }
+        return new Type(typeName, isArray);
+    }
 
+    private static Type determineMethodReturnType(String methodName, MySymbolTable table, Type expectedType)
+    {
         Type type = table.getReturnType(methodName);
         if (type != null) return type;
-        //else
-        //TODO
-        //FINISH THIS
-
-        return new Type(typeName, false);
+        else return expectedType;
     }
 }
