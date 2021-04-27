@@ -83,12 +83,25 @@ class OllirNodeProcessor {
                 ollirString += processArrayAccessNode(node, tempVarCount, locals, parameters, structureCount, table, isStatic);
                 break;
             }
+            case "Method":
+            {
+                ollirString += processMethodCallNode(node, tempVarCount, locals, parameters, structureCount, table, isStatic);
+                break;
+            }
             default:
             {
                 System.out.println("Invalid node kind!");
                 break;
             }
         }
+
+        return ollirString;
+    }
+
+    private static String processMethodCallNode(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
+    {
+        String ollirString = "";
+
 
         return ollirString;
     }
@@ -106,8 +119,8 @@ class OllirNodeProcessor {
         String rightTempVar = childrenData.get(3);
 
         ollirString = leftChild + rightChild;
-        //TODO
-        //FINISH THIS
+
+        ollirString += "t" + (tempVarCount++) + ".i32 :=.i32 " + trimType(leftTempVar) + "[" + rightTempVar + "].i32;";
 
         return ollirString;
     }
@@ -155,7 +168,7 @@ class OllirNodeProcessor {
             }
         }
 
-        ollirString += "t" + (tempVarCount++) + ".i32" + " :=.i32 " + leftTempVar + " " + operationChar + ".i32 " + rightTempVar + ";";
+        ollirString += "t" + (tempVarCount++) + ".i32 :=.i32 " + leftTempVar + " " + operationChar + ".i32 " + rightTempVar + ";";
 
         return ollirString;
     }
@@ -388,5 +401,13 @@ class OllirNodeProcessor {
         childrenVars.add(rightTempVar);
 
         return childrenVars;
+    }
+
+    private static String trimType(String ollirVarDeclaration)
+    {
+        String trimmedString = "";
+        int lastDotIndex = ollirVarDeclaration.lastIndexOf(".");
+        trimmedString = ollirVarDeclaration.substring(0, lastDotIndex);
+        return trimmedString;
     }
 }
