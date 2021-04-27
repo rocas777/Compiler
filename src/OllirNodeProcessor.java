@@ -88,6 +88,16 @@ class OllirNodeProcessor {
                 ollirString += processMethodCallNode(node, tempVarCount, locals, parameters, structureCount, table, isStatic);
                 break;
             }
+            case "This":
+            {
+                ollirString += processThisNode(node, tempVarCount, locals, parameters, structureCount, table, isStatic);
+                break;
+            }
+            case "Args":
+            {
+                ollirString += processArgsNode(node, tempVarCount, locals, parameters, structureCount, table, isStatic);
+                break;
+            }
             default:
             {
                 System.out.println("Invalid node kind!");
@@ -98,10 +108,64 @@ class OllirNodeProcessor {
         return ollirString;
     }
 
+    private static String processThisNode(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
+    {
+        String ollirString = "";
+
+        Type classType = new Type(table.getClassName(), false);
+        String typeString = processType(classType);
+
+        ollirString += "t" + (tempVarCount) + "." + typeString + " :=." + typeString + " $0.this." + typeString + ";"; 
+
+        return ollirString;
+    }
+
+    private static String processArgsNode(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
+    {
+        String ollirString = "";
+
+        var childrenData = extractChildrenData(node, tempVarCount, locals, parameters, structureCount, table, isStatic);
+        List<String> tempVars = new ArrayList<>();
+
+        for (int i = 0; i < (childrenData.size() / 2); i++) {
+            String currentString = childrenData.get(i);
+            ollirString += currentString;
+            String currentLastTempVar = extractLastTempVar(currentString);
+            tempVars.add(currentLastTempVar);
+        }        
+
+        ollirString += String.join(",", tempVars);
+
+        return ollirString;
+    }
+
     private static String processMethodCallNode(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
     {
         String ollirString = "";
 
+        var children = node.getChildren();
+
+        var firstChild = children.get(0);
+        var secondChild = children.get(1);
+        var thirdChild = children.get(2);
+
+        String firstChildString = processNode(firstChild, tempVarCount, locals, parameters, structureCount, table, isStatic);
+        String thirdChildString = processNode(thirdChild, tempVarCount, locals, parameters, structureCount, table, isStatic);
+        String methodName = secondChild.get("name");
+
+        ollirString += firstChildString;
+
+        String[] thirdChildLines = thirdChildString.split(";");
+        String lastThirdChildLine = thirdChildLines[thirdChildLines.length - 1];
+        for (int i = 0; i < (thirdChildLines.length - 1); i++ ) {
+            ollirString += thirdChildLines[i];
+        }
+        
+        Type methodReturnType = determineReturnMethodType(methodName, table);
+        String typeString = processType(methodReturnType);
+
+        if (!methodReturnType.getName().equals("void")) ollirString += "t" + (tempVarCount++) + "." + typeString + " := " + 
+        else ollirString += 
 
         return ollirString;
     }
@@ -289,9 +353,8 @@ class OllirNodeProcessor {
         int structureNumber = determineNumberForStructure("If", structureCount);
 
         String ifExpression = processNode(children.get(0), tempVarCount, locals, parameters, structureCount, table, isStatic);
-        String[] lines = ifExpression.split(";");
 
-        String lhsLastAssign = lines[lines.length - 1].split(":=")[0];
+        String lhsLastAssign = extractLastTempVar(ifExpression);
 
         ollirString += ifExpression;
         ollirString += "if (";
@@ -383,22 +446,18 @@ class OllirNodeProcessor {
     private static List<String> extractChildrenData(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
     {
         List<String> childrenVars = new ArrayList<>();
+        List<String> tempVars = new ArrayList<>();
 
         var children = node.getChildren();
 
-        String leftChild = processNode(children.get(0), tempVarCount, locals, parameters, structureCount, table, isStatic);
-        String rightChild = processNode(children.get(1), tempVarCount, locals, parameters, structureCount, table, isStatic);
+        for (JmmNode jmmNode : children) {
+            String currentChild = processNode(jmmNode, tempVarCount, locals, parameters, structureCount, table, isStatic);
+            childrenVars.add(currentChild);
+            String currentTempVar = extractLastTempVar(currentChild);
+            tempVars.add(currentTempVar);
+        }
         
-        String[] leftLines = leftChild.split(";");
-        String[] rightLines = rightChild.split(";");
-
-        String leftTempVar = leftLines[leftLines.length - 1].split(":=")[0]; 
-        String rightTempVar = rightLines[rightLines.length - 1].split(":=")[0]; 
-        
-        childrenVars.add(leftChild);
-        childrenVars.add(rightChild);
-        childrenVars.add(leftTempVar);
-        childrenVars.add(rightTempVar);
+        childrenVars.addAll(tempVars);
 
         return childrenVars;
     }
@@ -409,5 +468,25 @@ class OllirNodeProcessor {
         int lastDotIndex = ollirVarDeclaration.lastIndexOf(".");
         trimmedString = ollirVarDeclaration.substring(0, lastDotIndex);
         return trimmedString;
+    }
+
+    private static String extractLastTempVar(String ollirString)
+    {
+        String[] lines = ollirString.split(";");
+        String lastTempVar = lines[lines.length - 1].split(":=")[0];
+        return lastTempVar.replaceAll("\\s", "");
+    }
+
+    private static Type determineReturnMethodType(String methodName, MySymbolTable table)
+    {
+        String typeName = "";
+
+        Type type = table.getReturnType(methodName);
+        if (type != null) return type;
+        //else
+        //TODO
+        //FINISH THIS
+
+        return new Type(typeName, false);
     }
 }
