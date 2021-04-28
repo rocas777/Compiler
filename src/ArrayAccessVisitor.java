@@ -10,6 +10,7 @@ import java.util.List;
 public class ArrayAccessVisitor extends PreorderJmmVisitor<MySymbolTable, List<Report>> {
     public ArrayAccessVisitor() {
         addVisit("ArrayAccess", this::processOperation);
+        addVisit("ArrayInitializer", this::checkArraySize);
     }
 
     List<Report> processOperation(JmmNode node, MySymbolTable table) {
@@ -35,7 +36,7 @@ public class ArrayAccessVisitor extends PreorderJmmVisitor<MySymbolTable, List<R
                 String methodName = child.get("name");
                 Report report = SearchHelper.CheckIfInteger(methodName, table, "Array Access Index is not an Integer ",Integer.parseInt(arrayIndexNode.get("line")),Integer.parseInt(child.get("column")));
                 if (report != null) reports.add(report);
-
+                break;
             }
             case "VariableName": {
                 String methodName = SearchHelper.getMethodName(node);
@@ -52,9 +53,7 @@ public class ArrayAccessVisitor extends PreorderJmmVisitor<MySymbolTable, List<R
             }
 
         }
-        for (Report report : reports) {
-            Main.semanticReports.add(report);
-        }
+        Main.semanticReports.addAll(reports);
         return reports;
     }
 
@@ -90,4 +89,49 @@ public class ArrayAccessVisitor extends PreorderJmmVisitor<MySymbolTable, List<R
 
         return reports;
     }
+
+    List<Report> checkArraySize(JmmNode node, MySymbolTable table)
+    {
+        List<Report> reports = new ArrayList<>();
+
+        for(JmmNode jmmNode : node.getChildren()){
+            switch (jmmNode.getKind()) {
+                case "IntegerLiteral":
+                case "Add":
+                case "Sub":
+                case "Mul":
+                case "Div":
+                case "ArrayAccess": {
+                    break;
+                }
+                case "Method": {
+                    var child = jmmNode.getChildren().get(1);
+                    String methodName = child.get("name");
+                    Report report = SearchHelper.CheckIfInteger(methodName, table, "Array Size is not an Integer ",Integer.parseInt(jmmNode.get("line")),Integer.parseInt(jmmNode.get("column")));
+                    if (report != null) reports.add(report);
+                    break;
+                }
+                case "VariableName": {
+                    String methodName = SearchHelper.getMethodName(node);
+                    System.out.println("NOME " + methodName);
+                    Report report = SearchHelper.CheckIfInteger(jmmNode.get("name"), methodName, table, "Array Size is not an Integer ",Integer.parseInt(jmmNode.get("line")),Integer.parseInt(jmmNode.get("column")));
+                    if (report != null) reports.add(report);
+                    break;
+                }
+                default: {
+                    //todo fix line
+                    reports.add(new Report(ReportType.ERROR, Stage.SEMANTIC, 0, "Array Size is not an Integer "));
+                    break;
+                }
+
+            }
+        }
+
+
+        Main.semanticReports.addAll(reports);
+        return reports;
+
+    }
+
+
 }

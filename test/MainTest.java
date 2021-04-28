@@ -72,7 +72,7 @@ public class MainTest {
         TestUtils.mustFail(result2.getReports());
     }
 
-    //@Test
+    @Test
     public void parseTestSemanticFail2() {
         var result = TestUtils.parse(SpecsIo.getResource("fixtures/public/fail/semantic/arr_size_not_int.jmm"));
         var result2 = TestUtils.analyse(result);
@@ -136,9 +136,9 @@ public class MainTest {
         TestUtils.mustFail(result2.getReports());
     }
 
-    //@Test
+    @Test
     public void parseTestSemanticFail11() {
-        var result = TestUtils.parse(SpecsIo.getResource("fixtures/public/fail/semantic/varNotInit.jmm"));
+        var result = TestUtils.parse(SpecsIo.getResource("fixtures/public/fail/semantic/methodTargetNotExist.jmm"));
         var result2 = TestUtils.analyse(result);
         TestUtils.mustFail(result2.getReports());
     }

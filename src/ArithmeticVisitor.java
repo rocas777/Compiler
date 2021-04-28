@@ -13,6 +13,7 @@ public class ArithmeticVisitor extends PreorderJmmVisitor<MySymbolTable, List<Re
         addVisit("Sub", this::processOperation);
         addVisit("Mul", this::processOperation);
         addVisit("Div", this::processOperation);
+        addVisit("LessThan", this::processOperation);
     }
 
     List<Report> processOperation(JmmNode node, MySymbolTable table) {
