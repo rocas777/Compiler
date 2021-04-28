@@ -22,6 +22,13 @@ public class VariableExistsVisitor extends PreorderJmmVisitor<MySymbolTable, Lis
         if (table.getVariable(name, methodName) != null) {
             return reports;
         }
+
+        for (String s: table.getImports()){
+            var a = s.split("\\.");
+            if(a[a.length-1].equals(name)){
+                return reports;
+            }
+        }
         reports.add(new Report(ReportType.ERROR, Stage.SEMANTIC, Integer.parseInt(node.get("line")), Integer.parseInt(node.get("column")), "Symbol " + name + " not found"));
 
         Main.semanticReports.addAll(reports);

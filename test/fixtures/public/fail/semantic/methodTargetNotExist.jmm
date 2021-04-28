@@ -1,0 +1,24 @@
+/*  REASON:
+    Method target does not exist
+
+    ESTE TESTE FOI FEITO PELO NUNO
+*/
+import Yo;
+
+class T {
+    public static void main(String[] s) {
+          int a;
+
+          a = Yo.foo();
+          a = this.foo();
+          a = this.estuda();
+
+    }
+
+    public int foo(){
+        int aux;
+        aux=1;
+        return aux;
+    }
+
+}
