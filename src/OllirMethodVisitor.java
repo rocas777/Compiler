@@ -53,7 +53,7 @@ public class OllirMethodVisitor extends PreorderJmmVisitor<MySymbolTable, Boolea
         if (isMain) bodyNode = children.get(children.size() - 1);
         else bodyNode = children.get(children.size() - 2);
 
-        ollirString += " {";
+        ollirString += " {\n";
         ollirString += processMethodBody(methodName, bodyNode, table, isMain);
         ollirString += "}";
 
@@ -95,7 +95,7 @@ public class OllirMethodVisitor extends PreorderJmmVisitor<MySymbolTable, Boolea
         var locals = table.getLocalVariables(methodName);
         var parameters = table.getParameters(methodName);
         var bodyChildren = bodyNode.getChildren();
-        Integer tempVarCount = 0;
+        OllirNodeProcessor.tempVarCount = 0;
 
         boolean hasLocalVariables = (locals != null && locals.size() > 0);
         int startingIndex; 
@@ -106,7 +106,7 @@ public class OllirMethodVisitor extends PreorderJmmVisitor<MySymbolTable, Boolea
 
         for (int i = startingIndex; i < bodyChildren.size(); i++)
         {
-            methodString += OllirNodeProcessor.processNode(bodyChildren.get(i), tempVarCount, locals, parameters, structureCount, table, isStatic);
+            methodString += OllirNodeProcessor.processNode(bodyChildren.get(i), locals, parameters, structureCount, table, isStatic);
         }
 
         return methodString;

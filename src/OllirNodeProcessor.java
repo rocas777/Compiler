@@ -7,8 +7,10 @@ import pt.up.fe.comp.jmm.analysis.table.Type;
 import pt.up.fe.comp.jmm.JmmNode;
 
 class OllirNodeProcessor {
+
+    public static int tempVarCount = 0;
     
-    public static String processNode(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
+    public static String processNode(JmmNode node, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
     {
         String ollirString = "";
 
@@ -17,41 +19,41 @@ class OllirNodeProcessor {
         {
             case "If":
             {
-                ollirString += processIfNode(node, tempVarCount, locals, parameters, structureCount, table, isStatic);
+                ollirString += processIfNode(node, locals, parameters, structureCount, table, isStatic);
                 break;
             }
             case "LessThan":
             {
-                ollirString += processLessThanNode(node, tempVarCount, locals, parameters, structureCount, table, isStatic);
+                ollirString += processLessThanNode(node, locals, parameters, structureCount, table, isStatic);
                 break;
             }
             case "IntegerLiteral":
             {
-                ollirString += processIntegerLiteral(node, tempVarCount, locals, parameters, structureCount, table, isStatic);
+                ollirString += processIntegerLiteral(node, locals, parameters, structureCount, table, isStatic);
                 break;
             }
             case "Assigned":
             case "VariableName":
             {
-                ollirString += processVariableName(node, tempVarCount, locals, parameters, structureCount, table, isStatic);
+                ollirString += processVariableName(node, locals, parameters, structureCount, table, isStatic);
                 break;
             }
             case "Body":
             {
                 var children = node.getChildren();
                 for (JmmNode jmmNode : children) {
-                    ollirString += processNode(jmmNode, tempVarCount, locals, parameters, structureCount, table, isStatic);
+                    ollirString += processNode(jmmNode, locals, parameters, structureCount, table, isStatic);
                 }
                 break;
             }
             case "Else":
             {
-                ollirString += processElseNode(node, tempVarCount, locals, parameters, structureCount, table, isStatic);
+                ollirString += processElseNode(node, locals, parameters, structureCount, table, isStatic);
                 break;
             }
             case "Assign":
             {
-                ollirString += processAssignNode(node, tempVarCount, locals, parameters, structureCount, table, isStatic);
+                ollirString += processAssignNode(node, locals, parameters, structureCount, table, isStatic);
                 break;
             }
             case "Add":
@@ -59,27 +61,27 @@ class OllirNodeProcessor {
             case "Mul":
             case "Div":
             {
-                ollirString += processOperNode(node, tempVarCount, locals, parameters, structureCount, table, isStatic, nodeKind);
+                ollirString += processOperNode(node, locals, parameters, structureCount, table, isStatic, nodeKind);
                 break;
             }
             case "ArrayAccess":
             {
-                ollirString += processArrayAccessNode(node, tempVarCount, locals, parameters, structureCount, table, isStatic);
+                ollirString += processArrayAccessNode(node, locals, parameters, structureCount, table, isStatic);
                 break;
             }
             case "Method":
             {
-                ollirString += processMethodCallNode(node, tempVarCount, locals, parameters, structureCount, table, isStatic);
+                ollirString += processMethodCallNode(node, locals, parameters, structureCount, table, isStatic);
                 break;
             }
             case "This":
             {
-                ollirString += processThisNode(node, tempVarCount, locals, parameters, structureCount, table, isStatic);
+                ollirString += processThisNode(node, locals, parameters, structureCount, table, isStatic);
                 break;
             }
             case "Args":
             {
-                ollirString += processArgsNode(node, tempVarCount, locals, parameters, structureCount, table, isStatic);
+                ollirString += processArgsNode(node, locals, parameters, structureCount, table, isStatic);
                 break;
             }
             case "Object":
@@ -104,23 +106,23 @@ class OllirNodeProcessor {
         return ollirString;
     }
 
-    private static String processThisNode(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
+    private static String processThisNode(JmmNode node, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
     {
         String ollirString = "";
 
         Type classType = new Type(table.getClassName(), false);
         String typeString = OllirHelper.processType(classType);
 
-        ollirString += "t" + (tempVarCount) + "." + typeString + " :=." + typeString + " $0.this." + typeString + ";\n"; 
+        ollirString += "t" + (OllirNodeProcessor.tempVarCount++) + "." + typeString + " :=." + typeString + " $0.this." + typeString + ";\n"; 
 
         return ollirString;
     }
 
-    private static String processArgsNode(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
+    private static String processArgsNode(JmmNode node, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
     {
         String ollirString = "";
 
-        var childrenData = extractChildrenData(node, tempVarCount, locals, parameters, structureCount, table, isStatic);
+        var childrenData = extractChildrenData(node, locals, parameters, structureCount, table, isStatic);
         List<String> tempVars = new ArrayList<>();
 
         for (int i = 0; i < (childrenData.size() / 2); i++) {
@@ -135,7 +137,7 @@ class OllirNodeProcessor {
         return ollirString;
     }
 
-    private static String processMethodCallNode(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
+    private static String processMethodCallNode(JmmNode node, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
     {
         String ollirString = "";
 
@@ -145,8 +147,8 @@ class OllirNodeProcessor {
         var secondChild = children.get(1);
         var thirdChild = children.get(2);
 
-        String firstChildString = processNode(firstChild, tempVarCount, locals, parameters, structureCount, table, isStatic);
-        String thirdChildString = processNode(thirdChild, tempVarCount, locals, parameters, structureCount, table, isStatic);
+        String firstChildString = processNode(firstChild, locals, parameters, structureCount, table, isStatic);
+        String thirdChildString = processNode(thirdChild, locals, parameters, structureCount, table, isStatic);
         String methodName = secondChild.get("name");
 
         String firstInvokeParameter = "";
@@ -158,7 +160,7 @@ class OllirNodeProcessor {
         String[] thirdChildLines = thirdChildString.split(";\n");
         String lastThirdChildLine = thirdChildLines[thirdChildLines.length - 1];
         for (int i = 0; i < (thirdChildLines.length - 1); i++ ) {
-            ollirString += thirdChildLines[i];
+            ollirString += thirdChildLines[i] + ";\n";
         }
         
         Type methodReturnType = OllirHelper.determineMethodReturnType(methodName, table, node);
@@ -175,16 +177,16 @@ class OllirNodeProcessor {
         boolean methodIsVoid = typeString.equals("V");
 
         if (methodIsVoid) ollirString += invokeType + "(" + firstInvokeParameter + (lastThirdChildLine.equals("") ? "," : "") + lastThirdChildLine + ").V;\n";
-        else ollirString += "t" + (tempVarCount++) + "." + typeString + " :=." + typeString + " " + invokeType + "(" + firstInvokeParameter + (lastThirdChildLine.equals("") ? "," : "") + lastThirdChildLine + ")." + typeString + ";\n";
+        else ollirString += "t" + (OllirNodeProcessor.tempVarCount++) + "." + typeString + " :=." + typeString + " " + invokeType + "(" + firstInvokeParameter + (lastThirdChildLine.equals("") ? "," : "") + lastThirdChildLine + ")." + typeString + ";\n";
 
         return ollirString;
     }
 
-    private static String processArrayAccessNode(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
+    private static String processArrayAccessNode(JmmNode node, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
     {
         String ollirString = "";
 
-        var childrenData = extractChildrenData(node, tempVarCount, locals, parameters, structureCount, table, isStatic);
+        var childrenData = extractChildrenData(node, locals, parameters, structureCount, table, isStatic);
 
         String leftChild = childrenData.get(0);
         String rightChild = childrenData.get(1);
@@ -194,16 +196,16 @@ class OllirNodeProcessor {
 
         ollirString = leftChild + rightChild;
 
-        ollirString += "t" + (tempVarCount++) + ".i32 :=.i32 " + OllirHelper.trimType(leftTempVar) + "[" + rightTempVar + "].i32;\n";
+        ollirString += "t" + (OllirNodeProcessor.tempVarCount++) + ".i32 :=.i32 " + OllirHelper.trimType(leftTempVar) + "[" + rightTempVar + "].i32;\n";
 
         return ollirString;
     }
 
-    private static String processOperNode(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic, String operation)
+    private static String processOperNode(JmmNode node, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic, String operation)
     {
         String ollirString = "";
 
-        var childrenData = extractChildrenData(node, tempVarCount, locals, parameters, structureCount, table, isStatic);
+        var childrenData = extractChildrenData(node, locals, parameters, structureCount, table, isStatic);
 
         String leftChild = childrenData.get(0);
         String rightChild = childrenData.get(1);
@@ -242,16 +244,16 @@ class OllirNodeProcessor {
             }
         }
 
-        ollirString += "t" + (tempVarCount++) + ".i32 :=.i32 " + leftTempVar + " " + operationChar + ".i32 " + rightTempVar + ";\n";
+        ollirString += "t" + (OllirNodeProcessor.tempVarCount++) + ".i32 :=.i32 " + leftTempVar + " " + operationChar + ".i32 " + rightTempVar + ";\n";
 
         return ollirString;
     }
 
-    private static String processAssignNode(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
+    private static String processAssignNode(JmmNode node, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
     {
         String ollirString = "";
 
-        var childrenData = extractChildrenData(node, tempVarCount, locals, parameters, structureCount, table, isStatic);
+        var childrenData = extractChildrenData(node, locals, parameters, structureCount, table, isStatic);
 
         String leftChild = childrenData.get(0);
         String rightChild = childrenData.get(1);
@@ -268,7 +270,7 @@ class OllirNodeProcessor {
         return ollirString;
     }
 
-    private static String processVariableName(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
+    private static String processVariableName(JmmNode node, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
     {
         String ollirString = "";
 
@@ -313,9 +315,9 @@ class OllirNodeProcessor {
                 varType = fields.get(indexInList).getType();
 
                 varName = OllirHelper.sanitizeVariableName(varName);
-                Integer currentTempVarCount = tempVarCount;
+                Integer currentTempVarCount = OllirNodeProcessor.tempVarCount++;
                 typeString = OllirHelper.processType(varType);
-                ollirString += "t" + (tempVarCount++) + "." + typeString + " :=." + typeString + "getfield(this, " +  varName + "." + typeString + ")." + typeString + ";\n";
+                ollirString += "t" + (OllirNodeProcessor.tempVarCount++) + "." + typeString + " :=." + typeString + "getfield(this, " +  varName + "." + typeString + ")." + typeString + ";\n";
                 varName = "t" + currentTempVarCount.toString();
             }
         }
@@ -323,14 +325,14 @@ class OllirNodeProcessor {
         typeString = OllirHelper.processType(varType);
         
         rhs = varName + "." + typeString;
-        lhs = "t" + (tempVarCount++) + "." + typeString;
+        lhs = "t" + (OllirNodeProcessor.tempVarCount++) + "." + typeString;
 
         ollirString += lhs + " :=." + typeString + " " + rhs + ";\n";
 
         return ollirString;
     }
 
-    private static String processElseNode(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
+    private static String processElseNode(JmmNode node, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
     {
         String ollirString = "";
 
@@ -340,7 +342,7 @@ class OllirNodeProcessor {
 
         var children = node.getChildren();
         for (JmmNode jmmNode : children) {
-            ollirString += processNode(jmmNode, tempVarCount, locals, parameters, structureCount, table, isStatic);
+            ollirString += processNode(jmmNode, locals, parameters, structureCount, table, isStatic);
         }
 
         ollirString += "endifbody" + structureNumber + ":\n";
@@ -348,24 +350,24 @@ class OllirNodeProcessor {
         return ollirString;
     }
 
-    private static String processIntegerLiteral(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
+    private static String processIntegerLiteral(JmmNode node, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
     {
         String ollirString = "";
 
         String name = node.get("name");
 
-        ollirString += "t" + (tempVarCount++) + ".i32 :=.i32 " + name + ".i32;\n";
+        ollirString += "t" + (OllirNodeProcessor.tempVarCount++) + ".i32 :=.i32 " + name + ".i32;\n";
 
         return ollirString;
     }
 
-    private static String processIfNode(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
+    private static String processIfNode(JmmNode node, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
     {
         String ollirString = "";
         var children = node.getChildren();
         int structureNumber = OllirHelper.determineNumberForStructure("If", structureCount);
 
-        String ifExpression = processNode(children.get(0), tempVarCount, locals, parameters, structureCount, table, isStatic);
+        String ifExpression = processNode(children.get(0), locals, parameters, structureCount, table, isStatic);
 
         String lhsLastAssign = OllirHelper.extractLastTempVar(ifExpression);
 
@@ -375,31 +377,31 @@ class OllirNodeProcessor {
         ollirString += ") goto ifbody" + structureNumber + ";\n";
         ollirString += "goto elsebody" + structureNumber + ";\n";
         ollirString += "ifbody" + structureNumber + ":\n";
-        ollirString += processNode(children.get(1), tempVarCount, locals, parameters, structureCount, table, isStatic);
+        ollirString += processNode(children.get(1), locals, parameters, structureCount, table, isStatic);
         ollirString += "goto endifbody" + structureNumber + ";\n";
 
         return ollirString;
     }
 
-    private static String processLessThanNode(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
+    private static String processLessThanNode(JmmNode node, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
     {
         String ollirString = "";
 
-        var childrenData = extractChildrenData(node, tempVarCount, locals, parameters, structureCount, table, isStatic);
+        var childrenData = extractChildrenData(node, locals, parameters, structureCount, table, isStatic);
 
         String leftChild = childrenData.get(0);
         String rightChild = childrenData.get(1);
 
-        String leftTempVar = childrenData.get(2); 
+        String leftTempVar = childrenData.get(2);
         String rightTempVar = childrenData.get(3);
 
         ollirString += leftChild + rightChild;
-        ollirString += "t" + (tempVarCount++) + ".bool :=.bool " + leftTempVar + " <.bool " + rightTempVar + ";\n";        
+        ollirString += "t" + (OllirNodeProcessor.tempVarCount++) + ".bool :=.bool " + leftTempVar + " <.bool " + rightTempVar + ";\n";        
 
         return ollirString;
     }
 
-    private static List<String> extractChildrenData(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
+    private static List<String> extractChildrenData(JmmNode node, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
     {
         List<String> childrenVars = new ArrayList<>();
         List<String> tempVars = new ArrayList<>();
@@ -407,7 +409,7 @@ class OllirNodeProcessor {
         var children = node.getChildren();
 
         for (JmmNode jmmNode : children) {
-            String currentChild = OllirNodeProcessor.processNode(jmmNode, tempVarCount, locals, parameters, structureCount, table, isStatic);
+            String currentChild = OllirNodeProcessor.processNode(jmmNode, locals, parameters, structureCount, table, isStatic);
             childrenVars.add(currentChild);
             String currentTempVar = OllirHelper.extractLastTempVar(currentChild);
             tempVars.add(currentTempVar);

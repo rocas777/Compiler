@@ -14,6 +14,7 @@ public class OllirHelper {
         
         var parentNode = node.getParent();
         String parentNodeKind = parentNode.getKind();
+
         switch (parentNodeKind)
         {
             case "LessThan":
@@ -41,6 +42,7 @@ public class OllirHelper {
                     return chainedMethodParams.get(childIndex).getType();
                 }
             }
+            case "Body": return new Type("void", false);
             default: return null;
         }
     }
@@ -154,8 +156,9 @@ public class OllirHelper {
 
     public static String extractLastTempVar(String ollirString)
     {
-        if (!ollirString.contains(";")) return ollirString.replaceAll("\\s", "");
-        String[] lines = ollirString.split(";");
+        String stringWithoutNewLines = ollirString.replaceAll("\n", "");
+        if (!stringWithoutNewLines.contains(";")) return stringWithoutNewLines.replaceAll("\\s", "");
+        String[] lines = stringWithoutNewLines.split(";");
         String lastLine = lines[lines.length - 1];
         if (!lastLine.contains(":=")) return lastLine.replaceAll("\\s", "");
         String lastTempVar = lastLine.split(":=")[0];
