@@ -99,7 +99,7 @@ class OllirNodeProcessor {
         Type classType = new Type(table.getClassName(), false);
         String typeString = OllirHelper.processType(classType);
 
-        ollirString += "t" + (tempVarCount) + "." + typeString + " :=." + typeString + " $0.this." + typeString + ";"; 
+        ollirString += "t" + (tempVarCount) + "." + typeString + " :=." + typeString + " $0.this." + typeString + ";\n"; 
 
         return ollirString;
     }
@@ -143,7 +143,7 @@ class OllirNodeProcessor {
 
         firstInvokeParameter = OllirHelper.extractLastTempVar(firstChildString);
 
-        String[] thirdChildLines = thirdChildString.split(";");
+        String[] thirdChildLines = thirdChildString.split(";\n");
         String lastThirdChildLine = thirdChildLines[thirdChildLines.length - 1];
         for (int i = 0; i < (thirdChildLines.length - 1); i++ ) {
             ollirString += thirdChildLines[i];
@@ -162,8 +162,8 @@ class OllirNodeProcessor {
 
         boolean methodIsVoid = typeString.equals("V");
 
-        if (methodIsVoid) ollirString += invokeType + "(" + firstInvokeParameter + (lastThirdChildLine.equals("") ? "," : "") + lastThirdChildLine + ").V;";
-        else ollirString += "t" + (tempVarCount++) + "." + typeString + " :=." + typeString + " " + invokeType + "(" + firstInvokeParameter + (lastThirdChildLine.equals("") ? "," : "") + lastThirdChildLine + ")." + typeString + ";";
+        if (methodIsVoid) ollirString += invokeType + "(" + firstInvokeParameter + (lastThirdChildLine.equals("") ? "," : "") + lastThirdChildLine + ").V;\n";
+        else ollirString += "t" + (tempVarCount++) + "." + typeString + " :=." + typeString + " " + invokeType + "(" + firstInvokeParameter + (lastThirdChildLine.equals("") ? "," : "") + lastThirdChildLine + ")." + typeString + ";\n";
 
         return ollirString;
     }
@@ -182,7 +182,7 @@ class OllirNodeProcessor {
 
         ollirString = leftChild + rightChild;
 
-        ollirString += "t" + (tempVarCount++) + ".i32 :=.i32 " + OllirHelper.trimType(leftTempVar) + "[" + rightTempVar + "].i32;";
+        ollirString += "t" + (tempVarCount++) + ".i32 :=.i32 " + OllirHelper.trimType(leftTempVar) + "[" + rightTempVar + "].i32;\n";
 
         return ollirString;
     }
@@ -230,7 +230,7 @@ class OllirNodeProcessor {
             }
         }
 
-        ollirString += "t" + (tempVarCount++) + ".i32 :=.i32 " + leftTempVar + " " + operationChar + ".i32 " + rightTempVar + ";";
+        ollirString += "t" + (tempVarCount++) + ".i32 :=.i32 " + leftTempVar + " " + operationChar + ".i32 " + rightTempVar + ";\n";
 
         return ollirString;
     }
@@ -247,11 +247,11 @@ class OllirNodeProcessor {
         String leftTempVar = childrenData.get(2); 
         String rightTempVar = childrenData.get(3); 
 
-        String[] splitLeftVar = leftTempVar.split(".");
+        String[] splitLeftVar = leftTempVar.split("\\.");
         String typeString = splitLeftVar[splitLeftVar.length - 1];
 
         ollirString = leftChild + rightChild;
-        ollirString += leftTempVar + " :=." + typeString + " " + rightTempVar + ";";
+        ollirString += leftTempVar + " :=." + typeString + " " + rightTempVar + ";\n";
 
         return ollirString;
     }
@@ -303,7 +303,7 @@ class OllirNodeProcessor {
                 varName = OllirHelper.sanitizeVariableName(varName);
                 Integer currentTempVarCount = tempVarCount;
                 typeString = OllirHelper.processType(varType);
-                ollirString += "t" + (tempVarCount++) + "." + typeString + " :=." + typeString + "getfield(this, " +  varName + "." + typeString + ")." + typeString + ";";
+                ollirString += "t" + (tempVarCount++) + "." + typeString + " :=." + typeString + "getfield(this, " +  varName + "." + typeString + ")." + typeString + ";\n";
                 varName = "t" + currentTempVarCount.toString();
             }
         }
@@ -313,7 +313,7 @@ class OllirNodeProcessor {
         rhs = varName + "." + typeString;
         lhs = "t" + (tempVarCount++) + "." + typeString;
 
-        ollirString += lhs + " :=." + typeString + " " + rhs + ";";
+        ollirString += lhs + " :=." + typeString + " " + rhs + ";\n";
 
         return ollirString;
     }
@@ -342,13 +342,14 @@ class OllirNodeProcessor {
 
         String name = node.get("name");
 
-        ollirString += "t" + (tempVarCount++) + ".i32 :=.i32 " + name + ".i32;";
+        ollirString += "t" + (tempVarCount++) + ".i32 :=.i32 " + name + ".i32;\n";
 
         return ollirString;
     }
 
     private static String processIfNode(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
     {
+        System.out.println("Im here");
         String ollirString = "";
         var children = node.getChildren();
         int structureNumber = OllirHelper.determineNumberForStructure("If", structureCount);
@@ -360,11 +361,11 @@ class OllirNodeProcessor {
         ollirString += ifExpression;
         ollirString += "if (";
         ollirString += lhsLastAssign;
-        ollirString += ") goto ifbody" + structureNumber + ";";
-        ollirString += "goto elsebody" + structureNumber + ";";
+        ollirString += ") goto ifbody" + structureNumber + ";\n";
+        ollirString += "goto elsebody" + structureNumber + ";\n";
         ollirString += "ifbody" + structureNumber + ":\n";
         ollirString += processNode(children.get(1), tempVarCount, locals, parameters, structureCount, table, isStatic);
-        ollirString += "goto endifbody" + structureNumber + ";";
+        ollirString += "goto endifbody" + structureNumber + ";\n";
 
         return ollirString;
     }
@@ -382,7 +383,7 @@ class OllirNodeProcessor {
         String rightTempVar = childrenData.get(3);
 
         ollirString += leftChild + rightChild;
-        ollirString += "t" + (tempVarCount++) + ".bool :=.bool " + leftTempVar + " <.bool " + rightTempVar + ";";        
+        ollirString += "t" + (tempVarCount++) + ".bool :=.bool " + leftTempVar + " <.bool " + rightTempVar + ";\n";        
 
         return ollirString;
     }

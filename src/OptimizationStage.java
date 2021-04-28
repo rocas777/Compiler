@@ -29,10 +29,10 @@ public class OptimizationStage implements JmmOptimization {
         JmmNode node = semanticsResult.getRootNode();
 
         OllirMethodVisitor ollirMethodVisitor = new OllirMethodVisitor();
-        ollirMethodVisitor.visit(node);
+        ollirMethodVisitor.visit(node,(MySymbolTable) semanticsResult.getSymbolTable());
         var methodMap = ollirMethodVisitor.getMap();
 
-        System.out.println(methodMap.get("ComputeFac"));
+        System.out.println(methodMap.get("compFac"));
 
         // Convert the AST to a String containing the equivalent OLLIR code
         String ollirCode = ""; // Convert node ...

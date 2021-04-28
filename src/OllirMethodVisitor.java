@@ -36,17 +36,17 @@ public class OllirMethodVisitor extends PreorderJmmVisitor<MySymbolTable, Boolea
 
         String ollirString = "";
 
-        ollirString += ".method public";
+        ollirString += ".method public ";
 
 
-        if (isMain) ollirString += " static";
+        if (isMain) ollirString += "static";
         ollirString += methodName;
 
         var parameters = table.getParameters(methodName);
         var returnType = table.getReturnType(methodName);
 
         ollirString += processParameters(parameters) + ".";
-        ollirString += OllirNodeProcessor.processType(returnType);
+        ollirString += OllirHelper.processType(returnType);
 
         JmmNode bodyNode;
         var children = node.getChildren();
@@ -79,11 +79,11 @@ public class OllirMethodVisitor extends PreorderJmmVisitor<MySymbolTable, Boolea
     {
         String symbolString = "";
 
-        String name = OllirNodeProcessor.sanitizeVariableName(symbol.getName());
+        String name = OllirHelper.sanitizeVariableName(symbol.getName());
         Type type = symbol.getType();
         
         symbolString += name + ".";
-        symbolString += OllirNodeProcessor.processType(type);
+        symbolString += OllirHelper.processType(type);
     
         return symbolString;
     }
