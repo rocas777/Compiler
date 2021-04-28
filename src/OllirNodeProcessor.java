@@ -82,6 +82,18 @@ class OllirNodeProcessor {
                 ollirString += processArgsNode(node, tempVarCount, locals, parameters, structureCount, table, isStatic);
                 break;
             }
+            case "Object":
+            {
+                //TODO
+                //IMPLEMENT THIS
+                break;
+            }
+            case "ConstructorCall":
+            {
+                //TODO
+                //IMPLEMENT THIS
+                break;
+            }
             default:
             {
                 System.out.println("Invalid node kind!");
