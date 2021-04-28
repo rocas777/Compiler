@@ -243,5 +243,21 @@ public class OllirHelper {
 
         return newVarName;
     }
+
+    public static String extractCode(String pseudoOllirString)
+    {
+        String ollirString = "";
+
+        if (pseudoOllirString.endsWith(";\n")) ollirString = pseudoOllirString;
+        else
+        {
+            String[] lines = pseudoOllirString.split(";\n");
+            for (int i = 0; i < (lines.length - 1); i++) {
+                ollirString += lines[i] + ";\n";
+            }
+        }
+
+        return ollirString;
+    }
     
 }
