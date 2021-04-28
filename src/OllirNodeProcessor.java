@@ -361,7 +361,6 @@ class OllirNodeProcessor {
 
     private static String processIfNode(JmmNode node, Integer tempVarCount, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
     {
-        System.out.println("Im here");
         String ollirString = "";
         var children = node.getChildren();
         int structureNumber = OllirHelper.determineNumberForStructure("If", structureCount);
