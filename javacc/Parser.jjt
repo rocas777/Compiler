@@ -33,7 +33,7 @@ TOKEN:
     | < CLASS : "class">
     | < PUBLIC : "public">
     | < STATIC : "static">
-    | < STRING : "String">
+    | < STRING : "String"([" "])*"[]">
     | < LENGTH : "length">
     | < RETURN : "return">
     | < IMPORT : "import">
@@ -169,7 +169,7 @@ void NormalMethodDeclaration() : {Token t1,t2;}
 
 void MainMethodDeclaration() : {Token t1;}
 {
-    <STATIC> <VOID> <MAIN> <OPENPAR> <STRING> "[" "]" t1=<IDENTIFIER> {jjtThis.name = t1.image; jjtThis.line = String.valueOf(t1.beginLine); jjtThis.column = String.valueOf(t1.beginColumn);} #ArgName <CLOSEPAR> <OPENCUR> MethodBody() "}"
+    <STATIC> <VOID> <MAIN> <OPENPAR> <STRING> t1=<IDENTIFIER> {jjtThis.name = t1.image; jjtThis.line = String.valueOf(t1.beginLine); jjtThis.column = String.valueOf(t1.beginColumn);} #ArgName <CLOSEPAR> <OPENCUR> MethodBody() "}"
 }
 
 void MethodBody() #Body : {}{
