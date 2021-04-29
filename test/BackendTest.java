@@ -57,7 +57,8 @@ public class BackendTest {
                 "}";*/
                 "Fac {.construct Fac().V {invokespecial(this, \"<init>\").V;}" +
                 "   .method public compFac(num.i32).i32 {" +
-                "       ret.i32 3.i32;" +
+                "       aux1.i32 :=.i32 num.i32 -.i32 1.i32;" +
+                "       ret.i32 aux1.i32;" +
                 "   }" +
                 "   .method public static main(args.array.String).V {" +
                 "       aux1.Fac :=.Fac new(Fac).Fac;" +

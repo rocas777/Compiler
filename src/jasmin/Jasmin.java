@@ -114,6 +114,35 @@ public class Jasmin implements JasminBackend {
     private String processInstruction(Instruction i, Method m) {
         String out = new String();
         switch (i.getInstType()) {
+            case BINARYOPER: {
+                BinaryOpInstruction b = (BinaryOpInstruction) i;
+                out += loadOp(b.getLeftOperand(), m);
+                out += loadOp(b.getRightOperand(), m);
+                System.out.println(b.getUnaryOperation().getOpType());
+                switch (b.getUnaryOperation().getOpType()) {
+                    case ADD:
+                    case ADDI32: {
+                        out += "iadd\n";
+                        break;
+                    }
+                    case SUB:
+                    case SUBI32: {
+                        out += "isub\n";
+                        break;
+                    }
+                    case MUL:
+                    case MULI32: {
+                        out += "imul\n";
+                        break;
+                    }
+                    case DIV:
+                    case DIVI32: {
+                        out += "idiv\n";
+                        break;
+                    }
+                }
+                break;
+            }
             case ASSIGN: {
                 AssignInstruction a = (AssignInstruction) i;
                 Operand o = (Operand) a.getDest();
@@ -256,6 +285,31 @@ public class Jasmin implements JasminBackend {
                 return "L" + type.name();
         }
         return "V";
+    }
+
+    private String loadOp(Element e, Method m) {
+        String out = "";
+        if (e.isLiteral()) {
+            return "    ldc " + ((LiteralElement) e).getLiteral() + "\n";
+        } else {
+            Operand o = (Operand) e;
+            switch (o.getType().getTypeOfElement()) {
+                case INT32: {
+                    out += "    iload " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + " ;load integer " + o.getName() + "\n";
+                    break;
+                }
+                case ARRAYREF:
+                case OBJECTREF: {
+                    out += "    aload " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + " ;load reference " + o.getName() + "\n";
+                    break;
+                }
+                case BOOLEAN: {
+                    out += "    zload " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + " ;load boolean " + o.getName() + "\n";
+                    break;
+                }
+            }
+        }
+        return out;
     }
 }
 
