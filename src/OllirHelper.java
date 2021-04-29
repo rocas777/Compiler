@@ -157,6 +157,7 @@ public class OllirHelper {
     public static String extractLastTempVar(String ollirString)
     {
         String stringWithoutNewLines = ollirString.replaceAll("\n", "");
+        if (stringWithoutNewLines.endsWith(".V;")) return "";
         if (!stringWithoutNewLines.contains(";")) return stringWithoutNewLines.replaceAll("\\s", "");
         String[] lines = stringWithoutNewLines.split(";");
         String lastLine = lines[lines.length - 1];
@@ -247,7 +248,7 @@ public class OllirHelper {
     public static String extractCode(String pseudoOllirString)
     {
         String ollirString = "";
-
+        
         if (pseudoOllirString.endsWith(";\n")) ollirString = pseudoOllirString;
         else
         {

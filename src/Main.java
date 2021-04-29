@@ -15,7 +15,8 @@ public class Main implements JmmParser {
 
 	public static List<Report> reports;
 	public static List<Report> semanticReports;
-	public static boolean dumpTree = true;
+	public static boolean dumpTree = false;
+	public static boolean dumpJson = true;
 
 	public JmmParserResult parse(String jmmCode) {
 		
@@ -39,12 +40,8 @@ public class Main implements JmmParser {
 		var main = new Main();
 		var fileContents = SpecsIo.read(args[0]);
 		var result = main.parse(fileContents);
-		var analysis = new AnalysisStage();
-		var result2 = analysis.semanticAnalysis(result);
-		var optimizer = new OptimizationStage();
-		var result3 = optimizer.toOllir(result2);
-
-		if (dumpTree)
+		
+		if (dumpJson)
 		{
 			String jsonTree = result.toJson();
 			File jsonFile = new File("javacc/output.json");
@@ -59,6 +56,11 @@ public class Main implements JmmParser {
 				System.out.println(e.toString());
 			}
 		}
+
+		var analysis = new AnalysisStage();
+		var result2 = analysis.semanticAnalysis(result);
+		var optimizer = new OptimizationStage();
+		var result3 = optimizer.toOllir(result2);
 
         if (args[0].contains("fail")) {
             throw new RuntimeException("It's supposed to fail");

@@ -39,7 +39,7 @@ public class OllirMethodVisitor extends PreorderJmmVisitor<MySymbolTable, Boolea
         ollirString += ".method public ";
 
 
-        if (isMain) ollirString += "static";
+        if (isMain) ollirString += "static ";
         ollirString += methodName;
 
         var parameters = table.getParameters(methodName);
