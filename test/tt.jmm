@@ -1,0 +1,8 @@
+class Ex1 {
+    int y;
+	public int sum(int[] A){
+		int sum ;
+		sum = 0;
+		return sum;
+	}
+}
