@@ -97,8 +97,8 @@ class OllirNodeProcessor {
             }
             case "While":
             {
-                //TODO
-                //IMPLEMENT THIS
+                ollirString += processWhileNode(node, locals, parameters, structureCount, table, isStatic);
+                break;
             }
             case "ArrayIndex":
             {
@@ -136,6 +136,32 @@ class OllirNodeProcessor {
                 break;
             }
         }
+
+        return ollirString;
+    }
+
+    private static String processWhileNode(JmmNode node, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
+    {
+        String ollirString = "";
+
+        var childrenData = extractChildrenData(node, locals, parameters, structureCount, table, isStatic);
+
+        String firstChild = childrenData.get(0);
+        String secondChild = childrenData.get(1);
+
+        String firstChildTempVar = childrenData.get(2);
+        //String secondChildTempVar = childrenData.get(3);
+        
+        int whileStructureNumber = OllirHelper.determineNumberForStructure("While", structureCount);
+
+        ollirString += firstChild;
+        ollirString += "if (" + firstChildTempVar + ") goto whilebody" + whileStructureNumber + ";\n";
+        ollirString += "goto endwhile" + whileStructureNumber + ";\n";
+        ollirString += "whilebody" + whileStructureNumber + ":\n";
+        ollirString += secondChild;
+        ollirString += firstChild;
+        ollirString += "if ( " + firstChildTempVar + ") goto whilebody" + whileStructureNumber + ";\n";
+        ollirString += "endwhile" + whileStructureNumber + ":\n";
 
         return ollirString;
     }
