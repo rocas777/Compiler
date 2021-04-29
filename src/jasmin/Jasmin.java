@@ -125,7 +125,7 @@ public class Jasmin implements JasminBackend {
                     }
                     case ARRAYREF:
                     case OBJECTREF: {
-                        //out += "    astore " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + " ;store reference " + o.getName() + "\n";
+                        out += "    astore " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + " ;store reference " + o.getName() + "\n";
                         break;
                     }
                     case BOOLEAN: {
@@ -152,7 +152,6 @@ public class Jasmin implements JasminBackend {
                 CallInstruction c = (CallInstruction) i;
 
                 if (OllirAccesser.getCallInvocation(c) == CallType.NEW) {
-                    //todo
                     out += "    new " + ((Operand) c.getFirstArg()).getName() + "\n";
                     out += "    dup\n";
                     break;
@@ -162,6 +161,7 @@ public class Jasmin implements JasminBackend {
                 if (funcName.substring(1, funcName.length() - 1).equals("<init>")) {
                     Operand o = ((Operand) c.getFirstArg());
                     ClassType t = (ClassType) o.getType();
+                    out += "    aload " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + " ;load reference " + o.getName() + "\n";
                     out += "    invokespecial " + t.getName() + "/<init>()V\n";
                     out += "    astore " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + " ;store reference " + o.getName() + "\n";
                     break;
