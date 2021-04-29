@@ -158,10 +158,10 @@ public class OllirHelper {
     {
         String stringWithoutNewLines = ollirString.replaceAll("\n", "");
         if (stringWithoutNewLines.endsWith(".V;")) return "";
-        if (!stringWithoutNewLines.contains(";")) return stringWithoutNewLines.replaceAll("\\s", "");
+        if (!stringWithoutNewLines.contains(";")) return stringWithoutNewLines;
         String[] lines = stringWithoutNewLines.split(";");
         String lastLine = lines[lines.length - 1];
-        if (!lastLine.contains(":=")) return lastLine.replaceAll("\\s", "");
+        if (!lastLine.contains(":=")) return lastLine;
         String lastTempVar = lastLine.split(":=")[0];
         return lastTempVar.replaceAll("\\s", "");
     }

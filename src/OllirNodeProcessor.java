@@ -516,7 +516,7 @@ class OllirNodeProcessor {
         var childrenData = extractChildrenData(node, locals, parameters, structureCount, table, isStatic);
         String ifExpression = childrenData.get(0);
 
-        String lhsLastAssign = OllirHelper.extractLastTempVar(ifExpression);
+        String lhsLastAssign = childrenData.get(2);
 
         ollirString += ifExpression;
         ollirString += "if (";
@@ -543,7 +543,8 @@ class OllirNodeProcessor {
         String rightTempVar = childrenData.get(3);
 
         ollirString += leftChild + rightChild;
-        ollirString += "t" + (OllirNodeProcessor.tempVarCount++) + ".bool :=.bool " + leftTempVar + " <.bool " + rightTempVar + ";\n";        
+        //ollirString += "t" + (OllirNodeProcessor.tempVarCount++) + ".bool :=.bool " + leftTempVar + " <.i32 " + rightTempVar + ";\n";        
+        ollirString += leftTempVar + " <.i32 " + rightTempVar;
 
         return ollirString;
     }

@@ -41,13 +41,14 @@ public class OptimizationStage implements JmmOptimization {
         ollirMethodVisitor.visit(node, table);
         var methodMap = ollirMethodVisitor.getMap();
 
+        
         for (Map.Entry<String, String> methodEntry : methodMap.entrySet())
         {
             ollirCode += methodEntry.getValue() + "\n";
         }
 
         ollirCode += "}\n";
-
+        System.out.println("OLLIR CODE:");
         System.out.println(ollirCode);
 
         // Convert the AST to a String containing the equivalent OLLIR code
