@@ -6,11 +6,15 @@ import pt.up.fe.comp.jmm.jasmin.JasminResult;
 import pt.up.fe.comp.jmm.ollir.OllirResult;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 public class Jasmin implements JasminBackend {
+    List<String> imports = new ArrayList<>();
+
     @Override
     public JasminResult toJasmin(OllirResult ollirResult) {
+        imports = ollirResult.getOllirClass().getImports();
         String outCode = "";
         outCode += ".class " + ollirResult.getOllirClass().getClassName() + "\n";
         String superClass = ollirResult.getOllirClass().getSuperClass();
@@ -162,6 +166,13 @@ public class Jasmin implements JasminBackend {
                     out += "    astore " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + " ;store reference " + o.getName() + "\n";
                     break;
                 }
+
+                if (c.getFirstArg().getType().getTypeOfElement() == ElementType.THIS) {
+                    out += "    aload_0\n";
+                } else if (c.getFirstArg().getType().getTypeOfElement() == ElementType.OBJECTREF) {
+                    out += "    aload " + OllirAccesser.getVarTable(m).get(((Operand) c.getFirstArg()).getName()).getVirtualReg() + "\n";
+                }
+
                 String par = "";
                 for (int it = 0; it < c.getListOfOperands().size(); it++) {
                     if (c.getListOfOperands().get(it).isLiteral()) {
@@ -189,31 +200,43 @@ public class Jasmin implements JasminBackend {
                         }
                     }
                 }
-
-                var list = className.split("/.");
-                out += "    " + OllirAccesser.getCallInvocation(c).name() + " " + list[list.length - 1] + "/" + funcName.substring(1, funcName.length() - 1) + "(" + par + ")" + typeConversion(c.getReturnType().getTypeOfElement()) + "\n";
+                if (className.equals("this")) {
+                    ClassType cl = (ClassType) OllirAccesser.getVarTable(m).get("this").getVarType();
+                    className = cl.getName();
+                } else if (OllirAccesser.getCallInvocation(c).name().equals("invokevirtual")) {
+                    System.out.println(className);
+                    ClassType cl = (ClassType) OllirAccesser.getVarTable(m).get(className).getVarType();
+                    className = cl.getName();
+                }
+                out += "    " + OllirAccesser.getCallInvocation(c).name() + " " + className + "/" + funcName.substring(1, funcName.length() - 1) + "(" + par + ")" + typeConversion(c.getReturnType().getTypeOfElement()) + "\n";
                 break;
             }
             case RETURN: {
                 ReturnInstruction r = (ReturnInstruction) i;
-                Operand o = (Operand) r.getOperand();
-                switch (o.getType().getTypeOfElement()) {
-                    case INT32: {
-                        out += "    iload " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + " ;load integer " + o.getName() + "\n";
-                        out += "    ireturn\n";
-                        break;
+                try {
+                    Operand o = (Operand) r.getOperand();
+                    switch (o.getType().getTypeOfElement()) {
+                        case INT32: {
+                            out += "    iload " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + " ;load integer " + o.getName() + "\n";
+                            out += "    ireturn\n";
+                            break;
+                        }
+                        case ARRAYREF:
+                        case OBJECTREF: {
+                            out += "    aload " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + " ;load reference " + o.getName() + "\n";
+                            out += "    areturn\n";
+                            break;
+                        }
+                        case BOOLEAN: {
+                            out += "    zload " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + " ;load boolean " + o.getName() + "\n";
+                            out += "    zreturn\n";
+                            break;
+                        }
                     }
-                    case ARRAYREF:
-                    case OBJECTREF: {
-                        out += "    aload " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + " ;load reference " + o.getName() + "\n";
-                        out += "    areturn\n";
-                        break;
-                    }
-                    case BOOLEAN: {
-                        out += "    zload " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + " ;load boolean " + o.getName() + "\n";
-                        out += "    zreturn\n";
-                        break;
-                    }
+                } catch (Exception ignored) {
+                    LiteralElement l = (LiteralElement) r.getOperand();
+                    out += "    ldc " + l.getLiteral() + "\n";
+                    out += "    ireturn" + "\n";
                 }
                 break;
             }
