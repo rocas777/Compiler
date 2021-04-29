@@ -318,7 +318,12 @@ public class OllirHelper {
         var parent = node.getParent();
         var parentChildren = parent.getChildren();
         var lastChild = parentChildren.get(parentChildren.size() - 1);
-        return compareNodes(lastChild, node);
+        boolean isLastInBody = compareNodes(lastChild, node);
+        var grandparent = parent.getParent();
+        var grandparentChildren = grandparent.getChildren();
+        var lastGrandparentChild = grandparentChildren.get(grandparentChildren.size() - 1);
+        boolean thereIsReturnStatement = lastGrandparentChild.getKind().equals("ReturnValue");
+        return isLastInBody && !thereIsReturnStatement;
     }
     
 }
