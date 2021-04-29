@@ -87,8 +87,7 @@ class OllirNodeProcessor {
             }
             case "ConstructorCall":
             {
-                //TODO
-                //IMPLEMENT THIS
+                ollirString += processConstructorCallNode(node, locals, parameters, structureCount, table, isStatic);
                 break;
             }
             case "AttributeCall":
@@ -137,6 +136,19 @@ class OllirNodeProcessor {
                 break;
             }
         }
+
+        return ollirString;
+    }
+
+    private static String processConstructorCallNode(JmmNode node, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
+    {
+        String ollirString = "";
+
+        var child = node.getChildren().get(0);
+        String className = child.get("name");
+
+        ollirString += "t" + (OllirNodeProcessor.tempVarCount++) + "." + className + " :=." + className + " new(" + className + ")." + className + ";\n";
+        ollirString += "invokespecial(t" + (OllirNodeProcessor.tempVarCount - 1) + "." + className + ", \"<init>\").V;\n";
 
         return ollirString;
     }
