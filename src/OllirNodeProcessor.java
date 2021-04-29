@@ -128,8 +128,8 @@ class OllirNodeProcessor {
             }
             case "ArrayInitializer":
             {
-                //TODO
-                //FINISH THIS
+                ollirString += processArrayInitializerNode(node, locals, parameters, structureCount, table, isStatic);
+                break;
             }
             case "NEW":
             {
@@ -142,6 +142,20 @@ class OllirNodeProcessor {
                 break;
             }
         }
+
+        return ollirString;
+    }
+
+    private static String processArrayInitializerNode(JmmNode node, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
+    {
+        String ollirString = "";
+
+        var childrenData = extractChildrenData(node, locals, parameters, structureCount, table, isStatic);
+        String childString = childrenData.get(0);
+        String tempVar = childrenData.get(1);
+
+        ollirString += childString;
+        ollirString += "new(array, " + tempVar + ").array.i32";
 
         return ollirString;
     }
@@ -399,8 +413,8 @@ class OllirNodeProcessor {
         String leftTempVar = childrenData.get(2); 
         String rightTempVar = childrenData.get(3); 
 
-        String[] splitLeftVar = leftTempVar.split("\\.");
-        String typeString = splitLeftVar[splitLeftVar.length - 1];
+        Type type = OllirHelper.getTypeFromOllir(leftTempVar);
+        String typeString = OllirHelper.processType(type);
 
         ollirString = leftChild + rightChild;
         ollirString += leftTempVar + " :=." + typeString + " " + rightTempVar + ";\n";
