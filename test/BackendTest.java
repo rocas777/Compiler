@@ -43,28 +43,34 @@ public class BackendTest {
 
         var a_result = TestUtils.analyse(p_result);
         String oc = "" +
-                "Ex1 {             	" +
-                "   .construct public myClass().V {" +
-                "      invokespecial(this, \"<init>\").V; " +
-                "   } " +
-                "   .method public sum(A.array.i32).i32 { " +
-                "       sum.i32 :=.i32 0.i32; " +
-                "       i.i32 :=.i32 0.i32; " +
-                "   Loop: " +
-                "       t1.i32 :=.i32 arraylength($1.A.array.i32).i32; " +
-                "       if (i.i32 >=.i32 t1.i32) " +
-                "           goto End; " +
-                "       t2.i32 :=.i32 $1.A[i.i32].i32; " +
-                "       sum.i32 :=.i32 sum.i32 +.i32 t2.i32; " +
-                "       i.i32 :=.i32 i.i32 +.i32 1.i32;" +
-                "       goto Loop; " +
-                "   End: " +
-                "       ret.i32 sum.i32; " +
-                "   } " +
+
+                /*"HelloWorld {\n" +
+                "\n" +
+                "   .construct HelloWorld().V {\n" +
+                "      invokespecial(this, \"<init>\").V;\n" +
+                "   }\n" +
+                "\n" +
+                "   .method public static main(args.array.String).V {\n" +
+                "      invokestatic(ioPlus, \"printHelloWorld\").V;\n" +
+                "\n" +
+                "   }\n" +
+                "}";*/
+                "Fac {.construct Fac().V {invokespecial(this, \"<init>\").V;}" +
+                "   .method public compFac(num.i32).i32 {" +
+                "       aux2.i32 :=.i32 invokevirtual(this, \"compFac\", num.i32).i32;" +
+                "       ret.i32 aux2.i32;" +
+                "   }" +
+                "   .method public static main(args.array.String).V {" +
+                "       aux1.Fac :=.Fac new(Fac).Fac;" +
+                "       invokespecial(aux1.Fac,\"<init>\").V;" +
+                "       aux2.i32 :=.i32 invokevirtual(aux1.Fac,\"compFac\",10.i32).i32;" +
+                "       invokestatic(io, \"println\", aux2.i32).V;" +
+                "}" +
                 "}";
 
         OllirResult o = new OllirResult(a_result, oc, new ArrayList<>());
         JasminResult j = new Jasmin().toJasmin(o);
         File f = j.compile();
+        j.run();
     }
 }
