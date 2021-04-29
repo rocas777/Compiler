@@ -183,6 +183,9 @@ class OllirNodeProcessor {
         ollirString += "if ( " + firstChildTempVar + ") goto whilebody" + whileStructureNumber + ";\n";
         ollirString += "endwhile" + whileStructureNumber + ":\n";
 
+        boolean isEndOfFunction = OllirHelper.determineIfNodeIsLastInBody(node);
+        if (isEndOfFunction) ollirString += "t" + (OllirNodeProcessor.tempVarCount++) + ".i32 :=.i32 0.i32;\n"; 
+
         return ollirString;
     }
 
@@ -278,7 +281,8 @@ class OllirNodeProcessor {
         Type classType = new Type(table.getClassName(), false);
         String typeString = OllirHelper.processType(classType);
 
-        ollirString += "t" + (OllirNodeProcessor.tempVarCount++) + "." + typeString + " :=." + typeString + " $0.this." + typeString + ";\n"; 
+        //ollirString += "t" + (OllirNodeProcessor.tempVarCount++) + "." + typeString + " :=." + typeString + " $0.this." + typeString + ";\n"; 
+        ollirString += "$0.this." + typeString;
 
         return ollirString;
     }
@@ -325,6 +329,14 @@ class OllirNodeProcessor {
         else invokeType = "invokevirtual";
 
         boolean methodIsVoid = typeString.equals("V");
+
+        var argsData = OllirHelper.parseMethodArgs(lastThirdChildLine);
+        for (int i = 0; i < (argsData.size() - 1); i++) {
+            ollirString += argsData.get(i);
+        }
+        lastThirdChildLine = argsData.get(argsData.size() - 1);
+
+        if (firstInvokeParameter.startsWith("$0.this")) firstInvokeParameter = "this";
 
         String commonPart = invokeType + "(" + firstInvokeParameter + ", " + "\"" + methodName + "\"" + (lastThirdChildLine.equals("") ? "" : ", ") + lastThirdChildLine;
 
@@ -396,7 +408,8 @@ class OllirNodeProcessor {
             }
         }
 
-        ollirString += "t" + (OllirNodeProcessor.tempVarCount++) + ".i32 :=.i32 " + leftTempVar + " " + operationChar + ".i32 " + rightTempVar + ";\n";
+        //ollirString += "t" + (OllirNodeProcessor.tempVarCount++) + ".i32 :=.i32 " + leftTempVar + " " + operationChar + ".i32 " + rightTempVar + ";\n";
+        ollirString += leftTempVar + " " + operationChar + ".i32 " + rightTempVar;
 
         return ollirString;
     }
@@ -499,6 +512,9 @@ class OllirNodeProcessor {
         }
 
         ollirString += "endifbody" + structureNumber + ":\n";
+
+        boolean isEndOfFunction = OllirHelper.determineIfNodeIsLastInBody(node);
+        if (isEndOfFunction) ollirString += "t" + (OllirNodeProcessor.tempVarCount++) + ".i32 :=.i32 0.i32;\n"; 
 
         return ollirString;
     }

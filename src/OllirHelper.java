@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -264,6 +265,60 @@ public class OllirHelper {
         }
 
         return ollirString;
+    }
+
+    public static List<String> parseMethodArgs(String lastLine)
+    {
+        List<String> parseResult = new ArrayList<>();
+        List<String> tempVars = new ArrayList<>();
+
+        if (lastLine.contains(","))
+        {
+            String[] splitLine = lastLine.split(",");
+            for (String string : splitLine) {
+                var conversionResult = convertToTempIfNeeded(string);
+                parseResult.add(conversionResult.get(0));
+                tempVars.add(conversionResult.get(1));
+            }
+        }
+        else return convertToTempIfNeeded(lastLine);
+
+        parseResult.add(String.join(",", tempVars));
+
+        return parseResult;
+    }
+
+    private static List<String> convertToTempIfNeeded(String ollirString)
+    {
+        List<String> stringList = new ArrayList<>();
+
+        if (ollirString.contains("+") || ollirString.contains("-") || ollirString.contains("*") || ollirString.contains("/"))
+        {
+            String ollirCode = "t" + (OllirNodeProcessor.tempVarCount++) + ".i32 :=.i32 " + ollirString + ";\n";
+            stringList.add(ollirCode);
+            stringList.add("t" + (OllirNodeProcessor.tempVarCount - 1) + ".i32");
+        }
+        else if (ollirString.contains("<") || ollirString.contains("&&"))
+        {
+            String ollirCode = "t" + (OllirNodeProcessor.tempVarCount++) + ".bool :=.bool " + ollirString + ";\n";
+            stringList.add(ollirCode);
+            stringList.add("t" + (OllirNodeProcessor.tempVarCount - 1) + ".bool");
+        }
+        else
+        {
+            stringList.add("");
+            stringList.add(ollirString);
+        }
+
+        return stringList;
+    }
+
+    public static boolean determineIfNodeIsLastInBody(JmmNode node)
+    {
+        var parent = node.getParent();
+        var parentChildren = parent.getChildren();
+        var lastChild = parentChildren.get(parentChildren.size() - 1);
+        return compareNodes(lastChild, node);
     }
     
 }
