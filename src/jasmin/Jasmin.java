@@ -107,26 +107,119 @@ public class Jasmin implements JasminBackend {
     private String processInstruction(Instruction i, Method m) {
         String out = new String();
         switch (i.getInstType()) {
-            case ASSIGN -> {
+            case ASSIGN: {
                 AssignInstruction a = (AssignInstruction) i;
                 Operand o = (Operand) a.getDest();
                 out += processInstruction(a.getRhs(), m);
                 switch (o.getType().getTypeOfElement()) {
-                    case INT32 -> {
-                        out += "    istore " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + "\n";
+                    case INT32: {
+                        out += "    istore " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + " ;store integer " + o.getName() + "\n";
+                        break;
+                    }
+                    case ARRAYREF:
+                    case OBJECTREF: {
+                        out += "    astore " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + " ;store reference " + o.getName() + "\n";
+                        break;
+                    }
+                    case BOOLEAN: {
+                        out += "    zstore " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + " ;store boolean " + o.getName() + "\n";
+                        break;
                     }
                 }
+                break;
             }
-            case NOPER -> {
+            case NOPER: {
                 SingleOpInstruction o = (SingleOpInstruction) i;
                 if (o.getSingleOperand().isLiteral()) {
                     LiteralElement l = (LiteralElement) o.getSingleOperand();
                     out += "    ldc " + l.getLiteral() + "\n";
                     return out;
+                } else {
+                    switch (o.getInstType()) {
+
+                    }
                 }
+                break;
+            }
+            case CALL: {
+                CallInstruction c = (CallInstruction) i;
+                out += "    getstatic /" + OllirAccesser.getCallInvocation(c).name() + " " + typeConversion(c.getReturnType().getTypeOfElement()) + "\n";
+                if (c.getNumOperands() > 0) {
+                    Operand o = (Operand) c.getFirstArg();
+                    if (!c.getFirstArg().isLiteral()) {
+                        switch (c.getFirstArg().getType().getTypeOfElement()) {
+                            case INT32: {
+                                out += "    iload " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + " ;load integer " + o.getName() + "\n";
+                                break;
+                            }
+                            case ARRAYREF:
+                            case OBJECTREF: {
+                                out += "    aload " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + " ;load reference " + o.getName() + "\n";
+                                break;
+                            }
+                            case BOOLEAN: {
+                                out += "    zload " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + " ;load boolean " + o.getName() + "\n";
+                                break;
+                            }
+                        }
+                    } else {
+                        out += "    ldc " + o + "\n";
+                    }
+                }
+                if (c.getNumOperands() > 1) {
+                    Operand o = (Operand) c.getSecondArg();
+                    if (!c.getSecondArg().isLiteral()) {
+                        switch (c.getSecondArg().getType().getTypeOfElement()) {
+                            case INT32: {
+                                out += "    iload " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + " ;load integer " + o.getName() + "\n";
+                                break;
+                            }
+                            case ARRAYREF:
+                            case OBJECTREF: {
+                                out += "    aload " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + " ;load reference " + o.getName() + "\n";
+                                break;
+                            }
+                            case BOOLEAN: {
+                                out += "    zload " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + " ;load boolean " + o.getName() + "\n";
+                                break;
+                            }
+                        }
+                    } else {
+                        //todo
+                        out += "    ldc " + o + "\n";
+                    }
+                }
+                for (int it = 0; it < c.getNumOperands() - 2; it++) {
+                    c.getListOfOperands().get(it).show();
+                }
+                out += "    invokestatic " + OllirAccesser.getCallInvocation(c).name() + "(";
+                if (c.getNumOperands() > 0) {
+                    out += typeConversion(c.getFirstArg().getType().getTypeOfElement());
+                }
+                if (c.getNumOperands() > 1) {
+                    out += ";" + typeConversion(c.getSecondArg().getType().getTypeOfElement());
+                }
+                //todo resto
+                out += ")" + typeConversion(c.getReturnType().getTypeOfElement()) + "\n";
+
+                break;
             }
         }
         return out;
+    }
+
+    private String typeConversion(ElementType type) {
+        switch (type) {
+            case BOOLEAN:
+                return "Z";
+            case ARRAYREF:
+                return "[I";
+            case INT32:
+                return "I";
+            case OBJECTREF:
+                return "L" + type.name();
+        }
+        return "";
     }
 }
 
