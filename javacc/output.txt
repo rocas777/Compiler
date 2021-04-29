@@ -1,152 +1,41 @@
-Program
- ImportDeclaration
-  ImportMaterial [io.ia]
-  ImportMaterial [ia]
- ClassDeclaration
-  Name [Fac]
-  ExtendedClassName [Something]
-  Body
-   Vars
-    VarDeclaration
-     VarType [int]
-     VarName [a]
-   Methods
-    NormalMethodDeclaration
-     ReturnType [int]
-     MethodName [ComputeFac]
-     Body
-      VarDeclaration
-       VarType [int]
-       VarName [num_aux]
-      If
-       LessThan
-        VariableName [num]
-        IntegerLiteral [1]
-       Body
-        Assign
-         Assigned [num_aux]
-         IntegerLiteral [1]
-        Assign
-         Assigned [i]
-         IntegerLiteral [0]
-        Assign
-         Assigned [i]
-         IntegerLiteral [3]
-        Assign
-         Assigned [i]
-         IntegerLiteral [2]
-      Else
-       Assign
-        Assigned [num_aux]
-        Mul
-         VariableName [num]
-         Method
-          This
-          MethodName [ComputeFac]
-          Args
-           Sub
-            VariableName [num]
-            IntegerLiteral [1]
-       Assign
-        Assigned [i]
-        IntegerLiteral [3]
-       Assign
-        Assigned [i]
-        IntegerLiteral [2]
-     ReturnValue
-      Mul
-       VariableName [num_aux]
-       Method
-        This
-        MethodName [computeFac]
-        Args
-         IntegerLiteral [1]
-    MainMethodDeclaration
-     ArgName [args]
-     Body
-      VarDeclaration
-       VarType [int]
-       VarName [i]
-      VarDeclaration
-       VarType [boolean]
-       VarName [b]
-      VarDeclaration
-       VarType [int]
-       VarName [i]
-      VarDeclaration
-       VarType [boolean]
-       VarName [a]
-      Assign
-       Assigned [i]
-       IntegerLiteral [0]
-      Assign
-       Assigned [a]
-       AND
-        Method
-         VariableName [i]
-         MethodName [get]
-         Args
-        True
-      Assign
-       Assigned [afdfdfdfdf]
-       AND
-        True
-        Neg
-         Method
-          This
-          MethodName [gt]
-          Args
-           VariableName [a]
-           VariableName [b]
-      Assign
-       Assigned [a]
-       Neg
-        Method
-         This
-         MethodName [gt]
-         Args
-          VariableName [a]
-          VariableName [b]
-      Assign
-       Assigned [i]
-       Add
-        VariableName [i]
-        IntegerLiteral [3]
-      Assign
-       ArrayAccess
-        VariableName [a]
-        ArrayIndex
-         IntegerLiteral [0]
-       AttributeCall
-        VariableName [a]
-      Assign
-       Assigned [a]
-       ArrayAccess
-        Method
-         This
-         MethodName [method]
-         Args
-        ArrayIndex
-         IntegerLiteral [3]
-      Assign
-       Assigned [adfdfdfdf]
-       AND
-        Neg
-         True
-        AND
-         False
-         False
-      Assign
-       Assigned [a]
-       Neg
-        ConstructorCall
-         ObjectClassName [Main]
-      Assign
-       Assigned [a]
-       Add
-        Add
-         IntegerLiteral [1]
-         Mul
-          IntegerLiteral [2]
-          IntegerLiteral [3]
-        IntegerLiteral [4]
+OLLIR CODE:
+Fac {
+.construct Fac().V {
+invokespecial(this, "<init>").V;
+}
+.method public whileTest().i32 {
+num.i32 :=.i32 0.i32;
+if (num.i32 <.i32 5.i32) goto whilebody1;
+goto endwhile1;
+whilebody1:
+t0.i32 :=.i32 num.i32 +.i32 1.i32;
+num.i32 :=.i32 t0.i32;
+if ( num.i32 <.i32 5.i32) goto whilebody1;
+endwhile1:
+ret.i32 num.i32;
+}
+.method public static main(args.array.String).V {
+t0.i32 :=.i32 arraylength($0.args.i32).i32;
+a.i32 :=.i32 t0.i32;
+t1.Fac :=.Fac new(Fac).Fac;
+invokespecial(t1.Fac, "<init>").V;
+t2.i32 :=.i32 invokevirtual(t1.Fac , "compFac", 10.i32).i32;
+invokestatic(io, "println", t2.i32).V;
+}
+.method public compFac(num.i32).i32 {
+if ($1.num.i32 <.i32 1.i32) goto ifbody1;
+goto elsebody1;
+ifbody1:
+num_aux.i32 :=.i32 1.i32;
+goto endifbody1;
+elsebody1:
+t0.Fac :=.Fac $0.this.Fac;
+t1.i32 :=.i32 $1.num.i32 -.i32 1.i32;
+t2.i32 :=.i32 invokevirtual(t0.Fac, "compFac", t1.i32).i32;
+t3.i32 :=.i32 $1.num.i32 *.i32 t2.i32;
+num_aux.i32 :=.i32 t3.i32;
+endifbody1:
+ret.i32 num_aux.i32;
+}
+}
+

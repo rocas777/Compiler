@@ -157,7 +157,12 @@ public class OllirHelper {
     public static String extractLastTempVar(String ollirString)
     {
         String stringWithoutNewLines = ollirString.replaceAll("\n", "");
-        if (stringWithoutNewLines.endsWith(".V;")) return "";
+        if (stringWithoutNewLines.endsWith(".V;") && stringWithoutNewLines.contains("invokespecial"))
+        {
+            String[] lines = stringWithoutNewLines.split(";");
+            String secToLastLine = lines[lines.length - 2];
+            return secToLastLine.split(":=")[0];
+        } 
         if (!stringWithoutNewLines.contains(";")) return stringWithoutNewLines;
         String[] lines = stringWithoutNewLines.split(";");
         String lastLine = lines[lines.length - 1];

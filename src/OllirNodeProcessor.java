@@ -34,6 +34,7 @@ class OllirNodeProcessor {
             }
             case "Assigned":
             case "Object":
+            case "MethodName":
             case "VariableName":
             {
                 ollirString += processVariableName(node, locals, parameters, structureCount, table, isStatic);
@@ -125,10 +126,15 @@ class OllirNodeProcessor {
                 ollirString += processBoolConst(false, node, locals, parameters, structureCount, table, isStatic);
                 break;
             }
+            case "ArrayInitializer":
+            {
+                //TODO
+                //FINISH THIS
+            }
             case "NEW":
             {
                 //TODO
-                //IMPLEMENT THIS
+                //CHECK IF THIS IS EVER USED
             }
             default:
             {
@@ -266,15 +272,14 @@ class OllirNodeProcessor {
     private static String processArgsNode(JmmNode node, List<Symbol> locals, List<Symbol> parameters, Map<String, Integer> structureCount, MySymbolTable table, boolean isStatic)
     {
         String ollirString = "";
-
+  
         var childrenData = extractChildrenData(node, locals, parameters, structureCount, table, isStatic);
         List<String> tempVars = new ArrayList<>();
 
         for (int i = 0; i < (childrenData.size() / 2); i++) {
             String currentString = childrenData.get(i);
             ollirString += currentString;
-            String currentLastTempVar = OllirHelper.extractLastTempVar(currentString);
-            tempVars.add(currentLastTempVar);
+            tempVars.add(childrenData.get(i + (childrenData.size() / 2)));
         }        
 
         ollirString += String.join(",", tempVars);
@@ -286,27 +291,15 @@ class OllirNodeProcessor {
     {
         String ollirString = "";
 
-        var children = node.getChildren();
+        var childrenData = extractChildrenData(node, locals, parameters, structureCount, table, isStatic);
 
-        var firstChild = children.get(0);
-        var secondChild = children.get(1);
-        var thirdChild = children.get(2);
+        String firstChildString = childrenData.get(0);
+        String thirdChildString = childrenData.get(2);
+        String methodName = childrenData.get(4);
+        String firstInvokeParameter = childrenData.get(3);
 
-        String firstChildString = processNode(firstChild, locals, parameters, structureCount, table, isStatic);
-        String thirdChildString = processNode(thirdChild, locals, parameters, structureCount, table, isStatic);
-        String methodName = secondChild.get("name");
-
-        String firstInvokeParameter = "";
-
-        if (!firstChild.getKind().equals("VariableName")) ollirString += firstChildString;
-
-        firstInvokeParameter = OllirHelper.extractLastTempVar(firstChildString);
-
-        String[] thirdChildLines = thirdChildString.split(";\n");
-        String lastThirdChildLine = thirdChildLines[thirdChildLines.length - 1];
-        for (int i = 0; i < (thirdChildLines.length - 1); i++ ) {
-            ollirString += thirdChildLines[i] + ";\n";
-        }
+        String lastThirdChildLine = childrenData.get(5);
+        ollirString = firstChildString + thirdChildString;
         
         Type methodReturnType = OllirHelper.determineMethodReturnType(methodName, table, node);
         String typeString = OllirHelper.processType(methodReturnType);
