@@ -152,6 +152,7 @@ public class OllirHelper {
         String trimmedString = "";
         int lastDotIndex = ollirVarDeclaration.lastIndexOf(".");
         trimmedString = ollirVarDeclaration.substring(0, lastDotIndex);
+        if (trimmedString.contains(".array")) trimmedString = trimmedString.replaceAll("\\.array", "");
         return trimmedString;
     }
 
@@ -163,7 +164,8 @@ public class OllirHelper {
             String[] lines = stringWithoutNewLines.split(";");
             String secToLastLine = lines[lines.length - 2];
             return secToLastLine.split(":=")[0];
-        } 
+        }
+        else if (stringWithoutNewLines.endsWith(".V;")) return "";
         if (!stringWithoutNewLines.contains(";")) return stringWithoutNewLines;
         String[] lines = stringWithoutNewLines.split(";");
         String lastLine = lines[lines.length - 1];
@@ -236,10 +238,6 @@ public class OllirHelper {
 
     public static String sanitizeVariableName(String varName)
     {
-        //TODO 
-        //FINISH THIS
-        //CHECK FOR $ OR OTHER INVALID CHARS?
-
         String newVarName = ""; 
 
         if (varName.matches("t[0-9]+"))
@@ -247,6 +245,8 @@ public class OllirHelper {
             newVarName = "not_temp_" + varName;
         }
         else newVarName = varName;
+
+        if (newVarName.contains("$")) newVarName = newVarName.replaceAll("\\$", "_dollar_sign_");
 
         return newVarName;
     }
@@ -326,4 +326,16 @@ public class OllirHelper {
         return isLastInBody && !thereIsReturnStatement;
     }
     
+    public static String convertGetfieldToPutfield(String getfield, String rightTempVar)
+    {
+        String ollirString = "";
+
+        int openBracketsIndex = getfield.indexOf("(");
+        int closeBracketsIndex = getfield.indexOf(")");
+
+        String getfieldParams = getfield.substring(openBracketsIndex + 1, closeBracketsIndex);
+        ollirString += "putfield(" + getfieldParams + ", " + rightTempVar + ").V;\n";
+
+        return ollirString;
+    }
 }

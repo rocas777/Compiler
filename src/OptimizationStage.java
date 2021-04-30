@@ -4,6 +4,7 @@ import java.util.Map;
 
 import pt.up.fe.comp.jmm.JmmNode;
 import pt.up.fe.comp.jmm.analysis.JmmSemanticsResult;
+import pt.up.fe.comp.jmm.analysis.table.Symbol;
 import pt.up.fe.comp.jmm.ollir.JmmOptimization;
 import pt.up.fe.comp.jmm.ollir.OllirResult;
 import pt.up.fe.comp.jmm.report.Report;
@@ -33,6 +34,12 @@ public class OptimizationStage implements JmmOptimization {
         String className = table.getClassName();
 
         ollirCode += className + " {\n";
+
+        var fields = table.getFields();
+        for (Symbol symbol : fields) {
+            ollirCode += ".field private " + symbol.getName() + "." + OllirHelper.processType(symbol.getType()) + ";\n";
+        }
+
         ollirCode += ".construct " + className + "().V {\n";
         ollirCode += "invokespecial(this, \"<init>\").V;\n";
         ollirCode += "}\n";
@@ -48,7 +55,6 @@ public class OptimizationStage implements JmmOptimization {
         }
 
         ollirCode += "}\n";
-        System.out.println("OLLIR CODE:");
         System.out.println(ollirCode);
 
         // Convert the AST to a String containing the equivalent OLLIR code

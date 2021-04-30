@@ -131,11 +131,6 @@ class OllirNodeProcessor {
                 ollirString += processArrayInitializerNode(node, locals, parameters, structureCount, table, isStatic);
                 break;
             }
-            case "NEW":
-            {
-                //TODO
-                //CHECK IF THIS IS EVER USED
-            }
             default:
             {
                 System.out.println("Invalid node kind!");
@@ -429,8 +424,22 @@ class OllirNodeProcessor {
         Type type = OllirHelper.getTypeFromOllir(leftTempVar);
         String typeString = OllirHelper.processType(type);
 
-        ollirString = leftChild + rightChild;
-        ollirString += leftTempVar + " :=." + typeString + " " + rightTempVar + ";\n";
+        String[] leftChildLines = leftChild.split(";\n");
+        String lastLeftChildLine = leftChildLines[leftChildLines.length - 1];
+
+        if (!lastLeftChildLine.contains("getfield"))
+        {
+            ollirString = leftChild + rightChild;
+            ollirString += leftTempVar + " :=." + typeString + " " + rightTempVar + ";\n";
+        }
+        else
+        {
+            for (int i = 0; i < (leftChildLines.length - 1); i++) {
+                ollirString += leftChildLines[i] + ";\n";
+            }
+            ollirString = rightChild;
+            ollirString += OllirHelper.convertGetfieldToPutfield(lastLeftChildLine, rightTempVar);
+        }
 
         return ollirString;
     }
@@ -481,7 +490,7 @@ class OllirNodeProcessor {
 
                 varName = OllirHelper.sanitizeVariableName(varName);
                 typeString = OllirHelper.processType(varType);
-                ollirString += "t" + (OllirNodeProcessor.tempVarCount++) + "." + typeString + " :=." + typeString + "getfield(this, " +  varName + "." + typeString + ")." + typeString + ";\n";
+                ollirString += "t" + (OllirNodeProcessor.tempVarCount++) + "." + typeString + " :=." + typeString + " getfield(this, " +  varName + "." + typeString + ")." + typeString + ";\n";
                 return ollirString;
             }
         }
