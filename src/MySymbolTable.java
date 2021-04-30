@@ -129,6 +129,29 @@ public class MySymbolTable implements SymbolTable {
         return null;
     }
 
+    @Override
+    public String toString()
+    {
+        String strRepresentation = "";
+
+        strRepresentation += "Imports:\n";
+        for (String string : imports) {
+            strRepresentation += string + "\n";
+        }
+        strRepresentation += "Class Name: " + className + "\n";
+        strRepresentation += "Super Class Name: " + (superClassName == null ? "" : superClassName) + "\n";
+        strRepresentation += "Fields:\n";
+        for (Symbol symbol : fields) {
+            strRepresentation += symbol.toString() + "\n";
+        }
+        strRepresentation += "Methods:\n";
+        for (Map.Entry<String, FunctionTable> func : functions.entrySet()) {
+            strRepresentation += "::::" + func.getKey() + "::::\n" + func.getValue().toString();
+        }
+
+        return strRepresentation;
+    }
+
 
     //METHODS REQUIRED BY INTERFACE
     @Override
