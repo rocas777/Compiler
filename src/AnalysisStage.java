@@ -96,8 +96,8 @@ public class AnalysisStage implements JmmAnalysis {
             System.out.println(report.toString());
         }
         //Semantic analysis
-        //var 
-
+        //var
+        Main.semanticReports.add(new Report(ReportType.LOG, Stage.SEMANTIC, 0, 0, symbolTable.toString()));
 
         //Testing prints
         var imports = symbolTable.getImports();

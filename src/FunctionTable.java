@@ -34,4 +34,22 @@ public class FunctionTable {
     public List<Symbol> getParameters() {
         return parameters;
     }
+
+    @Override
+    public String toString()
+    {
+        String strRepresentation = "";
+
+        strRepresentation += "Return Type:\n" + returnType.toString() + "\n";
+        strRepresentation += "Parameters:\n";
+        for (Symbol symbol : parameters) {
+            strRepresentation += symbol.toString() + "\n";
+        }
+        strRepresentation += "Local Variables:\n";
+        for (Symbol symbol : localVariables) {
+            strRepresentation += symbol.toString() + "\n";
+        }
+
+        return strRepresentation;
+    }
 }
