@@ -71,7 +71,6 @@ class JasminUtils {
         } catch (Exception e) {
             throw new RuntimeException("eXception: "+ e.getMessage(), e);
         }
-        
     }
 
 	//
