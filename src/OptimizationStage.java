@@ -32,8 +32,9 @@ public class OptimizationStage implements JmmOptimization {
         MySymbolTable table = (MySymbolTable) semanticsResult.getSymbolTable();
         String ollirCode = "";
         String className = table.getClassName();
+        String superName = table.getSuper();
 
-        ollirCode += className + " {\n";
+        ollirCode += className + ((superName == null) ? "" : (" extends " + superName)) + " {\n";
 
         var fields = table.getFields();
         for (Symbol symbol : fields) {
