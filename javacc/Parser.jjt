@@ -336,7 +336,7 @@ void P1() #void : {Token t1,t2;}
     | <TRUE> #True
     | <FALSE> #False
     | <THIS> #This
-    | <NEW> (ArrayInitializer() | ConstructorCall()) #NEW
+    | <NEW> (ArrayInitializer() | ConstructorCall())
     | <OPENPAR> Expression() <CLOSEPAR>
 }
 

@@ -1,8 +1,10 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import pt.up.fe.comp.jmm.JmmNode;
 import pt.up.fe.comp.jmm.analysis.JmmSemanticsResult;
+import pt.up.fe.comp.jmm.analysis.table.Symbol;
 import pt.up.fe.comp.jmm.ollir.JmmOptimization;
 import pt.up.fe.comp.jmm.ollir.OllirResult;
 import pt.up.fe.comp.jmm.report.Report;
@@ -27,9 +29,37 @@ public class OptimizationStage implements JmmOptimization {
     public OllirResult toOllir(JmmSemanticsResult semanticsResult) {
 
         JmmNode node = semanticsResult.getRootNode();
+        MySymbolTable table = (MySymbolTable) semanticsResult.getSymbolTable();
+        String ollirCode = "";
+        String className = table.getClassName();
+        String superName = table.getSuper();
+
+        ollirCode += className + ((superName == null) ? "" : (" extends " + superName)) + " {\n";
+
+        var fields = table.getFields();
+        for (Symbol symbol : fields) {
+            ollirCode += ".field private " + symbol.getName() + "." + OllirHelper.processType(symbol.getType()) + ";\n";
+        }
+
+        ollirCode += ".construct " + className + "().V {\n";
+        ollirCode += "invokespecial(this, \"<init>\").V;\n";
+        ollirCode += "}\n";
+
+        OllirMethodVisitor ollirMethodVisitor = new OllirMethodVisitor();
+        ollirMethodVisitor.visit(node, table);
+        var methodMap = ollirMethodVisitor.getMap();
+
+        
+        for (Map.Entry<String, String> methodEntry : methodMap.entrySet())
+        {
+            ollirCode += methodEntry.getValue() + "\n";
+        }
+
+        ollirCode += "}\n";
+        System.out.println(ollirCode);
 
         // Convert the AST to a String containing the equivalent OLLIR code
-        String ollirCode = ""; // Convert node ...
+         // Convert node ...
 
         // More reports from this stage
         List<Report> reports = new ArrayList<>();

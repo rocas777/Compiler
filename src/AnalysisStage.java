@@ -100,38 +100,38 @@ public class AnalysisStage implements JmmAnalysis {
         Main.semanticReports.add(new Report(ReportType.LOG, Stage.SEMANTIC, 0, 0, symbolTable.toString()));
 
         //Testing prints
-        var imports = symbolTable.getImports();
-        System.out.println("Imports: ");
-        for (String string : imports) {
-            System.out.println("\t" + string);
-        }
-        System.out.println("Class Name: " + symbolTable.getClassName());
-        System.out.println("Super Class Name: " + symbolTable.getSuper());
-        var fields = symbolTable.getFields();
-        System.out.println("Fields: ");
-        for (Symbol symbol : fields) {
-            var type = symbol.getType();
-            String printLine = type.getName() + ((type.isArray()) ? "[]" : "");
-            printLine += " " + symbol.getName();
-            System.out.println("\t" + printLine);
-        }
-        var methods = symbolTable.getMethods();
-        System.out.println("METHODS: ");
-        for (String string : methods) {
-            System.out.println("Method Name: " + string);
-            var type = symbolTable.getReturnType(string);
-            System.out.println("Return Type: " + type.getName() + ((type.isArray()) ? "[]" : ""));
-            var params = symbolTable.getParameters(string);
-            for (Symbol param : params) {
-                var paramType = param.getType();
-                System.out.println("Parameter: " + paramType.getName() + ((paramType.isArray()) ? "[]" : "") + " " + param.getName());
-            }
-            var locals = symbolTable.getLocalVariables(string);
-            for (Symbol localVar : locals) {
-                var localType = localVar.getType();
-                System.out.println("Local Variable: " + localType.getName() + ((localType.isArray()) ? "[]" : "") + " " + localVar.getName());
-            }
-        }
+        // var imports = symbolTable.getImports();
+        // System.out.println("Imports: ");
+        // for (String string : imports) {
+        //     System.out.println("\t" + string);
+        // }
+        // System.out.println("Class Name: " + symbolTable.getClassName());
+        // System.out.println("Super Class Name: " + symbolTable.getSuper());
+        // var fields = symbolTable.getFields();
+        // System.out.println("Fields: ");
+        // for (Symbol symbol : fields) {
+        //     var type = symbol.getType();
+        //     String printLine = type.getName() + ((type.isArray()) ? "[]" : "");
+        //     printLine += " " + symbol.getName();
+        //     System.out.println("\t" + printLine);
+        // }
+        // var methods = symbolTable.getMethods();
+        // System.out.println("METHODS: ");
+        // for (String string : methods) {
+        //     System.out.println("Method Name: " + string);
+        //     var type = symbolTable.getReturnType(string);
+        //     System.out.println("Return Type: " + type.getName() + ((type.isArray()) ? "[]" : ""));
+        //     var params = symbolTable.getParameters(string);
+        //     for (Symbol param : params) {
+        //         var paramType = param.getType();
+        //         System.out.println("Parameter: " + paramType.getName() + ((paramType.isArray()) ? "[]" : "") + " " + param.getName());
+        //     }
+        //     var locals = symbolTable.getLocalVariables(string);
+        //     for (Symbol localVar : locals) {
+        //         var localType = localVar.getType();
+        //         System.out.println("Local Variable: " + localType.getName() + ((localType.isArray()) ? "[]" : "") + " " + localVar.getName());
+        //     }
+        // }
 
         return new JmmSemanticsResult(parserResult, symbolTable, Main.semanticReports);
 

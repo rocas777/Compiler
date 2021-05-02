@@ -49,7 +49,8 @@ public class MySymbolTable implements SymbolTable {
 
     private void processDuplicates(FunctionTable funcData)
     {
-        List<Symbol> symbols = funcData.getLocalVariables();
+        List<Symbol> symbols = new ArrayList<>();
+        symbols.addAll(funcData.getLocalVariables());
         symbols.addAll(funcData.getParameters());
 
         Map<String, List<Symbol>> varNameAndSymbols = new HashMap<>();
