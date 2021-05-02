@@ -61,6 +61,8 @@ public class Main implements JmmParser {
 		var result2 = analysis.semanticAnalysis(result);
 		var optimizer = new OptimizationStage();
 		var result3 = optimizer.toOllir(result2);
+		var backend = new BackendStage();
+		var result4 = backend.toJasmin(result3);
 
         if (args[0].contains("fail")) {
             throw new RuntimeException("It's supposed to fail");
