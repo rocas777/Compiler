@@ -255,7 +255,11 @@ class OllirNodeProcessor {
         String rightTempVar = childrenData.get(3);
 
         ollirString += leftChild + rightChild;
-        ollirString += leftTempVar + " &&.bool " + rightTempVar;        
+
+        boolean isInChain = OllirHelper.determineIfOperIsInChain(node);
+
+        if (isInChain) ollirString = "t" + (OllirNodeProcessor.tempVarCount++) + ".bool :=.bool " + leftTempVar + " &&.bool " + rightTempVar + ";\n"; 
+        else ollirString += leftTempVar + " &&.bool " + rightTempVar;        
 
         return ollirString;
     }
@@ -403,8 +407,10 @@ class OllirNodeProcessor {
             }
         }
 
-        //ollirString += "t" + (OllirNodeProcessor.tempVarCount++) + ".i32 :=.i32 " + leftTempVar + " " + operationChar + ".i32 " + rightTempVar + ";\n";
-        ollirString += leftTempVar + " " + operationChar + ".i32 " + rightTempVar;
+        boolean isInOperationChain = OllirHelper.determineIfOperIsInChain(node);
+
+        if (isInOperationChain) ollirString += "t" + (OllirNodeProcessor.tempVarCount++) + ".i32 :=.i32 " + leftTempVar + " " + operationChar + ".i32 " + rightTempVar + ";\n";
+        else ollirString += leftTempVar + " " + operationChar + ".i32 " + rightTempVar;
 
         return ollirString;
     }

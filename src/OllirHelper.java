@@ -338,4 +338,24 @@ public class OllirHelper {
 
         return ollirString;
     }
+
+    public static boolean determineIfOperIsInChain(JmmNode node)
+    {
+        boolean result = false;
+
+        String nodeKind = node.getKind();
+        var parent = node.getParent();
+        String parentKind = parent.getKind();
+
+        if (nodeKind.equals("Add") || nodeKind.equals("Sub") || nodeKind.equals("Mul") || nodeKind.equals("Div"))
+        {
+            if (parentKind.equals("Add") || parentKind.equals("Sub") || parentKind.equals("Mul") || parentKind.equals("Div")) return true;
+        }
+        else if (nodeKind.equals("AND"))
+        {
+            if (parentKind.equals("AND")) return true;
+        }
+
+        return result;
+    }
 }
