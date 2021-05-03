@@ -106,7 +106,6 @@ public class Jasmin implements JasminBackend {
         }
         System.out.println(OllirAccesser.getVarTable(m).keySet());
 
-        out += "    return\n";
         out += ".end method\n";
         return out;
     }
@@ -242,6 +241,10 @@ public class Jasmin implements JasminBackend {
             }
             case RETURN: {
                 ReturnInstruction r = (ReturnInstruction) i;
+                if(r.getOperand() == null){
+                    out += "    return\n";
+                    break;
+                }
                 try {
                     Operand o = (Operand) r.getOperand();
                     switch (o.getType().getTypeOfElement()) {

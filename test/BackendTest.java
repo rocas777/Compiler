@@ -65,6 +65,7 @@ public class BackendTest {
                 "       invokespecial(aux1.Fac,\"<init>\").V;" +
                 "       aux2.i32 :=.i32 invokevirtual(aux1.Fac,\"compFac\",10.i32).i32;" +
                 "       invokestatic(io, \"println\", aux2.i32).V;" +
+                "       ret.V;"+
                 "}" +
                 "}";
 
