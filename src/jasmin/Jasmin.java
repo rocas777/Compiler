@@ -26,7 +26,7 @@ public class Jasmin implements JasminBackend {
         }
         //field private balance D = 0.0
         for (Field f : ollirResult.getOllirClass().getFields()) {
-            outCode += "field " + f.getFieldAccessModifier().name() + " " + f.getFieldName() + " " + f.getFieldType() + "\n";
+            outCode += ".field " + f.getFieldAccessModifier().name() + " " + f.getFieldName() + " " + f.getFieldType() + "\n";
         }
 
         outCode += ".method public <init>()V\n" +
