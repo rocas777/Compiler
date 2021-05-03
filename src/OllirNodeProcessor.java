@@ -355,7 +355,7 @@ class OllirNodeProcessor {
 
         ollirString = leftChild + rightChild;
 
-        ollirString += "t" + (OllirNodeProcessor.tempVarCount++) + ".i32 :=.i32 " + OllirHelper.trimType(leftTempVar) + "[" + rightTempVar + "].i32;\n";
+        ollirString += OllirHelper.trimType(leftTempVar) + "[" + rightTempVar + "].i32";
 
         return ollirString;
     }
