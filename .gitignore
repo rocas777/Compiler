@@ -10,3 +10,6 @@ gradlew*
 .project
 .settings
 gradle/wrapper
+*.dot
+javacc/output*
+javacc/test*
