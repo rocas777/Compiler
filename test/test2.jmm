@@ -1,0 +1,17 @@
+import io;
+
+class Fac {
+
+    int temp_field;
+
+    public int compFac()
+    {
+        temp_field = 1;
+        return temp_field;
+    }
+
+
+    public static void main(String[] args){
+        io.println(new Fac().compFac());
+    }
+}

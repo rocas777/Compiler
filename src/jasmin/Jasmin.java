@@ -26,13 +26,14 @@ public class Jasmin implements JasminBackend {
         }
         //field private balance D = 0.0
         for (Field f : ollirResult.getOllirClass().getFields()) {
-            outCode += ".field " + f.getFieldAccessModifier().name() + " " + f.getFieldName() + " " + f.getFieldType() + "\n";
+            outCode += ".field " + (f.getFieldAccessModifier().name()).toLowerCase() + " " + f.getFieldName() + " " + typeConversion(f.getFieldType().getTypeOfElement()) + "\n";
         }
 
         outCode += ".method public <init>()V\n" +
                 "   aload_0\n" +
-                "   invokespecial " + superClass + "/<init>()V\n" +
-                "   return\n" +
+                "   invokespecial " + superClass + "/<init>()V\n";
+
+        outCode += "   return\n" +
                 ".end method\n";
 
         //.method public static sum([I)I
@@ -40,11 +41,10 @@ public class Jasmin implements JasminBackend {
             outCode += processMethod(m);
         }
 
-        System.out.println();
-        System.out.println(outCode);
-
 
         ollirResult.getOllirClass().getFields();
+
+        System.out.println("Done Compiling");
 
 
         return new JasminResult(ollirResult, outCode, new ArrayList<>());
@@ -104,7 +104,6 @@ public class Jasmin implements JasminBackend {
         for (Instruction i : m.getInstructions()) {
             out += processInstruction(i, m);
         }
-        System.out.println(OllirAccesser.getVarTable(m).keySet());
 
         out += ".end method\n";
         return out;
@@ -117,7 +116,6 @@ public class Jasmin implements JasminBackend {
                 BinaryOpInstruction b = (BinaryOpInstruction) i;
                 out += loadOp(b.getLeftOperand(), m);
                 out += loadOp(b.getRightOperand(), m);
-                System.out.println(b.getUnaryOperation().getOpType());
                 switch (b.getUnaryOperation().getOpType()) {
                     case ADD:
                     case ADDI32: {
@@ -232,7 +230,6 @@ public class Jasmin implements JasminBackend {
                     ClassType cl = (ClassType) OllirAccesser.getVarTable(m).get("this").getVarType();
                     className = cl.getName();
                 } else if (OllirAccesser.getCallInvocation(c).name().equals("invokevirtual")) {
-                    System.out.println(className);
                     ClassType cl = (ClassType) OllirAccesser.getVarTable(m).get(className).getVarType();
                     className = cl.getName();
                 }
@@ -270,6 +267,40 @@ public class Jasmin implements JasminBackend {
                     out += "    ldc " + l.getLiteral() + "\n";
                     out += "    ireturn" + "\n";
                 }
+                break;
+            }
+            case PUTFIELD:{
+                PutFieldInstruction p = (PutFieldInstruction) i;
+                String class_name = "";
+                var fo = (Operand) p.getFirstOperand();
+                if(fo.getName().equals("this")){
+                    class_name = ((ClassType) OllirAccesser.getVarTable(m).get("this").getVarType()).getName();
+                    out += "    aload_0\n";
+                }
+                else {
+                    class_name = fo.getName();
+                    out += loadOp(p.getFirstOperand(),m);
+                }
+                out += loadOp(p.getThirdOperand(),m);
+                out += "    putfield "+class_name+"/"+((Operand) p.getSecondOperand()).getName() +" "+ typeConversion(p.getSecondOperand().getType().getTypeOfElement())+"\n";
+
+                break;
+            }
+            case GETFIELD:{
+                GetFieldInstruction g = (GetFieldInstruction) i;
+                String class_name = "";
+                var fo = (Operand) g.getFirstOperand();
+
+                if(fo.getName().equals("this")){
+                    class_name = ((ClassType) OllirAccesser.getVarTable(m).get("this").getVarType()).getName();
+                    out += "    aload_0\n";
+                }
+                else {
+                    class_name = fo.getName();
+                    out += loadOp(g.getFirstOperand(),m);
+                }
+
+                out += "    getfield "+class_name+"/"+((Operand) g.getSecondOperand()).getName() +" "+ typeConversion(g.getSecondOperand().getType().getTypeOfElement())+"\n";
                 break;
             }
         }

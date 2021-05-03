@@ -13,6 +13,7 @@
 
 import jasmin.Jasmin;
 import org.junit.Test;
+import org.specs.comp.ollir.parser.OllirParser;
 import pt.up.fe.comp.TestUtils;
 import pt.up.fe.comp.jmm.jasmin.JasminResult;
 import pt.up.fe.comp.jmm.ollir.OllirResult;
@@ -39,12 +40,12 @@ public class BackendTest {
 
 
     public void testHelloWorld1() {
-        var p_result = TestUtils.parse(SpecsIo.getResource("tt.jmm"));
+        var p_result = TestUtils.parse(SpecsIo.getResource("test2.jmm"));
 
         var a_result = TestUtils.analyse(p_result);
-        String oc = "" +
+        /*String oc = "" +
 
-                /*"HelloWorld {\n" +
+                "HelloWorld {\n" +
                 "\n" +
                 "   .construct HelloWorld().V {\n" +
                 "      invokespecial(this, \"<init>\").V;\n" +
@@ -54,7 +55,7 @@ public class BackendTest {
                 "      invokestatic(ioPlus, \"printHelloWorld\").V;\n" +
                 "\n" +
                 "   }\n" +
-                "}";*/
+                "}";
                 "Fac {.construct Fac().V {invokespecial(this, \"<init>\").V;}" +
                 "   .method public compFac(num.i32).i32 {" +
                 "       aux1.i32 :=.i32 num.i32 -.i32 1.i32;" +
@@ -69,8 +70,9 @@ public class BackendTest {
                 "}" +
                 "}";
 
-        OllirResult o = new OllirResult(a_result, oc, new ArrayList<>());
-        JasminResult j = new Jasmin().toJasmin(o);
+        OllirResult o = new OllirResult(a_result, oc, new ArrayList<>());*/
+        var result = TestUtils.optimize(SpecsIo.getResource("test2.jmm"));
+        JasminResult j = new Jasmin().toJasmin(result);
         File f = j.compile();
         j.run();
     }
