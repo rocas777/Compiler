@@ -483,7 +483,7 @@ class OllirNodeProcessor {
                 int paramNum = (isStatic) ? indexInList : (indexInList + 1);
                 varName = OllirHelper.sanitizeVariableName(varName);
                 varName = "$" + paramNum + "." + varName;
-                varType = locals.get(indexInList).getType();
+                varType = parameters.get(indexInList).getType();
             }
             else
             {
