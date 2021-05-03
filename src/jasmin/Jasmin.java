@@ -26,13 +26,14 @@ public class Jasmin implements JasminBackend {
         }
         //field private balance D = 0.0
         for (Field f : ollirResult.getOllirClass().getFields()) {
-            outCode += ".field " + f.getFieldAccessModifier().name() + " " + f.getFieldName() + " " + f.getFieldType() + "\n";
+            outCode += ".field " + (f.getFieldAccessModifier().name()).toLowerCase() + " " + f.getFieldName() + " " + typeConversion(f.getFieldType().getTypeOfElement()) + "\n";
         }
 
         outCode += ".method public <init>()V\n" +
                 "   aload_0\n" +
-                "   invokespecial " + superClass + "/<init>()V\n" +
-                "   return\n" +
+                "   invokespecial " + superClass + "/<init>()V\n";
+
+        outCode += "   return\n" +
                 ".end method\n";
 
         //.method public static sum([I)I
@@ -271,6 +272,43 @@ public class Jasmin implements JasminBackend {
                     out += "    ireturn" + "\n";
                 }
                 break;
+            }
+            case PUTFIELD:{
+                PutFieldInstruction p = (PutFieldInstruction) i;
+                String class_name = "";
+                var fo = (Operand) p.getFirstOperand();
+                if(fo.getName().equals("this")){
+                    class_name = ((ClassType) OllirAccesser.getVarTable(m).get("this").getVarType()).getName();
+                    out += "    aload_0\n";
+                }
+                else {
+                    class_name = fo.getName();
+                    out += loadOp(p.getFirstOperand(),m);
+                }
+                out += loadOp(p.getThirdOperand(),m);
+                out += "    putfield "+class_name+"/"+((Operand) p.getSecondOperand()).getName() +" "+ typeConversion(p.getSecondOperand().getType().getTypeOfElement())+"\n";
+
+                break;
+            }
+            case GETFIELD:{
+                GetFieldInstruction g = (GetFieldInstruction) i;
+                String class_name = "";
+                var fo = (Operand) g.getFirstOperand();
+
+                if(fo.getName().equals("this")){
+                    class_name = ((ClassType) OllirAccesser.getVarTable(m).get("this").getVarType()).getName();
+                    out += "    aload_0\n";
+                }
+                else {
+                    class_name = fo.getName();
+                    out += loadOp(g.getFirstOperand(),m);
+                }
+
+                out += "    getfield "+class_name+"/"+((Operand) g.getSecondOperand()).getName() +" "+ typeConversion(g.getSecondOperand().getType().getTypeOfElement())+"\n";
+                break;
+            }
+            default: {
+                System.out.println("shit");
             }
         }
         return out;
