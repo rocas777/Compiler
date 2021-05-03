@@ -6,8 +6,12 @@ class Fac {
 
     public int compFac()
     {
-        temp_field = 1;
-        return temp_field;
+        int []a;
+        a = new int[5];
+        a[2] = 7;
+        a[3] = 1;
+        return a[3];
+
     }
 
 
