@@ -11,25 +11,17 @@
  * specific language governing permissions and limitations under the License. under the License.
  */
 
-import jasmin.Jasmin;
 import org.junit.Test;
-import org.specs.comp.ollir.parser.OllirParser;
 import pt.up.fe.comp.TestUtils;
-import pt.up.fe.comp.jmm.jasmin.JasminResult;
-import pt.up.fe.comp.jmm.ollir.OllirResult;
 import pt.up.fe.specs.util.SpecsIo;
-
-import java.io.File;
-import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
 
 public class BackendTest {
 
-    //@Test
+    @Test
     public void testHelloWorld() {
-
-        var result = TestUtils.backend("");
+        var result = TestUtils.backend(SpecsIo.getResource("fixtures/public/HelloWorld.jmm"));
         TestUtils.noErrors(result.getReports());
 
         var output = result.run();
@@ -37,43 +29,11 @@ public class BackendTest {
     }
 
     @Test
+    public void testSimple() {
+        var result = TestUtils.backend(SpecsIo.getResource("fixtures/public/Simple.jmm"));
+        TestUtils.noErrors(result.getReports());
 
-
-    public void testHelloWorld1() {
-        var p_result = TestUtils.parse(SpecsIo.getResource("test2.jmm"));
-
-        var a_result = TestUtils.analyse(p_result);
-        /*String oc = "" +
-
-                "HelloWorld {\n" +
-                "\n" +
-                "   .construct HelloWorld().V {\n" +
-                "      invokespecial(this, \"<init>\").V;\n" +
-                "   }\n" +
-                "\n" +
-                "   .method public static main(args.array.String).V {\n" +
-                "      invokestatic(ioPlus, \"printHelloWorld\").V;\n" +
-                "\n" +
-                "   }\n" +
-                "}";
-                "Fac {.construct Fac().V {invokespecial(this, \"<init>\").V;}" +
-                "   .method public compFac(num.i32).i32 {" +
-                "       aux1.i32 :=.i32 num.i32 -.i32 1.i32;" +
-                "       ret.i32 aux1.i32;" +
-                "   }" +
-                "   .method public static main(args.array.String).V {" +
-                "       aux1.Fac :=.Fac new(Fac).Fac;" +
-                "       invokespecial(aux1.Fac,\"<init>\").V;" +
-                "       aux2.i32 :=.i32 invokevirtual(aux1.Fac,\"compFac\",10.i32).i32;" +
-                "       invokestatic(io, \"println\", aux2.i32).V;" +
-                "       ret.V;" +
-                "}" +
-                "}";
-
-        OllirResult o = new OllirResult(a_result, oc, new ArrayList<>());*/
-        var result = TestUtils.optimize(SpecsIo.getResource("test2.jmm"));
-        JasminResult j = new Jasmin().toJasmin(result);
-        File f = j.compile();
-        j.run();
+        var output = result.run();
+        assertEquals("30", output.trim());
     }
 }
