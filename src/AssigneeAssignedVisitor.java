@@ -124,6 +124,15 @@ public class AssigneeAssignedVisitor extends PreorderJmmVisitor<MySymbolTable, L
                     }
                     break;
                 }
+                case "ConstructorCall": {
+                    String constructorClassName = children.get(1).getChildren().get(0).get("name");
+                    if (a1Type.getName().equals(constructorClassName)) {
+
+                    } else {
+                        reports.add(new Report(ReportType.ERROR, Stage.SEMANTIC, Integer.parseInt(children.get(1).get("line")), Integer.parseInt(children.get(1).get("line")), "Trying to assign the instation of a class to a variable that belongs to a different class"));
+                    }
+                    break;
+                }
                 default: {
                     try {
                         reports.add(new Report(ReportType.ERROR, Stage.SEMANTIC, Integer.parseInt(children.get(1).get("line")), Integer.parseInt(children.get(1).get("column")), "Trying to assign a value to a different type recipient"));
