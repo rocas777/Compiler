@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pt.up.fe.comp.jmm.JmmNode;
+import pt.up.fe.comp.jmm.analysis.table.Symbol;
 import pt.up.fe.comp.jmm.ast.PreorderJmmVisitor;
 import pt.up.fe.comp.jmm.report.Report;
 import pt.up.fe.comp.jmm.report.ReportType;
@@ -24,12 +25,29 @@ public class ImportMethodVisitor extends PreorderJmmVisitor<MySymbolTable, Boole
         var children = node.getChildren();
         var firstChild = children.get(0);
 
-        if (firstChild.getKind().equals("VariableName"))
+        
+        if (firstChild.getKind().equals("VariableName") || firstChild.getKind().equals("Object"))
         {
-            String importedClassName = firstChild.get("name");
-            if (!lastSectionsOfImports.contains(importedClassName))
+            boolean isLocalOrParam = false;
+            String methodName = SearchHelper.getMethodName(node);
+            var locals = table.getLocalVariables(methodName);
+            var params = table.getParameters(methodName);
+
+            List<Symbol> localAndParams = new ArrayList<>();
+            localAndParams.addAll(locals);
+            localAndParams.addAll(params);
+
+            for (Symbol symbol : localAndParams) {
+                if (symbol.getName().equals(firstChild.get("name"))) isLocalOrParam = true;
+            }
+
+            if (!isLocalOrParam) 
             {
-                Main.semanticReports.add(new Report(ReportType.ERROR, Stage.SEMANTIC, Integer.parseInt(firstChild.get("line")), Integer.parseInt(firstChild.get("column")), "External method is being called without a matching import statement"));
+                String importedClassName = firstChild.get("name");
+                if (!lastSectionsOfImports.contains(importedClassName))
+                {
+                    Main.semanticReports.add(new Report(ReportType.ERROR, Stage.SEMANTIC, Integer.parseInt(firstChild.get("line")), Integer.parseInt(firstChild.get("column")), "External method is being called without a matching import statement"));
+                }
             }
         }
 
