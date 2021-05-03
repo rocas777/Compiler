@@ -118,6 +118,10 @@ public class OllirMethodVisitor extends PreorderJmmVisitor<MySymbolTable, Boolea
             methodString += returnNodeChildrenData.get(0);
             methodString += "ret." + OllirHelper.processType(table.getReturnType(methodName)) + " " + returnNodeChildrenData.get(1) + ";\n";
         }
+        else
+        {
+            methodString += "ret.V;\n";
+        }
 
         return methodString;
     }

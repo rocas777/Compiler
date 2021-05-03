@@ -178,8 +178,8 @@ class OllirNodeProcessor {
         ollirString += "if ( " + firstChildTempVar + ") goto whilebody" + whileStructureNumber + ";\n";
         ollirString += "endwhile" + whileStructureNumber + ":\n";
 
-        boolean isEndOfFunction = OllirHelper.determineIfNodeIsLastInBody(node);
-        if (isEndOfFunction) ollirString += "t" + (OllirNodeProcessor.tempVarCount++) + ".i32 :=.i32 0.i32;\n"; 
+        // boolean isEndOfFunction = OllirHelper.determineIfNodeIsLastInBody(node);
+        // if (isEndOfFunction) ollirString += "t" + (OllirNodeProcessor.tempVarCount++) + ".i32 :=.i32 0.i32;\n"; 
 
         return ollirString;
     }
@@ -522,8 +522,8 @@ class OllirNodeProcessor {
 
         ollirString += "endifbody" + structureNumber + ":\n";
 
-        boolean isEndOfFunction = OllirHelper.determineIfNodeIsLastInBody(node);
-        if (isEndOfFunction) ollirString += "t" + (OllirNodeProcessor.tempVarCount++) + ".i32 :=.i32 0.i32;\n"; 
+        // boolean isEndOfFunction = OllirHelper.determineIfNodeIsLastInBody(node);
+        // if (isEndOfFunction) ollirString += "t" + (OllirNodeProcessor.tempVarCount++) + ".i32 :=.i32 0.i32;\n"; 
 
         return ollirString;
     }
