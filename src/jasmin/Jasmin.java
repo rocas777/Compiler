@@ -11,6 +11,7 @@ import java.util.Locale;
 
 public class Jasmin implements JasminBackend {
     List<String> imports = new ArrayList<>();
+    boolean returned = false;
 
     @Override
     public JasminResult toJasmin(OllirResult ollirResult) {
@@ -52,6 +53,7 @@ public class Jasmin implements JasminBackend {
     }
 
     private String processMethod(Method m) {
+        returned = false;
         if (m.isConstructMethod())
             return "";
         String out = "";
@@ -106,6 +108,8 @@ public class Jasmin implements JasminBackend {
             out += processInstruction(i, m);
         }
 
+        if (!returned)
+            out += "    return\n";
         out += ".end method\n";
         return out;
     }
@@ -120,22 +124,22 @@ public class Jasmin implements JasminBackend {
                 switch (b.getUnaryOperation().getOpType()) {
                     case ADD:
                     case ADDI32: {
-                        out += "iadd\n";
+                        out += "    iadd\n";
                         break;
                     }
                     case SUB:
                     case SUBI32: {
-                        out += "isub\n";
+                        out += "    isub\n";
                         break;
                     }
                     case MUL:
                     case MULI32: {
-                        out += "imul\n";
+                        out += "    imul\n";
                         break;
                     }
                     case DIV:
                     case DIVI32: {
-                        out += "idiv\n";
+                        out += "    idiv\n";
                         break;
                     }
                 }
@@ -293,6 +297,7 @@ public class Jasmin implements JasminBackend {
                 ReturnInstruction r = (ReturnInstruction) i;
                 if (r.getOperand() == null) {
                     out += "    return\n";
+                    returned = true;
                     break;
                 }
                 try {
@@ -308,6 +313,7 @@ public class Jasmin implements JasminBackend {
                                 out += "    iload " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + " ;load integer " + o.getName() + "\n";
                             }
                             out += "    ireturn\n";
+                            returned = true;
                             break;
                         }
                         case ARRAYREF:
@@ -321,6 +327,7 @@ public class Jasmin implements JasminBackend {
                                 out += "    aload " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + " ;load reference " + o.getName() + "\n";
                             }
                             out += "    areturn\n";
+                            returned = true;
                             break;
                         }
                         case BOOLEAN: {
@@ -334,6 +341,7 @@ public class Jasmin implements JasminBackend {
                                 out += "    zload " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + " ;load boolean " + o.getName() + "\n";
                             }
                             out += "    zreturn\n";
+                            returned = true;
                             break;
                         }
                     }
@@ -341,6 +349,7 @@ public class Jasmin implements JasminBackend {
                     LiteralElement l = (LiteralElement) r.getOperand();
                     out += "    ldc " + l.getLiteral() + "\n";
                     out += "    ireturn" + "\n";
+                    returned = true;
                 }
                 break;
             }
