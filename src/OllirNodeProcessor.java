@@ -237,7 +237,7 @@ class OllirNodeProcessor {
         String childTempVar = childrenData.get(1);
 
         ollirString += child;
-        ollirString += "t" + (OllirNodeProcessor.tempVarCount++) + ".bool :=.bool " + childTempVar + " !.bool " + childTempVar + ";\n";        
+        ollirString += childTempVar + " !.bool " + childTempVar;        
 
         return ollirString;
     }
@@ -255,7 +255,7 @@ class OllirNodeProcessor {
         String rightTempVar = childrenData.get(3);
 
         ollirString += leftChild + rightChild;
-        ollirString += "t" + (OllirNodeProcessor.tempVarCount++) + ".bool :=.bool " + leftTempVar + " &&.bool " + rightTempVar + ";\n";        
+        ollirString += leftTempVar + " &&.bool " + rightTempVar;        
 
         return ollirString;
     }
