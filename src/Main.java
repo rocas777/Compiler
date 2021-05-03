@@ -64,6 +64,8 @@ public class Main implements JmmParser {
 		var backend = new BackendStage();
 		var result4 = backend.toJasmin(result3);
 
+		result4.run();
+
         if (args[0].contains("fail")) {
             throw new RuntimeException("It's supposed to fail");
         }
