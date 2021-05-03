@@ -41,11 +41,10 @@ public class Jasmin implements JasminBackend {
             outCode += processMethod(m);
         }
 
-        System.out.println();
-        System.out.println(outCode);
-
 
         ollirResult.getOllirClass().getFields();
+
+        System.out.println("Done Compiling");
 
 
         return new JasminResult(ollirResult, outCode, new ArrayList<>());
@@ -105,7 +104,6 @@ public class Jasmin implements JasminBackend {
         for (Instruction i : m.getInstructions()) {
             out += processInstruction(i, m);
         }
-        System.out.println(OllirAccesser.getVarTable(m).keySet());
 
         out += ".end method\n";
         return out;
@@ -118,7 +116,6 @@ public class Jasmin implements JasminBackend {
                 BinaryOpInstruction b = (BinaryOpInstruction) i;
                 out += loadOp(b.getLeftOperand(), m);
                 out += loadOp(b.getRightOperand(), m);
-                System.out.println(b.getUnaryOperation().getOpType());
                 switch (b.getUnaryOperation().getOpType()) {
                     case ADD:
                     case ADDI32: {
@@ -233,7 +230,6 @@ public class Jasmin implements JasminBackend {
                     ClassType cl = (ClassType) OllirAccesser.getVarTable(m).get("this").getVarType();
                     className = cl.getName();
                 } else if (OllirAccesser.getCallInvocation(c).name().equals("invokevirtual")) {
-                    System.out.println(className);
                     ClassType cl = (ClassType) OllirAccesser.getVarTable(m).get(className).getVarType();
                     className = cl.getName();
                 }
@@ -306,9 +302,6 @@ public class Jasmin implements JasminBackend {
 
                 out += "    getfield "+class_name+"/"+((Operand) g.getSecondOperand()).getName() +" "+ typeConversion(g.getSecondOperand().getType().getTypeOfElement())+"\n";
                 break;
-            }
-            default: {
-                System.out.println("shit");
             }
         }
         return out;
