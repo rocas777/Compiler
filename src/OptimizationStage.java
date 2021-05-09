@@ -45,6 +45,22 @@ public class OptimizationStage implements JmmOptimization {
         ollirCode += "invokespecial(this, \"<init>\").V;\n";
         ollirCode += "}\n";
 
+        if (Main.shouldOptimizeWithOptionO)
+        {
+            var methods = table.getMethods();
+            for (String method : methods) {
+                var locals = table.getLocalVariables(method);
+                for (var local : locals) {
+                    var varUseVisitor = new VarUseVisitor(local.getName(), method);
+                    varUseVisitor.visit(node, table);
+                    if (varUseVisitor.isConst())
+                    {
+                        replaceVarUseWithConst(local.getName(), method, varUseVisitor.getFirstVal(), node, table);
+                    }
+                }
+            }
+        }
+
         OllirMethodVisitor ollirMethodVisitor = new OllirMethodVisitor();
         ollirMethodVisitor.visit(node, table);
         var methodMap = ollirMethodVisitor.getMap();
@@ -79,4 +95,19 @@ public class OptimizationStage implements JmmOptimization {
         return ollirResult;
     }
 
+
+
+
+
+
+    private void replaceVarUseWithConst(String varName, String methodName, JmmNode value, JmmNode root, MySymbolTable table)
+    {
+        //Should check if is integerLiteral or true or false?
+        String valueNodeKind = value.getKind();
+        if (valueNodeKind.equals("IntegerLiteral") || valueNodeKind.equals("True") || valueNodeKind.equals("False"))
+        {
+            var propagVisitor = new ConstPropagVisitor(varName, methodName, value);
+            propagVisitor.visit(root, table);
+        }
+    }
 }

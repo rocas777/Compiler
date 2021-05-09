@@ -17,6 +17,7 @@ public class Main implements JmmParser {
 	public static List<Report> semanticReports;
 	public static boolean dumpTree = false;
 	public static boolean dumpJson = true;
+	public static boolean shouldOptimizeWithOptionO = false;
 
 	public JmmParserResult parse(String jmmCode) {
 		
@@ -40,6 +41,10 @@ public class Main implements JmmParser {
 		var main = new Main();
 		var fileContents = SpecsIo.read(args[0]);
 		var result = main.parse(fileContents);
+
+		for (String arg : args) {
+			if (arg.equals("-o")) shouldOptimizeWithOptionO = true;
+		}
 		
 		if (dumpJson)
 		{
