@@ -5,11 +5,8 @@ class Simple {
         int b;
         a = 20;
         b = 10;
-        if(a < b){
+        while(a < b){
             io.println(a);
-        }
-        else{
-            io.println(b);
         }
     }
 }

@@ -5,13 +5,25 @@ import pt.up.fe.comp.jmm.jasmin.JasminBackend;
 import pt.up.fe.comp.jmm.jasmin.JasminResult;
 import pt.up.fe.comp.jmm.ollir.OllirResult;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
+
+class M {
+    HashSet<Integer> locals = new HashSet<>();
+    Integer stackSize = 0;
+    Integer maxStackSize = 0;
+    String mn;
+
+    public void deltaStack(int v) {
+        stackSize += v;
+        maxStackSize = Math.max(stackSize, maxStackSize);
+        System.out.println(stackSize + " " + mn);
+    }
+}
 
 public class Jasmin implements JasminBackend {
     List<String> imports = new ArrayList<>();
     boolean returned = false;
+    HashMap<String, M> ms = new HashMap<>();
 
     @Override
     public JasminResult toJasmin(OllirResult ollirResult) {
@@ -54,6 +66,10 @@ public class Jasmin implements JasminBackend {
 
     private String processMethod(Method m) {
         returned = false;
+        ms.put(m.getMethodName(), new M());
+        System.out.println();
+        System.out.println(m.getMethodName());
+        ms.get(m.getMethodName()).mn = m.getMethodName();
         if (m.isConstructMethod())
             return "";
         String out = "";
@@ -98,19 +114,28 @@ public class Jasmin implements JasminBackend {
         }
         out += "\n";
 
-        out += "    .limit locals 99\n" +
-                "    .limit stack 99\n";
+        String nOut = "";
 
 
         m.buildVarTable();
         m.buildCFG();
         for (Instruction i : m.getInstructions()) {
-            out += processInstruction(i, m);
+            nOut += processInstruction(i, m);
         }
 
         if (!returned)
-            out += "    return\n";
-        out += ".end method\n";
+            nOut += "    return\n";
+        nOut += ".end method\n";
+
+
+        for (int i = 0; i < m.getParams().size(); i++) {
+            ms.get(m.getMethodName()).locals.add(i);
+        }
+        out += "    .limit locals " + (ms.get(m.getMethodName()).locals.size() + 1) + "\n" +
+                "    .limit stack " + ms.get(m.getMethodName()).maxStackSize + "\n";
+
+        out += nOut;
+
         return out;
     }
 
@@ -125,21 +150,25 @@ public class Jasmin implements JasminBackend {
                     case ADD:
                     case ADDI32: {
                         out += "    iadd\n";
+                        ms.get(m.getMethodName()).deltaStack(-1);
                         break;
                     }
                     case SUB:
                     case SUBI32: {
                         out += "    isub\n";
+                        ms.get(m.getMethodName()).deltaStack(-1);
                         break;
                     }
                     case MUL:
                     case MULI32: {
                         out += "    imul\n";
+                        ms.get(m.getMethodName()).deltaStack(-1);
                         break;
                     }
                     case DIV:
                     case DIVI32: {
                         out += "    idiv\n";
+                        ms.get(m.getMethodName()).deltaStack(-1);
                         break;
                     }
                 }
@@ -154,12 +183,16 @@ public class Jasmin implements JasminBackend {
                             ArrayOperand ao = (ArrayOperand) o;
                             out += "    aload " + OllirAccesser.getVarTable(m).get(ao.getName()).getVirtualReg() + "\n";
                             out += "    iload " + OllirAccesser.getVarTable(m).get(((Operand) ao.getIndexOperands().get(0)).getName()).getVirtualReg() + "\n";
+                            ms.get(m.getMethodName()).deltaStack(2);
                             out += processInstruction(a.getRhs(), m);
                             out += "    iastore\n";
+                            ms.get(m.getMethodName()).deltaStack(-2);
                         } catch (Exception e) {
                             out += processInstruction(a.getRhs(), m);
                             out += "    istore " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + " ;store integer " + o.getName() + "\n";
+                            ms.get(m.getMethodName()).deltaStack(-1);
                         }
+                        ms.get(m.getMethodName()).locals.add(OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg());
                         break;
                     }
                     case ARRAYREF:
@@ -168,12 +201,17 @@ public class Jasmin implements JasminBackend {
                             ArrayOperand ao = (ArrayOperand) o;
                             out += "    aload " + OllirAccesser.getVarTable(m).get(ao.getName()).getVirtualReg() + "\n";
                             out += "    iload " + OllirAccesser.getVarTable(m).get(((Operand) ao.getIndexOperands().get(0)).getName()).getVirtualReg() + "\n";
+                            ms.get(m.getMethodName()).deltaStack(2);
+
                             out += processInstruction(a.getRhs(), m);
                             out += "    aastore\n";
+                            ms.get(m.getMethodName()).deltaStack(-2);
                         } catch (Exception e) {
                             out += processInstruction(a.getRhs(), m);
                             out += "    astore " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + " ;store reference " + o.getName() + "\n";
+                            ms.get(m.getMethodName()).deltaStack(-1);
                         }
+                        ms.get(m.getMethodName()).locals.add(OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg());
                         break;
                     }
                     case BOOLEAN: {
@@ -181,12 +219,16 @@ public class Jasmin implements JasminBackend {
                             ArrayOperand ao = (ArrayOperand) o;
                             out += "    aload " + OllirAccesser.getVarTable(m).get(ao.getName()).getVirtualReg() + "\n";
                             out += "    iload " + OllirAccesser.getVarTable(m).get(((Operand) ao.getIndexOperands().get(0)).getName()).getVirtualReg() + "\n";
+                            ms.get(m.getMethodName()).deltaStack(2);
                             out += processInstruction(a.getRhs(), m);
                             out += "    zastore\n";
+                            ms.get(m.getMethodName()).deltaStack(-2);
                         } catch (Exception e) {
                             out += processInstruction(a.getRhs(), m);
                             out += "    zstore " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + " ;store boolean " + o.getName() + "\n";
+                            ms.get(m.getMethodName()).deltaStack(-1);
                         }
+                        ms.get(m.getMethodName()).locals.add(OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg());
                         break;
                     }
                 }
@@ -198,8 +240,11 @@ public class Jasmin implements JasminBackend {
                     ArrayOperand a = (ArrayOperand) o.getSingleOperand();
                     out += "    aload " + OllirAccesser.getVarTable(m).get(a.getName()).getVirtualReg() + "\n";
                     out += "    iload " + OllirAccesser.getVarTable(m).get(((Operand) a.getIndexOperands().get(0)).getName()).getVirtualReg() + "\n";
+                    ms.get(m.getMethodName()).deltaStack(2);
                     out += "    iaload\n";
+                    ms.get(m.getMethodName()).deltaStack(-2);
                 } catch (Exception e) {
+                    ms.get(m.getMethodName()).deltaStack(-1);
                     out += loadOp(((SingleOpInstruction) i).getSingleOperand(), m);
                 }
 
@@ -210,11 +255,14 @@ public class Jasmin implements JasminBackend {
 
                 if (OllirAccesser.getCallInvocation(c) == CallType.NEW) {
                     if (c.getReturnType().getTypeOfElement() == ElementType.ARRAYREF) {
+                        //todo fix
                         out += "    ldc 5\n";
                         out += "    newarray int\n";
+                        ms.get(m.getMethodName()).deltaStack(2);
                     } else {
                         out += "    new " + ((Operand) c.getFirstArg()).getName() + "\n";
                         out += "    dup\n";
+                        ms.get(m.getMethodName()).deltaStack(2);
                     }
                     break;
                 }
@@ -224,20 +272,27 @@ public class Jasmin implements JasminBackend {
                     Operand o = ((Operand) c.getFirstArg());
                     ClassType t = (ClassType) o.getType();
                     out += "    aload " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + " ;load reference " + o.getName() + "\n";
+                    ms.get(m.getMethodName()).deltaStack(1);
                     out += "    invokespecial " + t.getName() + "/<init>()V\n";
+                    ms.get(m.getMethodName()).deltaStack(-1);
                     out += "    astore " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + " ;store reference " + o.getName() + "\n";
+                    ms.get(m.getMethodName()).deltaStack(-1);
+                    ms.get(m.getMethodName()).locals.add(OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg());
                     break;
                 }
 
                 if (c.getFirstArg().getType().getTypeOfElement() == ElementType.THIS) {
                     out += "    aload_0\n";
+                    ms.get(m.getMethodName()).deltaStack(1);
                 } else if (c.getFirstArg().getType().getTypeOfElement() == ElementType.OBJECTREF) {
                     out += "    aload " + OllirAccesser.getVarTable(m).get(((Operand) c.getFirstArg()).getName()).getVirtualReg() + "\n";
+                    ms.get(m.getMethodName()).deltaStack(1);
                 }
 
                 String par = "";
                 for (int it = 0; it < c.getListOfOperands().size(); it++) {
                     if (c.getListOfOperands().get(it).isLiteral()) {
+                        ms.get(m.getMethodName()).deltaStack(1);
                         out += "    ldc " + ((LiteralElement) c.getListOfOperands().get(it)).getLiteral() + "\n";
                         par += "I";
                         continue;
@@ -249,9 +304,12 @@ public class Jasmin implements JasminBackend {
                                 ArrayOperand a = (ArrayOperand) o;
                                 out += "    aload " + OllirAccesser.getVarTable(m).get(a.getName()).getVirtualReg() + "\n";
                                 out += "    iload " + OllirAccesser.getVarTable(m).get(((Operand) a.getIndexOperands().get(0)).getName()).getVirtualReg() + "\n";
+                                ms.get(m.getMethodName()).deltaStack(2);
                                 out += "    iaload\n";
+                                ms.get(m.getMethodName()).deltaStack(-1);
                             } catch (Exception e) {
                                 out += "    iload " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + " ;load integer " + o.getName() + "\n";
+                                ms.get(m.getMethodName()).deltaStack(1);
                             }
                             par += "I";
                             break;
@@ -262,9 +320,12 @@ public class Jasmin implements JasminBackend {
                                 ArrayOperand a = (ArrayOperand) o;
                                 out += "    aload " + OllirAccesser.getVarTable(m).get(a.getName()).getVirtualReg() + "\n";
                                 out += "    iload " + OllirAccesser.getVarTable(m).get(((Operand) a.getIndexOperands().get(0)).getName()).getVirtualReg() + "\n";
+                                ms.get(m.getMethodName()).deltaStack(2);
                                 out += "    aaload\n";
+                                ms.get(m.getMethodName()).deltaStack(-1);
                             } catch (Exception e) {
                                 out += "    aload " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + " ;load reference " + o.getName() + "\n";
+                                ms.get(m.getMethodName()).deltaStack(1);
                             }
                             par += "L" + o.getType().getTypeOfElement().name();
                             break;
@@ -274,9 +335,12 @@ public class Jasmin implements JasminBackend {
                                 ArrayOperand a = (ArrayOperand) o;
                                 out += "    aload " + OllirAccesser.getVarTable(m).get(a.getName()).getVirtualReg() + "\n";
                                 out += "    iload " + OllirAccesser.getVarTable(m).get(((Operand) a.getIndexOperands().get(0)).getName()).getVirtualReg() + "\n";
+                                ms.get(m.getMethodName()).deltaStack(2);
                                 out += "    zaload\n";
+                                ms.get(m.getMethodName()).deltaStack(-1);
                             } catch (Exception e) {
                                 out += "    zload " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + " ;load boolean " + o.getName() + "\n";
+                                ms.get(m.getMethodName()).deltaStack(1);
                             }
                             par += "Z";
                             break;
@@ -308,9 +372,12 @@ public class Jasmin implements JasminBackend {
                                 ArrayOperand a = (ArrayOperand) o;
                                 out += "    aload " + OllirAccesser.getVarTable(m).get(a.getName()).getVirtualReg() + "\n";
                                 out += "    iload " + OllirAccesser.getVarTable(m).get(((Operand) a.getIndexOperands().get(0)).getName()).getVirtualReg() + "\n";
+                                ms.get(m.getMethodName()).deltaStack(2);
                                 out += "    iaload\n";
+                                ms.get(m.getMethodName()).deltaStack(-1);
                             } catch (Exception e) {
                                 out += "    iload " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + " ;load integer " + o.getName() + "\n";
+                                ms.get(m.getMethodName()).deltaStack(1);
                             }
                             out += "    ireturn\n";
                             returned = true;
@@ -322,9 +389,12 @@ public class Jasmin implements JasminBackend {
                                 ArrayOperand a = (ArrayOperand) o;
                                 out += "    aload " + OllirAccesser.getVarTable(m).get(a.getName()).getVirtualReg() + "\n";
                                 out += "    iload " + OllirAccesser.getVarTable(m).get(((Operand) a.getIndexOperands().get(0)).getName()).getVirtualReg() + "\n";
+                                ms.get(m.getMethodName()).deltaStack(2);
                                 out += "    aaload\n";
+                                ms.get(m.getMethodName()).deltaStack(-1);
                             } catch (Exception e) {
                                 out += "    aload " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + " ;load reference " + o.getName() + "\n";
+                                ms.get(m.getMethodName()).deltaStack(1);
                             }
                             out += "    areturn\n";
                             returned = true;
@@ -336,9 +406,12 @@ public class Jasmin implements JasminBackend {
                                 ArrayOperand a = (ArrayOperand) o;
                                 out += "    aload " + OllirAccesser.getVarTable(m).get(a.getName()).getVirtualReg() + "\n";
                                 out += "    iload " + OllirAccesser.getVarTable(m).get(((Operand) a.getIndexOperands().get(0)).getName()).getVirtualReg() + "\n";
+                                ms.get(m.getMethodName()).deltaStack(2);
                                 out += "    zaload\n";
+                                ms.get(m.getMethodName()).deltaStack(-1);
                             } catch (Exception e) {
                                 out += "    zload " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + " ;load boolean " + o.getName() + "\n";
+                                ms.get(m.getMethodName()).deltaStack(1);
                             }
                             out += "    zreturn\n";
                             returned = true;
@@ -348,6 +421,7 @@ public class Jasmin implements JasminBackend {
                 } catch (Exception ignored) {
                     LiteralElement l = (LiteralElement) r.getOperand();
                     out += "    ldc " + l.getLiteral() + "\n";
+                    ms.get(m.getMethodName()).deltaStack(1);
                     out += "    ireturn" + "\n";
                     returned = true;
                 }
@@ -360,6 +434,7 @@ public class Jasmin implements JasminBackend {
                 if (fo.getName().equals("this")) {
                     class_name = ((ClassType) OllirAccesser.getVarTable(m).get("this").getVarType()).getName();
                     out += "    aload_0\n";
+                    ms.get(m.getMethodName()).deltaStack(1);
                 } else {
                     class_name = fo.getName();
                     out += loadOp(p.getFirstOperand(), m);
@@ -377,6 +452,7 @@ public class Jasmin implements JasminBackend {
                 if (fo.getName().equals("this")) {
                     class_name = ((ClassType) OllirAccesser.getVarTable(m).get("this").getVarType()).getName();
                     out += "    aload_0\n";
+                    ms.get(m.getMethodName()).deltaStack(1);
                 } else {
                     class_name = fo.getName();
                     out += loadOp(g.getFirstOperand(), m);
@@ -406,6 +482,7 @@ public class Jasmin implements JasminBackend {
     private String loadOp(Element e, Method m) {
         String out = "";
         if (e.isLiteral()) {
+            ms.get(m.getMethodName()).deltaStack(1);
             return "    ldc " + ((LiteralElement) e).getLiteral() + "\n";
         } else {
             Operand o = (Operand) e;
@@ -415,9 +492,12 @@ public class Jasmin implements JasminBackend {
                         ArrayOperand a = (ArrayOperand) o;
                         out += "    aload " + OllirAccesser.getVarTable(m).get(a.getName()).getVirtualReg() + "\n";
                         out += "    iload " + OllirAccesser.getVarTable(m).get(((Operand) a.getIndexOperands().get(0)).getName()).getVirtualReg() + "\n";
+                        ms.get(m.getMethodName()).deltaStack(2);
                         out += "    iaload\n";
+                        ms.get(m.getMethodName()).deltaStack(-1);
                     } catch (Exception i) {
                         out += "    iload " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + " ;load integer " + o.getName() + "\n";
+                        ms.get(m.getMethodName()).deltaStack(1);
                     }
                     break;
                 }
@@ -427,9 +507,12 @@ public class Jasmin implements JasminBackend {
                         ArrayOperand a = (ArrayOperand) o;
                         out += "    aload " + OllirAccesser.getVarTable(m).get(a.getName()).getVirtualReg() + "\n";
                         out += "    iload " + OllirAccesser.getVarTable(m).get(((Operand) a.getIndexOperands().get(0)).getName()).getVirtualReg() + "\n";
+                        ms.get(m.getMethodName()).deltaStack(2);
                         out += "    aaload\n";
+                        ms.get(m.getMethodName()).deltaStack(-1);
                     } catch (Exception i) {
                         out += "    aload " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + " ;load reference " + o.getName() + "\n";
+                        ms.get(m.getMethodName()).deltaStack(1);
                     }
                     break;
                 }
@@ -438,9 +521,12 @@ public class Jasmin implements JasminBackend {
                         ArrayOperand a = (ArrayOperand) o;
                         out += "    aload " + OllirAccesser.getVarTable(m).get(a.getName()).getVirtualReg() + "\n";
                         out += "    iload " + OllirAccesser.getVarTable(m).get(((Operand) a.getIndexOperands().get(0)).getName()).getVirtualReg() + "\n";
+                        ms.get(m.getMethodName()).deltaStack(2);
                         out += "    zaload\n";
+                        ms.get(m.getMethodName()).deltaStack(-1);
                     } catch (Exception i) {
                         out += "    zload " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + " ;load boolean " + o.getName() + "\n";
+                        ms.get(m.getMethodName()).deltaStack(1);
                     }
                     break;
                 }
