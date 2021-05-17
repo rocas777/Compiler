@@ -443,7 +443,7 @@ class OllirNodeProcessor {
             for (int i = 0; i < (leftChildLines.length - 1); i++) {
                 ollirString += leftChildLines[i] + ";\n";
             }
-            ollirString = rightChild;
+            ollirString += rightChild;
             ollirString += OllirHelper.convertGetfieldToPutfield(lastLeftChildLine, rightTempVar);
         }
 
@@ -457,7 +457,7 @@ class OllirNodeProcessor {
         var fields = table.getFields();
 
         String varName = node.get("name");
-        
+        String unsanitizedName = String.copyValueOf(varName.toCharArray());
         boolean isLocal = false;
         boolean isParameter = false;
 
@@ -475,7 +475,7 @@ class OllirNodeProcessor {
         }
         else
         {
-            indexInList = OllirHelper.lookupVarName(parameters, varName);
+            indexInList = OllirHelper.lookupVarName(parameters, unsanitizedName);
             varName = OllirHelper.sanitizeVariableName(varName);
             isParameter = (indexInList != -1);
             if (isParameter)
@@ -487,7 +487,7 @@ class OllirNodeProcessor {
             }
             else
             {
-                indexInList = OllirHelper.lookupVarName(fields, varName);
+                indexInList = OllirHelper.lookupVarName(fields, unsanitizedName);
                 if (indexInList < 0)
                 {
                     return varName;  

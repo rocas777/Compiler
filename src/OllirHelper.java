@@ -261,6 +261,36 @@ public class OllirHelper {
 
         if (newVarName.contains("$")) newVarName = newVarName.replaceAll("\\$", "_dollar_sign_");
 
+        switch (varName)
+        {
+            case "static":
+            case "field":
+            case "construct":
+            case "init":
+            case "method":
+            case "public":
+            case "if":
+            case "goto":
+            case "V":
+            case "array":
+            case "bool":
+            case "i32":
+            case "arraylength":
+            case "invokespecial":
+            case "invokestatic":
+            case "invokevirtual":
+            case "putfield":
+            case "getfield":
+            case "this":
+            case "new":
+            case "ret":
+            {
+                newVarName = "not_" + varName;
+                break;
+            }
+            default: break;
+        }
+
         return newVarName;
     }
 
