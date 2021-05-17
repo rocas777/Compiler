@@ -1,12 +1,18 @@
 import io;
 class Simple {
     public static void main(String[] args){
-        int a;
+        int[] a;
         int b;
-        a = 20;
-        b = 10;
-        while(a < b){
-            io.println(a);
+        a = new int[6];
+        a[0] = 20;
+        b = 1;
+        while(a[0] < b){
+            io.println(b);
         }
+    }
+    public int c(){
+        int y;
+        y = 9;
+        return y;
     }
 }

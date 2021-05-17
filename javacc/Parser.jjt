@@ -19,7 +19,7 @@ SKIP:
 
 TOKEN:
 {
-    < INTEGERLITERAL : (["0"-"9"])+ >
+    < INTEGERLITERAL : ("-")?(["0"-"9"])+ >
     | < IF : "if">
     | < INT : "int">
     | < NEW : "new">
