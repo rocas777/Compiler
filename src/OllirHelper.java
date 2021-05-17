@@ -19,11 +19,15 @@ public class OllirHelper {
         switch (parentNodeKind)
         {
             case "LessThan":
+            case "ArrayIndex":
             case "Add":
             case "Sub":
             case "Mul":
+            case "ArrayInitializer":
             case "Div": return new Type("int", false);
+            case "If":
             case "Neg":
+            case "While":
             case "AND": return new Type("boolean", false);
             case "ArrayAccess":
             {
@@ -43,6 +47,17 @@ public class OllirHelper {
                     return chainedMethodParams.get(childIndex).getType();
                 }
             }
+            case "Assign":
+            {
+                var parentChildren = parentNode.getChildren();
+                var firstParentChild = parentChildren.get(0);
+                String assignedName = firstParentChild.get("name");
+                String nodeMethodName = SearchHelper.getMethodName(firstParentChild);
+                Symbol symbol = table.getVariable(assignedName, nodeMethodName);
+                if (symbol != null) return symbol.getType();
+            }
+            case "AttributeCall": return new Type("int", true);
+            case "Else":
             case "Body": return new Type("void", false);
             default: return null;
         }
@@ -97,8 +112,6 @@ public class OllirHelper {
         var parentNode = node.getParent();
         String parentNodeKind = parentNode.getKind();
 
-        if (parentNodeKind.equals("Body")) return true;
-
         var children = node.getChildren();
         var firstChild = children.get(0);
         String firstChildKind = firstChild.getKind();
@@ -110,6 +123,8 @@ public class OllirHelper {
             Symbol varSymbol = table.getVariable(varName, SearchHelper.getMethodName(node));
             if (varSymbol == null) return true;
         }
+
+        if (parentNodeKind.equals("Body") || parentNodeKind.equals("Else")) return true;
 
         return false;
     }
