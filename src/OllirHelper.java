@@ -117,14 +117,12 @@ public class OllirHelper {
         String firstChildKind = firstChild.getKind();
 
         if (firstChildKind.equals("This")) return false;
-        else if (firstChildKind.equals("VariableName"))
+        else if (firstChildKind.equals("VariableName") || firstChildKind.equals("Object"))
         {
             String varName = firstChild.get("name");
             Symbol varSymbol = table.getVariable(varName, SearchHelper.getMethodName(node));
             if (varSymbol == null) return true;
         }
-
-        if (parentNodeKind.equals("Body") || parentNodeKind.equals("Else")) return true;
 
         return false;
     }
