@@ -249,7 +249,7 @@ void Expression() #void : {Token t1,t2;}
                (
                    "+" Expr3() #Add(2)
                    | "-" Expr3() #Sub(2)
-                   | "&&" Expr3() #LessThan(2)
+                   | "&&" Expr3() #AND(2)
                )*
 
 }
@@ -261,7 +261,7 @@ void Expression1() #void : {}
          (
              "+" Expr3() #Add(2)
              | "-" Expr3() #Sub(2)
-             | "&&" Expr3() #LessThan(2)
+             | "&&" Expr3() #AND(2)
          )*
 }
 
@@ -271,7 +271,7 @@ void Expr2() #void : {}
     (
         "*" Expr5() #Mul(2)
         | "/" Expr5() #Div(2)
-        | "<" Expr5() #AND(2)
+        | "<" Expr5() #LessThan(2)
     )*
 }
 
@@ -281,7 +281,7 @@ void Expr3() #void : {}
     (
         "*" Expr5() #Mul(2)
         | "/" Expr5() #Div(2)
-        | "<" Expr5() #AND(2)
+        | "<" Expr5() #LessThan(2)
     )*
 }
 
