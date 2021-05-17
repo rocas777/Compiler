@@ -1,0 +1,15 @@
+import io;
+class Simple {
+    public static void main(String[] args){
+        int a;
+        int b;
+        a = 20;
+        b = 10;
+        if(a < b){
+            io.println(a);
+        }
+        else{
+            io.println(b);
+        }
+    }
+}

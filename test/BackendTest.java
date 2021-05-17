@@ -36,4 +36,13 @@ public class BackendTest {
         var output = result.run();
         assertEquals("30", output.trim());
     }
+
+    @Test
+    public void testOurTest() {
+        var result = TestUtils.backend(SpecsIo.getResource("ourtest.jmm"));
+        TestUtils.noErrors(result.getReports());
+
+        var output = result.run();
+        assertEquals("30", output.trim());
+    }
 }
