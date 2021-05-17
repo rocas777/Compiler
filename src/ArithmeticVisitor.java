@@ -30,6 +30,7 @@ public class ArithmeticVisitor extends PreorderJmmVisitor<MySymbolTable, List<Re
                 case "Sub":
                 case "Mul":
                 case "Div":
+                case "AttributeCall":
                 case "ArrayAccess": {
                     continue;
                 }
