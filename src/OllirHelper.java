@@ -392,11 +392,11 @@ public class OllirHelper {
 
         if (nodeKind.equals("Add") || nodeKind.equals("Sub") || nodeKind.equals("Mul") || nodeKind.equals("Div"))
         {
-            if (parentKind.equals("Add") || parentKind.equals("Sub") || parentKind.equals("Mul") || parentKind.equals("Div")) return true;
+            if (parentKind.equals("Add") || parentKind.equals("Sub") || parentKind.equals("Mul") || parentKind.equals("Div") || parentKind.equals("LessThan")) return true;
         }
-        else if (nodeKind.equals("AND"))
+        else if (nodeKind.equals("AND") || nodeKind.equals("LessThan"))
         {
-            if (parentKind.equals("AND")) return true;
+            if (parentKind.equals("AND") || parentKind.equals("LessThan")) return true;
         }
 
         return result;

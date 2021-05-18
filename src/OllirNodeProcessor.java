@@ -169,6 +169,9 @@ class OllirNodeProcessor {
         
         int whileStructureNumber = OllirHelper.determineNumberForStructure("While", structureCount);
 
+        String firstChildNodeKind = node.getChildren().get(0).getKind();
+        if (!firstChildNodeKind.equals("LessThan") && !firstChildNodeKind.equals("AND")) firstChildTempVar += " &&.bool 1.bool";
+
         ollirString += firstChild;
         ollirString += "if (" + firstChildTempVar + ") goto whilebody" + whileStructureNumber + ";\n";
         ollirString += "goto endwhile" + whileStructureNumber + ";\n";
@@ -556,6 +559,9 @@ class OllirNodeProcessor {
 
         String lhsLastAssign = childrenData.get(2);
 
+        String firstChildNodeKind = children.get(0).getKind();
+        if (!firstChildNodeKind.equals("LessThan") && !firstChildNodeKind.equals("AND")) lhsLastAssign += " &&.bool 1.bool";
+
         ollirString += ifExpression;
         ollirString += "if (";
         ollirString += lhsLastAssign;
@@ -580,9 +586,11 @@ class OllirNodeProcessor {
         String leftTempVar = childrenData.get(2);
         String rightTempVar = childrenData.get(3);
 
+        
         ollirString += leftChild + rightChild;
-        //ollirString += "t" + (OllirNodeProcessor.tempVarCount++) + ".bool :=.bool " + leftTempVar + " <.i32 " + rightTempVar + ";\n";        
-        ollirString += leftTempVar + " <.i32 " + rightTempVar;
+        boolean isInChain = OllirHelper.determineIfOperIsInChain(node);
+        if (isInChain) ollirString += "t" + (OllirNodeProcessor.tempVarCount++) + ".bool :=.bool " + leftTempVar + " <.i32 " + rightTempVar + ";\n";        
+        else ollirString += leftTempVar + " <.i32 " + rightTempVar;
 
         return ollirString;
     }
