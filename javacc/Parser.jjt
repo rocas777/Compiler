@@ -19,6 +19,7 @@ SKIP:
 
 TOKEN:
 {
+//todo check this
     < INTEGERLITERAL : ("-")?(["0"-"9"])+ >
     | < IF : "if">
     | < INT : "int">

@@ -54,7 +54,6 @@ public class Jasmin implements JasminBackend {
         outCode += "   return\n" +
                 ".end method\n";
 
-        //.method public static sum([I)I
         for (Method m : ollirResult.getOllirClass().getMethods()) {
             outCode += processMethod(m);
         }
@@ -181,6 +180,42 @@ public class Jasmin implements JasminBackend {
             case ASSIGN: {
                 AssignInstruction a = (AssignInstruction) i;
                 Operand o = (Operand) a.getDest();
+                try {
+                    int value = 0;
+                    if (o.getType().getTypeOfElement() == ElementType.INT32) {
+                        if (a.getRhs().getInstType() == InstructionType.BINARYOPER) {
+                            BinaryOpInstruction b = (BinaryOpInstruction) a.getRhs();
+                            if (!b.getLeftOperand().isLiteral()) {
+                                Operand operand = (Operand) b.getLeftOperand();
+                                if (!operand.getName().equals(o.getName())) {
+                                    throw new Exception();
+                                }
+                            } else {
+                                throw new Exception();
+                            }
+                            if (b.getRightOperand().isLiteral()) {
+                                LiteralElement l = (LiteralElement) b.getRightOperand();
+                                value = Integer.parseInt(l.getLiteral());
+                            } else {
+                                throw new Exception();
+                            }
+                            switch (b.getUnaryOperation().getOpType()) {
+                                case ADD:
+                                case ADDI32: {
+                                    out += "    iinc " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + " " + value + "\n";
+                                    return out;
+                                }
+                                case SUB:
+                                case SUBI32: {
+                                    out += "    iinc " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + " -" + value + "\n";
+                                    return out;
+                                }
+                            }
+                        }
+                    }
+                } catch (Exception ignored) {
+
+                }
                 switch (o.getType().getTypeOfElement()) {
                     case INT32: {
                         try {
@@ -364,7 +399,7 @@ public class Jasmin implements JasminBackend {
                                 out += "    iaload\n";
                                 deltaStack(-1);
                             } catch (Exception e) {
-                                out += "    iload " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + " ;load integer " + o.getName() + "\n";
+                                out += "    iload " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + " ;load integer1 " + o.getName() + "\n";
                                 deltaStack(1);
                             }
                             par += "I";
@@ -520,6 +555,10 @@ public class Jasmin implements JasminBackend {
             case BRANCH: {
                 try {
                     CondBranchInstruction ci = (CondBranchInstruction) i;
+                    out += loadOp(ci.getLeftOperand(), m);
+                    out += loadOp(ci.getRightOperand(), m);
+                    out += boolOp(ci.getCondOperation(), m);
+
                 } catch (Exception ignored) {
 
                 }
@@ -593,6 +632,21 @@ public class Jasmin implements JasminBackend {
                     }
                     break;
                 }
+            }
+        }
+        return out;
+    }
+
+    private String boolOp(Operation o, Method m) {
+        String out = "";
+        switch (o.getOpType()) {
+            case LTHI32:
+            case LTH: {
+
+            }
+            case ANDI32:
+            case AND: {
+
             }
         }
         return out;

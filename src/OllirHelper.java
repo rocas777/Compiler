@@ -1,55 +1,53 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import pt.up.fe.comp.jmm.JmmNode;
 import pt.up.fe.comp.jmm.analysis.table.Symbol;
 import pt.up.fe.comp.jmm.analysis.table.Type;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 public class OllirHelper {
 
-    public static Type determineMethodReturnType(String methodName, MySymbolTable table, JmmNode node)
-    {
+    public static Type determineMethodReturnType(String methodName, MySymbolTable table, JmmNode node) {
         Type type = table.getReturnType(methodName);
         if (type != null) return type;
-        
+
         var parentNode = node.getParent();
         String parentNodeKind = parentNode.getKind();
 
-        switch (parentNodeKind)
-        {
+        switch (parentNodeKind) {
             case "LessThan":
             case "Add":
             case "Sub":
             case "Mul":
-            case "Div": return new Type("int", false);
+            case "Div":
+                return new Type("int", false);
             case "Neg":
-            case "AND": return new Type("boolean", false);
-            case "ArrayAccess":
-            {
+            case "AND":
+                return new Type("boolean", false);
+            case "ArrayAccess": {
                 int childIndex = findIndexOfChild(parentNode, node);
                 boolean isArray = false;
                 if (childIndex == 0) isArray = true;
                 return new Type("int", isArray);
             }
-            case "Args":
-            {
+            case "Args": {
                 var grandparent = parentNode.getParent();
                 String chainedMethodName = grandparent.getChildren().get(1).get("name");
                 var chainedMethodParams = table.getParameters(chainedMethodName);
-                if (chainedMethodParams != null)
-                {
+                if (chainedMethodParams != null) {
                     int childIndex = findIndexOfChild(parentNode, node);
                     return chainedMethodParams.get(childIndex).getType();
                 }
             }
-            case "Body": return new Type("void", false);
-            default: return null;
+            case "Body":
+                return new Type("void", false);
+            default:
+                return null;
         }
     }
 
-    public static boolean compareNodes(JmmNode node1, JmmNode node2)
-    {
+    public static boolean compareNodes(JmmNode node1, JmmNode node2) {
         String kind1, kind2;
         kind1 = node1.getKind();
         kind2 = node2.getKind();
@@ -57,11 +55,10 @@ public class OllirHelper {
 
         List<String> attributes1 = node1.getAttributes();
         List<String> attributes2 = node2.getAttributes();
-        
+
         if (attributes1.size() != attributes2.size()) return false;
 
-        for (int i = 0; i < attributes1.size(); i++) 
-        {
+        for (int i = 0; i < attributes1.size(); i++) {
             if (!attributes1.get(i).equals(attributes2.get(i))) return false;
             String attr1 = node1.get(attributes1.get(i));
             String attr2 = node2.get(attributes2.get(i));
@@ -76,8 +73,7 @@ public class OllirHelper {
         return true;
     }
 
-    public static int findIndexOfChild(JmmNode father, JmmNode child)
-    {
+    public static int findIndexOfChild(JmmNode father, JmmNode child) {
         var children = father.getChildren();
 
         for (int i = 0; i < children.size(); i++) {
@@ -87,8 +83,7 @@ public class OllirHelper {
         return -1;
     }
 
-    public static boolean determineIfMethodIsStatic(String methodName, MySymbolTable table, JmmNode node)
-    {
+    public static boolean determineIfMethodIsStatic(String methodName, MySymbolTable table, JmmNode node) {
         if (methodName.equals("main")) return true;
 
         Type returnType = table.getReturnType(methodName);
@@ -104,8 +99,7 @@ public class OllirHelper {
         String firstChildKind = firstChild.getKind();
 
         if (firstChildKind.equals("This")) return false;
-        else if (firstChildKind.equals("VariableName"))
-        {
+        else if (firstChildKind.equals("VariableName")) {
             String varName = firstChild.get("name");
             Symbol varSymbol = table.getVariable(varName, SearchHelper.getMethodName(node));
             if (varSymbol == null) return true;
@@ -114,32 +108,26 @@ public class OllirHelper {
         return false;
     }
 
-    public static Type getTypeFromOllir(String declaration)
-    {
+    public static Type getTypeFromOllir(String declaration) {
         boolean isArray = false;
         if (declaration.contains(".array.")) isArray = true;
         int lastDotIndex = declaration.lastIndexOf(".");
         String typeFragment = declaration.substring(lastDotIndex + 1);
         String typeName = "";
-        switch (typeFragment)
-        {
-            case "i32":
-            {
+        switch (typeFragment) {
+            case "i32": {
                 typeName = "int";
                 break;
             }
-            case "bool":
-            {
+            case "bool": {
                 typeName = "boolean";
                 break;
             }
-            case "String":
-            {
+            case "String": {
                 typeName = "String";
                 break;
             }
-            default:
-            {
+            default: {
                 typeName = typeFragment;
                 break;
             }
@@ -147,8 +135,7 @@ public class OllirHelper {
         return new Type(typeName, isArray);
     }
 
-    public static String trimType(String ollirVarDeclaration)
-    {
+    public static String trimType(String ollirVarDeclaration) {
         String trimmedString = "";
         int lastDotIndex = ollirVarDeclaration.lastIndexOf(".");
         trimmedString = ollirVarDeclaration.substring(0, lastDotIndex);
@@ -156,16 +143,13 @@ public class OllirHelper {
         return trimmedString;
     }
 
-    public static String extractLastTempVar(String ollirString)
-    {
+    public static String extractLastTempVar(String ollirString) {
         String stringWithoutNewLines = ollirString.replaceAll("\n", "");
-        if (stringWithoutNewLines.endsWith(".V;") && stringWithoutNewLines.contains("invokespecial"))
-        {
+        if (stringWithoutNewLines.endsWith(".V;") && stringWithoutNewLines.contains("invokespecial")) {
             String[] lines = stringWithoutNewLines.split(";");
             String secToLastLine = lines[lines.length - 2];
             return secToLastLine.split(":=")[0];
-        }
-        else if (stringWithoutNewLines.endsWith(".V;")) return "";
+        } else if (stringWithoutNewLines.endsWith(".V;")) return "";
         if (!stringWithoutNewLines.contains(";")) return stringWithoutNewLines;
         String[] lines = stringWithoutNewLines.split(";");
         String lastLine = lines[lines.length - 1];
@@ -174,61 +158,49 @@ public class OllirHelper {
         return lastTempVar.replaceAll("\\s", "");
     }
 
-    public static int determineNumberForStructure(String structure, Map<String, Integer> structureCount)
-    {
+    public static int determineNumberForStructure(String structure, Map<String, Integer> structureCount) {
         Integer currentCount = structureCount.get(structure);
-        if (currentCount == null)
-        {
+        if (currentCount == null) {
             structureCount.put(structure, Integer.valueOf(1));
             return 1;
-        }
-        else
-        {
+        } else {
             Integer updatedCount = currentCount++;
             structureCount.put(structure, updatedCount);
             return updatedCount.intValue();
         }
     }
 
-    public static int lookupVarName(List<Symbol> searchList, String varName)
-    {
+    public static int lookupVarName(List<Symbol> searchList, String varName) {
         for (int i = 0; i < searchList.size(); i++) {
             if (searchList.get(i).getName().equals(varName)) return i;
         }
         return -1;
     }
 
-    public static String processType(Type type)
-    {
+    public static String processType(Type type) {
         String typeString = "";
         String typeName = type.getName();
 
         if (type.isArray()) typeString += "array.";
 
-        switch (typeName)
-        {
-            case "int":
-            {
+        switch (typeName) {
+            case "int": {
                 typeString += "i32";
                 break;
             }
-            case "boolean":
-            {
+            case "boolean": {
                 typeString += "bool";
                 break;
             }
-            case "String":
-            {
+            case "String": {
                 typeString += "String";
                 break;
             }
-            case "void":
-            {
+            case "void": {
                 typeString += "V";
                 break;
             }
-            default:
-            {
+            default: {
                 typeString += typeName;
                 break;
             }
@@ -236,28 +208,23 @@ public class OllirHelper {
         return typeString;
     }
 
-    public static String sanitizeVariableName(String varName)
-    {
-        String newVarName = ""; 
+    public static String sanitizeVariableName(String varName) {
+        String newVarName = "";
 
-        if (varName.matches("t[0-9]+"))
-        {
+        if (varName.matches("t[0-9]+")) {
             newVarName = "not_temp_" + varName;
-        }
-        else newVarName = varName;
+        } else newVarName = varName;
 
         if (newVarName.contains("$")) newVarName = newVarName.replaceAll("\\$", "_dollar_sign_");
 
         return newVarName;
     }
 
-    public static String extractCode(String pseudoOllirString)
-    {
+    public static String extractCode(String pseudoOllirString) {
         String ollirString = "";
-        
+
         if (pseudoOllirString.endsWith(";\n")) ollirString = pseudoOllirString;
-        else
-        {
+        else {
             String[] lines = pseudoOllirString.split(";\n");
             for (int i = 0; i < (lines.length - 1); i++) {
                 ollirString += lines[i] + ";\n";
@@ -267,45 +234,36 @@ public class OllirHelper {
         return ollirString;
     }
 
-    public static List<String> parseMethodArgs(String lastLine)
-    {
+    public static List<String> parseMethodArgs(String lastLine) {
         List<String> parseResult = new ArrayList<>();
         List<String> tempVars = new ArrayList<>();
 
-        if (lastLine.contains(","))
-        {
+        if (lastLine.contains(",")) {
             String[] splitLine = lastLine.split(",");
             for (String string : splitLine) {
                 var conversionResult = convertToTempIfNeeded(string);
                 parseResult.add(conversionResult.get(0));
                 tempVars.add(conversionResult.get(1));
             }
-        }
-        else return convertToTempIfNeeded(lastLine);
+        } else return convertToTempIfNeeded(lastLine);
 
         parseResult.add(String.join(",", tempVars));
 
         return parseResult;
     }
 
-    private static List<String> convertToTempIfNeeded(String ollirString)
-    {
+    private static List<String> convertToTempIfNeeded(String ollirString) {
         List<String> stringList = new ArrayList<>();
 
-        if (ollirString.contains("+") || ollirString.contains("-") || ollirString.contains("*") || ollirString.contains("/"))
-        {
+        if (ollirString.contains("+") || ollirString.contains("-") || ollirString.contains("*") || ollirString.contains("/")) {
             String ollirCode = "t" + (OllirNodeProcessor.tempVarCount++) + ".i32 :=.i32 " + ollirString + ";\n";
             stringList.add(ollirCode);
             stringList.add("t" + (OllirNodeProcessor.tempVarCount - 1) + ".i32");
-        }
-        else if (ollirString.contains("<") || ollirString.contains("&&"))
-        {
+        } else if (ollirString.contains("<") || ollirString.contains("&&")) {
             String ollirCode = "t" + (OllirNodeProcessor.tempVarCount++) + ".bool :=.bool " + ollirString + ";\n";
             stringList.add(ollirCode);
             stringList.add("t" + (OllirNodeProcessor.tempVarCount - 1) + ".bool");
-        }
-        else
-        {
+        } else {
             stringList.add("");
             stringList.add(ollirString);
         }
@@ -313,8 +271,7 @@ public class OllirHelper {
         return stringList;
     }
 
-    public static boolean determineIfNodeIsLastInBody(JmmNode node)
-    {
+    public static boolean determineIfNodeIsLastInBody(JmmNode node) {
         var parent = node.getParent();
         var parentChildren = parent.getChildren();
         var lastChild = parentChildren.get(parentChildren.size() - 1);
@@ -325,9 +282,8 @@ public class OllirHelper {
         boolean thereIsReturnStatement = lastGrandparentChild.getKind().equals("ReturnValue");
         return isLastInBody && !thereIsReturnStatement;
     }
-    
-    public static String convertGetfieldToPutfield(String getfield, String rightTempVar)
-    {
+
+    public static String convertGetfieldToPutfield(String getfield, String rightTempVar) {
         String ollirString = "";
 
         int openBracketsIndex = getfield.indexOf("(");
@@ -339,20 +295,17 @@ public class OllirHelper {
         return ollirString;
     }
 
-    public static boolean determineIfOperIsInChain(JmmNode node)
-    {
+    public static boolean determineIfOperIsInChain(JmmNode node) {
         boolean result = false;
 
         String nodeKind = node.getKind();
         var parent = node.getParent();
         String parentKind = parent.getKind();
 
-        if (nodeKind.equals("Add") || nodeKind.equals("Sub") || nodeKind.equals("Mul") || nodeKind.equals("Div"))
-        {
-            if (parentKind.equals("Add") || parentKind.equals("Sub") || parentKind.equals("Mul") || parentKind.equals("Div")) return true;
-        }
-        else if (nodeKind.equals("AND"))
-        {
+        if (nodeKind.equals("Add") || nodeKind.equals("Sub") || nodeKind.equals("Mul") || nodeKind.equals("Div")) {
+            if (parentKind.equals("Add") || parentKind.equals("Sub") || parentKind.equals("Mul") || parentKind.equals("Div"))
+                return true;
+        } else if (nodeKind.equals("AND")) {
             if (parentKind.equals("AND")) return true;
         }
 

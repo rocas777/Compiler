@@ -32,7 +32,7 @@ public class SearchHelper {
         if (returnType == null)
             return new Report(ReportType.ERROR, Stage.SEMANTIC, line, col, error);
         if (!returnType.getName().equals("boolean"))
-            return new Report(ReportType.ERROR, Stage.SEMANTIC, line, col,  error);
+            return new Report(ReportType.ERROR, Stage.SEMANTIC, line, col, error);
         return null;
     }
 
