@@ -83,6 +83,12 @@ public class FuncCallVisitor extends PreorderJmmVisitor<MySymbolTable, Boolean> 
                                 argType = new Type("int", false);
                                 break;
                             }
+
+                            case "ArrayAccess":
+                            {
+                                argType = new Type("int", false);
+                                break;
+                            }
                             case "LessThan":
                             {
                                 argType = new Type("boolean", false);
