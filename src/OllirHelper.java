@@ -197,7 +197,7 @@ public class OllirHelper {
         }
         else
         {
-            Integer updatedCount = currentCount++;
+            Integer updatedCount = ++currentCount;
             structureCount.put(structure, updatedCount);
             return updatedCount.intValue();
         }
@@ -335,7 +335,7 @@ public class OllirHelper {
     {
         List<String> stringList = new ArrayList<>();
 
-        if (ollirString.contains("+") || ollirString.contains("-") || ollirString.contains("*") || ollirString.contains("/"))
+        if (ollirString.contains("+") || ollirString.contains("-") || ollirString.contains("*") || ollirString.contains("/") || ollirString.contains("["))
         {
             String ollirCode = "t" + (OllirNodeProcessor.tempVarCount++) + ".i32 :=.i32 " + ollirString + ";\n";
             stringList.add(ollirCode);
