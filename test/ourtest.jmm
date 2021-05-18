@@ -3,16 +3,17 @@ class Simple {
     public static void main(String[] args){
         int[] a;
         int b;
+        boolean iii;
+        Simple s;
+        s = new Simple();
+        iii = false;
         a = new int[6];
         a[0] = 20;
         b = 1;
-        while(a[0] < b){
-            io.println(b);
-        }
+        s.Teste();
     }
-    public int c(){
-        int y;
-        y = 9;
-        return y;
+
+    public boolean Teste(){
+        return false;
     }
 }
