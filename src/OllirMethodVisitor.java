@@ -1,33 +1,37 @@
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import pt.up.fe.comp.jmm.JmmNode;
 import pt.up.fe.comp.jmm.analysis.table.Symbol;
 import pt.up.fe.comp.jmm.analysis.table.Type;
 import pt.up.fe.comp.jmm.ast.PreorderJmmVisitor;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 public class OllirMethodVisitor extends PreorderJmmVisitor<MySymbolTable, Boolean> {
     Map<String, String> methodNameAndOllirCode;
-
-    public OllirMethodVisitor() {
+    
+    public OllirMethodVisitor()
+    {
         methodNameAndOllirCode = new HashMap<>();
         addVisit("NormalMethodDeclaration", this::processNormalMethod);
         addVisit("MainMethodDeclaration", this::processMainMethod);
     }
-
-    private Boolean processNormalMethod(JmmNode node, MySymbolTable table) {
+    
+    private Boolean processNormalMethod(JmmNode node, MySymbolTable table)
+    {
         String methodName = node.getChildren().get(1).get("name");
         processMethod(methodName, node, table);
         return true;
     }
 
-    private Boolean processMainMethod(JmmNode node, MySymbolTable table) {
+    private Boolean processMainMethod(JmmNode node, MySymbolTable table)
+    {
         processMethod("main", node, table);
         return true;
     }
 
-    private void processMethod(String methodName, JmmNode node, MySymbolTable table) {
+    private void processMethod(String methodName, JmmNode node, MySymbolTable table)
+    {
         boolean isMain = methodName.equals("main");
 
         String ollirString = "";
@@ -56,7 +60,8 @@ public class OllirMethodVisitor extends PreorderJmmVisitor<MySymbolTable, Boolea
         methodNameAndOllirCode.put(methodName, ollirString);
     }
 
-    private String processParameters(List<Symbol> parameters) {
+    private String processParameters(List<Symbol> parameters)
+    {
         String parameterString = "(";
 
         for (int i = 0; i < parameters.size(); i++) {
@@ -70,19 +75,21 @@ public class OllirMethodVisitor extends PreorderJmmVisitor<MySymbolTable, Boolea
         return parameterString;
     }
 
-    private String processSymbol(Symbol symbol) {
+    private String processSymbol(Symbol symbol)
+    {
         String symbolString = "";
 
         String name = OllirHelper.sanitizeVariableName(symbol.getName());
         Type type = symbol.getType();
-
+        
         symbolString += name + ".";
         symbolString += OllirHelper.processType(type);
-
+    
         return symbolString;
     }
 
-    private String processMethodBody(String methodName, JmmNode bodyNode, MySymbolTable table, boolean isStatic) {
+    private String processMethodBody(String methodName, JmmNode bodyNode, MySymbolTable table, boolean isStatic)
+    {
         String methodString = "";
 
         var locals = table.getLocalVariables(methodName);
@@ -91,24 +98,28 @@ public class OllirMethodVisitor extends PreorderJmmVisitor<MySymbolTable, Boolea
         OllirNodeProcessor.tempVarCount = 0;
 
         boolean hasLocalVariables = (locals != null && locals.size() > 0);
-        int startingIndex;
+        int startingIndex; 
         if (hasLocalVariables) startingIndex = locals.size();
         else startingIndex = 0;
 
         Map<String, Integer> structureCount = new HashMap<>();
 
-        for (int i = startingIndex; i < bodyChildren.size(); i++) {
-            methodString += OllirNodeProcessor.processNode(bodyChildren.get(i), locals, parameters, structureCount, table, isStatic);
+        for (int i = startingIndex; i < bodyChildren.size(); i++)
+        {
+            methodString += OllirNodeProcessor.processNode(bodyChildren.get(i), locals, parameters, table, isStatic);
         }
 
-        if (!isStatic) {
+        if (!isStatic)
+        {
             var parentNode = bodyNode.getParent();
             var parentChildren = parentNode.getChildren();
             var returnNode = parentChildren.get(parentChildren.size() - 1);
-            var returnNodeChildrenData = OllirNodeProcessor.extractChildrenData(returnNode, locals, parameters, structureCount, table, isStatic);
+            var returnNodeChildrenData = OllirNodeProcessor.extractChildrenData(returnNode, locals, parameters, table, isStatic);
             methodString += returnNodeChildrenData.get(0);
             methodString += "ret." + OllirHelper.processType(table.getReturnType(methodName)) + " " + returnNodeChildrenData.get(1) + ";\n";
-        } else {
+        }
+        else
+        {
             methodString += "ret.V;\n";
         }
 
