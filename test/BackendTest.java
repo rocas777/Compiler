@@ -37,7 +37,7 @@ public class BackendTest {
         assertEquals("30", output.trim());
     }
 
-    //@Test
+    @Test
     public void testOurTest() {
         var result = TestUtils.backend(SpecsIo.getResource("ourtest.jmm"));
         TestUtils.noErrors(result.getReports());

@@ -2,8 +2,10 @@ import io;
 class Simple {
     public static void main(String[] args){
         int b;
+        boolean z;
         b = 0;
-        while((b < 4) && true){
+        z = false;
+        while((b < 4) && z && 2 < 3){
             io.println(b);
             b= b + 1;
         }

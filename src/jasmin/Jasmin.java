@@ -24,6 +24,7 @@ public class Jasmin implements JasminBackend {
     public void deltaStack(int v) {
         stackSize += v;
         maxStackSize = Math.max(stackSize, maxStackSize);
+        System.out.println(stackSize);
     }
 
     public void Locals(int v) {
@@ -144,6 +145,10 @@ public class Jasmin implements JasminBackend {
 
     private String processInstruction(Instruction i, Method m) {
         String out = new String();
+        var labels = m.getLabels(i);
+        for (String l : labels) {
+            out += "  " + l + ":\n";
+        }
         switch (i.getInstType()) {
             case BINARYOPER: {
                 BinaryOpInstruction b = (BinaryOpInstruction) i;
@@ -172,6 +177,10 @@ public class Jasmin implements JasminBackend {
                     case DIVI32: {
                         out += "    idiv\n";
                         deltaStack(-1);
+                        break;
+                    }
+                    default: {
+                        out += boolOp(b.getUnaryOperation());
                         break;
                     }
                 }
@@ -203,6 +212,7 @@ public class Jasmin implements JasminBackend {
                                 case ADD:
                                 case ADDI32: {
                                     out += "    iinc " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + " " + value + "\n";
+                                    ;
                                     return out;
                                 }
                                 case SUB:
@@ -399,7 +409,7 @@ public class Jasmin implements JasminBackend {
                                 out += "    iaload\n";
                                 deltaStack(-1);
                             } catch (Exception e) {
-                                out += "    iload " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + " ;load integer1 " + o.getName() + "\n";
+                                out += "    iload " + OllirAccesser.getVarTable(m).get(o.getName()).getVirtualReg() + " ;load integer " + o.getName() + "\n";
                                 deltaStack(1);
                             }
                             par += "I";
@@ -445,6 +455,7 @@ public class Jasmin implements JasminBackend {
                     ClassType cl = (ClassType) OllirAccesser.getVarTable(m).get(className).getVarType();
                     className = cl.getName();
                 }
+                deltaStack(-c.getNumOperands() + 2);
                 out += "    " + OllirAccesser.getCallInvocation(c).name() + " " + className + "/" + funcName.substring(1, funcName.length() - 1) + "(" + par + ")" + typeConversion(c.getReturnType().getTypeOfElement()) + "\n";
                 break;
             }
@@ -555,15 +566,22 @@ public class Jasmin implements JasminBackend {
             case BRANCH: {
                 try {
                     CondBranchInstruction ci = (CondBranchInstruction) i;
-                    out += "  ;While\n";
                     out += loadOp(ci.getLeftOperand(), m);
                     out += loadOp(ci.getRightOperand(), m);
-                    out += boolOp(ci.getCondOperation());
                     out += branchOp(ci.getCondOperation(), ci.getLabel());
 
                 } catch (Exception ignored) {
 
                 }
+                break;
+            }
+            case GOTO: {
+                GotoInstruction gi = (GotoInstruction) i;
+                out += "    goto " + gi.getLabel() + "\n";
+                break;
+            }
+            default: {
+                System.out.println();
             }
         }
         return out;
@@ -645,11 +663,16 @@ public class Jasmin implements JasminBackend {
             case LTHI32:
             case LTH: {
                 out += "    isub\n";
+                out += "    ldc 63\n";
+                out += "    iushr\n";
+                deltaStack(-1);
                 break;
             }
+            case ANDB:
             case ANDI32:
             case AND: {
                 out += "    iand\n";
+                deltaStack(-1);
                 break;
             }
         }
@@ -661,12 +684,18 @@ public class Jasmin implements JasminBackend {
         switch (o.getOpType()) {
             case LTHI32:
             case LTH: {
-                out += "    iflt " + label + "\n";
+                deltaStack(-2);
+                out += "    if_icmplt " + label + "\n";
                 break;
             }
+            case ANDB:
             case ANDI32:
             case AND: {
-                out += "    iand " + label + "\n";
+                deltaStack(-2);
+                out += "    iand\n";
+                deltaStack(+1);
+                out += "    ifne " + label + "\n";
+                deltaStack(-1);
                 break;
             }
         }
