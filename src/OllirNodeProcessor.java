@@ -263,7 +263,7 @@ class OllirNodeProcessor {
 
         boolean isInChain = OllirHelper.determineIfOperIsInChain(node);
 
-        if (isInChain) ollirString = "t" + (OllirNodeProcessor.tempVarCount++) + ".bool :=.bool " + leftTempVar + " &&.bool " + rightTempVar + ";\n"; 
+        if (isInChain) ollirString += "t" + (OllirNodeProcessor.tempVarCount++) + ".bool :=.bool " + leftTempVar + " &&.bool " + rightTempVar + ";\n"; 
         else ollirString += leftTempVar + " &&.bool " + rightTempVar;        
 
         return ollirString;
@@ -273,7 +273,9 @@ class OllirNodeProcessor {
     {
         String ollirString = "";
 
-        ollirString += "t" + (OllirNodeProcessor.tempVarCount++) + ".bool :=.bool " + (value ? "1" : "0") + ".bool;\n";
+        //ollirString += "t" + (OllirNodeProcessor.tempVarCount++) + ".bool :=.bool " + (value ? "1" : "0") + ".bool;\n";
+       
+        ollirString += (value ? "1" : "0") + ".bool";
 
         return ollirString;
     }
@@ -321,7 +323,7 @@ class OllirNodeProcessor {
         String firstInvokeParameter = childrenData.get(3);
 
         String lastThirdChildLine = childrenData.get(5);
-        ollirString = firstChildString + thirdChildString;
+        ollirString += firstChildString + thirdChildString;
         
         Type methodReturnType = OllirHelper.determineMethodReturnType(methodName, table, node);
         String typeString = OllirHelper.processType(methodReturnType);
@@ -362,7 +364,7 @@ class OllirNodeProcessor {
         String leftTempVar = childrenData.get(2); 
         String rightTempVar = childrenData.get(3);
 
-        ollirString = leftChild + rightChild;
+        ollirString += leftChild + rightChild;
 
         ollirString += OllirHelper.trimType(leftTempVar) + "[" + rightTempVar + "].i32";
 
@@ -381,7 +383,7 @@ class OllirNodeProcessor {
         String leftTempVar = childrenData.get(2); 
         String rightTempVar = childrenData.get(3);
 
-        ollirString = leftChild + rightChild;
+        ollirString += leftChild + rightChild;
         String operationChar = "";
         switch (operation)
         {
@@ -440,7 +442,7 @@ class OllirNodeProcessor {
 
         if (!lastLeftChildLine.contains("getfield"))
         {
-            ollirString = leftChild + rightChild;
+            ollirString += leftChild + rightChild;
             ollirString += leftTempVar + " :=." + typeString + " " + rightTempVar + ";\n";
         }
         else

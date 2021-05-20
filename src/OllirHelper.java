@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import pt.up.fe.comp.jmm.JmmNode;
 import pt.up.fe.comp.jmm.analysis.table.Symbol;
@@ -298,7 +299,9 @@ public class OllirHelper {
     {
         String ollirString = "";
         
-        if (pseudoOllirString.endsWith(";\n")) ollirString = pseudoOllirString;
+        Pattern pattern = Pattern.compile(".*?body[0-9]+:\n", Pattern.DOTALL);
+
+        if (pseudoOllirString.endsWith(";\n") || pattern.matcher(pseudoOllirString).matches()) ollirString = pseudoOllirString;
         else
         {
             String[] lines = pseudoOllirString.split(";\n");
