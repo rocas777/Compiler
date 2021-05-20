@@ -38,7 +38,7 @@ public class OptimizationStage implements JmmOptimization {
 
         var fields = table.getFields();
         for (Symbol symbol : fields) {
-            ollirCode += ".field private " + symbol.getName() + "." + OllirHelper.processType(symbol.getType()) + ";\n";
+            ollirCode += ".field private " + OllirHelper.sanitizeVariableName(symbol.getName()) + "." + OllirHelper.processType(symbol.getType()) + ";\n";
         }
 
         ollirCode += ".construct " + className + "().V {\n";
