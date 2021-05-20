@@ -555,9 +555,11 @@ public class Jasmin implements JasminBackend {
             case BRANCH: {
                 try {
                     CondBranchInstruction ci = (CondBranchInstruction) i;
+                    out += "  ;While\n";
                     out += loadOp(ci.getLeftOperand(), m);
                     out += loadOp(ci.getRightOperand(), m);
-                    out += boolOp(ci.getCondOperation(), m);
+                    out += boolOp(ci.getCondOperation());
+                    out += branchOp(ci.getCondOperation(), ci.getLabel());
 
                 } catch (Exception ignored) {
 
@@ -637,16 +639,35 @@ public class Jasmin implements JasminBackend {
         return out;
     }
 
-    private String boolOp(Operation o, Method m) {
+    private String boolOp(Operation o) {
         String out = "";
         switch (o.getOpType()) {
             case LTHI32:
             case LTH: {
-
+                out += "    isub\n";
+                break;
             }
             case ANDI32:
             case AND: {
+                out += "    iand\n";
+                break;
+            }
+        }
+        return out;
+    }
 
+    private String branchOp(Operation o, String label) {
+        String out = "";
+        switch (o.getOpType()) {
+            case LTHI32:
+            case LTH: {
+                out += "    iflt " + label + "\n";
+                break;
+            }
+            case ANDI32:
+            case AND: {
+                out += "    iand " + label + "\n";
+                break;
             }
         }
         return out;

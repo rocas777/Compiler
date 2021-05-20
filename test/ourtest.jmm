@@ -3,7 +3,10 @@ class Simple {
     public static void main(String[] args){
         int b;
         b = 0;
-        b= b + 4;
+        while((b < 4) && true){
+            io.println(b);
+            b= b + 1;
+        }
         io.println(b);
     }
 }
