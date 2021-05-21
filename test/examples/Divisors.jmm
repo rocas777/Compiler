@@ -1,0 +1,90 @@
+import io;
+class Divisors {
+    public static void main(String[] args)
+    {
+        Divisors checker;
+        int result;
+        int target;
+
+        checker = new Divisors();
+        target = 19987;
+
+        result = checker.divisors(target);
+
+        
+	io.printprime(result,target);
+    }
+
+    public int divisors(int target){
+        int out;
+        int iterator;
+
+        iterator=2;
+        out=2;
+
+        while(this.menorigual(iterator,target/2)){
+            if(this.isDivisibleBy(target,iterator)){
+                out = out + 1;
+            }
+            else{
+
+            }
+            iterator = iterator + 1;
+        }
+        return out;
+    }
+
+    public boolean isDivisibleBy(int nr, int divisor){
+        int i;
+        boolean out;
+        i=2;
+
+        while( divisor*i < nr){
+            i=i+1;
+        }
+        if( this.equals(divisor*i,nr)){
+            out = true;
+        }
+        else{
+            out = false;
+        }
+
+        return out;
+    }
+
+    public boolean equals(int num1, int num2){
+        boolean out;
+
+        if(num1<num2){
+            out = false;
+        }
+        else{
+            if(num2<num1){
+                out = false;
+            }
+            else{
+                out = true;
+            }
+        }
+
+        return out;
+    }
+
+    public boolean menorigual(int num1, int num2){
+        boolean out;
+
+        if(num1<num2){
+            out = true;
+        }
+        else{
+            if(num2<num1){
+                out = false;
+            }
+            else{
+                out = true;
+            }
+        }
+
+        return out;
+    }
+}

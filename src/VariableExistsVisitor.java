@@ -23,9 +23,9 @@ public class VariableExistsVisitor extends PreorderJmmVisitor<MySymbolTable, Lis
             return reports;
         }
 
-        for (String s: table.getImports()){
+        for (String s : table.getImports()) {
             var a = s.split("\\.");
-            if(a[a.length-1].equals(name)){
+            if (a[a.length - 1].equals(name)) {
                 return reports;
             }
         }

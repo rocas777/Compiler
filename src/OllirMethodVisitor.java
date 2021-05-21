@@ -106,7 +106,7 @@ public class OllirMethodVisitor extends PreorderJmmVisitor<MySymbolTable, Boolea
 
         for (int i = startingIndex; i < bodyChildren.size(); i++)
         {
-            methodString += OllirNodeProcessor.processNode(bodyChildren.get(i), locals, parameters, structureCount, table, isStatic);
+            methodString += OllirNodeProcessor.processNode(bodyChildren.get(i), locals, parameters, table, isStatic);
         }
 
         if (!isStatic)
@@ -114,7 +114,7 @@ public class OllirMethodVisitor extends PreorderJmmVisitor<MySymbolTable, Boolea
             var parentNode = bodyNode.getParent();
             var parentChildren = parentNode.getChildren();
             var returnNode = parentChildren.get(parentChildren.size() - 1);
-            var returnNodeChildrenData = OllirNodeProcessor.extractChildrenData(returnNode, locals, parameters, structureCount, table, isStatic);
+            var returnNodeChildrenData = OllirNodeProcessor.extractChildrenData(returnNode, locals, parameters, table, isStatic);
             methodString += returnNodeChildrenData.get(0);
             methodString += "ret." + OllirHelper.processType(table.getReturnType(methodName)) + " " + returnNodeChildrenData.get(1) + ";\n";
         }

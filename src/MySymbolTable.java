@@ -1,14 +1,14 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import pt.up.fe.comp.jmm.analysis.table.Symbol;
 import pt.up.fe.comp.jmm.analysis.table.SymbolTable;
 import pt.up.fe.comp.jmm.analysis.table.Type;
 import pt.up.fe.comp.jmm.report.Report;
 import pt.up.fe.comp.jmm.report.ReportType;
 import pt.up.fe.comp.jmm.report.Stage;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class MySymbolTable implements SymbolTable {
     private List<String> imports;
@@ -23,10 +23,6 @@ public class MySymbolTable implements SymbolTable {
         this.superClassName = null;
         this.fields = new ArrayList<>();
         this.functions = new HashMap<>();
-    }
-
-    public void setClassName(String className) {
-        this.className = className;
     }
 
     public void setSuperClassName(String superClassName) {
@@ -47,8 +43,7 @@ public class MySymbolTable implements SymbolTable {
         processDuplicates(funcData);
     }
 
-    private void processDuplicates(FunctionTable funcData)
-    {
+    private void processDuplicates(FunctionTable funcData) {
         List<Symbol> symbols = new ArrayList<>();
         symbols.addAll(funcData.getLocalVariables());
         symbols.addAll(funcData.getParameters());
@@ -57,48 +52,38 @@ public class MySymbolTable implements SymbolTable {
 
         for (Symbol symbol : symbols) {
             String varName = symbol.getName();
-            if (varNameAndSymbols.containsKey(varName))
-            {
+            if (varNameAndSymbols.containsKey(varName)) {
                 varNameAndSymbols.get(varName).add(symbol);
-            }
-            else
-            {
+            } else {
                 List<Symbol> symbolList = new ArrayList<>();
                 symbolList.add(symbol);
                 varNameAndSymbols.put(varName, symbolList);
-            } 
+            }
         }
 
-        for (Map.Entry<String, List<Symbol>> mapEntry : varNameAndSymbols.entrySet())
-        {
+        for (Map.Entry<String, List<Symbol>> mapEntry : varNameAndSymbols.entrySet()) {
             var declarations = mapEntry.getValue();
-            if (declarations.size() > 1)
-            {
+            if (declarations.size() > 1) {
                 int minLine = Integer.MAX_VALUE;
                 int minCol = Integer.MAX_VALUE;
                 MySymbol firstSymbol = null;
 
                 for (Object declaration : declarations) {
                     MySymbol symbol = (MySymbol) declaration;
-                    if (symbol.getLine() < minLine)
-                    {
+                    if (symbol.getLine() < minLine) {
                         firstSymbol = symbol;
                         minLine = symbol.getLine();
                         minCol = symbol.getColumn();
-                    } 
-                    else if (symbol.getLine() == minLine && symbol.getColumn() < minCol)
-                    {
+                    } else if (symbol.getLine() == minLine && symbol.getColumn() < minCol) {
                         firstSymbol = symbol;
                         minLine = symbol.getLine();
                         minCol = symbol.getColumn();
                     }
                 }
 
-                for (Symbol declaration : declarations)
-                {
+                for (Symbol declaration : declarations) {
                     MySymbol symbol = (MySymbol) declaration;
-                    if (symbol.getLine() > minLine || symbol.getColumn() > minCol)
-                    {
+                    if (symbol.getLine() > minLine || symbol.getColumn() > minCol) {
                         Main.semanticReports.add(new Report(ReportType.ERROR, Stage.SEMANTIC, symbol.getLine(), symbol.getColumn(), "Duplicate local variable"));
                     }
                 }
@@ -107,8 +92,7 @@ public class MySymbolTable implements SymbolTable {
     }
 
     public Symbol getVariable(String variableName, String methodName) {
-        if (methodName != null)
-        {
+        if (methodName != null) {
             for (Symbol parameter : getParameters(methodName)) {
                 if (parameter.getName().equals(variableName)) {
                     return parameter;
@@ -120,7 +104,7 @@ public class MySymbolTable implements SymbolTable {
                 }
             }
         }
-       
+
         for (Symbol field : fields) {
             if (field.getName().equals(variableName)) {
                 return field;
@@ -130,8 +114,7 @@ public class MySymbolTable implements SymbolTable {
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         String strRepresentation = "";
 
         strRepresentation += "Imports:\n";
@@ -152,7 +135,6 @@ public class MySymbolTable implements SymbolTable {
         return strRepresentation;
     }
 
-
     //METHODS REQUIRED BY INTERFACE
     @Override
     public List<String> getImports() {
@@ -162,6 +144,10 @@ public class MySymbolTable implements SymbolTable {
     @Override
     public String getClassName() {
         return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
     }
 
     @Override

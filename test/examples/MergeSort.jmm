@@ -1,0 +1,107 @@
+import io;
+
+class MergeSort {
+
+    public static void main(String[] args)
+    {
+        int[] arayT;
+        int size;
+        MergeSort sorter;
+
+        size = 6;
+        arayT = new int[size];
+        arayT[0] = 7;
+        arayT[1] = 28;
+        arayT[2] = 45;
+        arayT[3] = 9;
+        arayT[4] = 3;
+        arayT[5] = 85;
+        io.printarray(arayT);
+
+        sorter = new MergeSort();
+
+        sorter.sort(arayT, 0, size - 1);
+
+        io.printarray(arayT);
+    }
+
+
+    public int merge(int[] arayT, int left, int middle, int right)
+    {
+        int[] L;
+        int[] R;
+        int n1;
+        int n2;
+        int i;
+        int j;
+        int k;
+
+        n1 = middle - left + 1;
+        n2 = right - middle;
+
+        L = new int[n1];
+        R = new int[n2];
+
+        i=0;
+        while(i<n1){
+            L[i] = arayT[left + i];
+            i=i+1;
+        }
+
+        i=0;
+        while(i<n2){
+            R[i] = arayT[middle + 1 + i];
+            i=i+1;
+        }
+
+        i = 0;
+        j = 0;
+
+        k = left;
+
+        while (i < n1 && j < n2) {
+            if (L[i] < R[j]) {
+                arayT[k] = L[i];
+                i=i+1;
+            }
+            else {
+                arayT[k] = R[j];
+                j=j+1;
+            }
+            k=k+1;
+        }
+
+        while (i < n1) {
+            arayT[k] = L[i];
+            i=i+1;
+            k=k+1;
+        }
+
+        while (j < n2) {
+            arayT[k] = R[j];
+            j=j+1;
+            k=k+1;
+        }
+
+        return 1;
+    }
+
+    public int sort(int[] arayT, int left, int right)
+    {
+        int middle;
+
+        if (left < right) {
+            middle = left + (right - left)/2;
+
+            this.sort(arayT, left, middle);
+            this.sort(arayT, middle + 1, right);
+
+            this.merge(arayT, left, middle, right);
+        }
+        else{
+
+        }
+
+        return 1;
+    }
+}

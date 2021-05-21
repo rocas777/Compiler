@@ -4,23 +4,11 @@ import pt.up.fe.comp.jmm.analysis.table.Type;
 import pt.up.fe.comp.jmm.ast.PreorderJmmVisitor;
 
 public class FieldVisitor extends PreorderJmmVisitor<MySymbolTable, Boolean> {
-    public FieldVisitor()
-    {
+    public FieldVisitor() {
         addVisit("Vars", this::addFields);
     }
 
-    public Boolean addFields(JmmNode node, MySymbolTable table)
-    {
-        var children = node.getChildren();
-        for (JmmNode jmmNode : children) {
-            table.addField(processVarDeclaration(jmmNode));
-        }
-
-        return true;
-    }
-
-    public static Symbol processVarDeclaration(JmmNode node)
-    {
+    public static Symbol processVarDeclaration(JmmNode node) {
         var grandChildren = node.getChildren();
         var typeInfo = grandChildren.get(0);
         var symbolInfo = grandChildren.get(1);
@@ -33,5 +21,14 @@ public class FieldVisitor extends PreorderJmmVisitor<MySymbolTable, Boolean> {
         Type type = new Type(typeName, isArray);
         Symbol symbol = new MySymbol(type, symbolInfo.get("name"), Integer.parseInt(symbolInfo.get("line")), Integer.parseInt(symbolInfo.get("column")));
         return symbol;
+    }
+
+    public Boolean addFields(JmmNode node, MySymbolTable table) {
+        var children = node.getChildren();
+        for (JmmNode jmmNode : children) {
+            table.addField(processVarDeclaration(jmmNode));
+        }
+
+        return true;
     }
 }

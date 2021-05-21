@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import pt.up.fe.comp.jmm.JmmNode;
 import pt.up.fe.comp.jmm.analysis.table.Symbol;
@@ -19,11 +20,15 @@ public class OllirHelper {
         switch (parentNodeKind)
         {
             case "LessThan":
+            case "ArrayIndex":
             case "Add":
             case "Sub":
             case "Mul":
+            case "ArrayInitializer":
             case "Div": return new Type("int", false);
+            case "If":
             case "Neg":
+            case "While":
             case "AND": return new Type("boolean", false);
             case "ArrayAccess":
             {
@@ -43,6 +48,17 @@ public class OllirHelper {
                     return chainedMethodParams.get(childIndex).getType();
                 }
             }
+            case "Assign":
+            {
+                var parentChildren = parentNode.getChildren();
+                var firstParentChild = parentChildren.get(0);
+                String assignedName = firstParentChild.get("name");
+                String nodeMethodName = SearchHelper.getMethodName(firstParentChild);
+                Symbol symbol = table.getVariable(assignedName, nodeMethodName);
+                if (symbol != null) return symbol.getType();
+            }
+            case "AttributeCall": return new Type("int", true);
+            case "Else":
             case "Body": return new Type("void", false);
             default: return null;
         }
@@ -97,14 +113,12 @@ public class OllirHelper {
         var parentNode = node.getParent();
         String parentNodeKind = parentNode.getKind();
 
-        if (parentNodeKind.equals("Body")) return true;
-
         var children = node.getChildren();
         var firstChild = children.get(0);
         String firstChildKind = firstChild.getKind();
 
         if (firstChildKind.equals("This")) return false;
-        else if (firstChildKind.equals("VariableName"))
+        else if (firstChildKind.equals("VariableName") || firstChildKind.equals("Object"))
         {
             String varName = firstChild.get("name");
             Symbol varSymbol = table.getVariable(varName, SearchHelper.getMethodName(node));
@@ -184,7 +198,7 @@ public class OllirHelper {
         }
         else
         {
-            Integer updatedCount = currentCount++;
+            Integer updatedCount = ++currentCount;
             structureCount.put(structure, updatedCount);
             return updatedCount.intValue();
         }
@@ -248,6 +262,36 @@ public class OllirHelper {
 
         if (newVarName.contains("$")) newVarName = newVarName.replaceAll("\\$", "_dollar_sign_");
 
+        switch (varName)
+        {
+            case "static":
+            case "field":
+            case "construct":
+            case "init":
+            case "method":
+            case "public":
+            case "if":
+            case "goto":
+            case "V":
+            case "array":
+            case "bool":
+            case "i32":
+            case "arraylength":
+            case "invokespecial":
+            case "invokestatic":
+            case "invokevirtual":
+            case "putfield":
+            case "getfield":
+            case "this":
+            case "new":
+            case "ret":
+            {
+                newVarName = "not_" + varName;
+                break;
+            }
+            default: break;
+        }
+
         return newVarName;
     }
 
@@ -255,7 +299,9 @@ public class OllirHelper {
     {
         String ollirString = "";
         
-        if (pseudoOllirString.endsWith(";\n")) ollirString = pseudoOllirString;
+        Pattern pattern = Pattern.compile(".*?body[0-9]+:\n", Pattern.DOTALL);
+
+        if (pseudoOllirString.endsWith(";\n") || pattern.matcher(pseudoOllirString).matches()) ollirString = pseudoOllirString;
         else
         {
             String[] lines = pseudoOllirString.split(";\n");
@@ -292,7 +338,7 @@ public class OllirHelper {
     {
         List<String> stringList = new ArrayList<>();
 
-        if (ollirString.contains("+") || ollirString.contains("-") || ollirString.contains("*") || ollirString.contains("/"))
+        if (ollirString.contains("+") || ollirString.contains("-") || ollirString.contains("*") || ollirString.contains("/") || ollirString.contains("["))
         {
             String ollirCode = "t" + (OllirNodeProcessor.tempVarCount++) + ".i32 :=.i32 " + ollirString + ";\n";
             stringList.add(ollirCode);
@@ -349,11 +395,11 @@ public class OllirHelper {
 
         if (nodeKind.equals("Add") || nodeKind.equals("Sub") || nodeKind.equals("Mul") || nodeKind.equals("Div"))
         {
-            if (parentKind.equals("Add") || parentKind.equals("Sub") || parentKind.equals("Mul") || parentKind.equals("Div")) return true;
+            if (parentKind.equals("Add") || parentKind.equals("Sub") || parentKind.equals("Mul") || parentKind.equals("Div") || parentKind.equals("LessThan")) return true;
         }
-        else if (nodeKind.equals("AND"))
+        else if (nodeKind.equals("AND") || nodeKind.equals("LessThan"))
         {
-            if (parentKind.equals("AND")) return true;
+            if (parentKind.equals("AND") || parentKind.equals("LessThan")) return true;
         }
 
         return result;

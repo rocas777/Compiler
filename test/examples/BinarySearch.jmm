@@ -1,0 +1,92 @@
+import io;
+
+class BinarySearch {
+
+    public static void main(String[] args)
+    {
+        BinarySearch searcher;
+        int[] arayT;
+        int size;
+        int target;
+        int result;
+
+        size = 6;
+        arayT = new int[size];
+        arayT[0] = 3;
+        arayT[1] = 7;
+        arayT[2] = 9;
+        arayT[3] = 28;
+        arayT[4] = 45;
+        arayT[5] = 85;
+
+        searcher = new BinarySearch();
+
+        target = 45;
+        result = searcher.binarySearch(arayT, 0, size - 1, target);
+
+        io.printsearch(result);
+    }
+
+    public int binarySearch(int[] arayT, int left, int right, int target)
+    {
+        int mid;
+        int out;
+
+        if (this.menorigual(left,right)) {
+            mid = left + (right - left) / 2;
+
+            if (this.equals(arayT[mid],target)){
+                out = mid;
+            }
+            else{
+                if (target < arayT[mid]){
+                    out = this.binarySearch(arayT, left, mid - 1, target);
+                }
+                else {
+                    out = this.binarySearch(arayT, mid + 1, right, target);
+                }
+            }
+        }
+        else{
+            out =  -1;
+        }
+
+        return out;
+    }
+
+    public boolean equals(int num1, int num2){
+        boolean out;
+
+        if(num1<num2){
+            out = false;
+        }
+        else{
+            if(num2<num1){
+                out = false;
+            }
+            else{
+                out = true;
+            }
+        }
+
+        return out;
+    }
+
+    public boolean menorigual(int num1, int num2){
+        boolean out;
+
+        if(num1<num2){
+            out = true;
+        }
+        else{
+            if(num2<num1){
+                out = false;
+            }
+            else{
+                out = true;
+            }
+        }
+
+        return out;
+    }
+}
