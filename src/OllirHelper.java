@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 import java.util.regex.Pattern;
 
 import pt.up.fe.comp.jmm.JmmNode;
@@ -188,18 +189,22 @@ public class OllirHelper {
         return lastTempVar.replaceAll("\\s", "");
     }
 
-    public static int determineNumberForStructure(String structure, Map<String, Integer> structureCount)
+    public static int determineNumberForStructure(String structure, Map<String, Integer> structureCount, Stack<Integer> elseNumStack)
     {
+        if (structure.equals("Else")) return elseNumStack.pop();
+
         Integer currentCount = structureCount.get(structure);
         if (currentCount == null)
         {
             structureCount.put(structure, Integer.valueOf(1));
+            if (structure.equals("If")) elseNumStack.push(1);
             return 1;
         }
         else
         {
             Integer updatedCount = ++currentCount;
             structureCount.put(structure, updatedCount);
+            if (structure.equals("If")) elseNumStack.push(updatedCount);
             return updatedCount.intValue();
         }
     }
@@ -252,17 +257,13 @@ public class OllirHelper {
 
     public static String sanitizeVariableName(String varName)
     {
-        String newVarName = ""; 
+        String newVarName = varName; 
 
-        if (varName.matches("t[0-9]+"))
-        {
-            newVarName = "not_temp_" + varName;
-        }
-        else newVarName = varName;
+        if (varName.matches("t[0-9]+")) newVarName = "not_temp_" + newVarName;
+        
+        if (newVarName.contains("$")) newVarName = newVarName.replaceAll("\\$", "dollar_sign_");
 
-        if (newVarName.contains("$")) newVarName = newVarName.replaceAll("\\$", "_dollar_sign_");
-
-        switch (varName)
+        switch (newVarName)
         {
             case "static":
             case "field":
@@ -286,7 +287,7 @@ public class OllirHelper {
             case "new":
             case "ret":
             {
-                newVarName = "not_" + varName;
+                newVarName = "not_" + newVarName;
                 break;
             }
             default: break;
