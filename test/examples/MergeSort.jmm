@@ -1,31 +1,32 @@
-import io.io;
+import io;
 
 class MergeSort {
 
     public static void main(String[] args)
     {
-        int[] array;
+        int[] arayT;
         int size;
         MergeSort sorter;
 
         size = 6;
-        array = new int[size];
-        array[0] = 7;
-        array[1] = 28;
-        array[2] = 45;
-        array[3] = 9;
-        array[4] = 3;
-        array[5] = 85;
+        arayT = new int[size];
+        arayT[0] = 7;
+        arayT[1] = 28;
+        arayT[2] = 45;
+        arayT[3] = 9;
+        arayT[4] = 3;
+        arayT[5] = 85;
+        io.printarray(arayT);
 
         sorter = new MergeSort();
 
-        sorter.sort(array, 0, size - 1);
+        sorter.sort(arayT, 0, size - 1);
 
-        io.printarray(array);
+        io.printarray(arayT);
     }
 
 
-    public int merge(int[] array, int left, int middle, int right)
+    public int merge(int[] arayT, int left, int middle, int right)
     {
         int[] L;
         int[] R;
@@ -43,13 +44,13 @@ class MergeSort {
 
         i=0;
         while(i<n1){
-            L[i] = array[left + i];
+            L[i] = arayT[left + i];
             i=i+1;
         }
 
         i=0;
         while(i<n2){
-            R[i] = array[middle + 1 + i];
+            R[i] = arayT[middle + 1 + i];
             i=i+1;
         }
 
@@ -60,24 +61,24 @@ class MergeSort {
 
         while (i < n1 && j < n2) {
             if (L[i] < R[j]) {
-                array[k] = L[i];
+                arayT[k] = L[i];
                 i=i+1;
             }
             else {
-                array[k] = R[j];
+                arayT[k] = R[j];
                 j=j+1;
             }
             k=k+1;
         }
 
         while (i < n1) {
-            array[k] = L[i];
+            arayT[k] = L[i];
             i=i+1;
             k=k+1;
         }
 
         while (j < n2) {
-            array[k] = R[j];
+            arayT[k] = R[j];
             j=j+1;
             k=k+1;
         }
@@ -85,17 +86,17 @@ class MergeSort {
         return 1;
     }
 
-    public int sort(int[] array, int left, int right)
+    public int sort(int[] arayT, int left, int right)
     {
         int middle;
 
         if (left < right) {
             middle = left + (right - left)/2;
 
-            this.sort(array, left, middle);
-            this.sort(array, middle + 1, right);
+            this.sort(arayT, left, middle);
+            this.sort(arayT, middle + 1, right);
 
-            this.merge(array, left, middle, right);
+            this.merge(arayT, left, middle, right);
         }
         else{
 

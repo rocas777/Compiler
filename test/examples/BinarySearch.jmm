@@ -1,33 +1,33 @@
-import io.io;
+import io;
 
 class BinarySearch {
 
     public static void main(String[] args)
     {
         BinarySearch searcher;
-        int[] array;
+        int[] arayT;
         int size;
         int target;
         int result;
 
         size = 6;
-        array = new int[size];
-        array[0] = 3;
-        array[1] = 7;
-        array[2] = 9;
-        array[3] = 28;
-        array[4] = 45;
-        array[5] = 85;
+        arayT = new int[size];
+        arayT[0] = 3;
+        arayT[1] = 7;
+        arayT[2] = 9;
+        arayT[3] = 28;
+        arayT[4] = 45;
+        arayT[5] = 85;
 
         searcher = new BinarySearch();
 
         target = 45;
-        result = searcher.binarySearch(array, 0, size - 1, target);
+        result = searcher.binarySearch(arayT, 0, size - 1, target);
 
         io.printsearch(result);
     }
 
-    public int binarySearch(int[] array, int left, int right, int target)
+    public int binarySearch(int[] arayT, int left, int right, int target)
     {
         int mid;
         int out;
@@ -35,15 +35,15 @@ class BinarySearch {
         if (this.menorigual(left,right)) {
             mid = left + (right - left) / 2;
 
-            if (this.equals(array[mid],target)){
+            if (this.equals(arayT[mid],target)){
                 out = mid;
             }
             else{
-                if (target < array[mid]){
-                    out = this.binarySearch(array, left, mid - 1, target);
+                if (target < arayT[mid]){
+                    out = this.binarySearch(arayT, left, mid - 1, target);
                 }
                 else {
-                    out = this.binarySearch(array, mid + 1, right, target);
+                    out = this.binarySearch(arayT, mid + 1, right, target);
                 }
             }
         }

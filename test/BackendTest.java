@@ -15,6 +15,8 @@ import org.junit.Test;
 import pt.up.fe.comp.TestUtils;
 import pt.up.fe.specs.util.SpecsIo;
 
+import java.io.File;
+
 import static org.junit.Assert.assertEquals;
 
 public class BackendTest {
@@ -36,6 +38,28 @@ public class BackendTest {
         var output = result.run();
         assertEquals("30", output.trim());
     }
+    
+    @Test
+    public void testDivisors() {
+        var result = TestUtils.backend(SpecsIo.getResource("examples/Divisors.jmm"));
+        TestUtils.noErrors(result.getReports());
+        result.compile(new File("./executables")).setExecutable(true);
+    }
+
+    @Test
+    public void testBinarySearch() {
+        var result = TestUtils.backend(SpecsIo.getResource("examples/BinarySearch.jmm"));
+        TestUtils.noErrors(result.getReports());
+        result.compile(new File("./executables")).setExecutable(true);
+    }
+
+    @Test
+    public void testMergeSort() {
+        var result = TestUtils.backend(SpecsIo.getResource("examples/Divisors.jmm"));
+        TestUtils.noErrors(result.getReports());
+        result.compile(new File("./executables")).setExecutable(true);
+    }
+
 
     @Test
     public void testOurTest() {
