@@ -10,6 +10,36 @@ import pt.up.fe.comp.jmm.analysis.table.Type;
 
 public class OllirHelper {
 
+    public static String separateArrayTempVarFromAssignment(String arrayAccessString)
+    {
+        String ollirString = "";
+
+        int openStraightBracketIndex = arrayAccessString.indexOf("[");
+        String tempVar = arrayAccessString.substring(0, openStraightBracketIndex);
+
+        ollirString += tempVar + ".array.i32";
+
+        return ollirString;
+    }
+
+    public static String determineFieldArraySet(JmmNode node, MySymbolTable table)
+    {
+        String nodeKind = node.getKind();
+        if (nodeKind.equals("ArrayAccess"))
+        {
+            var children = node.getChildren();
+            var firstChild = children.get(0);
+            String arrayName = firstChild.get("name");
+            var fields = table.getFields();
+            for (Symbol field : fields) {
+                String fieldName = field.getName();
+                if (fieldName.equals(arrayName) && field.getType().isArray()) return fieldName + ".array.i32";
+            }
+        }
+
+        return "";
+    }
+
     public static Type determineMethodReturnType(String methodName, MySymbolTable table, JmmNode node)
     {
         Type type = table.getReturnType(methodName);

@@ -446,6 +446,14 @@ class OllirNodeProcessor {
         {
             ollirString += leftChild + rightChild;
             ollirString += leftTempVar + " :=." + typeString + " " + rightTempVar + ";\n";
+            
+            String fieldArraySet = OllirHelper.determineFieldArraySet(node.getChildren().get(0), table);
+
+            if (!fieldArraySet.equals(""))
+            {
+                String arrayTempVar = OllirHelper.separateArrayTempVarFromAssignment(leftTempVar);
+                ollirString += "putfield(this, " + fieldArraySet + ", " + arrayTempVar + ").V;\n";
+            }
         }
         else
         {
