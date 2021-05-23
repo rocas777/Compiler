@@ -60,7 +60,6 @@ public class BackendTest {
         result.compile(new File("./executables")).setExecutable(true);
     }
 
-
     @Test
     public void testOurTest() {
         var result = TestUtils.backend(SpecsIo.getResource("ourtest.jmm"));
