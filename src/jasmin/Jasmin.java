@@ -24,6 +24,7 @@ public class Jasmin implements JasminBackend {
     public void deltaStack(int v) {
         stackSize += v;
         maxStackSize = Math.max(stackSize, maxStackSize);
+        System.out.println(maxStackSize+" "+stackSize +" "+v);
     }
 
     public void Locals(int v) {
@@ -390,6 +391,7 @@ public class Jasmin implements JasminBackend {
 
                     if (c.getFirstArg().getType().getTypeOfElement() == ElementType.THIS) {
                         out += "    aload_0\n";
+                        System.out.println();
                         deltaStack(1);
                     } else if (c.getFirstArg().getType().getTypeOfElement() == ElementType.OBJECTREF) {
                         out += "    aload " + OllirAccesser.getVarTable(m).get(((Operand) c.getFirstArg()).getName()).getVirtualReg() + "\n";
@@ -462,7 +464,13 @@ public class Jasmin implements JasminBackend {
                         className = cl.getName();
                     }
                     deltaStack(-c.getNumOperands() + 2);
+                    System.out.println(funcName.substring(1, funcName.length() - 1)+" "+m.getMethodName());
+                    System.out.println();
                     out += "    " + OllirAccesser.getCallInvocation(c).name() + " " + className + "/" + funcName.substring(1, funcName.length() - 1) + "(" + par + ")" + typeConversion(c.getReturnType().getTypeOfElement()) + "\n";
+                    if(c.getReturnType().getTypeOfElement() != ElementType.VOID){
+                        deltaStack(+1);
+                    }
+                    ;
                 }
                 break;
             }
@@ -543,6 +551,7 @@ public class Jasmin implements JasminBackend {
                 if (fo.getName().equals("this")) {
                     class_name = ((ClassType) OllirAccesser.getVarTable(m).get("this").getVarType()).getName();
                     out += "    aload_0\n";
+                    System.out.println();
                     deltaStack(1);
                 } else {
                     class_name = fo.getName();
@@ -561,6 +570,7 @@ public class Jasmin implements JasminBackend {
                 if (fo.getName().equals("this")) {
                     class_name = ((ClassType) OllirAccesser.getVarTable(m).get("this").getVarType()).getName();
                     out += "    aload_0\n";
+                    System.out.println();
                     deltaStack(1);
                 } else {
                     class_name = fo.getName();
