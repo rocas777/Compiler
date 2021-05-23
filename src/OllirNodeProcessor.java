@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 import pt.up.fe.comp.jmm.analysis.table.Symbol;
 import pt.up.fe.comp.jmm.analysis.table.Type;
@@ -11,7 +12,8 @@ class OllirNodeProcessor {
 
     public static int tempVarCount = 0;
     public static Map<String, Integer> structureCount = new HashMap<>();
-    
+    public static Stack<Integer> elseNumStack = new Stack<>();
+
     public static String processNode(JmmNode node, List<Symbol> locals, List<Symbol> parameters, MySymbolTable table, boolean isStatic)
     {
         String ollirString = "";
@@ -169,7 +171,7 @@ class OllirNodeProcessor {
         String firstChildTempVar = childrenData.get(2);
         //String secondChildTempVar = childrenData.get(3);
         
-        int whileStructureNumber = OllirHelper.determineNumberForStructure("While", structureCount);
+        int whileStructureNumber = OllirHelper.determineNumberForStructure("While", structureCount, elseNumStack);
 
         String firstChildNodeKind = node.getChildren().get(0).getKind();
         if (!firstChildNodeKind.equals("LessThan") && !firstChildNodeKind.equals("AND")) firstChildTempVar += " &&.bool 1.bool";
@@ -444,6 +446,14 @@ class OllirNodeProcessor {
         {
             ollirString += leftChild + rightChild;
             ollirString += leftTempVar + " :=." + typeString + " " + rightTempVar + ";\n";
+            
+            String fieldArraySet = OllirHelper.determineFieldArraySet(node.getChildren().get(0), table);
+
+            if (!fieldArraySet.equals(""))
+            {
+                String arrayTempVar = OllirHelper.separateArrayTempVarFromAssignment(leftTempVar);
+                ollirString += "putfield(this, " + fieldArraySet + ", " + arrayTempVar + ").V;\n";
+            }
         }
         else
         {
@@ -479,6 +489,7 @@ class OllirNodeProcessor {
         if (isLocal)
         {
             varType = locals.get(indexInList).getType();
+            varName = OllirHelper.sanitizeVariableName(varName);
         }
         else
         {
@@ -522,7 +533,7 @@ class OllirNodeProcessor {
     {
         String ollirString = "";
 
-        int structureNumber = OllirHelper.determineNumberForStructure("Else", structureCount);
+        int structureNumber = OllirHelper.determineNumberForStructure("Else", structureCount, elseNumStack);
 
         ollirString += "elsebody" + structureNumber + ":\n";
 
@@ -556,7 +567,7 @@ class OllirNodeProcessor {
     {
         String ollirString = "";
         var children = node.getChildren();
-        int structureNumber = OllirHelper.determineNumberForStructure("If", structureCount);
+        int structureNumber = OllirHelper.determineNumberForStructure("If", structureCount, elseNumStack);
 
         var childrenData = extractChildrenData(node, locals, parameters, table, isStatic);
         String ifExpression = childrenData.get(0);
@@ -572,7 +583,7 @@ class OllirNodeProcessor {
         ollirString += ") goto ifbody" + structureNumber + ";\n";
         ollirString += "goto elsebody" + structureNumber + ";\n";
         ollirString += "ifbody" + structureNumber + ":\n";
-        ollirString += processNode(children.get(1), locals, parameters, table, isStatic);
+        ollirString += childrenData.get(1);
         ollirString += "goto endifbody" + structureNumber + ";\n";
 
         return ollirString;
