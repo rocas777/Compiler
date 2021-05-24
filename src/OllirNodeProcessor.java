@@ -179,13 +179,13 @@ class OllirNodeProcessor {
         var conversionToTemp = OllirHelper.convertToTempIfNeeded(firstChildTempVar);
         ollirString += conversionToTemp.get(0);
         ollirString += "if (" + conversionToTemp.get(1) + " &&.bool 1.bool" + ") goto whilebody" + whileStructureNumber + ";\n";
-        ollirString += "goto endwhile" + whileStructureNumber + ";\n";
+        ollirString += "goto endwhilebody" + whileStructureNumber + ";\n";
         ollirString += "whilebody" + whileStructureNumber + ":\n";
         ollirString += secondChild;
         ollirString += firstChild;
         ollirString += conversionToTemp.get(0);
         ollirString += "if ( " + conversionToTemp.get(1) + " &&.bool 1.bool" + ") goto whilebody" + whileStructureNumber + ";\n";
-        ollirString += "endwhile" + whileStructureNumber + ":\n";
+        ollirString += "endwhilebody" + whileStructureNumber + ":\n";
 
         // boolean isEndOfFunction = OllirHelper.determineIfNodeIsLastInBody(node);
         // if (isEndOfFunction) ollirString += "t" + (OllirNodeProcessor.tempVarCount++) + ".i32 :=.i32 0.i32;\n"; 
@@ -493,6 +493,8 @@ class OllirNodeProcessor {
 
     private static String processVariableName(JmmNode node, List<Symbol> locals, List<Symbol> parameters, MySymbolTable table, boolean isStatic)
     {
+        if (node.getKind().equals("MethodName")) return node.get("name");
+
         String ollirString = "";
 
         var fields = table.getFields();
