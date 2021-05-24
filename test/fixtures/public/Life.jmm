@@ -371,3 +371,1803 @@ class Life {
 	}
 
 }
+
+
+/*
+
+.class Life
+.super java/lang/Object
+.field private UNDERPOP_LIM I
+.field private OVERPOP_LIM I
+.field private REPRODUCE_NUM I
+.field private LOOPS_PER_MS I
+.field private xMax I
+.field private yMax I
+.field private not_field [I
+.method public <init>()V
+   aload_0
+   invokespecial java/lang/Object/<init>()V
+   return
+.end method
+.method public init()I
+    .limit locals 11
+    .limit stack 18
+    ldc 1
+    newarray int
+    astore 1 ;store reference lineLenA
+    aload_0
+    ldc 2
+    putfield Life/UNDERPOP_LIM I
+    aload_0
+    ldc 3
+    putfield Life/OVERPOP_LIM I
+    aload_0
+    ldc 3
+    putfield Life/REPRODUCE_NUM I
+    aload_0
+    ldc 225000
+    putfield Life/LOOPS_PER_MS I
+    aload_0
+    aload 1 ;load reference lineLenA
+    invokevirtual Life/t5.array.i32([I)[I
+    astore 3 ;store reference t6
+    aload_0
+    aload 3 ;load reference t6
+    putfield Life/not_field [I
+    ldc 0
+    istore 4 ;store integer t7
+    aload 1
+    iload 4
+    iaload
+    istore 5 ;store integer lineLen
+    iload 5 ;load integer lineLen
+    ldc 1
+    isub
+    istore 6 ;store integer t9
+    aload_0
+    iload 6 ;load integer t9
+    putfield Life/xMax I
+    aload_0
+    getfield Life/not_field [I
+    astore 7 ;store reference t11
+    aload 7 ;load reference t11
+    arraylength
+    istore 8 ;store integer t12
+    iload 8 ;load integer t12
+    iload 5 ;load integer lineLen
+    idiv
+    istore 9 ;store integer t13
+    iload 9 ;load integer t13
+    ldc 1
+    isub
+    istore 10 ;store integer t14
+    aload_0
+    iload 10 ;load integer t14
+    putfield Life/yMax I
+    ldc 1
+    ireturn
+.end method
+.method public trIdx(II)I
+    .limit locals 7
+    .limit stack 2
+    aload_0
+    getfield Life/xMax I
+    istore 3 ;store integer t0
+    iload 3 ;load integer t0
+    ldc 1
+    iadd
+    istore 4 ;store integer t1
+    iload 4 ;load integer t1
+    iload 2 ;load integer y
+    imul
+    istore 5 ;store integer t2
+    iload 1 ;load integer x
+    iload 5 ;load integer t2
+    iadd
+    istore 6 ;store integer t3
+    iload 6 ;load integer t3
+    ireturn
+.end method
+.method public lt(II)I
+    .limit locals 4
+    .limit stack 2
+    iload 1 ;load integer a
+    iload 2 ;load integer b
+    isub
+    ldc 63
+    iushr
+    istore 3 ;store boolean t0
+    iload 3 ;load boolean t0
+    ireturn
+.end method
+.method public update()I
+    .limit locals 32
+    .limit stack 12
+    aload_0
+    getfield Life/not_field [I
+    astore 1 ;store reference t0
+    aload 1 ;load reference t0
+    arraylength
+    istore 2 ;store integer t1
+    iload 2 ;load integer t1
+    newarray int
+    astore 3 ;store reference newField
+    ldc 0
+    istore 5 ;store integer i
+    aload_0
+    getfield Life/not_field [I
+    astore 6 ;store reference t2
+    aload 6 ;load reference t2
+    arraylength
+    istore 7 ;store integer t3
+    iload 5 ;load integer i
+    iload 7 ;load integer t3
+    isub
+    ldc 63
+    iushr
+    istore 8 ;store boolean t24
+    iload 8 ;load boolean t24
+    ldc 1
+    iand
+    ifne whilebody2
+    goto endwhile2
+  whilebody2:
+    aload_0
+    getfield Life/not_field [I
+    astore 9 ;store reference t4
+    iload 5 ;load integer i
+    istore 10 ;store integer t5
+    aload 9
+    iload 10
+    iaload
+    istore 11 ;store integer cur
+    aload_0
+    iload 5 ;load integer i
+    invokevirtual Life/getLiveNeighborN(I)I
+    istore 12 ;store integer t6
+    iload 12 ;load integer t6
+    istore 13 ;store integer neighN
+    iload 11 ;load integer cur
+    ldc 1
+    isub
+    ldc 63
+    iushr
+    istore 14 ;store boolean t7
+    iload 14 ;load boolean t7
+    iload 14 ;load boolean t7
+    istore 15 ;store boolean t17
+    iload 15 ;load boolean t17
+    ldc 1
+    iand
+    ifne ifbody1
+    goto elsebody1
+  ifbody1:
+    aload_0
+    getfield Life/UNDERPOP_LIM I
+    istore 16 ;store integer t8
+    aload_0
+    iload 13 ;load integer neighN
+    iload 16 ;load integer t8
+    invokevirtual Life/ge(II)I
+    istore 17 ;store boolean t9
+    aload_0
+    getfield Life/OVERPOP_LIM I
+    istore 18 ;store integer t10
+    aload_0
+    iload 13 ;load integer neighN
+    iload 18 ;load integer t10
+    invokevirtual Life/le(II)I
+    istore 19 ;store boolean t11
+    iload 17 ;load boolean t9
+    iload 19 ;load boolean t11
+    iand
+    istore 20 ;store boolean goodPop
+    iload 20 ;load boolean goodPop
+    iload 20 ;load boolean goodPop
+    istore 21 ;store boolean t13
+    iload 21 ;load boolean t13
+    ldc 1
+    iand
+    ifne ifbody2
+    goto elsebody2
+  ifbody2:
+    iload 5 ;load integer i
+    istore 22 ;store integer t12
+    aload 3
+    iload 22
+    ldc 0
+    iastore
+    goto endifbody2
+  elsebody2:
+    iload 5 ;load integer i
+    istore 23 ;store integer t14
+    aload_0
+    getfield Life/not_field [I
+    astore 24 ;store reference t15
+    iload 5 ;load integer i
+    istore 25 ;store integer t16
+    aload 3
+    iload 23
+    aload 24
+    iload 25
+    iaload
+    iastore
+  endifbody2:
+    goto endifbody1
+  elsebody1:
+    aload_0
+    getfield Life/REPRODUCE_NUM I
+    istore 26 ;store integer t18
+    aload_0
+    iload 13 ;load integer neighN
+    iload 26 ;load integer t18
+    invokevirtual Life/eq(II)I
+    istore 27 ;store boolean t19
+    iload 27 ;load boolean t19
+    ldc 1
+    iand
+    ifne ifbody3
+    goto elsebody3
+  ifbody3:
+    iload 5 ;load integer i
+    istore 28 ;store integer t20
+    aload 3
+    iload 28
+    ldc 1
+    iastore
+    goto endifbody3
+  elsebody3:
+    iload 5 ;load integer i
+    istore 29 ;store integer t21
+    aload_0
+    getfield Life/not_field [I
+    astore 30 ;store reference t22
+    iload 5 ;load integer i
+    istore 31 ;store integer t23
+    aload 3
+    iload 29
+    aload 30
+    iload 31
+    iaload
+    iastore
+  endifbody3:
+  endifbody1:
+    iinc 5 1
+    aload_0
+    getfield Life/not_field [I
+    astore 6 ;store reference t2
+    aload 6 ;load reference t2
+    arraylength
+    istore 7 ;store integer t3
+    iload 5 ;load integer i
+    iload 7 ;load integer t3
+    isub
+    ldc 63
+    iushr
+    istore 8 ;store boolean t24
+    iload 8 ;load boolean t24
+    ldc 1
+    iand
+    ifne whilebody2
+  endwhile2:
+    aload_0
+    aload 3 ;load reference newField
+    putfield Life/not_field [I
+    ldc 1
+    ireturn
+.end method
+.method public static main([Ljava/lang/String;)V
+    .limit locals 9
+    .limit stack 5
+    new Life
+    dup
+    astore 1 ;store reference t0
+    aload 1 ;load reference t0
+    invokespecial Life/<init>()V
+    astore 1 ;store reference t0
+    aload 1 ;load reference t0
+    astore 3 ;store reference l
+    aload 3
+    invokevirtual Life/not_init()V
+    ldc 1
+    ldc 1
+    iand
+    ifne whilebody1
+    goto endwhile1
+  whilebody1:
+    aload 3
+    invokevirtual Life/printField()I
+    istore 4 ;store boolean t1
+    aload 3
+    invokevirtual Life/update()I
+    istore 5 ;store boolean t2
+    invokestatic io/read()I
+    istore 6 ;store integer t3
+    iload 6 ;load integer t3
+    istore 8 ;store integer unused
+    ldc 1
+    ldc 1
+    iand
+    ifne whilebody1
+  endwhile1:
+    return
+.end method
+.method public getNeighborCoords(I)[I
+    .limit locals 38
+    .limit stack 16
+    aload_0
+    iload 1 ;load integer absPos
+    invokevirtual Life/cartIdx(I)[I
+    astore 2 ;store reference t0
+    aload 2 ;load reference t0
+    astore 3 ;store reference cart
+    ldc 0
+    istore 4 ;store integer t1
+    aload 3
+    iload 4
+    iaload
+    istore 5 ;store integer x
+    ldc 1
+    istore 6 ;store integer t2
+    aload 3
+    iload 6
+    iaload
+    istore 7 ;store integer y
+    aload_0
+    getfield Life/xMax I
+    istore 8 ;store integer t3
+    iload 5 ;load integer x
+    iload 8 ;load integer t3
+    isub
+    ldc 63
+    iushr
+    istore 9 ;store boolean t6
+    iload 9 ;load boolean t6
+    ldc 1
+    iand
+    ifne ifbody5
+    goto elsebody5
+  ifbody5:
+    iload 5 ;load integer x
+    ldc 1
+    iadd
+    istore 10 ;store integer downX
+    aload_0
+    iload 5 ;load integer x
+    ldc 0
+    invokevirtual Life/gt(II)I
+    istore 11 ;store boolean t4
+    iload 11 ;load boolean t4
+    ldc 1
+    iand
+    ifne ifbody6
+    goto elsebody6
+  ifbody6:
+    iload 5 ;load integer x
+    ldc 1
+    isub
+    istore 12 ;store integer upX
+    goto endifbody6
+  elsebody6:
+    aload_0
+    getfield Life/xMax I
+    istore 13 ;store integer t5
+    iload 13 ;load integer t5
+    istore 12 ;store integer upX
+  endifbody6:
+    goto endifbody5
+  elsebody5:
+    ldc 0
+    istore 10 ;store integer downX
+    iload 5 ;load integer x
+    ldc 1
+    isub
+    istore 12 ;store integer upX
+  endifbody5:
+    aload_0
+    getfield Life/yMax I
+    istore 14 ;store integer t7
+    iload 7 ;load integer y
+    iload 14 ;load integer t7
+    isub
+    ldc 63
+    iushr
+    istore 15 ;store boolean t10
+    iload 15 ;load boolean t10
+    ldc 1
+    iand
+    ifne ifbody7
+    goto elsebody7
+  ifbody7:
+    iload 7 ;load integer y
+    ldc 1
+    iadd
+    istore 16 ;store integer downY
+    aload_0
+    iload 7 ;load integer y
+    ldc 0
+    invokevirtual Life/gt(II)I
+    istore 17 ;store boolean t8
+    iload 17 ;load boolean t8
+    ldc 1
+    iand
+    ifne ifbody8
+    goto elsebody8
+  ifbody8:
+    iload 7 ;load integer y
+    ldc 1
+    isub
+    istore 18 ;store integer upY
+    goto endifbody8
+  elsebody8:
+    aload_0
+    getfield Life/yMax I
+    istore 19 ;store integer t9
+    iload 19 ;load integer t9
+    istore 18 ;store integer upY
+  endifbody8:
+    goto endifbody7
+  elsebody7:
+    ldc 0
+    istore 16 ;store integer downY
+    iload 7 ;load integer y
+    ldc 1
+    isub
+    istore 18 ;store integer upY
+  endifbody7:
+    ldc 8
+    newarray int
+    astore 20 ;store reference result
+    ldc 0
+    istore 22 ;store integer t11
+    aload_0
+    iload 5 ;load integer x
+    iload 18 ;load integer upY
+    invokevirtual Life/trIdx(II)I
+    istore 23 ;store integer t12
+    aload 20
+    iload 22
+    iload 23 ;load integer t12
+    iastore
+    ldc 1
+    istore 24 ;store integer t13
+    aload_0
+    iload 12 ;load integer upX
+    iload 18 ;load integer upY
+    invokevirtual Life/trIdx(II)I
+    istore 25 ;store integer t14
+    aload 20
+    iload 24
+    iload 25 ;load integer t14
+    iastore
+    ldc 2
+    istore 26 ;store integer t15
+    aload_0
+    iload 12 ;load integer upX
+    iload 7 ;load integer y
+    invokevirtual Life/trIdx(II)I
+    istore 27 ;store integer t16
+    aload 20
+    iload 26
+    iload 27 ;load integer t16
+    iastore
+    ldc 3
+    istore 28 ;store integer t17
+    aload_0
+    iload 12 ;load integer upX
+    iload 16 ;load integer downY
+    invokevirtual Life/trIdx(II)I
+    istore 29 ;store integer t18
+    aload 20
+    iload 28
+    iload 29 ;load integer t18
+    iastore
+    ldc 4
+    istore 30 ;store integer t19
+    aload_0
+    iload 5 ;load integer x
+    iload 16 ;load integer downY
+    invokevirtual Life/trIdx(II)I
+    istore 31 ;store integer t20
+    aload 20
+    iload 30
+    iload 31 ;load integer t20
+    iastore
+    ldc 5
+    istore 32 ;store integer t21
+    aload_0
+    iload 10 ;load integer downX
+    iload 16 ;load integer downY
+    invokevirtual Life/trIdx(II)I
+    istore 33 ;store integer t22
+    aload 20
+    iload 32
+    iload 33 ;load integer t22
+    iastore
+    ldc 6
+    istore 34 ;store integer t23
+    aload_0
+    iload 10 ;load integer downX
+    iload 7 ;load integer y
+    invokevirtual Life/trIdx(II)I
+    istore 35 ;store integer t24
+    aload 20
+    iload 34
+    iload 35 ;load integer t24
+    iastore
+    ldc 7
+    istore 36 ;store integer t25
+    aload_0
+    iload 10 ;load integer downX
+    iload 18 ;load integer upY
+    invokevirtual Life/trIdx(II)I
+    istore 37 ;store integer t26
+    aload 20
+    iload 36
+    iload 37 ;load integer t26
+    iastore
+    aload 20 ;load reference result
+    areturn
+.end method
+.method public getLiveNeighborN(I)I
+    .limit locals 14
+    .limit stack 4
+    ldc 0
+    istore 2 ;store integer result
+    aload_0
+    iload 1 ;load integer absPos
+    invokevirtual Life/getNeighborCoords(I)[I
+    astore 3 ;store reference t0
+    aload 3 ;load reference t0
+    astore 4 ;store reference neigh
+    ldc 0
+    istore 5 ;store integer i
+    aload 4 ;load reference neigh
+    arraylength
+    istore 6 ;store integer t1
+    iload 5 ;load integer i
+    iload 6 ;load integer t1
+    isub
+    ldc 63
+    iushr
+    istore 7 ;store boolean t8
+    iload 7 ;load boolean t8
+    ldc 1
+    iand
+    ifne whilebody4
+    goto endwhile4
+  whilebody4:
+    aload_0
+    getfield Life/not_field [I
+    astore 8 ;store reference t2
+    iload 5 ;load integer i
+    istore 9 ;store integer t3
+    aload 4
+    iload 9
+    iaload
+    istore 10 ;store integer t4
+    iload 10 ;load integer t4
+    istore 11 ;store integer t5
+    aload 8
+    iload 11
+    iaload
+    istore 12 ;store integer t6
+    aload_0
+    iload 12 ;load integer t6
+    ldc 0
+    invokevirtual Life/ne(II)I
+    istore 13 ;store boolean t7
+    iload 13 ;load boolean t7
+    ldc 1
+    iand
+    ifne ifbody9
+    goto elsebody9
+  ifbody9:
+    iinc 2 1
+    goto endifbody9
+  elsebody9:
+  endifbody9:
+    iinc 5 1
+    aload 4 ;load reference neigh
+    arraylength
+    istore 6 ;store integer t1
+    iload 5 ;load integer i
+    iload 6 ;load integer t1
+    isub
+    ldc 63
+    iushr
+    istore 7 ;store boolean t8
+    iload 7 ;load boolean t8
+    ldc 1
+    iand
+    ifne whilebody4
+  endwhile4:
+    iload 2 ;load integer result
+    ireturn
+.end method
+.method public printField()I
+    .limit locals 12
+    .limit stack 3
+    ldc 0
+    istore 1 ;store integer i
+    ldc 0
+    istore 2 ;store integer j
+    aload_0
+    getfield Life/not_field [I
+    astore 3 ;store reference t0
+    aload 3 ;load reference t0
+    arraylength
+    istore 4 ;store integer t1
+    iload 1 ;load integer i
+    iload 4 ;load integer t1
+    isub
+    ldc 63
+    iushr
+    istore 5 ;store boolean t7
+    iload 5 ;load boolean t7
+    ldc 1
+    iand
+    ifne whilebody3
+    goto endwhile3
+  whilebody3:
+    aload_0
+    getfield Life/xMax I
+    istore 6 ;store integer t2
+    aload_0
+    iload 2 ;load integer j
+    iload 6 ;load integer t2
+    invokevirtual Life/gt(II)I
+    istore 7 ;store boolean t3
+    iload 7 ;load boolean t3
+    ldc 1
+    iand
+    ifne ifbody4
+    goto elsebody4
+  ifbody4:
+    invokestatic io/println()V
+    ldc 0
+    istore 2 ;store integer j
+    goto endifbody4
+  elsebody4:
+  endifbody4:
+    aload_0
+    getfield Life/not_field [I
+    astore 9 ;store reference t4
+    iload 1 ;load integer i
+    istore 10 ;store integer t5
+    aload 9
+    iload 10
+    iaload
+    istore 11 ;store integer t6
+    iload 11 ;load integer t6
+    invokestatic io/print(I)V
+    iinc 1 1
+    iinc 2 1
+    aload_0
+    getfield Life/not_field [I
+    astore 3 ;store reference t0
+    aload 3 ;load reference t0
+    arraylength
+    istore 4 ;store integer t1
+    iload 1 ;load integer i
+    iload 4 ;load integer t1
+    isub
+    ldc 63
+    iushr
+    istore 5 ;store boolean t7
+    iload 5 ;load boolean t7
+    ldc 1
+    iand
+    ifne whilebody3
+  endwhile3:
+    invokestatic io/println()V
+    invokestatic io/println()V
+    ldc 1
+    ireturn
+.end method
+.method public eq(II)I
+    .limit locals 8
+    .limit stack 6
+    aload_0
+    iload 1 ;load integer a
+    iload 2 ;load integer b
+    invokevirtual Life/lt(II)I
+    istore 3 ;store boolean t0
+    aload_0
+    iload 2 ;load integer b
+    iload 1 ;load integer a
+    invokevirtual Life/lt(II)I
+    istore 4 ;store boolean t1
+    iload 3 ;load boolean t0
+    iload 3 ;load boolean t0
+    istore 5 ;store boolean t2
+    iload 4 ;load boolean t1
+    iload 4 ;load boolean t1
+    istore 6 ;store boolean t3
+    iload 5 ;load boolean t2
+    iload 6 ;load boolean t3
+    iand
+    istore 7 ;store boolean t4
+    iload 7 ;load boolean t4
+    ireturn
+.end method
+.method public gt(II)I
+    .limit locals 5
+    .limit stack 3
+    aload_0
+    iload 1 ;load integer a
+    iload 2 ;load integer b
+    invokevirtual Life/le(II)I
+    istore 3 ;store boolean t0
+    iload 3 ;load boolean t0
+    iload 3 ;load boolean t0
+    istore 4 ;store boolean t1
+    iload 4 ;load boolean t1
+    ireturn
+.end method
+.method public field([I)[I
+    .limit locals 105
+    .limit stack 203
+    ldc 100
+    newarray int
+    astore 2 ;store reference not_field
+    ldc 0
+    istore 4 ;store integer t0
+    aload 1
+    iload 4
+    ldc 10
+    iastore
+    ldc 0
+    istore 5 ;store integer t1
+    aload 2
+    iload 5
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 1
+    istore 6 ;store integer t2
+    aload 2
+    iload 6
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 2
+    istore 7 ;store integer t3
+    aload 2
+    iload 7
+    ldc 1
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 3
+    istore 8 ;store integer t4
+    aload 2
+    iload 8
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 4
+    istore 9 ;store integer t5
+    aload 2
+    iload 9
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 5
+    istore 10 ;store integer t6
+    aload 2
+    iload 10
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 6
+    istore 11 ;store integer t7
+    aload 2
+    iload 11
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 7
+    istore 12 ;store integer t8
+    aload 2
+    iload 12
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 8
+    istore 13 ;store integer t9
+    aload 2
+    iload 13
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 9
+    istore 14 ;store integer t10
+    aload 2
+    iload 14
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 10
+    istore 15 ;store integer t11
+    aload 2
+    iload 15
+    ldc 1
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 11
+    istore 16 ;store integer t12
+    aload 2
+    iload 16
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 12
+    istore 17 ;store integer t13
+    aload 2
+    iload 17
+    ldc 1
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 13
+    istore 18 ;store integer t14
+    aload 2
+    iload 18
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 14
+    istore 19 ;store integer t15
+    aload 2
+    iload 19
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 15
+    istore 20 ;store integer t16
+    aload 2
+    iload 20
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 16
+    istore 21 ;store integer t17
+    aload 2
+    iload 21
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 17
+    istore 22 ;store integer t18
+    aload 2
+    iload 22
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 18
+    istore 23 ;store integer t19
+    aload 2
+    iload 23
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 19
+    istore 24 ;store integer t20
+    aload 2
+    iload 24
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 20
+    istore 25 ;store integer t21
+    aload 2
+    iload 25
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 21
+    istore 26 ;store integer t22
+    aload 2
+    iload 26
+    ldc 1
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 22
+    istore 27 ;store integer t23
+    aload 2
+    iload 27
+    ldc 1
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 23
+    istore 28 ;store integer t24
+    aload 2
+    iload 28
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 24
+    istore 29 ;store integer t25
+    aload 2
+    iload 29
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 25
+    istore 30 ;store integer t26
+    aload 2
+    iload 30
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 26
+    istore 31 ;store integer t27
+    aload 2
+    iload 31
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 27
+    istore 32 ;store integer t28
+    aload 2
+    iload 32
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 28
+    istore 33 ;store integer t29
+    aload 2
+    iload 33
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 29
+    istore 34 ;store integer t30
+    aload 2
+    iload 34
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 30
+    istore 35 ;store integer t31
+    aload 2
+    iload 35
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 31
+    istore 36 ;store integer t32
+    aload 2
+    iload 36
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 32
+    istore 37 ;store integer t33
+    aload 2
+    iload 37
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 33
+    istore 38 ;store integer t34
+    aload 2
+    iload 38
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 34
+    istore 39 ;store integer t35
+    aload 2
+    iload 39
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 35
+    istore 40 ;store integer t36
+    aload 2
+    iload 40
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 36
+    istore 41 ;store integer t37
+    aload 2
+    iload 41
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 37
+    istore 42 ;store integer t38
+    aload 2
+    iload 42
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 38
+    istore 43 ;store integer t39
+    aload 2
+    iload 43
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 39
+    istore 44 ;store integer t40
+    aload 2
+    iload 44
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 40
+    istore 45 ;store integer t41
+    aload 2
+    iload 45
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 41
+    istore 46 ;store integer t42
+    aload 2
+    iload 46
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 42
+    istore 47 ;store integer t43
+    aload 2
+    iload 47
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 43
+    istore 48 ;store integer t44
+    aload 2
+    iload 48
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 44
+    istore 49 ;store integer t45
+    aload 2
+    iload 49
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 45
+    istore 50 ;store integer t46
+    aload 2
+    iload 50
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 46
+    istore 51 ;store integer t47
+    aload 2
+    iload 51
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 47
+    istore 52 ;store integer t48
+    aload 2
+    iload 52
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 48
+    istore 53 ;store integer t49
+    aload 2
+    iload 53
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 49
+    istore 54 ;store integer t50
+    aload 2
+    iload 54
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 50
+    istore 55 ;store integer t51
+    aload 2
+    iload 55
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 51
+    istore 56 ;store integer t52
+    aload 2
+    iload 56
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 52
+    istore 57 ;store integer t53
+    aload 2
+    iload 57
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 53
+    istore 58 ;store integer t54
+    aload 2
+    iload 58
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 54
+    istore 59 ;store integer t55
+    aload 2
+    iload 59
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 55
+    istore 60 ;store integer t56
+    aload 2
+    iload 60
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 56
+    istore 61 ;store integer t57
+    aload 2
+    iload 61
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 57
+    istore 62 ;store integer t58
+    aload 2
+    iload 62
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 58
+    istore 63 ;store integer t59
+    aload 2
+    iload 63
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 59
+    istore 64 ;store integer t60
+    aload 2
+    iload 64
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 60
+    istore 65 ;store integer t61
+    aload 2
+    iload 65
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 61
+    istore 66 ;store integer t62
+    aload 2
+    iload 66
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 62
+    istore 67 ;store integer t63
+    aload 2
+    iload 67
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 63
+    istore 68 ;store integer t64
+    aload 2
+    iload 68
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 64
+    istore 69 ;store integer t65
+    aload 2
+    iload 69
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 65
+    istore 70 ;store integer t66
+    aload 2
+    iload 70
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 66
+    istore 71 ;store integer t67
+    aload 2
+    iload 71
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 67
+    istore 72 ;store integer t68
+    aload 2
+    iload 72
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 68
+    istore 73 ;store integer t69
+    aload 2
+    iload 73
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 69
+    istore 74 ;store integer t70
+    aload 2
+    iload 74
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 70
+    istore 75 ;store integer t71
+    aload 2
+    iload 75
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 71
+    istore 76 ;store integer t72
+    aload 2
+    iload 76
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 72
+    istore 77 ;store integer t73
+    aload 2
+    iload 77
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 73
+    istore 78 ;store integer t74
+    aload 2
+    iload 78
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 74
+    istore 79 ;store integer t75
+    aload 2
+    iload 79
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 75
+    istore 80 ;store integer t76
+    aload 2
+    iload 80
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 76
+    istore 81 ;store integer t77
+    aload 2
+    iload 81
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 77
+    istore 82 ;store integer t78
+    aload 2
+    iload 82
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 78
+    istore 83 ;store integer t79
+    aload 2
+    iload 83
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 79
+    istore 84 ;store integer t80
+    aload 2
+    iload 84
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 80
+    istore 85 ;store integer t81
+    aload 2
+    iload 85
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 81
+    istore 86 ;store integer t82
+    aload 2
+    iload 86
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 82
+    istore 87 ;store integer t83
+    aload 2
+    iload 87
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 83
+    istore 88 ;store integer t84
+    aload 2
+    iload 88
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 84
+    istore 89 ;store integer t85
+    aload 2
+    iload 89
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 85
+    istore 90 ;store integer t86
+    aload 2
+    iload 90
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 86
+    istore 91 ;store integer t87
+    aload 2
+    iload 91
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 87
+    istore 92 ;store integer t88
+    aload 2
+    iload 92
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 88
+    istore 93 ;store integer t89
+    aload 2
+    iload 93
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 89
+    istore 94 ;store integer t90
+    aload 2
+    iload 94
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 90
+    istore 95 ;store integer t91
+    aload 2
+    iload 95
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 91
+    istore 96 ;store integer t92
+    aload 2
+    iload 96
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 92
+    istore 97 ;store integer t93
+    aload 2
+    iload 97
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 93
+    istore 98 ;store integer t94
+    aload 2
+    iload 98
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 94
+    istore 99 ;store integer t95
+    aload 2
+    iload 99
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 95
+    istore 100 ;store integer t96
+    aload 2
+    iload 100
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 96
+    istore 101 ;store integer t97
+    aload 2
+    iload 101
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 97
+    istore 102 ;store integer t98
+    aload 2
+    iload 102
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 98
+    istore 103 ;store integer t99
+    aload 2
+    iload 103
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    ldc 99
+    istore 104 ;store integer t100
+    aload 2
+    iload 104
+    ldc 0
+    iastore
+    aload_0
+    aload 2 ;load reference not_field
+    putfield Life/field [I
+    aload 2 ;load reference not_field
+    areturn
+.end method
+.method public busyWait(I)I
+    .limit locals 6
+    .limit stack 2
+    aload_0
+    getfield Life/LOOPS_PER_MS I
+    istore 2 ;store integer t0
+    iload 1 ;load integer ms
+    iload 2 ;load integer t0
+    imul
+    istore 3 ;store integer n
+    ldc 0
+    istore 4 ;store integer i
+    iload 4 ;load integer i
+    iload 3 ;load integer n
+    isub
+    ldc 63
+    iushr
+    istore 5 ;store boolean t1
+    iload 5 ;load boolean t1
+    ldc 1
+    iand
+    ifne whilebody5
+    goto endwhile5
+  whilebody5:
+    iinc 4 1
+    iload 4 ;load integer i
+    iload 3 ;load integer n
+    isub
+    ldc 63
+    iushr
+    istore 5 ;store boolean t1
+    iload 5 ;load boolean t1
+    ldc 1
+    iand
+    ifne whilebody5
+  endwhile5:
+    ldc 1
+    ireturn
+.end method
+.method public cartIdx(I)[I
+    .limit locals 11
+    .limit stack 5
+    aload_0
+    getfield Life/xMax I
+    istore 2 ;store integer t0
+    iload 2 ;load integer t0
+    ldc 1
+    iadd
+    istore 3 ;store integer xLim
+    iload 1 ;load integer absPos
+    iload 3 ;load integer xLim
+    idiv
+    istore 4 ;store integer y
+    iload 4 ;load integer y
+    iload 3 ;load integer xLim
+    imul
+    istore 5 ;store integer t1
+    iload 1 ;load integer absPos
+    iload 5 ;load integer t1
+    isub
+    istore 6 ;store integer x
+    ldc 2
+    newarray int
+    astore 7 ;store reference result
+    ldc 0
+    istore 9 ;store integer t2
+    aload 7
+    iload 9
+    iload 6 ;load integer x
+    iastore
+    ldc 1
+    istore 10 ;store integer t3
+    aload 7
+    iload 10
+    iload 4 ;load integer y
+    iastore
+    aload 7 ;load reference result
+    areturn
+.end method
+.method public ne(II)I
+    .limit locals 5
+    .limit stack 3
+    aload_0
+    iload 1 ;load integer a
+    iload 2 ;load integer b
+    invokevirtual Life/eq(II)I
+    istore 3 ;store boolean t0
+    iload 3 ;load boolean t0
+    iload 3 ;load boolean t0
+    istore 4 ;store boolean t1
+    iload 4 ;load boolean t1
+    ireturn
+.end method
+.method public le(II)I
+    .limit locals 9
+    .limit stack 6
+    aload_0
+    iload 1 ;load integer a
+    iload 2 ;load integer b
+    invokevirtual Life/lt(II)I
+    istore 3 ;store boolean t0
+    aload_0
+    iload 1 ;load integer a
+    iload 2 ;load integer b
+    invokevirtual Life/eq(II)I
+    istore 4 ;store boolean t1
+    iload 3 ;load boolean t0
+    iload 3 ;load boolean t0
+    istore 5 ;store boolean t2
+    iload 4 ;load boolean t1
+    iload 4 ;load boolean t1
+    istore 6 ;store boolean t3
+    iload 5 ;load boolean t2
+    iload 6 ;load boolean t3
+    iand
+    istore 7 ;store boolean t4
+    iload 7 ;load boolean t4
+    iload 7 ;load boolean t4
+    istore 8 ;store boolean t5
+    iload 8 ;load boolean t5
+    ireturn
+.end method
+.method public ge(II)I
+    .limit locals 9
+    .limit stack 6
+    aload_0
+    iload 1 ;load integer a
+    iload 2 ;load integer b
+    invokevirtual Life/gt(II)I
+    istore 3 ;store boolean t0
+    aload_0
+    iload 1 ;load integer a
+    iload 2 ;load integer b
+    invokevirtual Life/eq(II)I
+    istore 4 ;store boolean t1
+    iload 3 ;load boolean t0
+    iload 3 ;load boolean t0
+    istore 5 ;store boolean t2
+    iload 4 ;load boolean t1
+    iload 4 ;load boolean t1
+    istore 6 ;store boolean t3
+    iload 5 ;load boolean t2
+    iload 6 ;load boolean t3
+    iand
+    istore 7 ;store boolean t4
+    iload 7 ;load boolean t4
+    iload 7 ;load boolean t4
+    istore 8 ;store boolean t5
+    iload 8 ;load boolean t5
+    ireturn
+*/

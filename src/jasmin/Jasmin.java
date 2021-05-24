@@ -56,6 +56,8 @@ public class Jasmin implements JasminBackend {
                 ".end method\n";
 
         for (Method m : ollirResult.getOllirClass().getMethods()) {
+            System.out.println();
+            System.out.println(m.getMethodName());
             outCode += processMethod(m);
         }
 
@@ -132,7 +134,7 @@ public class Jasmin implements JasminBackend {
         nOut += ".end method\n";
 
 
-        for (int i = 0; i < m.getParams().size(); i++) {
+        for (int i = 0; i < m.getParams().size()+1; i++) {
             Locals(i);
         }
         out += "    .limit locals " + (max + 1) + "\n" +
@@ -291,7 +293,7 @@ public class Jasmin implements JasminBackend {
                     out += "    iload " + OllirAccesser.getVarTable(m).get(((Operand) a.getIndexOperands().get(0)).getName()).getVirtualReg() + "\n";
                     deltaStack(2);
                     out += "    iaload\n";
-                    deltaStack(-2);
+                    deltaStack(-1);
                 } catch (Exception e) {
                     out += loadOp(((SingleOpInstruction) i).getSingleOperand(), m);
                 }
@@ -306,6 +308,7 @@ public class Jasmin implements JasminBackend {
                     out += loadOp(c.getFirstArg(),m);
                     out += "    arraylength\n";
                     deltaStack(-1);
+                    deltaStack(1);
                 }
                 else {
                     if (OllirAccesser.getCallInvocation(c) == CallType.NEW) {
@@ -391,7 +394,6 @@ public class Jasmin implements JasminBackend {
 
                     if (c.getFirstArg().getType().getTypeOfElement() == ElementType.THIS) {
                         out += "    aload_0\n";
-                        System.out.println();
                         deltaStack(1);
                     } else if (c.getFirstArg().getType().getTypeOfElement() == ElementType.OBJECTREF) {
                         out += "    aload " + OllirAccesser.getVarTable(m).get(((Operand) c.getFirstArg()).getName()).getVirtualReg() + "\n";
@@ -465,7 +467,6 @@ public class Jasmin implements JasminBackend {
                     }
                     deltaStack(-c.getNumOperands() + 2);
                     System.out.println(funcName.substring(1, funcName.length() - 1)+" "+m.getMethodName());
-                    System.out.println();
                     out += "    " + OllirAccesser.getCallInvocation(c).name() + " " + className + "/" + funcName.substring(1, funcName.length() - 1) + "(" + par + ")" + typeConversion(c.getReturnType().getTypeOfElement()) + "\n";
                     if(c.getReturnType().getTypeOfElement() != ElementType.VOID){
                         deltaStack(+1);
@@ -551,7 +552,6 @@ public class Jasmin implements JasminBackend {
                 if (fo.getName().equals("this")) {
                     class_name = ((ClassType) OllirAccesser.getVarTable(m).get("this").getVarType()).getName();
                     out += "    aload_0\n";
-                    System.out.println();
                     deltaStack(1);
                 } else {
                     class_name = fo.getName();
@@ -570,7 +570,6 @@ public class Jasmin implements JasminBackend {
                 if (fo.getName().equals("this")) {
                     class_name = ((ClassType) OllirAccesser.getVarTable(m).get("this").getVarType()).getName();
                     out += "    aload_0\n";
-                    System.out.println();
                     deltaStack(1);
                 } else {
                     class_name = fo.getName();
@@ -598,7 +597,6 @@ public class Jasmin implements JasminBackend {
                 break;
             }
             default: {
-                System.out.println();
             }
         }
         return out;
