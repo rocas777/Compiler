@@ -40,7 +40,7 @@ public class ArrayAccessVisitor extends PreorderJmmVisitor<MySymbolTable, List<R
             }
             case "VariableName": {
                 String methodName = SearchHelper.getMethodName(node);
-                System.out.println("NOME " + methodName);
+                //System.out.println("NOME " + methodName);
                 Report report = SearchHelper.CheckIfInteger(arrayIndexNode.get("name"), methodName, table, "Array Access Index is not an Integer ", Integer.parseInt(arrayIndexNode.get("line")), Integer.parseInt(arrayIndexNode.get("column")));
                 if (report != null) reports.add(report);
 
@@ -114,7 +114,7 @@ public class ArrayAccessVisitor extends PreorderJmmVisitor<MySymbolTable, List<R
                 }
                 case "VariableName": {
                     String methodName = SearchHelper.getMethodName(node);
-                    System.out.println("NOME " + methodName);
+                    //System.out.println("NOME " + methodName);
                     Report report = SearchHelper.CheckIfInteger(jmmNode.get("name"), methodName, table, "Array Size is not an Integer ", Integer.parseInt(jmmNode.get("line")), Integer.parseInt(jmmNode.get("column")));
                     if (report != null) reports.add(report);
                     break;
