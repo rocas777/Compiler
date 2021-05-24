@@ -366,7 +366,7 @@ public class OllirHelper {
         return parseResult;
     }
 
-    private static List<String> convertToTempIfNeeded(String ollirString)
+    public static List<String> convertToTempIfNeeded(String ollirString)
     {
         List<String> stringList = new ArrayList<>();
 
@@ -376,7 +376,7 @@ public class OllirHelper {
             stringList.add(ollirCode);
             stringList.add("t" + (OllirNodeProcessor.tempVarCount - 1) + ".i32");
         }
-        else if (ollirString.contains("<") || ollirString.contains("&&"))
+        else if (ollirString.contains("<") || ollirString.contains("&&") || ollirString.contains("!"))
         {
             String ollirCode = "t" + (OllirNodeProcessor.tempVarCount++) + ".bool :=.bool " + ollirString + ";\n";
             stringList.add(ollirCode);
