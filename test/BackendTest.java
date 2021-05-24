@@ -17,6 +17,11 @@ import pt.up.fe.comp.jmm.jasmin.JasminResult;
 import pt.up.fe.specs.util.SpecsIo;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.LinkOption;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -70,14 +75,14 @@ public class BackendTest {
         var result = TestUtils.backend(SpecsIo.getResource("fixtures/public/MonteCarloPi.jmm"));
         TestUtils.noErrors(result.getReports());
         result.compile(new File("./executables")).setExecutable(true);
-        result.run("300\n");
+        result.run("3000\n");
     }
     @Test
     public void testTicTacToe() {
         var result = TestUtils.backend(SpecsIo.getResource("fixtures/public/TicTacToe.jmm"));
         TestUtils.noErrors(result.getReports());
         result.compile(new File("./executables")).setExecutable(true);
-        var output = result.run(SpecsIo.getResource("fixtures/public/TicTacToe.txt"));
+        var output = result.run(SpecsIo.getResource("fixtures/public/TicTacToe.input"));
     }
     @Test
     public void testWhileAndIf() {
@@ -101,29 +106,57 @@ public class BackendTest {
     
     @Test
     public void testDivisors() {
+        try {
+            Path bytes = Files.copy(
+                    new File("executables/io.class").toPath(),
+                    new File("test/fixtures/libs/compiled/io.class").toPath(),
+                    StandardCopyOption.REPLACE_EXISTING,
+                    StandardCopyOption.COPY_ATTRIBUTES,
+                    LinkOption.NOFOLLOW_LINKS);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         var result = TestUtils.backend(SpecsIo.getResource("examples/Divisors.jmm"));
         TestUtils.noErrors(result.getReports());
         result.compile(new File("./executables")).setExecutable(true);
+        System.out.println("it need our io class");
+        result.run();
     }
 
     @Test
     public void testBinarySearch() {
+        try {
+            Path bytes = Files.copy(
+                    new File("executables/io.class").toPath(),
+                    new File("test/fixtures/libs/compiled/io.class").toPath(),
+                    StandardCopyOption.REPLACE_EXISTING,
+                    StandardCopyOption.COPY_ATTRIBUTES,
+                    LinkOption.NOFOLLOW_LINKS);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         var result = TestUtils.backend(SpecsIo.getResource("examples/BinarySearch.jmm"));
         TestUtils.noErrors(result.getReports());
         result.compile(new File("./executables")).setExecutable(true);
+        result.run();
     }
 
     @Test
     public void testMergeSort() {
-        var result = TestUtils.backend(SpecsIo.getResource("examples/Divisors.jmm"));
+        try {
+            Path bytes = Files.copy(
+                    new File("executables/io.class").toPath(),
+                    new File("test/fixtures/libs/compiled/io.class").toPath(),
+                    StandardCopyOption.REPLACE_EXISTING,
+                    StandardCopyOption.COPY_ATTRIBUTES,
+                    LinkOption.NOFOLLOW_LINKS);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        var result = TestUtils.backend(SpecsIo.getResource("examples/MergeSort.jmm"));
         TestUtils.noErrors(result.getReports());
         result.compile(new File("./executables")).setExecutable(true);
-    }
-
-    @Test
-    public void testOurTest() {
-        var result = TestUtils.backend(SpecsIo.getResource("ourtest.jmm"));
-        TestUtils.noErrors(result.getReports());
-        var output = result.run();
+        result.run();
     }
 }

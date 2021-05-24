@@ -110,7 +110,7 @@ public class Jasmin implements JasminBackend {
                 break;
             }
             case "BOOLEAN": {
-                out += "I";
+                out += "Z";
                 break;
             }
             case "VOID": {
@@ -499,7 +499,7 @@ public class Jasmin implements JasminBackend {
                     deltaStack(-c.getNumOperands() + 2 - pad);
                     System.out.println(c.getNumOperands());
                     System.out.println(funcName.substring(1, funcName.length() - 1)+" "+m.getMethodName());
-                    out += "    " + OllirAccesser.getCallInvocation(c).name() + " " + className + "/" + funcName.substring(1, funcName.length() - 1) + "(" + par + ")" + typeConversion(c.getReturnType().getTypeOfElement()) + "\n";
+                    out += "    " + OllirAccesser.getCallInvocation(c).name() + " " + className + "/" + funcName.substring(1, funcName.length() - 1) + "(" + par + ")" + funcTypeConversion(c.getReturnType().getTypeOfElement()) + "\n";
                     if(c.getReturnType().getTypeOfElement() != ElementType.VOID){
                         deltaStack(+1);
                     }
@@ -646,6 +646,20 @@ public class Jasmin implements JasminBackend {
         switch (type) {
             case BOOLEAN:
                 return "I";
+            case ARRAYREF:
+                return "[I";
+            case INT32:
+                return "I";
+            case OBJECTREF:
+                return "L" + type.name();
+        }
+        return "V";
+    }
+
+    private String funcTypeConversion(ElementType type) {
+        switch (type) {
+            case BOOLEAN:
+                return "Z";
             case ARRAYREF:
                 return "[I";
             case INT32:

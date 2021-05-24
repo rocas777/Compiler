@@ -63,8 +63,6 @@ class Lazysort extends Quicksort {
 
             $allowedNameI = $allowedNameI + 1;
         }
-
-
         return true;
     }
 }
