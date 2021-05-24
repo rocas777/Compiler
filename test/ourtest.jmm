@@ -1,16 +1,11 @@
 import io;
-class Simple {
+class Simple extends Quicksort{
     public static void main(String[] args){
-        if(true){
-            if(true){
-
-            }
-            else{
-
-            }
-        }
-        else{
-
-        }
+        int []u;
+        Simple s;
+        s = new Simple();
+        u = new int[8];
+        u[0] = 0;
+        s.printL(u);
     }
 }
