@@ -95,6 +95,7 @@ public class ArrayAccessVisitor extends PreorderJmmVisitor<MySymbolTable, List<R
                 case "Sub":
                 case "Mul":
                 case "Div":
+                case "AttributeCall":
                 case "ArrayAccess": {
                     break;
                 }

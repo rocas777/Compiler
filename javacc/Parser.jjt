@@ -246,43 +246,69 @@ void id() #void: {Token t1;}
 void Expression() #void : {Token t1,t2;}
 {
 
-    Expr3()
+    LESSN()
                (
-                   "+" Expr3() #Add(2)
-                   | "-" Expr3() #Sub(2)
-                   | "&&" Expr3() #AND(2)
+                   "&&" LESSN() #AND(2)
                )*
-
 }
 
 void Expression1() #void : {}
 {
 
-    Expr2()
+    LESSE()
          (
-             "+" Expr3() #Add(2)
-             | "-" Expr3() #Sub(2)
-             | "&&" Expr3() #AND(2)
+             "&&" LESSN() #AND(2)
          )*
 }
 
-void Expr2() #void : {}
+void LESSN() #void : {}{
+    SUMSN()
+        (
+             "<" SUMSN() #LessThan(2)
+        )*
+}
+
+void LESSE() #void : {}{
+    SUMSE()
+        (
+            "<" SUMSN() #LessThan(2)
+        )*
+}
+
+void SUMSN() #void : {}{
+    MULSN()
+        (
+              "+" MULSN() #Add(2)
+              | "-" MULSN() #Sub(2)
+        )*
+}
+
+void SUMSE() #void : {}{
+    MULSE()
+        (
+              "+" MULSN() #Add(2)
+              | "-" MULSN() #Sub(2)
+        )*
+}
+
+
+
+
+void MULSE() #void : {}
 {
     Expr4()
     (
         "*" Expr5() #Mul(2)
         | "/" Expr5() #Div(2)
-        | "<" Expr5() #LessThan(2)
     )*
 }
 
-void Expr3() #void : {}
+void MULSN() #void : {}
 {
     Expr5()
     (
         "*" Expr5() #Mul(2)
         | "/" Expr5() #Div(2)
-        | "<" Expr5() #LessThan(2)
     )*
 }
 
