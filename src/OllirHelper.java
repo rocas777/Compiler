@@ -382,6 +382,14 @@ public class OllirHelper {
             stringList.add(ollirCode);
             stringList.add("t" + (OllirNodeProcessor.tempVarCount - 1) + ".bool");
         }
+        else if (ollirString.contains("("))
+        {
+            Type type = getTypeFromOllir(ollirString);
+            String typeString = processType(type);
+            String ollirCode = "t" + (OllirNodeProcessor.tempVarCount++) + "." + typeString + " :=." + typeString + " " + ollirString + ";\n";
+            stringList.add(ollirCode);
+            stringList.add("t" + (OllirNodeProcessor.tempVarCount - 1) + "." + typeString);
+        }
         else
         {
             stringList.add("");
@@ -411,8 +419,12 @@ public class OllirHelper {
         int openBracketsIndex = getfield.indexOf("(");
         int closeBracketsIndex = getfield.indexOf(")");
 
+        var conversionToTemp = convertToTempIfNeeded(rightTempVar);
+        ollirString += conversionToTemp.get(0);
+        String processedRightTempVar = conversionToTemp.get(1);
+
         String getfieldParams = getfield.substring(openBracketsIndex + 1, closeBracketsIndex);
-        ollirString += "putfield(" + getfieldParams + ", " + rightTempVar + ").V;\n";
+        ollirString += "putfield(" + getfieldParams + ", " + processedRightTempVar + ").V;\n";
 
         return ollirString;
     }
