@@ -83,6 +83,7 @@ public class OllirHelper {
             {
                 var parentChildren = parentNode.getChildren();
                 var firstParentChild = parentChildren.get(0);
+                if (firstParentChild.getKind().equals("ArrayAccess")) return new Type("int", false);
                 String assignedName = firstParentChild.get("name");
                 String nodeMethodName = SearchHelper.getMethodName(firstParentChild);
                 Symbol symbol = table.getVariable(assignedName, nodeMethodName);
