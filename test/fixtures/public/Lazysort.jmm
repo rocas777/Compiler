@@ -1,7 +1,7 @@
 import MathUtils; //lowerLimit,upperLimit
 import Quicksort;
 
-class Lazysort extends QuickSort {
+class Lazysort extends Quicksort {
     public static void main(String[] a) {
         int[] L;
         int i;
@@ -18,15 +18,53 @@ class Lazysort extends QuickSort {
 
         q = new Lazysort();
 
-        q.quicksortp(L);
+        q.quicksorto(L);
         d = q.printL(L);
     }
 
-    public boolean quicksortp(int[] L) {
-        return false;
+    public boolean quicksorto(int[] L) {
+        boolean lazy;
+        int rand;
+        rand = MathUtils.random(0, 5);
+        if (rand  < 4 ) {
+            this.beLazy(L);
+            lazy = true;
+        }
+        else {
+            lazy = false;
+        }
+
+        if ( lazy ) {
+            lazy = !lazy;
+        }
+        else {
+            lazy = this.quicksort(L, 0, L.length - 1);
+        }
+
+        return lazy;
     }
-    
+
     public boolean beLazy(int[] L) {
-        return false;
+        int _allowedNameL;
+        int $allowedNameI;
+		int rand;
+        _allowedNameL = L.length;
+
+        $allowedNameI = 0;
+        while ($allowedNameI < _allowedNameL/2) {
+            L[$allowedNameI] = MathUtils.random(0, 10);
+
+            $allowedNameI = $allowedNameI + 1;
+        }
+
+        while ($allowedNameI < _allowedNameL) {
+        	rand = MathUtils.random(0, 10);
+            L[$allowedNameI] = rand + 1;
+
+            $allowedNameI = $allowedNameI + 1;
+        }
+
+
+        return true;
     }
 }

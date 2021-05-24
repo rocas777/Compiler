@@ -13,9 +13,12 @@
 
 import org.junit.Test;
 import pt.up.fe.comp.TestUtils;
+import pt.up.fe.comp.jmm.jasmin.JasminResult;
 import pt.up.fe.specs.util.SpecsIo;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 
@@ -59,7 +62,7 @@ public class BackendTest {
         var result = TestUtils.backend(SpecsIo.getResource("fixtures/public/Life.jmm"));
         TestUtils.noErrors(result.getReports());
         result.compile(new File("./executables")).setExecutable(true);
-        var output = result.run();
+        //var output = result.run();
     }
 
     @Test
@@ -67,13 +70,14 @@ public class BackendTest {
         var result = TestUtils.backend(SpecsIo.getResource("fixtures/public/MonteCarloPi.jmm"));
         TestUtils.noErrors(result.getReports());
         result.compile(new File("./executables")).setExecutable(true);
+        result.run("300\n");
     }
     @Test
     public void testTicTacToe() {
         var result = TestUtils.backend(SpecsIo.getResource("fixtures/public/TicTacToe.jmm"));
         TestUtils.noErrors(result.getReports());
         result.compile(new File("./executables")).setExecutable(true);
-        var output = result.run();
+        var output = result.run(SpecsIo.getResource("fixtures/public/TicTacToe.txt"));
     }
     @Test
     public void testWhileAndIf() {
