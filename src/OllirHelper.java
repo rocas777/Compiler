@@ -30,6 +30,18 @@ public class OllirHelper {
             var children = node.getChildren();
             var firstChild = children.get(0);
             String arrayName = firstChild.get("name");
+
+            String methodName = SearchHelper.getMethodName(node);
+            var locals = table.getLocalVariables(methodName);
+            for (Symbol local : locals) {
+                if (local.getName().equals(arrayName)) return "";
+            }
+
+            var params = table.getParameters(methodName);
+            for (Symbol param : params) {
+                if (param.getName().equals(arrayName)) return "";
+            }
+
             var fields = table.getFields();
             for (Symbol field : fields) {
                 String fieldName = field.getName();
