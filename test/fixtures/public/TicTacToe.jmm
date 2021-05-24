@@ -203,3 +203,33 @@ class TicTacToe {
 
   }
 }
+
+
+/*1 1 1
+  2 2 1
+  2 1 -1
+  2 0 -1
+  2 1 1
+  2 1 0
+  2 0 -1
+  2 1 1
+  2 1 0
+  2 0 -1
+  2 1 1
+  2 -1 -2
+
+
+      ldc 0
+      ldc 1
+      isub
+      istore 1 ;store integer winner
+      ldc 3
+      newarray int
+      astore 2 ;store reference test_array
+      aload_0
+      getfield TicTacToe/row0 [I
+      astore 4 ;store reference t0
+      aload 4 ;load reference t0
+
+
+*/

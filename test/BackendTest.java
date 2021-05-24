@@ -120,7 +120,6 @@ public class BackendTest {
     public void testOurTest() {
         var result = TestUtils.backend(SpecsIo.getResource("ourtest.jmm"));
         TestUtils.noErrors(result.getReports());
-
         var output = result.run();
     }
 }
