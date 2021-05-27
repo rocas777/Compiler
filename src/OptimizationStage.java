@@ -44,22 +44,6 @@ public class OptimizationStage implements JmmOptimization {
         ollirCode += "invokespecial(this, \"<init>\").V;\n";
         ollirCode += "}\n";
 
-        if (Main.shouldOptimizeWithOptionO)
-        {
-            var methods = table.getMethods();
-            for (String method : methods) {
-                var locals = table.getLocalVariables(method);
-                for (var local : locals) {
-                    var varUseVisitor = new VarUseVisitor(local.getName(), method);
-                    varUseVisitor.visit(node, table);
-                    if (varUseVisitor.isConst())
-                    {
-                        replaceVarUseWithConst(local.getName(), method, varUseVisitor.getFirstVal(), node, table);
-                    }
-                }
-            }
-        }
-
         OllirMethodVisitor ollirMethodVisitor = new OllirMethodVisitor();
         ollirMethodVisitor.visit(node, table);
         var methodMap = ollirMethodVisitor.getMap();
@@ -83,7 +67,22 @@ public class OptimizationStage implements JmmOptimization {
 
     @Override
     public JmmSemanticsResult optimize(JmmSemanticsResult semanticsResult) {
-        // THIS IS JUST FOR CHECKPOINT 3
+        MySymbolTable table = (MySymbolTable) semanticsResult.getSymbolTable();
+        JmmNode node = semanticsResult.getRootNode();
+
+        var methods = table.getMethods();
+            for (String method : methods) {
+                var locals = table.getLocalVariables(method);
+                for (var local : locals) {
+                    var varUseVisitor = new VarUseVisitor(local.getName(), method);
+                    varUseVisitor.visit(node, table);
+                    if (varUseVisitor.isConst())
+                    {
+                        replaceVarUseWithConst(local.getName(), method, varUseVisitor.getFirstVal(), node, table);
+                    }
+                }
+            }
+
         return semanticsResult;
     }
 
