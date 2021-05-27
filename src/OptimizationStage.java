@@ -106,6 +106,7 @@ public class OptimizationStage implements JmmOptimization {
         {
             var propagVisitor = new ConstPropagVisitor(varName, methodName, value);
             propagVisitor.visit(root, table);
+            propagVisitor.replaceNodes();
         }
     }
 }
