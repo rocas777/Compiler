@@ -22,15 +22,16 @@ public class AssigneeAssignedVisitor extends PreorderJmmVisitor<MySymbolTable, L
             String varName;
             String methodName;
             Type a1Type;
+            boolean access = false;
             if (children.get(0).getKind().equals("Assigned")) {
                 varName = children.get(0).get("name");
                 methodName = SearchHelper.getMethodName(node);
                 a1Type = table.getVariable(varName, methodName).getType();
-
             } else if (children.get(0).getKind().equals("ArrayAccess")) {
                 varName = children.get(0).getChildren().get(0).get("name");
                 methodName = SearchHelper.getMethodName(node);
                 a1Type = table.getVariable(varName, methodName).getType();
+                access = true;
             } else {
                 reports.add(new Report(ReportType.ERROR, Stage.SEMANTIC, 1, 1, "Assign error"));
                 return reports;
@@ -39,7 +40,7 @@ public class AssigneeAssignedVisitor extends PreorderJmmVisitor<MySymbolTable, L
                 case "Method": {
                     var call = children.get(1).getChildren().get(1);
                     var rType = table.getReturnType(call.get("name"));
-                    if (a1Type.isArray() && !rType.isArray()) {
+                    if (a1Type.isArray() && !rType.isArray() && !access) {
                         reports.add(new Report(ReportType.ERROR, Stage.SEMANTIC, Integer.parseInt(call.get("line")), Integer.parseInt(call.get("column")), "Trying to assign a non array to an array "));
                     } else if (!a1Type.isArray() && rType.isArray()) {
                         reports.add(new Report(ReportType.ERROR, Stage.SEMANTIC, Integer.parseInt(call.get("line")), Integer.parseInt(call.get("column")), "Trying to assign an  array to a non array "));
@@ -68,7 +69,7 @@ public class AssigneeAssignedVisitor extends PreorderJmmVisitor<MySymbolTable, L
 
                     var call = children.get(1);
                     var rType = symbol.getType();
-                    if (a1Type.isArray() && !rType.isArray()) {
+                    if (a1Type.isArray() && !rType.isArray() && !access) {
                         reports.add(new Report(ReportType.ERROR, Stage.SEMANTIC, Integer.parseInt(call.get("line")), Integer.parseInt(call.get("column")), "Trying to assign a non array to an array "));
                     } else if (!a1Type.isArray() && rType.isArray()) {
                         reports.add(new Report(ReportType.ERROR, Stage.SEMANTIC, Integer.parseInt(call.get("line")), Integer.parseInt(call.get("column")), "Trying to assign an  array to a non array "));

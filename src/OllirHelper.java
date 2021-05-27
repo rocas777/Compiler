@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 import java.util.regex.Pattern;
 
 import pt.up.fe.comp.jmm.JmmNode;
@@ -8,6 +9,48 @@ import pt.up.fe.comp.jmm.analysis.table.Symbol;
 import pt.up.fe.comp.jmm.analysis.table.Type;
 
 public class OllirHelper {
+
+    public static String separateArrayTempVarFromAssignment(String arrayAccessString)
+    {
+        String ollirString = "";
+
+        int openStraightBracketIndex = arrayAccessString.indexOf("[");
+        String tempVar = arrayAccessString.substring(0, openStraightBracketIndex);
+
+        ollirString += tempVar + ".array.i32";
+
+        return ollirString;
+    }
+
+    public static String determineFieldArraySet(JmmNode node, MySymbolTable table)
+    {
+        String nodeKind = node.getKind();
+        if (nodeKind.equals("ArrayAccess"))
+        {
+            var children = node.getChildren();
+            var firstChild = children.get(0);
+            String arrayName = firstChild.get("name");
+
+            String methodName = SearchHelper.getMethodName(node);
+            var locals = table.getLocalVariables(methodName);
+            for (Symbol local : locals) {
+                if (local.getName().equals(arrayName)) return "";
+            }
+
+            var params = table.getParameters(methodName);
+            for (Symbol param : params) {
+                if (param.getName().equals(arrayName)) return "";
+            }
+
+            var fields = table.getFields();
+            for (Symbol field : fields) {
+                String fieldName = field.getName();
+                if (fieldName.equals(arrayName) && field.getType().isArray()) return fieldName + ".array.i32";
+            }
+        }
+
+        return "";
+    }
 
     public static Type determineMethodReturnType(String methodName, MySymbolTable table, JmmNode node)
     {
@@ -52,6 +95,7 @@ public class OllirHelper {
             {
                 var parentChildren = parentNode.getChildren();
                 var firstParentChild = parentChildren.get(0);
+                if (firstParentChild.getKind().equals("ArrayAccess")) return new Type("int", false);
                 String assignedName = firstParentChild.get("name");
                 String nodeMethodName = SearchHelper.getMethodName(firstParentChild);
                 Symbol symbol = table.getVariable(assignedName, nodeMethodName);
@@ -188,18 +232,22 @@ public class OllirHelper {
         return lastTempVar.replaceAll("\\s", "");
     }
 
-    public static int determineNumberForStructure(String structure, Map<String, Integer> structureCount)
+    public static int determineNumberForStructure(String structure, Map<String, Integer> structureCount, Stack<Integer> elseNumStack)
     {
+        if (structure.equals("Else")) return elseNumStack.pop();
+
         Integer currentCount = structureCount.get(structure);
         if (currentCount == null)
         {
             structureCount.put(structure, Integer.valueOf(1));
+            if (structure.equals("If")) elseNumStack.push(1);
             return 1;
         }
         else
         {
             Integer updatedCount = ++currentCount;
             structureCount.put(structure, updatedCount);
+            if (structure.equals("If")) elseNumStack.push(updatedCount);
             return updatedCount.intValue();
         }
     }
@@ -252,17 +300,13 @@ public class OllirHelper {
 
     public static String sanitizeVariableName(String varName)
     {
-        String newVarName = ""; 
+        String newVarName = varName; 
 
-        if (varName.matches("t[0-9]+"))
-        {
-            newVarName = "not_temp_" + varName;
-        }
-        else newVarName = varName;
+        if (varName.matches("t[0-9]+")) newVarName = "not_temp_" + newVarName;
+        
+        if (newVarName.contains("$")) newVarName = newVarName.replaceAll("\\$", "dollar_sign_");
 
-        if (newVarName.contains("$")) newVarName = newVarName.replaceAll("\\$", "_dollar_sign_");
-
-        switch (varName)
+        switch (newVarName)
         {
             case "static":
             case "field":
@@ -286,7 +330,7 @@ public class OllirHelper {
             case "new":
             case "ret":
             {
-                newVarName = "not_" + varName;
+                newVarName = "not_" + newVarName;
                 break;
             }
             default: break;
@@ -334,7 +378,7 @@ public class OllirHelper {
         return parseResult;
     }
 
-    private static List<String> convertToTempIfNeeded(String ollirString)
+    public static List<String> convertToTempIfNeeded(String ollirString)
     {
         List<String> stringList = new ArrayList<>();
 
@@ -344,11 +388,19 @@ public class OllirHelper {
             stringList.add(ollirCode);
             stringList.add("t" + (OllirNodeProcessor.tempVarCount - 1) + ".i32");
         }
-        else if (ollirString.contains("<") || ollirString.contains("&&"))
+        else if (ollirString.contains("<") || ollirString.contains("&&") || ollirString.contains("!"))
         {
             String ollirCode = "t" + (OllirNodeProcessor.tempVarCount++) + ".bool :=.bool " + ollirString + ";\n";
             stringList.add(ollirCode);
             stringList.add("t" + (OllirNodeProcessor.tempVarCount - 1) + ".bool");
+        }
+        else if (ollirString.contains("("))
+        {
+            Type type = getTypeFromOllir(ollirString);
+            String typeString = processType(type);
+            String ollirCode = "t" + (OllirNodeProcessor.tempVarCount++) + "." + typeString + " :=." + typeString + " " + ollirString + ";\n";
+            stringList.add(ollirCode);
+            stringList.add("t" + (OllirNodeProcessor.tempVarCount - 1) + "." + typeString);
         }
         else
         {
@@ -379,8 +431,12 @@ public class OllirHelper {
         int openBracketsIndex = getfield.indexOf("(");
         int closeBracketsIndex = getfield.indexOf(")");
 
+        var conversionToTemp = convertToTempIfNeeded(rightTempVar);
+        ollirString += conversionToTemp.get(0);
+        String processedRightTempVar = conversionToTemp.get(1);
+
         String getfieldParams = getfield.substring(openBracketsIndex + 1, closeBracketsIndex);
-        ollirString += "putfield(" + getfieldParams + ", " + rightTempVar + ").V;\n";
+        ollirString += "putfield(" + getfieldParams + ", " + processedRightTempVar + ").V;\n";
 
         return ollirString;
     }

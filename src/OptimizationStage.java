@@ -70,7 +70,7 @@ public class OptimizationStage implements JmmOptimization {
         }
 
         ollirCode += "}\n";
-        System.out.println(ollirCode);
+        //System.out.println(ollirCode);
 
         // Convert the AST to a String containing the equivalent OLLIR code
         // Convert node ...

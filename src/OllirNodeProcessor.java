@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 import pt.up.fe.comp.jmm.analysis.table.Symbol;
 import pt.up.fe.comp.jmm.analysis.table.Type;
@@ -11,7 +12,8 @@ class OllirNodeProcessor {
 
     public static int tempVarCount = 0;
     public static Map<String, Integer> structureCount = new HashMap<>();
-    
+    public static Stack<Integer> elseNumStack = new Stack<>();
+
     public static String processNode(JmmNode node, List<Symbol> locals, List<Symbol> parameters, MySymbolTable table, boolean isStatic)
     {
         String ollirString = "";
@@ -152,7 +154,9 @@ class OllirNodeProcessor {
         String tempVar = childrenData.get(1);
 
         ollirString += childString;
-        ollirString += "new(array, " + tempVar + ").array.i32";
+        var tempConversion = OllirHelper.convertToTempIfNeeded(tempVar);
+        ollirString += tempConversion.get(0);
+        ollirString += "new(array, " + tempConversion.get(1) + ").array.i32";
 
         return ollirString;
     }
@@ -169,19 +173,19 @@ class OllirNodeProcessor {
         String firstChildTempVar = childrenData.get(2);
         //String secondChildTempVar = childrenData.get(3);
         
-        int whileStructureNumber = OllirHelper.determineNumberForStructure("While", structureCount);
-
-        String firstChildNodeKind = node.getChildren().get(0).getKind();
-        if (!firstChildNodeKind.equals("LessThan") && !firstChildNodeKind.equals("AND")) firstChildTempVar += " &&.bool 1.bool";
+        int whileStructureNumber = OllirHelper.determineNumberForStructure("While", structureCount, elseNumStack);
 
         ollirString += firstChild;
-        ollirString += "if (" + firstChildTempVar + ") goto whilebody" + whileStructureNumber + ";\n";
-        ollirString += "goto endwhile" + whileStructureNumber + ";\n";
+        var conversionToTemp = OllirHelper.convertToTempIfNeeded(firstChildTempVar);
+        ollirString += conversionToTemp.get(0);
+        ollirString += "if (" + conversionToTemp.get(1) + " &&.bool 1.bool" + ") goto whilebody" + whileStructureNumber + ";\n";
+        ollirString += "goto endwhilebody" + whileStructureNumber + ";\n";
         ollirString += "whilebody" + whileStructureNumber + ":\n";
         ollirString += secondChild;
         ollirString += firstChild;
-        ollirString += "if ( " + firstChildTempVar + ") goto whilebody" + whileStructureNumber + ";\n";
-        ollirString += "endwhile" + whileStructureNumber + ":\n";
+        ollirString += conversionToTemp.get(0);
+        ollirString += "if ( " + conversionToTemp.get(1) + " &&.bool 1.bool" + ") goto whilebody" + whileStructureNumber + ";\n";
+        ollirString += "endwhilebody" + whileStructureNumber + ":\n";
 
         // boolean isEndOfFunction = OllirHelper.determineIfNodeIsLastInBody(node);
         // if (isEndOfFunction) ollirString += "t" + (OllirNodeProcessor.tempVarCount++) + ".i32 :=.i32 0.i32;\n"; 
@@ -212,7 +216,9 @@ class OllirNodeProcessor {
         String childTempVar = childrenData.get(1);
 
         ollirString += child;
-        ollirString += "t" + (OllirNodeProcessor.tempVarCount++) + ".i32 :=.i32 arraylength(" + childTempVar + ").i32;\n";        
+        var tempConversion = OllirHelper.convertToTempIfNeeded(childTempVar);
+        ollirString += tempConversion.get(0);
+        ollirString += "t" + (OllirNodeProcessor.tempVarCount++) + ".i32 :=.i32 arraylength(" + tempConversion.get(1) + ").i32;\n";        
 
         return ollirString;
     }
@@ -227,7 +233,9 @@ class OllirNodeProcessor {
         String childTempVar = childrenData.get(1);
 
         ollirString += child;
-        ollirString += "t" + (OllirNodeProcessor.tempVarCount++) + ".i32 :=.i32 " + childTempVar + ";\n";        
+        var tempConversion = OllirHelper.convertToTempIfNeeded(childTempVar);
+        ollirString += tempConversion.get(0);
+        ollirString += "t" + (OllirNodeProcessor.tempVarCount++) + ".i32 :=.i32 " + tempConversion.get(1) + ";\n";        
 
         return ollirString;
     }
@@ -241,8 +249,11 @@ class OllirNodeProcessor {
         String child = childrenData.get(0);
         String childTempVar = childrenData.get(1);
 
+        var conversionToTemp = OllirHelper.convertToTempIfNeeded(childTempVar);
+
         ollirString += child;
-        ollirString += childTempVar + " !.bool " + childTempVar;        
+        ollirString += conversionToTemp.get(0);
+        ollirString += conversionToTemp.get(1) + " !.bool " + conversionToTemp.get(1);        
 
         return ollirString;
     }
@@ -263,8 +274,13 @@ class OllirNodeProcessor {
 
         boolean isInChain = OllirHelper.determineIfOperIsInChain(node);
 
-        if (isInChain) ollirString += "t" + (OllirNodeProcessor.tempVarCount++) + ".bool :=.bool " + leftTempVar + " &&.bool " + rightTempVar + ";\n"; 
-        else ollirString += leftTempVar + " &&.bool " + rightTempVar;        
+        var leftConversion = OllirHelper.convertToTempIfNeeded(leftTempVar);
+        var rightConversion = OllirHelper.convertToTempIfNeeded(rightTempVar);
+        ollirString += leftConversion.get(0);
+        ollirString += rightConversion.get(0);
+
+        if (isInChain) ollirString += "t" + (OllirNodeProcessor.tempVarCount++) + ".bool :=.bool " + leftConversion.get(1) + " &&.bool " + rightConversion.get(1) + ";\n"; 
+        else ollirString += leftConversion.get(1) + " &&.bool " + rightConversion.get(1);        
 
         return ollirString;
     }
@@ -303,7 +319,10 @@ class OllirNodeProcessor {
         for (int i = 0; i < (childrenData.size() / 2); i++) {
             String currentString = childrenData.get(i);
             ollirString += currentString;
-            tempVars.add(childrenData.get(i + (childrenData.size() / 2)));
+            var tempVar = childrenData.get(i + (childrenData.size() / 2));
+            var tempConversion = OllirHelper.convertToTempIfNeeded(tempVar);
+            ollirString += tempConversion.get(0); 
+            tempVars.add(tempConversion.get(1));
         }        
 
         ollirString += String.join(",", tempVars);
@@ -365,8 +384,10 @@ class OllirNodeProcessor {
         String rightTempVar = childrenData.get(3);
 
         ollirString += leftChild + rightChild;
+        var tempConversion = OllirHelper.convertToTempIfNeeded(rightTempVar);
+        ollirString += tempConversion.get(0);
 
-        ollirString += OllirHelper.trimType(leftTempVar) + "[" + rightTempVar + "].i32";
+        ollirString += OllirHelper.trimType(leftTempVar) + "[" + tempConversion.get(1) + "].i32";
 
         return ollirString;
     }
@@ -416,8 +437,13 @@ class OllirNodeProcessor {
 
         boolean isInOperationChain = OllirHelper.determineIfOperIsInChain(node);
 
-        if (isInOperationChain) ollirString += "t" + (OllirNodeProcessor.tempVarCount++) + ".i32 :=.i32 " + leftTempVar + " " + operationChar + ".i32 " + rightTempVar + ";\n";
-        else ollirString += leftTempVar + " " + operationChar + ".i32 " + rightTempVar;
+        var leftConversion = OllirHelper.convertToTempIfNeeded(leftTempVar);
+        var rightConversion = OllirHelper.convertToTempIfNeeded(rightTempVar);
+        ollirString += leftConversion.get(0);
+        ollirString += rightConversion.get(0);
+
+        if (isInOperationChain) ollirString += "t" + (OllirNodeProcessor.tempVarCount++) + ".i32 :=.i32 " + leftConversion.get(1) + " " + operationChar + ".i32 " + rightConversion.get(1) + ";\n";
+        else ollirString += leftConversion.get(1) + " " + operationChar + ".i32 " + rightConversion.get(1);
 
         return ollirString;
     }
@@ -444,6 +470,14 @@ class OllirNodeProcessor {
         {
             ollirString += leftChild + rightChild;
             ollirString += leftTempVar + " :=." + typeString + " " + rightTempVar + ";\n";
+            
+            String fieldArraySet = OllirHelper.determineFieldArraySet(node.getChildren().get(0), table);
+
+            if (!fieldArraySet.equals(""))
+            {
+                String arrayTempVar = OllirHelper.separateArrayTempVarFromAssignment(leftTempVar);
+                ollirString += "putfield(this, " + fieldArraySet + ", " + arrayTempVar + ").V;\n";
+            }
         }
         else
         {
@@ -459,6 +493,8 @@ class OllirNodeProcessor {
 
     private static String processVariableName(JmmNode node, List<Symbol> locals, List<Symbol> parameters, MySymbolTable table, boolean isStatic)
     {
+        if (node.getKind().equals("MethodName")) return node.get("name");
+
         String ollirString = "";
 
         var fields = table.getFields();
@@ -479,6 +515,7 @@ class OllirNodeProcessor {
         if (isLocal)
         {
             varType = locals.get(indexInList).getType();
+            varName = OllirHelper.sanitizeVariableName(varName);
         }
         else
         {
@@ -522,7 +559,7 @@ class OllirNodeProcessor {
     {
         String ollirString = "";
 
-        int structureNumber = OllirHelper.determineNumberForStructure("Else", structureCount);
+        int structureNumber = OllirHelper.determineNumberForStructure("Else", structureCount, elseNumStack);
 
         ollirString += "elsebody" + structureNumber + ":\n";
 
@@ -556,23 +593,22 @@ class OllirNodeProcessor {
     {
         String ollirString = "";
         var children = node.getChildren();
-        int structureNumber = OllirHelper.determineNumberForStructure("If", structureCount);
+        int structureNumber = OllirHelper.determineNumberForStructure("If", structureCount, elseNumStack);
 
         var childrenData = extractChildrenData(node, locals, parameters, table, isStatic);
         String ifExpression = childrenData.get(0);
 
         String lhsLastAssign = childrenData.get(2);
 
-        String firstChildNodeKind = children.get(0).getKind();
-        if (!firstChildNodeKind.equals("LessThan") && !firstChildNodeKind.equals("AND")) lhsLastAssign += " &&.bool 1.bool";
-
         ollirString += ifExpression;
+        var conversionToTemp = OllirHelper.convertToTempIfNeeded(lhsLastAssign);
+        ollirString += conversionToTemp.get(0);
         ollirString += "if (";
-        ollirString += lhsLastAssign;
+        ollirString += conversionToTemp.get(1) + " &&.bool 1.bool";
         ollirString += ") goto ifbody" + structureNumber + ";\n";
         ollirString += "goto elsebody" + structureNumber + ";\n";
         ollirString += "ifbody" + structureNumber + ":\n";
-        ollirString += processNode(children.get(1), locals, parameters, table, isStatic);
+        ollirString += childrenData.get(1);
         ollirString += "goto endifbody" + structureNumber + ";\n";
 
         return ollirString;
@@ -593,8 +629,14 @@ class OllirNodeProcessor {
         
         ollirString += leftChild + rightChild;
         boolean isInChain = OllirHelper.determineIfOperIsInChain(node);
-        if (isInChain) ollirString += "t" + (OllirNodeProcessor.tempVarCount++) + ".bool :=.bool " + leftTempVar + " <.i32 " + rightTempVar + ";\n";        
-        else ollirString += leftTempVar + " <.i32 " + rightTempVar;
+
+        var leftConversion = OllirHelper.convertToTempIfNeeded(leftTempVar);
+        var rightConversion = OllirHelper.convertToTempIfNeeded(rightTempVar);
+        ollirString += leftConversion.get(0);
+        ollirString += rightConversion.get(0);
+
+        if (isInChain) ollirString += "t" + (OllirNodeProcessor.tempVarCount++) + ".bool :=.bool " + leftConversion.get(1) + " <.i32 " + rightConversion.get(1) + ";\n";        
+        else ollirString += leftConversion.get(1) + " <.i32 " + rightConversion.get(1);
 
         return ollirString;
     }

@@ -48,7 +48,7 @@ class BinarySearch {
             }
         }
         else{
-            out =  -1;
+            out =  0-1;
         }
 
         return out;
