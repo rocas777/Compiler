@@ -175,16 +175,13 @@ class OllirNodeProcessor {
         
         int whileStructureNumber = OllirHelper.determineNumberForStructure("While", structureCount, elseNumStack);
 
+        ollirString += "whilebody" + whileStructureNumber + ":\n";
         ollirString += firstChild;
         var conversionToTemp = OllirHelper.convertToTempIfNeeded(firstChildTempVar);
         ollirString += conversionToTemp.get(0);
-        ollirString += "if (" + conversionToTemp.get(1) + " &&.bool 1.bool" + ") goto whilebody" + whileStructureNumber + ";\n";
-        ollirString += "goto endwhilebody" + whileStructureNumber + ";\n";
-        ollirString += "whilebody" + whileStructureNumber + ":\n";
+        ollirString += "if (" + conversionToTemp.get(1) + " !.bool " + conversionToTemp.get(1) + ") goto endwhilebody" + whileStructureNumber + ";\n";
         ollirString += secondChild;
-        ollirString += firstChild;
-        ollirString += conversionToTemp.get(0);
-        ollirString += "if ( " + conversionToTemp.get(1) + " &&.bool 1.bool" + ") goto whilebody" + whileStructureNumber + ";\n";
+        ollirString += "goto whilebody" + whileStructureNumber + ";\n";
         ollirString += "endwhilebody" + whileStructureNumber + ":\n";
 
         // boolean isEndOfFunction = OllirHelper.determineIfNodeIsLastInBody(node);
