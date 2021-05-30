@@ -622,9 +622,7 @@ public class Jasmin implements JasminBackend {
             case BRANCH: {
                 try {
                     CondBranchInstruction ci = (CondBranchInstruction) i;
-                    out += loadOp(ci.getLeftOperand(), m);
-                    out += loadOp(ci.getRightOperand(), m);
-                    out += branchOp(ci.getCondOperation(), ci.getLabel());
+                    out += branchOp(ci, m);
 
                 } catch (Exception ignored) {
 
@@ -734,6 +732,7 @@ public class Jasmin implements JasminBackend {
         switch (o.getOpType()) {
             case LTHI32:
             case LTH: {
+                System.out.println("while");
                 out += "    isub\n";
                 deltaStack(-2);
                 deltaStack(1);
@@ -754,22 +753,36 @@ public class Jasmin implements JasminBackend {
         return out;
     }
 
-    private String branchOp(Operation o, String label) {
+    private String branchOp(CondBranchInstruction ci,Method m) {
         String out = "";
+        var o = ci.getCondOperation();
+        var label = ci.getLabel();
         switch (o.getOpType()) {
             case LTHI32:
             case LTH: {
+                out += loadOp(ci.getLeftOperand(), m);
+                out += loadOp(ci.getRightOperand(), m);
                 deltaStack(-2);
+                System.exit(3);
                 out += "    if_icmplt " + label + "\n";
                 break;
             }
             case ANDB:
             case ANDI32:
             case AND: {
+                out += loadOp(ci.getLeftOperand(), m);
+                out += loadOp(ci.getRightOperand(), m);
                 deltaStack(-2);
                 out += "    iand\n";
                 deltaStack(+1);
                 out += "    ifne " + label + "\n";
+                deltaStack(-1);
+                break;
+            }
+            case NOT:
+            case NOTB:{
+                out += loadOp(ci.getLeftOperand(), m);
+                out += "    ifeq " + label + "\n";
                 deltaStack(-1);
                 break;
             }
