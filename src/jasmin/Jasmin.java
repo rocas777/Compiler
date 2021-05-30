@@ -24,7 +24,7 @@ public class Jasmin implements JasminBackend {
     public void deltaStack(int v) {
         stackSize += v;
         maxStackSize = Math.max(stackSize, maxStackSize);
-        System.out.println(maxStackSize+" "+stackSize +" "+v);
+        //System.out.(maxStackSize+" "+stackSize +" "+v);
     }
 
     public void Locals(int v) {
@@ -56,8 +56,8 @@ public class Jasmin implements JasminBackend {
                 ".end method\n";
 
         for (Method m : ollirResult.getOllirClass().getMethods()) {
-            System.out.println();
-            System.out.println(m.getMethodName());
+            /*System.out.println();
+            System.out.println(m.getMethodName());*/
             outCode += processMethod(m);
         }
 
@@ -497,8 +497,8 @@ public class Jasmin implements JasminBackend {
                         className = cl.getName();
                     }
                     deltaStack(-c.getNumOperands() + 2 - pad);
-                    System.out.println(c.getNumOperands());
-                    System.out.println(funcName.substring(1, funcName.length() - 1)+" "+m.getMethodName());
+                    /*System.out.println(c.getNumOperands());
+                    System.out.println(funcName.substring(1, funcName.length() - 1)+" "+m.getMethodName());*/
                     out += "    " + OllirAccesser.getCallInvocation(c).name() + " " + className + "/" + funcName.substring(1, funcName.length() - 1) + "(" + par + ")" + funcTypeConversion(c.getReturnType().getTypeOfElement()) + "\n";
                     if(c.getReturnType().getTypeOfElement() != ElementType.VOID){
                         deltaStack(+1);
@@ -732,7 +732,6 @@ public class Jasmin implements JasminBackend {
         switch (o.getOpType()) {
             case LTHI32:
             case LTH: {
-                System.out.println("while");
                 out += "    isub\n";
                 deltaStack(-2);
                 deltaStack(1);
