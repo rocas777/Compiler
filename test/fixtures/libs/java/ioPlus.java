@@ -3,4 +3,9 @@ public class ioPlus {
     {
         System.out.println("Hello, World!");
     }
+
+    public static void printResult(int num)
+    {
+        System.out.println(num);
+    }
 }
