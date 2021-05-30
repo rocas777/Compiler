@@ -99,7 +99,7 @@ public class BackendTest {
     public void testSimple() {
         var result = TestUtils.backend(SpecsIo.getResource("fixtures/public/Simple.jmm"));
         TestUtils.noErrors(result.getReports());
-
+        result.compile(new File("./executables")).setExecutable(true);
         var output = result.run();
         assertEquals("30", output.trim());
     }

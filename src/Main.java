@@ -37,10 +37,18 @@ public class Main implements JmmParser {
 	}
 
     public static void main(String[] args) {
+		boolean shouldOptimizeWithOptionO = false;
+		String pathArg = "";
+
+		for (String arg : args) {
+			if (arg.equals("-o")) shouldOptimizeWithOptionO = true;
+			else pathArg = arg;
+		}
+
 		var main = new Main();
-		var fileContents = SpecsIo.read(args[0]);
+		var fileContents = SpecsIo.read(pathArg);
 		var result = main.parse(fileContents);
-		
+
 		if (dumpJson)
 		{
 			String jsonTree = result.toJson();
@@ -60,6 +68,7 @@ public class Main implements JmmParser {
 		var analysis = new AnalysisStage();
 		var result2 = analysis.semanticAnalysis(result);
 		var optimizer = new OptimizationStage();
+		if (shouldOptimizeWithOptionO) optimizer.optimize(result2);
 		var result3 = optimizer.toOllir(result2);
 		var backend = new BackendStage();
 		var result4 = backend.toJasmin(result3);

@@ -24,7 +24,7 @@ public class Jasmin implements JasminBackend {
     public void deltaStack(int v) {
         stackSize += v;
         maxStackSize = Math.max(stackSize, maxStackSize);
-        System.out.println(maxStackSize+" "+stackSize +" "+v);
+        //System.out.(maxStackSize+" "+stackSize +" "+v);
     }
 
     public void Locals(int v) {
@@ -56,8 +56,8 @@ public class Jasmin implements JasminBackend {
                 ".end method\n";
 
         for (Method m : ollirResult.getOllirClass().getMethods()) {
-            System.out.println();
-            System.out.println(m.getMethodName());
+            /*System.out.println();
+            System.out.println(m.getMethodName());*/
             outCode += processMethod(m);
         }
 
@@ -497,8 +497,8 @@ public class Jasmin implements JasminBackend {
                         className = cl.getName();
                     }
                     deltaStack(-c.getNumOperands() + 2 - pad);
-                    System.out.println(c.getNumOperands());
-                    System.out.println(funcName.substring(1, funcName.length() - 1)+" "+m.getMethodName());
+                    /*System.out.println(c.getNumOperands());
+                    System.out.println(funcName.substring(1, funcName.length() - 1)+" "+m.getMethodName());*/
                     out += "    " + OllirAccesser.getCallInvocation(c).name() + " " + className + "/" + funcName.substring(1, funcName.length() - 1) + "(" + par + ")" + funcTypeConversion(c.getReturnType().getTypeOfElement()) + "\n";
                     if(c.getReturnType().getTypeOfElement() != ElementType.VOID){
                         deltaStack(+1);
@@ -622,9 +622,7 @@ public class Jasmin implements JasminBackend {
             case BRANCH: {
                 try {
                     CondBranchInstruction ci = (CondBranchInstruction) i;
-                    out += loadOp(ci.getLeftOperand(), m);
-                    out += loadOp(ci.getRightOperand(), m);
-                    out += branchOp(ci.getCondOperation(), ci.getLabel());
+                    out += branchOp(ci, m);
 
                 } catch (Exception ignored) {
 
@@ -754,22 +752,36 @@ public class Jasmin implements JasminBackend {
         return out;
     }
 
-    private String branchOp(Operation o, String label) {
+    private String branchOp(CondBranchInstruction ci,Method m) {
         String out = "";
+        var o = ci.getCondOperation();
+        var label = ci.getLabel();
         switch (o.getOpType()) {
             case LTHI32:
             case LTH: {
+                out += loadOp(ci.getLeftOperand(), m);
+                out += loadOp(ci.getRightOperand(), m);
                 deltaStack(-2);
+                System.exit(3);
                 out += "    if_icmplt " + label + "\n";
                 break;
             }
             case ANDB:
             case ANDI32:
             case AND: {
+                out += loadOp(ci.getLeftOperand(), m);
+                out += loadOp(ci.getRightOperand(), m);
                 deltaStack(-2);
                 out += "    iand\n";
                 deltaStack(+1);
                 out += "    ifne " + label + "\n";
+                deltaStack(-1);
+                break;
+            }
+            case NOT:
+            case NOTB:{
+                out += loadOp(ci.getLeftOperand(), m);
+                out += "    ifeq " + label + "\n";
                 deltaStack(-1);
                 break;
             }

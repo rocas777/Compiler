@@ -54,7 +54,7 @@ public class OptimizationStage implements JmmOptimization {
         }
 
         ollirCode += "}\n";
-        //System.out.println(ollirCode);
+        System.out.println(ollirCode);
 
         // Convert the AST to a String containing the equivalent OLLIR code
         // Convert node ...
@@ -67,7 +67,22 @@ public class OptimizationStage implements JmmOptimization {
 
     @Override
     public JmmSemanticsResult optimize(JmmSemanticsResult semanticsResult) {
-        // THIS IS JUST FOR CHECKPOINT 3
+        MySymbolTable table = (MySymbolTable) semanticsResult.getSymbolTable();
+        JmmNode node = semanticsResult.getRootNode();
+
+        var methods = table.getMethods();
+            for (String method : methods) {
+                var locals = table.getLocalVariables(method);
+                for (var local : locals) {
+                    var varUseVisitor = new VarUseVisitor(local.getName(), method);
+                    varUseVisitor.visit(node, table);
+                    if (varUseVisitor.isConst())
+                    {
+                        replaceVarUseWithConst(local.getName(), method, varUseVisitor.getFirstVal(), node, table);
+                    }
+                }
+            }
+
         return semanticsResult;
     }
 
@@ -77,4 +92,20 @@ public class OptimizationStage implements JmmOptimization {
         return ollirResult;
     }
 
+
+
+
+
+
+    private void replaceVarUseWithConst(String varName, String methodName, JmmNode value, JmmNode root, MySymbolTable table)
+    {
+        //Should check if is integerLiteral or true or false?
+        String valueNodeKind = value.getKind();
+        if (valueNodeKind.equals("IntegerLiteral") || valueNodeKind.equals("True") || valueNodeKind.equals("False"))
+        {
+            var propagVisitor = new ConstPropagVisitor(varName, methodName, value);
+            propagVisitor.visit(root, table);
+            propagVisitor.replaceNodes();
+        }
+    }
 }
