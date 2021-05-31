@@ -1,3 +1,38 @@
+# Group and Project Info
+
+**GROUP**: 2C
+
+NAME1: João Pedro Fontes Vilhena e Mascarenhas, NR1: 201806389, GRADE1:, CONTRIBUTION1:
+NAME2: João Pereira da Silva Matos, NR2: 201703884, GRADE2:, CONTRIBUTION2:
+NAME3: Luís Miguel Afonso Pinto, NR3: 201806206, GRADE3:, CONTRIBUTION3:
+NAME4: Nuno Filipe Amaral Oliveira, NR4: 201806525, GRADE4:, CONTRIBUTION4:
+
+**SUMMARY**: Our tools allows a user to compile source code files written in the Jmm language and generate ``.class`` files that can be executed. A path to the Jmm file must be provided as a command line argument. Additionally, a ``-o`` option can be provided to apply the corresponding optimizations before converting the syntax tree to OLLIR.
+
+**DEALING WITH SYNTACTIC ERRORS**: The tool tolerates up to 10 syntactic errors in the expressions of ``while`` loops and crashes if errors exist elsewhere.
+
+**SEMANTIC ANALYSIS**: In this stage, all the rules mentioned in the checklist provided for the second checkpoint are implemented, this includes:
+### Expression Analysis 
+
+#### Type Verification
+- verificar se operações são efetuadas com o mesmo tipo (e.g. int + boolean tem de dar erro)
+- não é possível utilizar arrays diretamente para operações aritmeticas (e.g. array1 + array2)
+- verificar se um array access é de facto feito sobre um array (e.g. 1[10] não é permitido)
+- verificar se o indice do array access é um inteiro (e.g. a[true] não é permitido)
+- verificar se valor do assignee é igual ao do assigned (a_int = b_boolean não é permitido!)
+- verificar se operação booleana (&&, < ou !) é efetuada só com booleanos
+- verificar se conditional expressions (if e while) resulta num booleano
+            
+#### Method Verification
+
+- verificar se o "target" do método existe, e se este contém o método (e.g. a.foo, ver se 'a' existe e se tem um método 'foo')		
+    - caso seja do tipo da classe declarada (e.g. a usar o this), se não existir declaração na própria classe: se não tiver extends retorna erro, se tiver extends assumir que é da classe super.	
+- caso o método não seja da classe declarada, isto é uma classe importada, assumir como existente e assumir tipos esperados. (e.g. a = Foo.b(), se a é um inteiro, e Foo é uma classe importada, assumir que o método b é estático (pois estamos a aceder a uma método diretamente da classe), que não tem argumentos e que retorna um inteiro)
+- verificar se o número de argumentos na invocação é igual ao número de parâmetros da declaração
+- verificar se o tipo dos parâmetros coincide com o tipo dos argumentos
+
+**CODE GENERATION**: At this point, the entire tree is converted to OLLIR (OO-based Low Lever Intermediate Representation), at this point if the ``-o`` option was provided as a command line argument the corresponding optimizations are applied to the tree before the conversion. Finally, the OLLIR code is converted to the corresponding Jasmin code which is then used to generate the ``.class`` file.
+
 # Compilers Project
 
 For this project, you need to [install Gradle](https://gradle.org/install/)
