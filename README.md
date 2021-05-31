@@ -2,10 +2,10 @@
 
 **GROUP**: 2C
 
-NAME1: João Pedro Fontes Vilhena e Mascarenhas, NR1: 201806389, GRADE1:, CONTRIBUTION1:
-NAME2: João Pereira da Silva Matos, NR2: 201703884, GRADE2:, CONTRIBUTION2:
-NAME3: Luís Miguel Afonso Pinto, NR3: 201806206, GRADE3:, CONTRIBUTION3:
-NAME4: Nuno Filipe Amaral Oliveira, NR4: 201806525, GRADE4:, CONTRIBUTION4:
+NAME1: João Pedro Fontes Vilhena e Mascarenhas, NR1: 201806389, GRADE1:, CONTRIBUTION1:  
+NAME2: João Pereira da Silva Matos, NR2: 201703884, GRADE2:, CONTRIBUTION2:  
+NAME3: Luís Miguel Afonso Pinto, NR3: 201806206, GRADE3:, CONTRIBUTION3:  
+NAME4: Nuno Filipe Amaral Oliveira, NR4: 201806525, GRADE4:, CONTRIBUTION4:  
 
 GLOBAL Grade of the project: 
 
