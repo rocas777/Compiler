@@ -2,12 +2,12 @@
 
 **GROUP**: 2C
 
-NAME1: João Pedro Fontes Vilhena e Mascarenhas, NR1: 201806389, GRADE1:17, CONTRIBUTION1:17%  
-NAME2: João Pereira da Silva Matos, NR2: 201703884, GRADE2:, CONTRIBUTION2:  
-NAME3: Luís Miguel Afonso Pinto, NR3: 201806206, GRADE3:18.5, CONTRIBUTION3: 25%  
-NAME4: Nuno Filipe Amaral Oliveira, NR4: 201806525, GRADE4:18.5, CONTRIBUTION4: 25% 
+NAME1: João Pedro Fontes Vilhena e Mascarenhas, NR1: 201806389, GRADE1: 17, CONTRIBUTION1: 17%  
+NAME2: João Pereira da Silva Matos, NR2: 201703884, GRADE2: 19, CONTRIBUTION2: 33% 
+NAME3: Luís Miguel Afonso Pinto, NR3: 201806206, GRADE3: 18.5, CONTRIBUTION3: 25%  
+NAME4: Nuno Filipe Amaral Oliveira, NR4: 201806525, GRADE4: 18.5, CONTRIBUTION4: 25% 
 
-GLOBAL Grade of the project:18.5 
+GLOBAL Grade of the project: 18.5 
 
 **SUMMARY**: Our tools allows a user to compile source code files written in the Jmm language and generate ``.class`` files that can be executed. A path to the Jmm file must be provided as a command line argument. Additionally, a ``-o`` option can be provided to apply the corresponding optimizations before converting the syntax tree to OLLIR.
 
