@@ -57,6 +57,11 @@ public class JasminResult {
         return this.reports;
     }
 
+    public void writeJasminFileToProjRoot() {
+        File jasminFile = new File(getClassName() + ".j");
+        SpecsIo.write(jasminFile, getJasminCode());
+    }
+
     /**
      * Compiles the generated Jasmin code using the Jasmin tool.
      * 
