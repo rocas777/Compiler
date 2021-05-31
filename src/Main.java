@@ -57,11 +57,12 @@ public class Main implements JmmParser {
 		var backend = new BackendStage();
 		var result4 = backend.toJasmin(result3);
 
-		result4.writeJasminFileToProjRoot();
-		//result4.run();
-
 		var table = result2.getSymbolTable();
 		String className = table.getClassName();
+
+		String jasminCode = result4.getJasminCode();
+		File jasminFile = new File(className + ".j");
+        SpecsIo.write(jasminFile, jasminCode);
 
 		String jsonTree = result.toJson();
 		File jsonFile = new File(className + ".json");
@@ -75,7 +76,6 @@ public class Main implements JmmParser {
 		File ollirFile = new File(className + ".ollir");
 		SpecsIo.write(ollirFile, ollirCode);
 
-		File jasminFile = new File(className + ".j");
 		JasminUtils.assemble(jasminFile, new File("").getAbsoluteFile());
 
         if (args[0].contains("fail")) {
