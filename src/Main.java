@@ -16,7 +16,6 @@ public class Main implements JmmParser {
 	public static List<Report> reports;
 	public static List<Report> semanticReports;
 	public static boolean dumpTree = false;
-	public static boolean dumpJson = true;
 
 	public JmmParserResult parse(String jmmCode) {
 		
@@ -48,23 +47,7 @@ public class Main implements JmmParser {
 		var main = new Main();
 		var fileContents = SpecsIo.read(pathArg);
 		var result = main.parse(fileContents);
-
-		if (dumpJson)
-		{
-			String jsonTree = result.toJson();
-			File jsonFile = new File("javacc/output.json");
-			try
-			{
-				FileWriter writer = new FileWriter(jsonFile);
-				writer.write(jsonTree);
-				writer.close();
-			}
-			catch (IOException e)
-			{
-				System.out.println(e.toString());
-			}
-		}
-
+		
 		var analysis = new AnalysisStage();
 		var result2 = analysis.semanticAnalysis(result);
 		var optimizer = new OptimizationStage();
@@ -75,6 +58,50 @@ public class Main implements JmmParser {
 
 		result4.writeJasminFileToProjRoot();
 		//result4.run();
+
+		var table = result2.getSymbolTable();
+		String className = table.getClassName();
+
+		String jsonTree = result.toJson();
+		File jsonFile = new File(className + ".json");
+		try
+		{
+			FileWriter writer = new FileWriter(jsonFile);
+			writer.write(jsonTree);
+			writer.close();
+		}
+		catch (IOException e)
+		{
+			System.out.println(e.toString());
+		}
+
+		String tableData = table.print();
+		File tableFile = new File(className + ".table.txt");
+		try
+		{
+			FileWriter writer = new FileWriter(tableFile);
+			writer.write(tableData);
+			writer.close();
+		}
+		catch (IOException e)
+		{
+			System.out.println(e.toString());
+		}
+
+		String ollirCode = result3.getOllirCode();
+		File ollirFile = new File(className + ".ollir");
+		try
+		{
+			FileWriter writer = new FileWriter(ollirFile);
+			writer.write(ollirCode);
+			writer.close();
+		}
+		catch (IOException e)
+		{
+			System.out.println(e.toString());
+		}
+
+	
 
         if (args[0].contains("fail")) {
             throw new RuntimeException("It's supposed to fail");
