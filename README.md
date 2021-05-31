@@ -3,7 +3,7 @@
 **GROUP**: 2C
 
 NAME1: João Pedro Fontes Vilhena e Mascarenhas, NR1: 201806389, GRADE1: 17, CONTRIBUTION1: 17%  
-NAME2: João Pereira da Silva Matos, NR2: 201703884, GRADE2: 19, CONTRIBUTION2: 33%
+NAME2: João Pereira da Silva Matos, NR2: 201703884, GRADE2: 19, CONTRIBUTION2: 33%  
 NAME3: Luís Miguel Afonso Pinto, NR3: 201806206, GRADE3: 18.5, CONTRIBUTION3: 25%  
 NAME4: Nuno Filipe Amaral Oliveira, NR4: 201806525, GRADE4: 18.5, CONTRIBUTION4: 25% 
 
