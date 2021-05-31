@@ -8,6 +8,7 @@ import java.util.List;
 
 import pt.up.fe.comp.jmm.JmmParser;
 import pt.up.fe.comp.jmm.JmmParserResult;
+import pt.up.fe.comp.jmm.jasmin.JasminUtils;
 import pt.up.fe.comp.jmm.report.Report;
 import pt.up.fe.specs.util.SpecsIo;
 
@@ -64,44 +65,18 @@ public class Main implements JmmParser {
 
 		String jsonTree = result.toJson();
 		File jsonFile = new File(className + ".json");
-		try
-		{
-			FileWriter writer = new FileWriter(jsonFile);
-			writer.write(jsonTree);
-			writer.close();
-		}
-		catch (IOException e)
-		{
-			System.out.println(e.toString());
-		}
+		SpecsIo.write(jsonFile, jsonTree);
 
 		String tableData = table.print();
 		File tableFile = new File(className + ".table.txt");
-		try
-		{
-			FileWriter writer = new FileWriter(tableFile);
-			writer.write(tableData);
-			writer.close();
-		}
-		catch (IOException e)
-		{
-			System.out.println(e.toString());
-		}
+		SpecsIo.write(tableFile, tableData);
 
 		String ollirCode = result3.getOllirCode();
 		File ollirFile = new File(className + ".ollir");
-		try
-		{
-			FileWriter writer = new FileWriter(ollirFile);
-			writer.write(ollirCode);
-			writer.close();
-		}
-		catch (IOException e)
-		{
-			System.out.println(e.toString());
-		}
+		SpecsIo.write(ollirFile, ollirCode);
 
-	
+		File jasminFile = new File(className + ".j");
+		JasminUtils.assemble(jasminFile, new File("").getAbsoluteFile());
 
         if (args[0].contains("fail")) {
             throw new RuntimeException("It's supposed to fail");
