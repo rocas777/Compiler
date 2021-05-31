@@ -7,9 +7,11 @@ NAME2: João Pereira da Silva Matos, NR2: 201703884, GRADE2:, CONTRIBUTION2:
 NAME3: Luís Miguel Afonso Pinto, NR3: 201806206, GRADE3:, CONTRIBUTION3:
 NAME4: Nuno Filipe Amaral Oliveira, NR4: 201806525, GRADE4:, CONTRIBUTION4:
 
+GLOBAL Grade of the project: 
+
 **SUMMARY**: Our tools allows a user to compile source code files written in the Jmm language and generate ``.class`` files that can be executed. A path to the Jmm file must be provided as a command line argument. Additionally, a ``-o`` option can be provided to apply the corresponding optimizations before converting the syntax tree to OLLIR.
 
-**DEALING WITH SYNTACTIC ERRORS**: The tool tolerates up to 10 syntactic errors in the expressions of ``while`` loops and crashes if errors exist elsewhere.
+**DEALING WITH SYNTACTIC ERRORS**: The tool tolerates up to 10 syntactic errors in the expressions of ``while`` loops and crashes if errors exist elsewhere or if this limit is exceeded.
 
 **SEMANTIC ANALYSIS**: In this stage, all the rules mentioned in the checklist provided for the second checkpoint are implemented, this includes:
 ### Expression Analysis 
@@ -31,7 +33,28 @@ NAME4: Nuno Filipe Amaral Oliveira, NR4: 201806525, GRADE4:, CONTRIBUTION4:
 - verificar se o número de argumentos na invocação é igual ao número de parâmetros da declaração
 - verificar se o tipo dos parâmetros coincide com o tipo dos argumentos
 
-**CODE GENERATION**: At this point, the entire tree is converted to OLLIR (OO-based Low Lever Intermediate Representation), at this point if the ``-o`` option was provided as a command line argument the corresponding optimizations are applied to the tree before the conversion. Finally, the OLLIR code is converted to the corresponding Jasmin code which is then used to generate the ``.class`` file.
+**CODE GENERATION**: At this point, the entire tree is converted to OLLIR (OO-based Low Lever Intermediate Representation), also if the ``-o`` option was provided as a command line argument the corresponding optimizations are applied to the tree before the conversion. Finally, the OLLIR code is converted to the corresponding Jasmin code which is then used to generate the ``.class`` file. In the project's current state we were unable to find problems related to code generation.
+
+**TASK DISTRIBUTION**:
+- Parsing and syntactic analysis:
+    - João Mascarenhas
+    - João Matos
+    - Luís Pinto
+    - Nuno Oliveira
+- Semantic analysis:
+    - João Mascarenhas
+    - João Matos
+    - Luís Pinto
+    - Nuno Oliveira
+- OLLIR:
+    - João Matos
+- Jasmin:
+    - Luís Pinto
+    - Nuno Oliveira (?)
+
+**PROS**: Almost everything that was requested in checklists and project instructions was implemented.
+
+**CONS**: Unfortunately, we only had time to implement the optimizations related to the ``-o`` option.
 
 # Compilers Project
 
