@@ -67,7 +67,7 @@ public class BackendTest {
         var result = TestUtils.backend(SpecsIo.getResource("fixtures/public/Life.jmm"));
         TestUtils.noErrors(result.getReports());
         result.compile(new File("./executables")).setExecutable(true);
-        //var output = result.run();
+        var output = result.run("\n");
     }
 
     @Test
